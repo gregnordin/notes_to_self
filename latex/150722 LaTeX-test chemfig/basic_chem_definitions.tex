@@ -1,0 +1,241 @@
+\documentclass{article}
+\usepackage{chemfig}
+\renewcommand*\printatom[1]{\ensuremath{\mathsf{#1}}}
+
+\title{Definitions - Organic Chemistry}
+\author{G. Nordin}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+ \hline
+ Number of Carbons & Parent chain name & Substituent Name \\ 
+ \hline
+ 1 & methane & methyl \\ 
+ 2 & ethane & ethyl \\ 
+ 3 & propane & propyl \\ 
+ 4 & butane & butyl \\ 
+ 5 & pentane & pentyl \\ 
+ 6 & hexane & hexyl \\ 
+ 7 & heptane & heptyl \\ 
+ 8 & octane & octyl \\ 
+ 9 & nonane & nonyl \\ 
+ 10 & decane & decyl \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent{\large \textbf{alkane}} - saturated hydrocarbon. It only has C and H and all bonds are single bonds. Example: \par
+\vspace{3mm}
+\centerline{
+\chemfig{CH_3%6 these numbers are the carbon positions in the chain for ease of reading
+-[:30]%5
+-[:-30]%4
+-[:30]%3
+-[:-30]%2
+-[:30]CH_3}%1
+}
+
+\vspace{5mm}
+\noindent{\large \textbf{alkene}} - unsaturated hydrocarbon. It only has C and H there is at least one double bond. Example: \par
+\vspace{3mm}
+\centerline{
+\chemfig{CH_3%6 these numbers are the carbon positions in the chain for ease of reading
+-[:30]%5
+-[:-30]%4
+-[:30]%3
+=[:-30]%2
+-[:30]CH_3}%1
+}
+
+\vspace{5mm}
+\noindent{\large \textbf{alkyl}} - an alkyl substituent is an alkane missing one hydrogen. A substituent is an atom or group of atoms substituted in place of a hydrogen atom on the parent chain of a hydrocarbon. Typically an alkyl is a part of a larger molecule. The smallest alkyl group is methyl, with the formula CH3Ñ. Example: \par
+\vspace{3mm}
+\centerline{
+\chemfig{-C(-[:90]H)(-[:-90]H)-H}
+}
+
+\vspace{5mm}
+\noindent{\large \textbf{R}} - used to designate a generic (unspecified) alkyl group in a structural formula.
+
+\vspace{5mm}
+\noindent{\large \textbf{ether}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{
+  R-[::30]O-[::-60]R'}
+}
+
+\vspace{5mm}
+\noindent{\large \textbf{carobnyl}} - a carbonyl group is a functional group composed of a carbon atom double-bonded to an oxygen atom: C=O. A compound containing a carbonyl group is often referred to as a carbonyl compound. Example carbonyl compound where A and B can be anything: \par
+\vspace{2mm}
+\centerline{
+\chemfig{
+  A-[::30]O(=[:90]O)-[::-60]B}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{aldehyde}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{
+  R-[:30]C(=[:90]O)-[:-30]H}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{ketone}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{
+  R_1-[:30]C(=[:90]O)-[:-30]R_2}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{ester}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{
+  R-[:30]C(=[:90]O)-[:-30]OR'}
+}
+
+\pagebreak
+\vspace{8mm}
+\noindent{\large \textbf{carboxylic acid}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{
+  R-[:30]C(=[:90]O)-[:-30]OH}
+}
+  
+\vspace{8mm}
+\noindent{\large \textbf{amino acid}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{H_2N-C(-[:90]H)(-[:-90]R)-[:30]C(=[:90]O)(-[:-30]OH)}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{anhydride}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{
+  -[:30]C(=[:90]O)-[:-30]O-[:30]C(=[:90]O)-[:-30]}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{malonate}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{
+  -[:-30]O-[:30]C(=[:90]O)-[:-30]-[:30]C(=[:90]O)-[:-30]O-[:30]}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{alcohol}} - Any R with an OH, i.e., ROH \par
+\vspace{2mm}
+\centerline{
+\chemname{\chemfig{ R-OH}}{primary} \qquad
+\chemname{\chemfig{ R_1-C(-[:90]OH)(-[:-90]H)-R_2}}{secondary}  \qquad
+\chemname{\chemfig{ R_1-C(-[:90]OH)(-[:-90]R_3)-R_2}}{tertiary}  \qquad
+ }
+
+\pagebreak
+\vspace{8mm}
+\noindent{\large \textbf{aryl}} - any functional group or substituent derived from an aromatic ring, be it phenyl, naphthyl, thienyl, indolyl, etc. 
+
+\vspace{8mm}
+\noindent{\large \textbf{cyclohexane}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{ *6(------)}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{benzene}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{ *6(-=-=-=)}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{phenyl}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{ R-*6(-=-=-=)}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{phenol}} - simplest phenyl \par
+\vspace{2mm}
+\centerline{
+\chemfig{ HO-*6(-=-=-=)}
+}
+
+\pagebreak
+\vspace{8mm}
+\noindent{\large \textbf{benzyl}} \par
+\vspace{2mm}
+\centerline{
+\chemfig{*6(-=-(-C-[::60]R)=-=)}
+}
+
+\vspace{8mm}
+\noindent{\large \textbf{Other prefixes}} \par
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+ \hline
+ Number & Prefix \\ 
+ \hline
+ 1 & mono- \\ 
+ 2 & di- \\ 
+ 3 & tri- \\ 
+ 4 & tetra- \\ 
+ 5 & penta- \\ 
+ 6 & hexa- \\ 
+ 7 & hepta- \\ 
+ 8 & octa- \\ 
+ 9 & nona- \\ 
+ 10 & deca- \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\pagebreak
+\noindent------------------------------------------------------------------------------------------
+
+\vspace{5mm}
+\chemfig{CH_3%6 these numbers are the carbon positions in the chain for ease of reading
+-[::30]%5
+-[::-60]%4
+%(-[::-60]-[::60]CH_3)%ethyl
+-[::60]%3
+%(-[::30]CH_3)%methyl
+%(-[::90]CH_3)%methyl
+-[::-60]%2
+-[::60]CH_3%1
+}
+
+\vspace{5mm}
+\chemfig{CH_3%6 these numbers are the carbon positions in the chain for ease of reading
+-[::30]%5
+-[::-60]%4
+(-[::-60]-[::60]CH_3)%ethyl
+-[::60]%3
+%(-[::30]CH_3)%methyl
+%(-[::90]CH_3)%methyl
+-[::-60]%2
+-[::60]CH_3%1
+}
+
+\vspace{5mm}
+\setatomsep{2em}
+\chemfig{
+  H_3C-[:72]{\color{blue}N}
+    *5(-
+      *6(-(={\color{red}O})-{\color{blue}N}(-CH_3)-(={\color{red}O})-{\color{blue}N}(-CH_3)-=)
+    --{\color{blue}N}=-)}
+
+\end{document}

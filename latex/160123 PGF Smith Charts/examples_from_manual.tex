@@ -1,0 +1,25 @@
+\documentclass{article}
+\usepackage{pgfplots}
+\usepgfplotslibrary{smithchart}
+
+\begin{document}
+
+This is from http://tex.stackexchange.com/questions/35263/tikz-polar-grid
+
+\begin{tikzpicture}[scale=0.75]
+\begin{smithchart}[
+title=Huge  Smith  Chart  (rescaled),
+width=20cm]
+\addplot  coordinates  {(0.5,0.2)  (1,0.8)  (2,2)};
+\end{smithchart}
+\end{tikzpicture}
+
+\begin{tikzpicture}\begin{smithchart}[title=Medium--Sized Smith Chart,width=14cm]\addplot coordinates {(0.5,0.2) (1,0.8) (2,2)};\end{smithchart}\end{tikzpicture}
+
+    \begin{tikzpicture}
+        \begin{smithchart}[width=14cm]
+            \draw (1,0) circle[radius=0.5];
+        \end{smithchart}
+    \end{tikzpicture}
+
+\end{document}

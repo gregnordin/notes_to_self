@@ -1,0 +1,70 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta}
+\usetikzlibrary{calc}
+
+\usepackage{xcolor}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+
+\title{Things I've Learned Working With Tikz}
+\date{April 2016}
+\author{Greg Nordin}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+    \item Don't start with complicated approaches that I don't understand. Instead, begin with the absolute simplest implementation that shows the fundamental properties I'm interested in. Use simple fixed coordinates--don't try to make the exploratory approach general or adjustable. Save that for later after the fundamentals have been demonstrated. 
+
+    \item After showing the fundamental drawing element or visual aspects I want, incrementally increase the complexity/generality, compiling every step of the way so I don't spend unproductive time with unfound bugs confounding the process.
+
+    \item When I google an issue for information, rapidly determine if it is a complicated solution. If so, reject it and look for something simpler. Don't spend time trying to figure it out because this can balloon into a massive time sink and misdirect subsequent efforts.
+
+    \item Begin with simple documentation to learn a new feature, rather than looking at a Stackexchange question/answer that involves more complicated and likely unneeded elements.
+
+    \item Review \href{http://cremeronline.com/LaTeX/minimaltikz.pdf}{minimaltikz.pdf}, which is especially good with
+    	\begin{itemize}
+		\item \verb!\draw!
+		\begin{itemize}
+			\item lines (single or multiple segments)
+			\item decorators to specify line thickness, color, arrows, help lines, dashed, dotted, etc.
+			\item line out and in angles
+			\item rectangle, circle, arc
+			\item plotting including axes
+		\end{itemize}
+		\item Filling area and setting borders
+		\item \verb!\node!
+		\begin{itemize}
+			\item standalone nodes and nodes defined in a \verb!\draw! statement
+			\item Adding text labels
+			\item Locating labels relative to node coordinate
+		\end{itemize}
+	\end{itemize}
+
+    \item Develop my own documentation and examples to remind myself what I have previously learned so I don't have to go through it all again. Examples:
+	\begin{itemize}
+		\item \verb!\draw!
+		\item \verb!\node!
+		\item \verb!\coordinate!
+		\item \verb!\newcommand! - see https://en.wikibooks.org/wiki/LaTeX/Macros for how to use
+		\item \verb!calcs! package
+		\item \verb!.styles!
+		\item \verb!positioning! package (still need to learn)
+		\item Kinds of documents 
+		\begin{itemize}
+			\item Page with embedded figures: \\ \verb!\documentclass{article}!
+			\item Standalone figure: \\ \verb!\documentclass[border=10pt, convert={density=300}]{standalone}!
+		\end{itemize}
+	\end{itemize}
+    
+\end{enumerate}
+
+
+\end{document}

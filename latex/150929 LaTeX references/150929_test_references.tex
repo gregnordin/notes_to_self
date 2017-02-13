@@ -1,0 +1,20 @@
+\documentclass{article} % say 
+\usepackage{tikz} 
+\usepackage[super,sort&compress,comma]{natbib} 
+\begin{document}
+We are working on
+ \begin{tikzpicture}
+  \draw (-1.5,0) -- (1.5,0);
+  \draw (0,-1.5) -- (0,1.5);
+  \draw (0,0) circle [radius=1cm];
+\end{tikzpicture}.
+
+As discussed in Ref. \citenum{Ho2015}, the last few years have seen a steep increase in microfluidic publications involving 3D printing. This is indicative of growing interest in 3D printing for rapid prototyping of microfluidic devices in which devices are fabricated layer-by-layer directly from a 3D CAD design. A particularly promising 3D printing method for microfluidics is stereolithography (SLA) based on Digital Light Processing (DLP). In this approach a micromirror array is used to optically define the pattern for an individual layer by selective photopolymerization of a photo-sensitive resin. Successive layers of resin are exposed with appropriate optical patterns to fabricate an entire device. (REFS)
+
+For successful 3D printing, the key feature of microfluidic devices is that they consist primarily of a series of small (micro) voids inside the polymerized material. These voids form a variety of structures including passive components\cite{Bhargava2014,Shallan2014,Au2014} (Bhargava 2014, Shallan 2014, Au 2014) such as flow channels, splitters, mixers, reaction chambers, and droplet generators, and active components such as valves (us and Au) and pumps.\cite{Au2015} Note that this emphasis on small voids is in direct contrast to many typical 3D printing applications in which external features or sparse structures are important. 
+
+%%%REFERENCES%%%
+\bibliography{references_jabref} %You need to replace "rsc" on this line with the name of your .bib file
+\bibliographystyle{rsc} %the RSC's .bst file
+
+\end{document}

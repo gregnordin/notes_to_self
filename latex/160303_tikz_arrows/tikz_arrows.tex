@@ -1,0 +1,14 @@
+\documentclass[convert={density=200}]{standalone}
+\usepackage{tikz} 
+\usetikzlibrary{arrows}
+
+\begin{document}
+
+% See http://www.texample.net/tikz/examples/intersection-of/
+ \begin{tikzpicture} [axis/.style={dashed, ->, >=stealth'}, 
+ 			      pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten >=2pt}]
+    \draw[axis] (0,0) -- (3,1);
+    \draw[pile] (0,0) -- (1,2);
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax Test Page</title>
+<!-- Copyright (c) 2009-2015 The MathJax Consortium -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+<!-- <script type="text/javascript" src="../MathJax.js"></script> -->
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<style>
+h1 {text-align:center}
+h2 {
+  font-weight: bold;
+  background-color: #DDDDDD;
+  padding: .2em .5em;
+  margin-top: 1.5em;
+  border-top: 3px solid #666666;
+  border-bottom: 2px solid #999999;
+}
+#maxmin { max-width: 700px; min-width: 650px; margin: 0 auto; border: none; padding: 0; box-sizing: border-box;}
+</style>
+</head>
+<body>
+
+<noscript>
+<div style="color:#CC0000; text-align:center">
+<b>Warning: <a href="http://www.mathjax.org/">MathJax</a>
+requires JavaScript to process the mathematics on this page.<br />
+If your browser supports JavaScript, be sure it is enabled.</b>
+</div>
+<hr>
+</noscript>
+
+<div id="maxmin">
+
+<p>The voltage on a lossless transmission line is given by</p>
+
+\begin{aligned} v(z,t) & = v_0 cos(\omega t - \beta z) + \left|{\Gamma_L}\right|v_o cos(\omega t + \beta z + \phi_L)\\
+& = \Re(\tilde{V}(z) e^{j\omega t} )\end{aligned}
+
+
+<p>where $\Re()$ is an operator that takes the real part of the enclosed expression,
+$\omega = 2\pi f$ ($f$ is the frequency of the sinusoidal voltage), $\beta$ is
+the wavenumber (propagation constant), and $\Gamma_L$ is the load reflection
+coefficient, which in general is complex such that
+$\Gamma_L = \left|\Gamma_L\right|\exp(j \phi_L)$. The phase velocity, $u$, is $\omega / \beta$.
+Since $u = \lambda f$, $\beta = 2 \pi / \lambda$, where $\lambda$ is the
+wavelength of the sinusoidal voltage.
+</p>
+
+The voltage phasor is
+
+$$ \tilde{V}(z) = V^+_0 e^{-j\beta z}[1 + \Gamma(z)]$$
+
+where we have used the generalized reflection coefficient
+
+$$ \Gamma(z) = \Gamma_L e^{j2\beta z}. $$
+
+Note that $V^+_0$ can in general be complex such that $V^+_0 = \left|V^+_0\right|e^{j\theta_V}$. The magnitude of the voltage phasor, $\tilde{V}(z)$, is the envelope of the time-varying real voltage and is called the standing wave. It can be calculated as
+
+$$ \left|\tilde{V}(z)\right| = \left|V^+_0\right|\sqrt{1 + 2\left|\Gamma_L\right|cos(2\beta z + \theta_L) + \left|\Gamma_L\right|^2}.$$
+
+The voltage standing wave ratio is given by
+
+$$VSWR = \frac{\left|\tilde{V}(z)\right|_{max}}{\left|\tilde{V}(z)\right|_{min}}  = \frac{1 + \left|\Gamma_L\right|}{1 - \left|\Gamma_L\right|}.$$
+
+</div>
+</body>
+</html>

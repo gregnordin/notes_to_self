@@ -1,0 +1,44 @@
+\documentclass{article}
+
+% Try package changebar
+% From http://tex.stackexchange.com/questions/175755/vertical-line-next-to-a-block-with-no-margins
+\usepackage[color]{changebar}
+
+% This provides the command, \ul{}, that supports line breaks in the underlined text
+\usepackage{soul}
+
+% From http://blog.rtwilson.com/how-to-add-simple-new-commands-to-latex-to-help-with-writing-papers/
+\usepackage{xcolor}
+\newcommand{\todo}[1] {\textbf{\textcolor{red}{#1}}}
+\newcommand{\rh}{\todo{REF HERE }}
+
+\begin{document}
+
+Here is some text. \todo{and a to-do comment}. Some more text. \rh
+
+\cbstart
+Here is some more text.
+\cbend
+
+And more, and more, and more, and more....
+
+\cbcolor{red}
+
+\cbstart
+In this paper we demonstrate that 3D printing with a Digital Light Processor stereolithographic (DLP-SLA) 3D printer can be used to create high density microfluidic devices with active components such as valves and pumps. 
+Leveraging our previous work on optical formulation of inexpensive resins (RSC Adv. 5, 106621, 2015), we demonstrate valves with only 10\% of the volume of our original 3D printed valves (Biomicrofluidics 9, 016501, 2015), which were already the smallest that have been reported. 
+\cbend
+
+In this paper we demonstrate that 3D printing with a Digital Light Processor stereolithographic (DLP-SLA) 3D printer can be used to create high density microfluidic devices with active components such as valves and pumps. 
+\cbstart Leveraging our previous work on optical formulation of inexpensive resins (RSC Adv. 5, 106621, 2015), we demonstrate valves with only 10\% of the volume of our original 3D printed valves (Biomicrofluidics 9, 016501, 2015), \cbend which were already the smallest that have been reported. 
+
+Moreover, we show that inclusion of a thermal initiator in the resin formulation along with a post-print bake can dramatically improve the durability of 3D printed valves up to 1 million actuations. 
+\cbstart Using two valves and a valve-like displacement chamber (DC), we also create compact 3D printed pumps. 
+\cbend
+With 5-phase actuation and a 15 ms phase interval, we obtain pump flow rates as high as 40 $\mu$L/min. 
+We also characterize maximum pump back pressure (i.e., maximum pressure the pump can work against), maximum flow rate (flow rate when there is zero back pressure), and flow rate as a function of the height of the pump outlet. \underline{We further demonstrate combining 5 valves and one DC to create a 3-to-2 multiplexer with integrated pump. } 
+\ul{In addition to serial multiplexing, we also show that the device can operate as a mixer.} 
+Importantly, we illustrate the rapid fabrication and test cycles that 3D printing makes possible by implementing a new multiplexer design to improve mixing, and fabricate and test it within one day.
+
+
+\end{document}
