@@ -54,3 +54,4 @@ I want to document my current thoughts about what tools to use for various tasks
     - Sublime Text 3 as editor
     - Need to explore [transcrypt](http://www.transcrypt.org) to write code in python and have it transcribed into javascript so can be seen in a browser. Can use any javascript library, like D3.js and three.js.
     - [plotly](http://moderndata.plot.ly/15-python-and-r-charts-with-interactive-controls-buttons-dropdowns-and-sliders/) as an interactive 2D/3D plotting package (javascript/python/browser?)
+    - [chaco](http://docs.enthought.com/chaco/) as an interactive/realtime 2D plotting package. Uses traits instead of variables(?)
