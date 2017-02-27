@@ -50,8 +50,12 @@ I want to document my current thoughts about what tools to use for various tasks
     - Serve with either github pages or rawgit from a github respository
     - Or, convert Jupyter notebook to html
 - Explore
-    - Vega or vega-lite for static 2D graphs in browser, [Introduction to Vega-Lite](https://vega.github.io/vega-lite/tutorials/getting_started.html)
-    - Sublime Text 3 as editor
+    - Start using tests for code
+        - `assert` statements
+        - CLI such as `Travis` so every commit undergoes all tests
+    - Sublime Text 3 as editor instead of Atom
     - Need to explore [transcrypt](http://www.transcrypt.org) to write code in python and have it transcribed into javascript so can be seen in a browser. Can use any javascript library, like D3.js and three.js.
+    - Vega or vega-lite for static 2D graphs in browser, [Introduction to Vega-Lite](https://vega.github.io/vega-lite/tutorials/getting_started.html)
     - [plotly](http://moderndata.plot.ly/15-python-and-r-charts-with-interactive-controls-buttons-dropdowns-and-sliders/) as an interactive 2D/3D plotting package (javascript/python/browser?)
     - [chaco](http://docs.enthought.com/chaco/) as an interactive/realtime 2D plotting package. Uses traits instead of variables(?)
+    - Use D3 in a Jupyter notebook. See [d3-jupyter-tutorial](https://github.com/stitchfix/d3-jupyter-tutorial), which is excellent. Try out the little helper file, `d3_lib.py`?
