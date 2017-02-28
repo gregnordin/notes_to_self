@@ -1,3 +1,25 @@
+## Frequently used commands
+
+Add todo and immediately mark it as done.
+
+    > t add "x some todo +someprojecttag"
+
+List what I've done so far today
+
+    > tt
+
+List items on todo list
+
+    > t list
+
+List what I've done the last 2 days
+
+    > t xp 1
+
+List what I did on a specific day and put in Markdown list format
+
+    > dd YYYY-MM-DD
+
 ## Using todo.txt and my enhancements
 
 ### Copying stuff to the clipboard
