@@ -20,6 +20,18 @@ List what I did on a specific day and put in Markdown list format
 
     > dd YYYY-MM-DD
 
+Change the priority of an item
+
+    > t pri ITEMNUMBER
+
+Mark an item as done
+
+    > t do ITEMNUMBER
+
+Delete an item
+
+    > t rm ITEMNUMBER
+
 ## Using todo.txt and my enhancements
 
 ### Copying stuff to the clipboard
