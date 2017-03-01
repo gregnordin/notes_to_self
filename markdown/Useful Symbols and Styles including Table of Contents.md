@@ -52,3 +52,11 @@ __<span style="font-size:200%">Contents</span>__
     - `A<sub>subscript</sub>`
 - <span style="font-family:courier;">Specific font: Courier</span>
     - `<span style="font-family:courier;">Specific font: Courier</span>`
+
+## Border around an element
+
+<p style="border: blue 5px solid">Test: &lt;p&gt; with a 5px border</p>
+
+<h4 style="border: red 2px solid">Test: &lt;h4&gt; with a 2px border</h4>
+
+<p style="border-bottom: red 1px solid">Test: &lt;p&gt; with a 1px bottom border</p>
