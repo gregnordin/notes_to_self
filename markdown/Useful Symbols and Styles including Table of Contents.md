@@ -55,8 +55,10 @@ __<span style="font-size:200%">Contents</span>__
 
 ## Border around an element
 
-<p style="border: blue 5px solid">Test: &lt;p&gt; with a 5px border</p>
+<p style="border: blue 5px solid">&lt;p&gt; with a 5px border</p>
 
-<h4 style="border: red 2px solid">Test: &lt;h4&gt; with a 2px border</h4>
+<h4 style="border: red 2px solid">&lt;h4&gt; with a 2px border</h4>
 
-<p style="border-bottom: red 1px solid">Test: &lt;p&gt; with a 1px bottom border</p>
+<p style="border-bottom: red 1px solid">&lt;p&gt; with a 1px bottom border</p>
+
+<p style="border: green 3px solid;width: 140px">&lt;p&gt; 140px wide with a 5px border</p>
