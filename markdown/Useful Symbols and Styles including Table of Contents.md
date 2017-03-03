@@ -52,6 +52,8 @@ __<span style="font-size:200%">Contents</span>__
     - `A<sub>subscript</sub>`
 - <span style="font-family:courier;">Specific font: Courier</span>
     - `<span style="font-family:courier;">Specific font: Courier</span>`
+- <span style="text-decoration: overline">Overline</span>
+    - `<span style="text-decoration: overline">Overline</span>`
 
 ## Border around an element
 
