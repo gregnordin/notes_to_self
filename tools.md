@@ -50,6 +50,19 @@ I want to document my current thoughts about what tools to use for various tasks
     - Serve with either github pages or rawgit from a github respository
     - Or, convert Jupyter notebook to html
 - Explore
+    - 3D numpy array &rarr; mesh &rarr; stl file
+        - [Marching cubes algorithm](https://en.wikipedia.org/wiki/Marching_cubes): numpy array &rarr; mesh
+            - [Surface Extraction: Creating a mesh from pixel-data using Python and VTK](https://pyscience.wordpress.com/2014/09/11/surface-extraction-creating-a-mesh-from-pixel-data-using-python-and-vtk/) - VTK to get mesh
+            - [scikit-image.marchingcubes](http://scikit-image.org/docs/dev/api/skimage.measure.html?highlight=marching_cubes#marching-cubes) - python approach to get mesh
+        - View mesh and convert to stl file
+            - [numpy-stl](http://pythonhosted.org/numpy-stl/usage.html#quickstart) - shows code to plot stl data with matplotlib
+            - [trimesh 2.8.5](https://pypi.python.org/pypi/trimesh) - Import, export, process, analyze and view (with [pyglet](https://en.wikipedia.org/wiki/Pyglet)) triangular meshes
+                - [Example notebook](https://github.com/mikedh/trimesh/blob/master/examples/quick_start.ipynb)
+        - [fstl](https://github.com/mkeeter/fstl) - fast viewer for stl files (needs support for ascii stl files -> look at other guy's fork)
+        - VTK for viewing
+            - [Paraview](http://www.paraview.org) - program to visualize 3D data
+            - [Volume Rendering with Python and VTK](https://pyscience.wordpress.com/2014/11/16/volume-rendering-with-python-and-vtk/)
+            - [NumPy to VTK: Converting your NumPy arrays to VTK arrays and files](https://pyscience.wordpress.com/2014/09/06/numpy-to-vtk-converting-your-numpy-arrays-to-vtk-arrays-and-files/)
     - Start using tests for code
         - `assert` statements
         - CLI such as `Travis` so every commit undergoes all tests
