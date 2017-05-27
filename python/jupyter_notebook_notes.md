@@ -20,5 +20,19 @@
 - Jupyter supports mutiple cursors, similar to Sublime Text. Simply click and drag your mouse while holding down Alt
 
 
-[28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)
+From [28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)
 
+# Resources
+
+[Jupyter Notebook: Little-Known Tricks!](https://blog.3blades.io/jupyter-notebook-little-known-tricks-b0866a558017)
+
+- Internal and external hyperlinks - <span style="background-color:lightpink;">very useful</span>
+- Automatic module reload
+- Run demos
+
+[The Jupyter Notebook: 3 More Little-Known Tricks](https://blog.3blades.io/the-jupyter-notebook-3-more-little-known-tricks-34b75b6455a4)
+
+- Change your notebook appearance and functionality: custom.js - <span style="background-color:lightpink;">very useful</span>
+    - displaying line numbers by default
+- Comment out large snippets AND maintain syntax highlighting!
+- Write and execute functions in languages other than Python (example: Fortran)
