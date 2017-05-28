@@ -36,3 +36,7 @@ From [28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://ww
     - displaying line numbers by default
 - Comment out large snippets AND maintain syntax highlighting!
 - Write and execute functions in languages other than Python (example: Fortran)
+
+# Example notebooks
+
+[A gallery of interesting Jupyter Notebooks](https://github.com/jupyter/jupyter/wiki/A-gallery-of-interesting-Jupyter-Notebooks)
