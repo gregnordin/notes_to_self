@@ -64,3 +64,11 @@ __<span style="font-size:200%">Contents</span>__
 <p style="border-bottom: red 1px solid">&lt;p&gt; with a 1px bottom border</p>
 
 <p style="border: green 3px solid;width: 140px">&lt;p&gt; 140px wide with a 5px border</p>
+
+
+## Special characters
+
+[Character entity reference](https://dev.w3.org/html5/html-author/charref?t=1&cn=ZmxleGlibGVfcmVjc18y&iid=90409a87c37e453f94107944cfe07dfc&uid=514536360&nid=244+272699400)
+
+- &lsim; less than or similar
+- &gsim; greater than or similar
