@@ -31,7 +31,7 @@ From [28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://ww
 
 >See my notes in `/Users/nordin/Documents/Projects/2016_Projects/160320_map_gpx_files_folium/notes.md` under 4/10/16.
 
-Each conda environment needs to be a valid jupyter kernel. To see what conda environments are installed, execute `conda info --envs`.
+Each conda environment needs to be a valid jupyter kernel. To see what conda environments are installed, execute `conda env list` or `conda info --envs`.
 
 <span style="background-color:lightgreen;">Always work from the root conda environment.</span> Install new jupyter kernels in the root environment. Also always start `jupyter notebook` from the root environment. Each conda environment installed as a jupyter kernel becomes a selectable kernel from within jupyter notebook. 
 
