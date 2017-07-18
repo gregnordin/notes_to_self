@@ -72,3 +72,5 @@ __<span style="font-size:200%">Contents</span>__
 
 - &lsim; less than or similar
 - &gsim; greater than or similar
+- &times;
+
