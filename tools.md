@@ -10,23 +10,28 @@ I want to document my current thoughts about what tools to use for various tasks
 - Documents (proposals, etc.)
     - Microsoft Word (as little as possible), Endnote
     - LaTeX (as much as possible), BibTeX
+- Presentations
+    - Powerpoint
+    - Reveal.js
+    - RISE (reveal.js with jupyter notebooks)
 - Editor
-    - Atom
-- Python coding
+    - Atom for code development
+    - BBedit for editing my `done.txt` file and other small text processing tasks
+- Python
     - Use Anaconda, latest release (python 3.5 for now)
         - Usually install packages into root env, but occasionally make new envs for special purposes and to test new packages
     - Jupyter notebook for code development and code/narrative/documentation bundled together
-    - Occasinally make my own packages for various projects
+    - Occasionally make my own packages for various projects
     - GUI code: PyQt & Qt4
 - Drawings
-    - png
-        - Illustrator?
+    - png, eps
+        - Illustrator - my preferred tool
         - Powerpoint
-        - LaTex with Tikz
-        - Inkscape
+        - LaTex with Tikz - too time-consuming so don't use it
+        - Inkscape - forget this since I started using Illustrator
     - Webpages & markdown files
         - SVG
-            - Illustrator?
+            - Illustrator
             - Raw, written directly in SVG
             - Inkscape
         - Image tag with png or jpeg files
@@ -52,9 +57,10 @@ I want to document my current thoughts about what tools to use for various tasks
     - Serve with either github pages or rawgit from a github respository
     - Or, convert Jupyter notebook to html
 - Explore
-    - Learn how to use Adobe Illustrator (on Don DeVoe's recommendation)
+    - &#9989; Learn how to use Adobe Illustrator (on Don DeVoe's recommendation)
     - Start using tests for code
-        - `assert` statements
+        - &#9989; `pytest`
+        - &#9989; `assert` statements
         - CLI such as `Travis` so every commit undergoes all tests
     - Sublime Text 3 as editor instead of Atom
     - Need to explore [transcrypt](http://www.transcrypt.org) to write code in python and have it transcribed into javascript so can be seen in a browser. Can use any javascript library, like D3.js and three.js. Or try Flexx.
