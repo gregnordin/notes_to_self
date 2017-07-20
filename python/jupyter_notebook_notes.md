@@ -39,7 +39,7 @@ Each conda environment needs to be a valid jupyter kernel. To see what conda env
 
 ### Easy way
 
-Install Damian Avilla's [nb_conda_kernels](https://github.com/Anaconda-Server/nb_conda_kernels), which automatically creates KernelSpecs for each conda environment.
+Install Damian Avilla's [nb_conda_kernels](https://github.com/Anaconda-Server/nb_conda_kernels), which automatically creates KernelSpecs for each conda environment. Make sure `ipykernel` is installed in every conda environment you want to be available as a jupyter kernel.
 
 ### More involved method
 
@@ -53,7 +53,7 @@ From my old (4/10/16) notes:
     - Open an existing notebook
         - In Edit menu select Edit Notebook Metadata
         - In "kernelspec" change "name" to "python3folium" and "display_name" to "Python 3 folium"
-        - Shutdown kernel and re-start. Do `import os` and `sys.path` to confirm that new env is in the path
+        - Shutdown kernel and re-start. Do `import sys` and `sys.path` to confirm that new env is in the path
 
 ## How to check which kernel is being used in a jupyter notebook
 
