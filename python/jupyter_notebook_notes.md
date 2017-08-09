@@ -22,7 +22,16 @@
 - Esc + F Find and replace on your code but not the outputs.
 - Esc + O Toggle cell output.
 - Jupyter supports mutiple cursors, similar to Sublime Text. Simply click and drag your mouse while holding down Alt
-
+- package.some_function_or_class_name?
+    - Shows docstring
+- package.some_function_or_class_name??
+    - Shows code
+- \*int*?
+    - Shows all objects in current namespace that has "int" in their name. Useful if you can't quite remember the whole object name
+    - Example:
+            <pre>import numpy as np
+        np.\*array*?</pre>
+- %%quickref - shows a summary of these things
 
 From [28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)
 
