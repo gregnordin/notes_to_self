@@ -16,7 +16,7 @@ I want to document my current thoughts about what tools to use for various tasks
     - RISE (reveal.js with jupyter notebooks)
 - Editor
     - Atom for code development
-    - Sublime for editing my `done.txt` file
+    - Sublime Text for editing my `done.txt` file
     - BBedit for other small text processing tasks
 - Python
     - Use Anaconda, latest release (python 3.6 for now)
