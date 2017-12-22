@@ -27,6 +27,8 @@ __<span style="font-size:200%">Contents</span>__
     - With red color: `<span style="color:red">&cross;</span>`
 - &#10060;
     - `&#10060;`
+- <span style="color:red; font-size:150%">&#x2605;</span>
+    - `<span style="color:red; font-size:150%">&#x2605;</span>`
 - ~~Strike-through~~
     - `~~Strike-through~~`
 - <mark>Marked text</mark>
