@@ -36,6 +36,59 @@
 From [28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)
 
 
+# Noteworthy notebook items
+
+## Magics
+
+List available magics
+
+    %lsmagic
+    
+    
+Time how long things take
+
+    # Time one-line command
+    %time <command>
+    
+    # Time commands in an input cell
+    %%time
+    <commands for cell>
+    
+    # Time multiple executions of the same command(s)
+    %timeit <command>
+    # or
+    %%timeit
+    <commands>
+    
+Share data between notebooks
+
+    # Write data from one notebook to a file
+    import numpy as np
+    table = np.random.random((10,100))
+    %store table
+    
+    # In another notebook read data from file
+    %store -r table
+    
+Show docstring for a command
+
+    %pdoc <code>
+    # or
+    ?<code>
+    
+Latex - show rendered latex in an input cell
+
+    %%latex
+    <latex commands over multiple lines>
+    
+Watermark
+
+    !pip install watermark
+    
+    %reload_ext watermark
+    %watermark
+
+
 # Working with `conda` environments
 
 >See my notes in `/Users/nordin/Documents/Projects/2016_Projects/160320_map_gpx_files_folium/notes.md` under 4/10/16.
@@ -84,6 +137,8 @@ In notebook do `import sys` and `sys.path`. This will print which python version
     - displaying line numbers by default
 - Comment out large snippets AND maintain syntax highlighting!
 - Write and execute functions in languages other than Python (example: Fortran)
+
+[10 things you really should know about jupyter notebooks - Jakub Czakon](https://www.youtube.com/watch?v=FwUcJFSAfQw)
 
 # Example notebooks
 
