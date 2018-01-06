@@ -2,6 +2,10 @@
 
 # Information
 
+## General
+
+[Ten Things I Wish I’d Known About bash](https://zwischenzugs.com/2018/01/06/ten-things-i-wish-id-known-about-bash/)
+
 ## Expansions
 
 From [Learning the Shell](http://linuxcommand.org/lc3_lts0080.php), here are some key expansion things to know:
@@ -23,6 +27,7 @@ In double quotes, you can use \ to escape characters. For example `\$` means use
   
     
 ---
+
 # Commands
 
 ## grep
