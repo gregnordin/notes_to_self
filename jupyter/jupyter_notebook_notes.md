@@ -38,6 +38,17 @@ From [28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://ww
 
 # Noteworthy notebook items
 
+## Getting help for objects
+
+Show docstring:
+
+    <object>?
+    
+Show source code:
+
+    <object>??
+    
+
 ## Magics
 
 List available magics
