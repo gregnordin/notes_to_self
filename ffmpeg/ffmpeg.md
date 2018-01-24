@@ -34,6 +34,19 @@ If there are a lot of filters, use grep to search for what you want:
 
 	ffmpeg -filters -hide_banner | grep -i <search term>
 
+### Get total frame count
+
+[Fetch frame count with ffmpeg (actually, ffprobe)](https://stackoverflow.com/questions/2017843/fetch-frame-count-with-ffmpeg)
+
+    $ ffprobe -v error -count_frames -select_streams v:0 \
+      -show_entries stream=nb_read_frames -of default=nokey=1:noprint_wrappers=1 \
+      input.mov
+
+### Get fps
+
+	$ ffmpeg -i input.mov
+    
+
 ### Extract multiple key frames
 
 	ffmpeg -ss 00:02:10 -i mixer3_4red_2water_2.mp4 -vf select="eq(pict_type\,I)" -vframes 2 out_test_%03d.png -hide_banner
@@ -132,7 +145,7 @@ Format: X.XXXXXX seconds:
 
 	ffmpeg -i 180111_p4_pump_40px_vacuum.MOV -vf \
         "drawtext=fontfile=/Library/Fonts/Verdana.ttf:text='timestamp\: %{pts \: flt}': \
-        fontcolor='white':fontsize=50:x=200:y=100:" temp_text_frametimetemp_text_frametime_flt_format.mp4
+        fontcolor='white':fontsize=50:x=200:y=100:" temp_text_frametime_flt_format.mp4
 
 Format: Hours:Minutes:Seconds.XXXX:
 
@@ -146,3 +159,17 @@ Format: Hours:Minutes:Seconds:
         "drawtext=fontfile=/Library/Fonts/Verdana.ttf:text='timestamp\: %{pts\:gmtime\:0\:%M %S}': \
         fontcolor='white':fontsize=50:x=200:y=100:" temp_text_frametime.mp4
 
+
+### Crop video
+
+	ffmpeg -i in.MOV -filter:v "crop=1080:1300:0:400" -c:a copy out.MOV
+    
+ Here 1080 is the width and 1300 is the height of the region that should be cropped starting at position x=0 and y=400.
+ 
+ 
+ ### Re-sample from 240 fps to 60 fps
+ 
+ See answer to [Re-sampling H264 video to reduce frame rate while maintaining high image quality](https://stackoverflow.com/questions/11004137/re-sampling-h264-video-to-reduce-frame-rate-while-maintaining-high-image-quality).
+ 
+ 	ffmpeg -y -i in_240fps.MOV -r 60 -c:v libx264 -strict -2 -movflags faststart out_60fps.MOV
+ 
