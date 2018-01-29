@@ -6,11 +6,13 @@
 
 [Ten Things I Wish I’d Known About bash](https://zwischenzugs.com/2018/01/06/ten-things-i-wish-id-known-about-bash/)
 
+Jumping back and forth on the command line: [Moving efficiently in the CLI](https://clementc.github.io/blog/2018/01/25/moving_cli/)
+
 ## Expansions
 
 From [Learning the Shell](http://linuxcommand.org/lc3_lts0080.php), here are some key expansion things to know:
 
-**Parameter expansion**: $USER means replace this with the definition of USER. For a list of parameters: printenv | less
+**Parameter expansion**: $USER means replace this with the definition of USER. For a list of parameters: `printenv | less`
 
 Command substitution:
 
