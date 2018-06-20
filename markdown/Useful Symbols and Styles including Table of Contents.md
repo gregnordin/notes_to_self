@@ -39,6 +39,10 @@ __<span style="font-size:200%">Contents</span>__
         - <span style="background-color:lightpink;">Marked text</span> `<span style="background-color:lightpink;">Marked text</span>`
         - <span style="background-color:lightgreen;">Marked text</span> `<span style="background-color:lightgreen;">Marked text</span>`
         - <span style="color: #ffffff; background-color: #ff0000">Marked text</span> `<span style="color: #ffffff; background-color: #ff0000">Marked text</span>`
+- &Rightarrow;
+    - `&Rightarrow;`
+- &rightarrow;
+    - `&rightarrow;`
 
 
 
