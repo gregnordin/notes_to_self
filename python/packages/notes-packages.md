@@ -5,12 +5,23 @@
 
 ## 3 Ways to import modules in a single-level package
 
+Assumptions:
+
+- Package directory contains only a single level of files (no sub-packages)
+- Python file including package is in the same directory as the package directory
+    - Alternatively, the package directory could be included in `PYTHONPATH` in the shell or be added to `sys.path` in the calling program
+
 ### No `__init__.py`
 
-See `blank_init`
+See `blank_init`:
 
-    # tryit.py
-    
+    ├── pkg
+    │   ├── a.py
+    │   └── b.py
+    └── tryit.py
+
+tryit.py:
+
     import pkg.a, pkg.b
     from pkg.a import A1
     from pkg.b import B1
@@ -23,17 +34,21 @@ See `blank_init`
 
 ### Import modules in `__init__.py`
 
-See `init_import_modules`
+See `init_import_modules`:
 
-    # __init__.py
+    ├── pkg
+    │   ├── __init__.py
+    │   ├── a.py
+    │   └── b.py
+    └── tryit.py
+
+`__init__.py`:
     
     import pkg.a
     import pkg.b
 
-and
+tryit.py:
 
-    # tryit.py
-    
     import pkg as pg
     
     a1 = pg.a.A1()
@@ -46,14 +61,19 @@ and
 
 See `init_import_things_in_modules`
 
-    # __init__.py
+    ├── pkg
+    │   ├── __init__.py
+    │   ├── a.py
+    │   └── b.py
+    └── tryit.py
+
+
+`__init__.py`:
     
     from pkg.a import A1, A2
     from pkg.b import B1, B2
 
-and 
-
-    # tryit.py
+tryit.py:
         
     import pkg as pg
     
