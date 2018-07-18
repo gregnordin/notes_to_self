@@ -85,4 +85,9 @@ tryit.py:
     b1 = pg.B1()
     b2 = pg.B2()
 
+Alternative `__init__.py`:
+    
+    from .a import A1, A2
+    from .b import B1, B2
 
+This uses relative imports whereas the first one uses absolute imports.
