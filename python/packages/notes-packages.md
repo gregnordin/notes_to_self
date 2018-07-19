@@ -9,9 +9,9 @@ Assumptions:
 
 - Package directory contains only a single level of files (no sub-packages)
 - Python file in which package will be included is in the same directory as the package directory
-    - Alternatively, the package directory could be included in `PYTHONPATH` in the shell or be added to `sys.path` in the calling program or already be in the path
+    - Alternatively, the package directory could be (i) included in `PYTHONPATH` in the shell, (ii) be added to `sys.path` in the calling program, or (iii) already be in the path
 
-### No `__init__.py`
+### 1. No `__init__.py`
 
 See `blank_init`:
 
@@ -35,7 +35,7 @@ tryit.py:
     
 
 
-### Import modules in `__init__.py`
+### 2. Import modules in `__init__.py`
 
 See `init_import_modules`:
 
@@ -60,7 +60,7 @@ tryit.py:
     b2 = pg.b.B2()
 
 
-### Import items from modules in `__init__.py`
+### 3. Import items from modules in `__init__.py`
 
 See `init_import_things_in_modules`:
 
