@@ -1,0 +1,42 @@
+digraph finite_state_machine {
+	//rankdir=TB;  //left to right
+	//size="5,12"
+	//rankdir=LR;  //left to right
+	//size="12,5"
+    //B bottom  T top  L left R right
+
+    subgraph cluster_exposures {
+        style=filled;
+        color=lightgrey;
+        node [style=filled,color=white];
+        "Exp Wait 1" -> "Exposure 1" -> "Exp Wait 2" -> "Exposure 2" -> "Exp Wait 3" -> "Exposure 3" -> "Exp Wait Final";
+        label = "Exposure Settings\nExample: 3 exposures";
+        {rank = same; "Exp Wait 1"; "Exp Wait 2"; "Exp Wait 3";}
+    }
+
+    subgraph cluster_position {
+        style=filled;
+        color=lightgrey;
+        node [style=filled,color=white];
+        "BP Up" -> "BP Up Wait" -> "BP Down"
+        label = "Position Settings";
+    }
+
+	Uninitialized -> Initialized [ label = "Initialize" ];
+	Initialized -> "Job Ready" [ label = "Load print job" ];
+	"Job Ready" -> Planarized [ label = "Planarize" ];
+	Planarized -> "BP Top" [ label = "Move BP to top" ];
+	"BP Top" -> "BP Down Initial" [ label = "Move to first layer position" ];
+	"BP Down Initial" -> "Exp Wait 1" [ label = "Start print" ];
+	// "BP Up" -> "BP Down" [ label = "Move BP down" ];
+	// "BP Up" -> "BP Up Wait" [ label = "Wait" ];
+	// "BP Up Wait" -> "BP Down" [ label = "Move BP down" ];
+	"BP Down" -> "Exp Wait 1" [ label = "Start exposures" ];
+	"Exp Wait Final" -> "BP Up" [ label = "Position next layer" ];
+	"Exp Wait Final" -> "BP Top End" [ label = "No more exposures" ];
+
+    overlap=false;
+    labelloc=top;
+    label="HR3.2 Finite State Machine\nDec. 23, 2019";
+    fontsize=18;
+}
