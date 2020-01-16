@@ -89,6 +89,20 @@ In double quotes, you can use \ to escape characters. For example `\$` means use
 [Linux/Mac Terminal Tutorial: How To Use The rsync Command - Sync Files Locally and Remotely, Corey Schafer](https://www.youtube.com/watch?v=qE77MbDnljA)  
 [Geek to Live: Mirror files across systems with rsync, Gina Trapani](https://lifehacker.com/196122/geek-to-live--mirror-files-across-systems-with-rsync)  
 
+## ln
+
+Create a symlink.  
+[Is it possible to navigate to a parent directory in the jupyter tree?](https://stackoverflow.com/questions/38282336/is-it-possible-to-navigate-to-a-parent-directory-in-the-jupyter-tree)  
+[How to Create and Use Symbolic Links (aka Symlinks) on a Mac](https://www.howtogeek.com/297721/how-to-create-and-use-symbolic-links-aka-symlinks-on-a-mac/)  
+
+You can specify either a path to a directory or file:
+
+    ln -s /path/to/original /path/to/link
+    
+The -s here tells the ln command to create a symbolic link. If you want to create a hard link, you’d omit the -s. Most of the time symbolic links are the better choice, so don’t create a hard link unless you have a specific reason for doing so.
+
+
+
 ## `wc` Word Count
 
 Line, word, and character count for a file.

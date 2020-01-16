@@ -36,6 +36,18 @@
 From [28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)
 
 
+# How to navigate up the directory structure &rarr; symlink
+
+[Is it possible to navigate to a parent directory in the jupyter tree?](https://stackoverflow.com/questions/38282336/is-it-possible-to-navigate-to-a-parent-directory-in-the-jupyter-tree)  
+[How to Create and Use Symbolic Links (aka Symlinks) on a Mac](https://www.howtogeek.com/297721/how-to-create-and-use-symbolic-links-aka-symlinks-on-a-mac/)  
+
+You can specify either a path to a directory or file:
+
+    ln -s /path/to/original /path/to/link
+    
+The -s here tells the ln command to create a symbolic link. If you want to create a hard link, you’d omit the -s. Most of the time symbolic links are the better choice, so don’t create a hard link unless you have a specific reason for doing so.
+
+
 # Noteworthy notebook items
 
 ## Getting help for objects
