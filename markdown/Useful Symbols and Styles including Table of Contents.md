@@ -76,7 +76,8 @@ __<span style="font-size:200%">Contents</span>__
 
 [Character entity reference](https://dev.w3.org/html5/html-author/charref?t=1&cn=ZmxleGlibGVfcmVjc18y&iid=90409a87c37e453f94107944cfe07dfc&uid=514536360&nid=244+272699400)
 
-- &lsim; less than or similar
-- &gsim; greater than or similar
-- &times;
+- &lsim; less than or similar, `&lsim;`
+- &gsim; greater than or similar, `&gsim;`
+- &times; `&times;`
+- &#177; `&#177;`
 
