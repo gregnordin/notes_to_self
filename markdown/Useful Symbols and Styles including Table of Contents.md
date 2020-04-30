@@ -81,3 +81,9 @@ __<span style="font-size:200%">Contents</span>__
 - &times; `&times;`
 - &#177; `&#177;`
 
+## Center stuff
+
+<div align="center">
+<img src="https://octodex.github.com/images/dunetocat.png" width="200">
+<p>text</p>
+</div>
