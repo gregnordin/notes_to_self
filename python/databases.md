@@ -47,3 +47,36 @@ To understand and implement foreign keys and relationships, follow [Working with
 # peewee
 
 As an alternative to SQLAlchemy, [peewee](http://docs.peewee-orm.com/en/latest/peewee/quickstart.html#) looks very good. It has as reptuation for being simpler than SQLAlchemy. Also, Hua says its search capability is more extensive.
+
+
+# General Database Information
+
+[Whats is your decision process between CSV, JSON, XML, and SQL &NoSQL database?](https://old.reddit.com/r/learnpython/comments/glbuog/whats_is_your_decision_process_between_csv_json/)
+
+    Generally speaking,
+    
+    1) how do you decide which file format to use to store data?
+    
+    2) at what point it's better to use a database?
+    
+    3) how do you decide when to use SQL database or NoSQL database?
+    
+    UPDATE: I didnt know I would get so many respond. thank you all and this amazing community.
+    
+
+>mooglinux answer:
+    
+>The universal answer is “It Depends” as unhelpful as that may be at first. Here are some questions it depends on though:
+    
+>What is the source of the data? If it’s an external source, what format does it come in?
+How is the data structured? Is it a hierarchy of objects? A list of uniform records? Is it text or binary?
+How do you plan on accessing the data? Does it just need to be read once in a while or will it be continually queried?
+What sort of processing do you need to do with it? Are you running data analytics? Performing lookups on individual items? Or do you need to process blobs of binary data such as images?
+How much data are you working with? Gigabytes of server logs or a couple megabytes of application settings?
+All that said, here are a few guidelines:
+    
+>Learn basic file types first, because you would be surprised how far you can get with CSV, the configparser module, and pickle. Json is also a great option.
+Your default choice for a database should be SQLite, because it’s built-in to the standard library and is quite fast. Don’t move on unless you have a specific reason (for example, if multiple processes will be writing to the database simultaneously)
+Relational databases (SQL) should generally be your default when you move up from SQLite. I recommend Postgres.
+    “NoSQL” databases are each designed to be better at some specific use cases where more traditional databases used to struggle. They’re specialized tools, so only use one if you know it’s the right tool for your particular application.
+
