@@ -33,21 +33,6 @@ When joining table A to table B, a LEFT JOIN simply includes rows from A regardl
 
 >When using any of these new joins, you will likely have to write additional logic to deal with NULLs in the result and constraints (more on this in the next lesson).
 
-- [How to execute “left outer join” in SqlAlchemy](https://stackoverflow.com/questions/26142304/how-to-execute-left-outer-join-in-sqlalchemy)
-
-        q = session.query(Table1.field1, Table1.field2)\
-            .outerjoin(Table2)\ # use for cases in which you have relationship defined
-            .filter(Table2.tbl2_id == None)
-
-- Another example using `group_by` and `sum`
-
-        # This assumes a relationship where Table2.date_id is tied to
-        # Table1.id using sa.relationship and foreign key
-        q = session.query(Table1.date, Table1.field2, sa.func.sum(Table2.field1))\
-            .outerjoin(Table2)\
-            .group_by(Table2.date)
-
-
 
 [SQL Lesson 8: A short note on NULLs](https://sqlbolt.com/lesson/select_queries_with_nulls)
 
@@ -133,3 +118,45 @@ This would then create as many results as there are unique groups defined as by 
 >Because subqueries can be nested, each subquery must be fully enclosed in parentheses in order to establish proper hierarchy. Subqueries can otherwise reference any tables in the database, and make use of the constructs of a normal query
 
 
+# SQLAlchemy
+
+## Left outer join
+
+- [How to execute “left outer join” in SqlAlchemy](https://stackoverflow.com/questions/26142304/how-to-execute-left-outer-join-in-sqlalchemy)
+
+        q = session.query(Table1.field1, Table1.field2)\
+            .outerjoin(Table2)\ # use for cases in which you have relationship defined
+            .filter(Table2.tbl2_id == None)
+
+- Another example using `group_by` and `sum`
+
+        # This assumes a relationship where Table2.date_id is tied to
+        # Table1.id using sa.relationship and foreign key
+        q = session.query(Table1.date, Table1.field2, sa.func.sum(Table2.field1))\
+            .outerjoin(Table2)\
+            .group_by(Table2.date)
+
+## Get equivalent SQL command
+
+Create the query without actually executing it:
+
+    q = session.query(Main.date, Main.weight, Main.calories_eaten, 
+                      sa.func.sum(Exercise.calories_burned)) \
+            .outerjoin(Exercise) \  # Left outer join because of table relationship
+            .group_by(Main.date)
+
+Get equivalent SQL command:
+
+    print(str(q))
+    # Output:
+        SELECT main.date AS main_date, main.weight AS main_weight, main.calories_eaten AS main_calories_eaten, sum(exercise.calories_burned) AS sum_1 
+        FROM main LEFT OUTER JOIN exercise ON main.id = exercise.date_id GROUP BY main.date
+    # Reformatted:
+        SELECT main.date AS main_date, 
+           main.weight AS main_weight, 
+           main.calories_eaten AS main_calories_eaten, 
+           sum(exercise.calories_burned) AS sum_1 
+        FROM main 
+        LEFT OUTER JOIN exercise 
+            ON main.id = exercise.date_id 
+        GROUP BY main.date
