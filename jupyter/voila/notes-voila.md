@@ -1,4 +1,57 @@
 
+# Sunday, October 25, 2020
+
+## Goal
+
+- Develop a workflow where I develop ipywidget apps in jupyter notebooks and then deploy using Voila to my laptop or to a server.
+
+## Thoughts
+
+- Possible Voila servers:
+    - Home Raspberry Pi
+    - Office Raspberry Pi
+    - nordinvm.byu.edu
+    - New BYU VM
+    - Get a Digital Ocean VM
+    
+## Python virtual environment organization
+
+### My laptop
+
+
+### Set up on nordinvm.byu.edu
+
+From my laptop:
+
+    # If not on campus, connect to CAEDM VPN
+    
+    # Copy files from my laptop to nordinvm.byu.edu 
+    # The -r flag means recursive so that all underlying files and directories are copied
+    $ scp -r 200820_analyze_strobed_images/ nordin@nordinvm.byu.edu:"~/projects"
+    
+    # ssh to nordinvm.byu.edu
+    $ ssh -i ~/.ssh/nordinvmbyu nordin@10.18.46.149
+    
+    # Create new virtual environment
+    $ pyenv virtualenv 3.8.3 voila_opencv
+    
+    # Switch to new virtual environment
+    $ pyenv shell voila_opencv
+    
+    # Upgrade pip
+    $ pip install --upgrade pip
+    
+    # Install packages
+    $ pip install matplotlib numpy jupyterlab opencv-contrib-python imutils pandas voila pytest scipy panel ipywidgets ipympl
+    
+    $ cd /home/nordin/projects/200820_analyze_strobed_images
+    
+    $ voila 201021_dev__linescans_for_all_defocus_values.ipynb
+    
+    
+
+
+
 # Saturday, October 24, 2020
 
 Last night I got voila to work on my macbook pro by doing the following:

@@ -35,6 +35,16 @@
 
 From [28 Jupyter Notebook tips, tricks and shortcuts - Oct. 12, 2016](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)
 
+# Install new python kernel
+
+- Crate new virual environment using conda or `python -m venv ...`
+- Activate new virtual environment
+- Install desired packages for the virtual environment
+- Install ipykernel & add kernel to jupyter venv I use to serve jupyter notebooks, `jupyter_py37`
+    - `pip install ipykernel`
+    - `$ python -m ipykernel install --prefix=/Users/nordin/opt/miniconda3/envs/jupyter_py37 --name 'name_of_virtual_environment'`
+- a
+
 
 # How to navigate up the directory structure &rarr; symlink
 
@@ -124,9 +134,9 @@ Each conda environment needs to be a valid jupyter kernel. To see what conda env
 
 ### Easy way
 
-Install Damian Avilla's [nb_conda_kernels](https://github.com/Anaconda-Server/nb_conda_kernels), which automatically creates KernelSpecs for each conda environment. Make sure `ipykernel` is installed in every conda environment you want to be available as a jupyter kernel.
+Install Damian Avilla's [`nb_conda_kernels`](https://github.com/Anaconda-Server/nb_conda_kernels), which automatically creates KernelSpecs for each conda environment. Make sure `ipykernel` is installed in every conda environment you want to be available as a jupyter kernel.
 
-### More involved method
+### Extremely manual method
 
 From my old (4/10/16) notes:
 
