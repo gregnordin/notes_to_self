@@ -11,6 +11,9 @@
     - [JupyterHub Tutorial: Set up your Lab, Classroom, or Business](https://www.youtube.com/watch?v=Mk6ZHVIw0Xs)
     - The Littlest JupyterHub (TLJH)
         - [Installing on your own server](https://tljh.jupyter.org/en/latest/install/custom-server.html)
+        - Can use LDAP as the authenticator. See:
+            - [Configuring JupyterHub authenticators](https://tljh.jupyter.org/en/latest/topic/authenticator-configuration.html) - LDAPAuthenticator is already installed, there's an example for how to configure at least one part of it
+            - [LDAPAuthenticator](https://github.com/jupyterhub/ldapauthenticator) README says the minimum info needed to configure it
 - Flask and ipywidgets
     - [maartenbreddels/flask-ipywidgets](https://github.com/maartenbreddels/flask-ipywidgets)
         - Hasn't been updated in 2 years, looks dead
