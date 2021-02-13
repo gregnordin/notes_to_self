@@ -12,6 +12,22 @@ Assumption: set up on a virtual machine.
 
 ### Native Authenticator
 
+Be sure to note how to authorize a new user by going to <>/hub/authorize
+
 ### Dummy Authenticator
 
 ## Install ContainDS Dashboards
+
+
+# How to use
+
+## Share with shared directory
+
+Use links to do sharing?
+
+## Share as dashboard
+
+## Copy files to account
+
+
+# How to backup everyone's files
