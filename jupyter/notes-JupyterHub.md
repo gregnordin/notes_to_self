@@ -18,6 +18,7 @@ Be sure to note how to authorize a new user by going to <>/hub/authorize
 
 ## Install ContainDS Dashboards
 
+## Install python packages for user python
 
 # How to use
 
