@@ -1,11 +1,21 @@
 # How enable others to use notebooks with ipywidget apps?
 
+## 2 use cases:
+
+- Access control for my group and collaborators only &rarr; Jupyterhub on server behind BYU firewall
+    - CS Dashboard to serve built-out dashboards
+    - Shared storage to get to and run notebooks
+- No access control that anyone can get to (share with colleagues located anywhere) &rarr; Public server running voila
+    - For each dashboard, run `voila xxx.ipynb` on a unique port, leaving ports 80 and 443 open for the usual default browser traffic
+
+## Main possibilities
+
 - [Voila](https://voila.readthedocs.io/en/stable/index.html)
 
-    (base)
-    $ conda activate jupyter_py37
-    (jupyter_py37) (base)
-    $ pip install voila
+        (base)
+        $ conda activate jupyter_py37
+        (jupyter_py37) (base)
+        $ pip install voila
 
 - JupyterHub
     - [JupyterHub Tutorial: Set up your Lab, Classroom, or Business](https://www.youtube.com/watch?v=Mk6ZHVIw0Xs)
@@ -18,7 +28,7 @@
     - [maartenbreddels/flask-ipywidgets](https://github.com/maartenbreddels/flask-ipywidgets)
         - Hasn't been updated in 2 years, looks dead
 
-# Other possibilities 
+## Other possibilities 
 
 Without necessarily being interactive....
 
