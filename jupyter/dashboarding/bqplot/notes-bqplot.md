@@ -1,0 +1,6 @@
+- [bqplot - github](https://github.com/bqplot/bqplot) - thin wrapper over D3.js. **`bqplot` is built on top of the `ipywidgets` framework**. *
+    - ...a Grammar of Graphics based interactive visualization library for the Jupyter notebook where every single component of a plot is an interactive iPython widget. What this means is that even after a plot is drawn, you can change almost any aspect of it. This makes the creation of advanced Graphical User Interfaces attainable through just a few simple lines of Python code.*
+    - Binder - [Intro & links to tutorial notebooks](https://hub.mybinder.turing.ac.uk/user/bqplot-bqplot-lryb3bhe/notebooks/examples/Index.ipynb) - goes over many aspects of bqplot
+    - Binder - [Mark Interactions](https://hub.mybinder.turing.ac.uk/user/bqplot-bqplot-lryb3bhe/notebooks/examples/Interactions/Mark%20Interactions.ipynb)
+    - Binder - [Interaction Layer](https://hub.mybinder.turing.ac.uk/user/bqplot-bqplot-lryb3bhe/notebooks/examples/Interactions/Interaction%20Layer.ipynb) - **Try brush selector with dates**
+    - Binder - [Introduction](https://hub.mybinder.turing.ac.uk/user/bqplot-bqplot-lryb3bhe/notebooks/examples/Introduction.ipynb) - great
