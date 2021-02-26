@@ -1,3 +1,7 @@
+# Information
+
+[Bokeh Discourse Forum](https://discourse.bokeh.org/)
+
 # Animating a line graph
 
 ## Information
