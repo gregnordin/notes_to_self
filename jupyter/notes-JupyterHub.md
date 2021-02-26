@@ -1,3 +1,7 @@
+# Resources
+
+- [Jupyter Discourse Forum](https://discourse.jupyter.org/)
+
 # TLJH installation & set up
 
 Assumption: set up on a virtual machine.
