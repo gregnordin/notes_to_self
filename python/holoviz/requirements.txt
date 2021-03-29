@@ -60,7 +60,7 @@ prompt-toolkit==3.0.4
 ptyprocess==0.6.0
 py==1.8.1
 pyct==0.4.6
-Pygments==2.5.2
+Pygments==2.7.4
 pylint==2.4.4
 pyparsing==2.4.6
 pyrsistent==0.15.7
