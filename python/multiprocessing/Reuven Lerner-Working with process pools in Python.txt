@@ -1,0 +1,100 @@
+From: "Reuven M. Lerner" <reuven@lerner.co.il>
+Subject: [Better developers] Working with process pools in Python
+Date: May 11, 2020 at 11:00:00 AM MDT
+To: nordin@byu.edu
+Reply-To: reply-53a6o9y44c8d1b7aq3mw@in2.getdrip.com
+
+Have you filled out my subscriber survey? If not, please do — it helps me to keep this newsletter relevant. And it only takes a few minutes! Click here to fill it out! 
+In the last few newsletters, I have written about the "multiprocessing" module. The biggest advantage of "multiprocessing" is that it feels like you're working with threads, making it easier and more natural than would be possible with a more traditional process-based system.
+
+But consider the case in which we want to count the words in a very large number of files. I know that this isn't actually a "very large" number of files, but let's assume that I want to count the characters in all of the files in the "/etc/" directory on my computer.  I could, using the "multiprocessing" module, do something like this:
+    #!/usr/bin/env python
+
+    import multiprocessing
+    import glob
+    from multiprocessing import Queue
+
+    def file_size(filename):
+        try:
+            q.put(len(open(filename).read()))
+        except:
+            pass
+
+    if __name__ == '__main__':
+        q = Queue()
+
+        processes = [ ]
+        for one_filename in glob.glob('/etc/*):
+            p = multiprocessing.Process(target=file_size,
+                                        args=(one_filename,))
+            p.start()
+            processes.append(p)
+
+        for one_process in processes:
+            one_process.join()
+
+        total = 0
+        while not q.empty():
+            total += q.get()
+
+        print "Total: {}".format(total)
+
+In other words: For each file in '/etc/', we'll try to open the file and read it into memory. (This isn't a good idea if the file is large, but we'll ignore that point for now.)
+
+The thing to keep in mind here is that every file is being opened and counted in a separate process.  This means that if we have 1,000 files, we're opening 1,000 processes.  Now, Unix people like to say that processes are better than threads, and that they're not too heavy. But if you start to open 1,000 processes, your computer might start to complain, even if it's running Unix.
+
+In such cases, a better solution might be to use a "process pool."  In other words, we start up 10 Python processes -- think of them as Python servers, perhaps -- and then ask "multiprocessing" to execute our code on those 10 Python processes.  If we have more files to count than available processes, then some of the files will just need to wait.
+
+It turns out that "multiprocessing" handles this quite easily: We can start several Python processes, and then say that we want to apply our function to a number of values, with each application taking place in a separate process.
+
+A big difference between the traditional use of "multiprocessing" and the technique employed here is that when you use a process pool, you'll be applying a function to each element in a list, much as we do with a "for" loop or a list comprehension. In a typical "multiprocessing" program, including the one shown above, a function never "returns" in the traditional sense, so it cannot return a value to its caller. We thus employ a queue to return values. By contrast, when we use the process pool, we want and expect to get output from the function.
+
+Here's one re-implementation of our count_chars program:
+    #!/usr/bin/env python3
+
+    from multiprocessing import Pool
+    import glob
+    import os
+
+    def file_size(filename):
+        print("I'm in PID {}".format(os.getpid()))
+        try:
+            return len(open(filename).read())
+        except IOError:
+            return 0
+
+    if __name__ == '__main__':
+        with Pool(processes=8) as pool:
+            result = pool.map(file_size,
+                              glob.glob('/etc/*.conf'))
+
+            print(sum(result))
+
+
+Pretty snazzy, eh?  Here's what's going on: 
+	•	First of all, our function stays almost exactly the same. That is, except for the fact that it'll now print its process ID (in order to demonstrate that we are actually using our process pool) and that the function returns its value, rather than putting it on a queue.
+	•	If we're unable to read the file for any reason, then we'll return 0
+	•	We'll then create a pool of 8 processes.
+	•	Then we'll use "pool.map" to invoke our function once for each element returned by glob.glob. This is a special, pool-aware version of "map", which you might remember as the older, function version of the first line of a list comprehension.
+	•	The result of pool.map is a list, which we can then "sum" to get the total size back.
+In many ways, this solves the problem of working with processes, by turning it into a functional-style programming problem (i.e., lacking state). We can raise or lower the number of processes in the pool, as needs go up and down. 
+
+There are other ways to invoke functions on a pool, but I really like to use "map" -- not only because I've been using versions of "map" for years, but because I like the paradigm of getting a list of results and then performing an action on them.
+
+pool.map considers the number of items, and breaks the iterable (its argument) into separate pieces, each of which goes to a process. You can change the chunk size by providing pool.map with an optional, third integer argument.
+
+If you're looking to apply a function to a large number of inputs, then you might definitely want to consider the "pool" objects that come with "multiprocessing". The full documentation is here:
+
+    https://docs.python.org/3/library/multiprocessing.html
+
+And with this, we have reached the end of my (very long) series on threads, processes, and concurrency in Python.  I might come back to this topic at some point, but for now I feel like I've learned a lot about the subject in researching these articles -- and I hope you've learned a great deal in reading and trying out what I've been writing.
+
+Next week, I'll get back to some of the other topics people have been asking me to write about. If you haven't yet replied to tell me what is of interest to you, please do so!  It always thrills me to hear what people from around the world want to learn. 
+
+Until next time,
+
+Reuven
+PS: Follow me on Twitter for even more updates about Python, programming, podcasts, and other topics I write about. Follow me at reuvenmlerner. 
+Know someone who would benefit from this newsletter? Just send them to http://lerner.co.il/newsletter.
+If you're tired of getting this newsletter, then you can just unsubscribe by clicking Unsubscribe.  No hard feelings!  And in case you're so intrigued by my newsletter that you want to meet me at home, I publish this at 14 Migdal Oz Street, Apt. #1, Modi'in 7170334 Israel . 
+  
