@@ -25,6 +25,8 @@ def insert_dir_into_path(cwd, num_levels_up):
     import <some_package>
     """
     assert isinstance(cwd, Path)
+    assert isinstance(num_levels_up, int)
+    assert num_levels_up >= 0
     
     module_path = str(cwd.parents[num_levels_up - 1])
     if module_path not in sys.path:
