@@ -1,4 +1,8 @@
 
+**Problem**: When try to use `\ul` to underline text, if there is a `\ref{}` in the text then LaTex will throw an error.  
+**Solution**: Enclose `ref{}` in `{}` like this: `{\ref{}}`. Answer found at: [Problems with \ref when using soul for highlighting](https://tex.stackexchange.com/questions/23307/problems-with-ref-when-using-soul-for-highlighting)
+
+
 Helpful links
 
 - [How to write multi-part definitions in LaTeX](https://www.johndcook.com/blog/2009/09/14/latex-multi-part-definitions/)
