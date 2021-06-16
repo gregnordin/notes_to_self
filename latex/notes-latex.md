@@ -1,6 +1,11 @@
 
 **Problem**: When try to use `\ul` to underline text, if there is a `\ref{}` in the text then LaTex will throw an error.  
-**Solution**: Enclose `ref{}` in `{}` like this: `{\ref{}}`. Answer found at: [Problems with \ref when using soul for highlighting](https://tex.stackexchange.com/questions/23307/problems-with-ref-when-using-soul-for-highlighting)
+**Solution**: Enclose `ref{}` in `{}` like this: `{\ref{}}`.  
+**See**: [Problems with \ref when using soul for highlighting](https://tex.stackexchange.com/questions/23307/problems-with-ref-when-using-soul-for-highlighting).
+
+**Problem**: When using the `soul` package, `\ul` results in an underline that is too garish for paragraphs of text.  
+**Solution**: Instead, use `\hl` from the `soul` package, which puts the text on a yellow background.  
+**See**: [Using colors in a LaTeX document](https://texblog.org/2015/05/20/using-colors-in-a-latex-document/), [Changing background color of text in Latex](https://tex.stackexchange.com/questions/136742/changing-background-color-of-text-in-latex)
 
 
 Helpful links
