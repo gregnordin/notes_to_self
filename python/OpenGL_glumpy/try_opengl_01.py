@@ -15,8 +15,8 @@ vertex = """
     {
         float ct = cos(theta);
         float st = sin(theta);
-        float x = 0.75* (position.x*ct - position.y*st);
-        float y = 0.75* (position.x*st + position.y*ct);
+        float x = 0.65* (position.x*ct - position.y*st);
+        float y = 0.65* (position.x*st + position.y*ct);
         gl_Position = vec4(x, y, 0.0, 1.0);
         v_color = color;
     } """
@@ -40,14 +40,17 @@ quad['theta'] = 0
 # Create a window with a valid GL context
 window = app.Window()
 
-theta = 0.0
+counter = 0
 
 # Tell glumpy what needs to be done at each redraw
 @window.event
 def on_draw(dt):
+    global counter
     window.clear()
     quad['theta'] += dt
     quad.draw(gl.GL_TRIANGLE_STRIP)
+#     print(counter, dt, quad['theta'])
+#     counter += 1
 
 # Run the app
 app.run()
