@@ -101,3 +101,11 @@ Run simple program [code/chapter-03/glumpy-quad-solid.py](https://www.labri.fr/p
         
 Try everything else in the rest of Chapter 3 of the book.
 
+
+# Saturday, 2020-06-19
+
+Read Chapter 4 of [Python & OpenGL for Scientific Visualization by Nicolas P. Rougier, 2018](https://www.labri.fr/perso/nrougier/python-opengl/).
+
+Go through Chapter 5 of [Python & OpenGL for Scientific Visualization by Nicolas P. Rougier, 2018](https://www.labri.fr/perso/nrougier/python-opengl/).
+
+>For the projection, we'll use the default perspective camera that is available from the glumpy.glm module (that also defines ortho, frustum and perspective matrices as well as rotation, translation and scaling operations). This default perspective matrix is located at the origin and looks in the negative z direction with the up direction pointing toward the positive y-axis. If we leave our cube at the origin, the camera would be inside the cube and we would not see much. So let's first create a view matrix that is a translation along the z-axis:
