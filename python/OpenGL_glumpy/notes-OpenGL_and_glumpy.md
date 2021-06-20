@@ -110,4 +110,4 @@ Go through Chapter 5 of [Python & OpenGL for Scientific Visualization by Nicolas
 
 >For the projection, we'll use the default perspective camera that is available from the glumpy.glm module (that also defines ortho, frustum and perspective matrices as well as rotation, translation and scaling operations). This default perspective matrix is located at the origin and looks in the negative z direction with the up direction pointing toward the positive y-axis. If we leave our cube at the origin, the camera would be inside the cube and we would not see much. So let's first create a view matrix that is a translation along the z-axis:
 
-Read Chapter 6.
+Read Chapters 6, 7, 8, 9.
