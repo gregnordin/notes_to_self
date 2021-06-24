@@ -16,6 +16,7 @@
 - Document basic docker ideas
 - Use a docker file to create container (or is it an image?)
 - Create container with specific set of installed packages as well as jupyter (including ipywidgets, voila, bokeh, panel?)
+- How put image where students can get it? Docker Hub?
 
 # Log
 
@@ -30,7 +31,8 @@ Create container from image and start it running.
     $ docker run -i -t -p 8890:8890 -v "$PWD":/home --name anaconda3 continuumio/anaconda3
     # Notes:
     #   -i -t - interactive, terminal
-    #   -p 8890:8890 - connect port 8890 in container to port 8890 on container's host
+    #   -p 8890:8890 - <host port>:<container port>, connect port 8890 in container to port
+                       8890 on container's host
     #                  NOTE: jupyter usually runs on port 8888. If you use port 8888 here
                        for the host and are already running jupyter lab on the host, trying to 
                        connect to the container will be superceded by jupyter on the host.
