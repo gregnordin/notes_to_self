@@ -11,6 +11,12 @@
 
 [Docker Tutorial part 1 | Python in Docker | Jupyter in Docker](https://www.youtube.com/watch?v=At5alroIsic)  
 
+# Next
+
+- Document basic docker ideas
+- Use a docker file to create container (or is it an image?)
+- Create container with specific set of installed packages as well as jupyter (including ipywidgets, voila, bokeh, panel?)
+
 # Log
 
 ## Wed 2020-06-23
