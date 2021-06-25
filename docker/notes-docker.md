@@ -15,8 +15,11 @@
 
 - Document basic docker ideas
 - Use a docker file to create container (or is it an image?)
-- Create container with specific set of installed packages as well as jupyter (including ipywidgets, voila, bokeh, panel?)
 - How put image where students can get it? Docker Hub?
+- Create container with specific set of installed packages as well as jupyter
+    - loky - multiprocessing that is compatible with jupyter notebooks
+    - ipywidgets, voila
+    - bokeh, panel, holoviz stuff
 
 # Log
 
