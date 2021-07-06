@@ -15,21 +15,21 @@ I want to document my current thoughts about what tools to use for various tasks
     - Reveal.js
     - RISE (reveal.js with jupyter notebooks)
 - Editor
-    - Atom for code development
+    - VS Code for code development
     - Sublime Text for editing my `done.txt` file
     - BBedit for other small text processing tasks
 - Python
-    - Use Anaconda, latest release (python 3.6 for now)
-        - Usually install packages into root env, but occasionally make new envs for special purposes and to test new packages
-    - Jupyter notebook for code development and code/narrative/documentation bundled together
+    - See [gregnordin/python\_setup_macbook](https://github.com/gregnordin/python_setup_macbook)
+        - Based on Miniconda and Conda and venv virtual environments
+    - Jupyter notebook for data exploration and analysis, and code/narrative/documentation bundled together
     - Occasionally make my own packages for various projects
-    - GUI code: PyQt & Qt4
+    - &#10060; GUI code: PySimpleGUI or PyQt & Qt4
 - Drawings
     - png, eps
         - Illustrator - my preferred tool
         - Powerpoint
-        - LaTex with Tikz - too time-consuming so don't use it
-        - Inkscape - forget this since I started using Illustrator
+        - &#10060; LaTex with Tikz - too time-consuming so don't use it
+        - &#10060; Inkscape - forget this since I started using Illustrator
     - Webpages & markdown files
         - SVG
             - Illustrator
@@ -46,6 +46,7 @@ I want to document my current thoughts about what tools to use for various tasks
         - png file
         - D3.js
     - Interactive 2D - webpage
+        - Bokeh with Panel or matplotlib with ipywidgets
         - D3.js looks promising, but must use javascript/html/css. See [Hua's example for measured absorber spectra](https://nanomicro.byu.edu:3456/maingroup/12839)
         - In principle, this can be integrated directly into markdown files (?)
     - Animated 2D - kind of have to do this in a browser
@@ -63,11 +64,10 @@ I want to document my current thoughts about what tools to use for various tasks
         - &#9989; `pytest`
         - &#9989; `assert` statements
         - CLI such as `Travis` so every commit undergoes all tests
-    - Sublime Text 3 as editor instead of Atom
     - Need to explore [transcrypt](http://www.transcrypt.org) to write code in python and have it transcribed into javascript so can be seen in a browser. Can use any javascript library, like D3.js and three.js. Or try Flexx.
     - Vega or vega-lite for static 2D graphs in browser, [Introduction to Vega-Lite](https://vega.github.io/vega-lite/tutorials/getting_started.html)
     - Interactive and possibly realtime plotting
         - [plotly](http://moderndata.plot.ly/15-python-and-r-charts-with-interactive-controls-buttons-dropdowns-and-sliders/) as an interactive 2D/3D plotting package (javascript/python/browser?)
-        - bqplot as in interactive/realtime 2D plotting package
+        - &#10060; bqplot as in interactive/realtime 2D plotting package
         - [chaco](http://docs.enthought.com/chaco/) as an interactive/realtime 2D plotting package. Uses traits instead of variables(?)
     - Use D3 in a Jupyter notebook. See [d3-jupyter-tutorial](https://github.com/stitchfix/d3-jupyter-tutorial), which is excellent. Try out the little helper file, `d3_lib.py`?
