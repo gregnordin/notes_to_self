@@ -4,6 +4,12 @@
 
 # Tuesday, 2021-07-06
 
+## Next
+
+- Pick up from where I left off at the `Introduction - making-an-app` section of the [Svelte Tutorial](https://svelte.dev/tutorial/making-an-app).
+
+## Log
+
 - Start going through [Svelte Tutorial](https://svelte.dev/tutorial/making-an-app) up to the `Introduction - making-an-app` section.
 - Install VS code plugin: Svelte for VS Code
 - Follow [Svelte for new developers - Creating a project](https://svelte.dev/blog/svelte-for-new-developers#Creating_a_project)
