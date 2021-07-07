@@ -1,5 +1,13 @@
 # Try out svelte.js
 
+---
+
+# Wednesday, 2021-07-07
+
+## Log
+
+- Look through the rest of the Svelte tutorial just focusing on the main chapter ideas
+- Read [What's the deal with SvelteKit?](https://svelte.dev/blog/whats-the-deal-with-sveltekit)
 
 
 # Tuesday, 2021-07-06
