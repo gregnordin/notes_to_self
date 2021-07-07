@@ -6,7 +6,14 @@
 
 ## Next
 
-- Pick up from where I left off at the `Introduction - making-an-app` section of the [Svelte Tutorial](https://svelte.dev/tutorial/making-an-app).
+- Pick up from where I left off at the `Bindings/Group inputs` section of the [Svelte Tutorial](https://svelte.dev/tutorial/making-an-app).
+- Look into Flask with svelte
+    - [Flask + Svelte](https://svelte.dev/tutorial/group-inputs) - good
+    - [Svelte.js + Flask](https://github.com/cabreraalex/svelte-flask-example) - 
+A super simple example of using Flask to serve a Svelte app and use it as a backend server.
+- Look into D3.js with svelte
+    - [svelte-charts](https://medium.com/@mbostock/why-you-should-use-d3-ae63c276e958)
+    - [Cannot get D3.js to work inside Svelte component (with Rollup)](https://techinplanet.com/cannot-get-d3-js-to-work-inside-svelte-component-with-rollup/) - good info
 
 ## Log
 
