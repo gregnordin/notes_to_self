@@ -38,4 +38,6 @@
               - Local:      http://localhost:5000
               - Network:    Add `--host` to expose
               
-      - It works! Use `^C` from the command line to exit.
+    - It works! Use `^C` from the command line to exit.
+    - Explore directory, focus on `src` and `public`.
+    - Edit `src/App.svelte` to add a new component `newpart`.
