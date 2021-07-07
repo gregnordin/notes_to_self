@@ -1,11 +1,7 @@
 <script>
   export let name;
 
-  let count = 0;
-
-  function handleClick() {
-    count += 1;
-  }
+  import Simplecounter from "./simplecounter.svelte";
 </script>
 
 <main>
@@ -21,10 +17,7 @@
   <p>name variable: {name}</p>
 </newpart>
 
-<button on:click={handleClick}>
-  Clicked {count}
-  {count === 1 ? "time" : "times"}
-</button>
+<Simplecounter />
 
 <style>
   newpart {

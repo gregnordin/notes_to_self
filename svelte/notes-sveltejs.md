@@ -41,3 +41,7 @@
     - It works! Use `^C` from the command line to exit.
     - Explore directory, focus on `src` and `public`.
     - Edit `src/App.svelte` to add a new component `newpart`.
+    - Add `src/simplecounter.svelte` and include in App.
+        - See [Building a simple Svelte JS app - Example included](https://blog.logrocket.com/how-to-build-a-simple-svelte-js-app/).
+            - Center button horizontally: [How can I horizontally center a button element in a div element?](https://stackoverflow.com/questions/15300234/how-can-i-horizontally-center-a-button-element-in-a-div-element)
+    - a
