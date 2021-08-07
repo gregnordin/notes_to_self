@@ -2,7 +2,9 @@
 
 ## Manim
 
-
+[Manim](https://docs.manim.community/en/stable/index.html)  
+[Tutorials](https://docs.manim.community/en/stable/tutorials.html)  
+[Manim - github](https://github.com/manimcommunity/manim)  
 
 
 # Next
