@@ -79,3 +79,9 @@ Some other useful docker commands:
     $ docker ps
     # List all running and exited containers
     $ docker ps -a
+    # Remove container
+    $ docker rm ID_or_Name ID_or_Name
+    # List docker images
+    $ docker image ls
+    # Remove image (containers depending on image must be deleted already)
+    $ docker image rm <ID from docker image ls>
