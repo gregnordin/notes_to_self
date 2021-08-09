@@ -5,6 +5,8 @@
 [Manim](https://docs.manim.community/en/stable/index.html)  
 [Tutorials](https://docs.manim.community/en/stable/tutorials.html)  
 [Manim - github](https://github.com/manimcommunity/manim)  
+[Creating math animations in Python with Manim](https://gilberttanner.com/blog/creating-math-animations-in-python-with-manim)  
+[Jupyter - manim magic - %%manim](https://docs.manim.community/en/stable/reference/manim.utils.ipython_magic.ManimMagic.html#manim.utils.ipython_magic.ManimMagic.manim)  
 
 
 # Next
@@ -44,3 +46,7 @@ Also see my notes at `notes_to_self/docker/notes-docker.md`.
             http://ba4698c8a060:8891/lab?token=6f331357f74d2a1888d81c2ba0482316a38e1d441c09db6a
          or http://127.0.0.1:8891/lab?token=6f331357f74d2a1888d81c2ba0482316a38e1d441c09db6a
 
+
+### Run python file from docker command line from terminal
+
+    manimuser@ba4698c8a060:~/210807_try_manim/manim_try1$ manim -ql manim_try1.py SquareToCircle
