@@ -73,3 +73,6 @@ Note: this creates a `480p15` video (854 × 480 pixels, 15 frames per second
 - Get 3D scene to work.
 - Animate transformation of cube into rectangular slice.
 
+### `manim_try_slices.py`
+
+- `manim -ql manim_try_slices.py Slices`
