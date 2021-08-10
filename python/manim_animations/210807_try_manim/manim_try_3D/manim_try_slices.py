@@ -33,8 +33,8 @@ class Slices(ThreeDScene):
 
         # matrix
         M = np.array([
-            [3, 0, 0],
-            [0, 3, 0],
+            [5, 0, 0],
+            [0, 5, 0],
             [0, 0, 0.5]
         ])
         matrix = self.create_matrix(M)
@@ -45,16 +45,17 @@ class Slices(ThreeDScene):
                     stroke_width=2, fill_opacity=0.1)
         cube.set_stroke(BLUE_E)
 
-        # Animation
-        self.wait(0.5)
-        self.play(
-            FadeIn(cube),
-        )
-        self.wait()
+        # # Animation
+        # self.wait(0.5)
+        # self.play(
+        #     FadeIn(cube),
+        # )
+        # self.wait()
 
         matrix_anim = ApplyMatrix(M, cube)
+        self.add(matrix_anim)
 
-        self.play(
-            matrix_anim,
-        )
+        # self.play(
+        #     matrix_anim,
+        # )
         self.wait()

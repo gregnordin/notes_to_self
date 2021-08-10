@@ -68,6 +68,13 @@ Note: this creates a `480p15` video (854 × 480 pixels, 15 frames per second
 - Create "layer" rectangular slice.
 - Stack "layers".
 
+### Info
+
+[How to create a 3d shapes in manim](https://www.reddit.com/r/manim/comments/biqbgb/how_to_create_a_3d_shapes_in_manim/)
+
+>How to create a 3d shapes in manim?  
+>Answer: it isn't currently possible with manim.
+
 ### `manim_try_3D.py`
 
 - Get 3D scene to work.
@@ -76,3 +83,8 @@ Note: this creates a `480p15` video (854 × 480 pixels, 15 frames per second
 ### `manim_try_slices.py`
 
 - `manim -ql manim_try_slices.py Slices`
+
+### `manim_try_parametricsurface.py`
+
+- [ParametricSurface documentation](https://docs.manim.community/en/stable/reference/manim.mobject.three_dimensions.ParametricSurface.html?highlight=ParametricSurface)
+- `manim -ql manim_try_parametricsurface.py ParaSurface`
