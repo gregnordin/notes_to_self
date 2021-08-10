@@ -64,8 +64,12 @@ Note: this creates a `480p15` video (854 × 480 pixels, 15 frames per second
 
 ### Objectives
 
-- Learn how to work with a 3D scene.
+- &#9989; Learn how to work with a 3D scene.
 - Create "layer" rectangular slice.
 - Stack "layers".
 
-### 
+### `manim_try_3D.py`
+
+- Get 3D scene to work.
+- Animate transformation of cube into rectangular slice.
+
