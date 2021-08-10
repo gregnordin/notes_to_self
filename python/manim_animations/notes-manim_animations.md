@@ -1,3 +1,9 @@
+# Objective
+
+
+Determine whether I can use manim to create an animation showing sliced object reconstruction to explain stereolithographic 3D printing.
+
+
 # Info
 
 ## Manim
@@ -17,7 +23,7 @@
 
 ## Saturday 2021-08-07
 
-Objective: determine whether I can use manim to create an animation showing sliced object reconstruction to explain stereolithographic 3D printing.
+&#9989; Objective: Try to get manim in a docker container to work with a simple example.
 
 ### Set up manim docker container
 
@@ -50,3 +56,16 @@ Also see my notes at `notes_to_self/docker/notes-docker.md`.
 ### Run python file from docker command line from terminal
 
     manimuser@ba4698c8a060:~/210807_try_manim/manim_try1$ manim -ql manim_try1.py SquareToCircle
+    
+Note: this creates a `480p15` video (854 × 480 pixels, 15 frames per second). Use `-qm` to create a `720p30` video (1280 × 720 pixels, 30 frames per second).
+    
+
+## Monday 2021-08-09
+
+### Objectives
+
+- Learn how to work with a 3D scene.
+- Create "layer" rectangular slice.
+- Stack "layers".
+
+### 
