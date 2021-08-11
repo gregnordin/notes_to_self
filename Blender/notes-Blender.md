@@ -37,3 +37,15 @@
 - With cursor anywhere in viewport, hit `shift-space` and will bring up tool bar as a pop-up menu
 - Click `n` and toolbar will pop out of upper right side with object transformation settings
 - Pie menus? Around 3:50 in video
+
+## Duplication
+
+- 2 finger click on object, which brings up a popup menu
+- Select `Duplicate`
+- Single finger drag away from original object and you'll have a 2nd object that you can place
+- To more finely position object when it is selected, go into Object Properties and type in coordinates for x, y, z
+
+
+## Animation
+
+- [How to Make an Object Fade in/out in Blender (Tutorial)](https://www.youtube.com/watch?v=3QjN693Gzwo)
