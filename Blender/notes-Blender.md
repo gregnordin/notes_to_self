@@ -2,6 +2,7 @@
 
 # Information
 
+[What is a .blend1 file and why do you (not) need them?](https://cgcookie.com/articles/what-is-a-blend1-file-and-do-you-really-need-them)
 
 # Basics
 
@@ -23,8 +24,8 @@
 
 - Use tiny buttons along right upper edge of main window or XYZ stick axes
 - Zoom in and out - click on tiny magnifier icon and move trackpad finger up or down OR cmd and 2 fingers on trackpad
-- Rotate - 2 fingers on trackpad
-- Move - shift key with 2 fingers on trackpad OR shift-option with 1 finger on mousepad
+- Rotate - option with 1 finger on trackpad OR 2 fingers unclicked on track pad
+- Move - shift-option with 1 finger on mousepad
 - Recenter on selected object(s) - View menu &rarr; Frame Selected
 
 ## Interface
@@ -38,6 +39,8 @@
 - Click `n` and toolbar will pop out of upper right side with object transformation settings
 - Pie menus? Around 3:50 in video
 
+[Select & Transform - Blender 2.80 Fundamentals](https://www.youtube.com/watch?v=hTL6AKR8YDs&list=PLa1F2ddGya_-UvuAqHAksYnB0qL9yWDO6&index=5)
+
 ## Duplication
 
 - 2 finger click on object, which brings up a popup menu
@@ -49,3 +52,4 @@
 ## Animation
 
 - [How to Make an Object Fade in/out in Blender (Tutorial)](https://www.youtube.com/watch?v=3QjN693Gzwo)
+- [Fade In – Fade Out Effects in Blender](https://prosperocoder.com/posts/blender/fade-in-fade-out-effects/)
