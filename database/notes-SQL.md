@@ -118,6 +118,15 @@ This would then create as many results as there are unique groups defined as by 
 >Because subqueries can be nested, each subquery must be fully enclosed in parentheses in order to establish proper hierarchy. Subqueries can otherwise reference any tables in the database, and make use of the constructs of a normal query
 
 
+# Python SQL query builder
+  
+[SQL query builder in 150 lines of Python](https://death.andgravity.com/query-builder)  
+[Why use an SQL query builder in the first place?](https://death.andgravity.com/query-builder-why)  
+[Why I wrote my own SQL query builder (in Python)](https://death.andgravity.com/own-query-builder)  
+[Write an SQL query builder in 150 lines of Python](https://death.andgravity.com/query-builder-how)
+
+
+
 # SQLAlchemy
 
 ## Left outer join
