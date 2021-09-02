@@ -84,5 +84,6 @@
 
 - Go through [Create 3D objects and animations in Blender with Python API](https://demando.se/blogg/post/dev-generating-a-procedural-solar-system-with-blenders-python-api/), which is excellent!
     - Complete through Step 4 adding sun and radius rings
-    - Complete through Step 5, shader and materials for planets etc.
+    - Complete Step 5, shader and materials for planets etc.
+    - Complete Step 6, animating the planets
 
