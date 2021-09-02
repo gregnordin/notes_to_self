@@ -86,4 +86,5 @@
     - Complete through Step 4 adding sun and radius rings
     - Complete Step 5, shader and materials for planets etc.
     - Complete Step 6, animating the planets
+    - Complete Step 7, autocleaning the scene
 
