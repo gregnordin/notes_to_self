@@ -87,4 +87,5 @@
     - Complete Step 5, shader and materials for planets etc.
     - Complete Step 6, animating the planets
     - Complete Step 7, autocleaning the scene
+    - Complete Step 8, Auto-setting scene properties, render engine, the 3D view settings
 
