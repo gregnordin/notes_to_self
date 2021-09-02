@@ -25,7 +25,7 @@
 - Use tiny buttons along right upper edge of main window or XYZ stick axes
 - Zoom in and out - click on tiny magnifier icon and move trackpad finger up or down OR cmd and 2 fingers on trackpad
 - Rotate - option with 1 finger on trackpad OR 2 fingers unclicked on track pad
-- Move - shift-option with 1 finger on mousepad
+- Move - shift-option with 1 finger clicked on mousepad
 - Recenter on selected object(s) - View menu &rarr; Frame Selected
 
 ## Interface
@@ -48,6 +48,14 @@
 - Single finger drag away from original object and you'll have a 2nd object that you can place
 - To more finely position object when it is selected, go into Object Properties and type in coordinates for x, y, z
 
+## Python Scripting
+
+- Start Blender from the terminal command line so that print statements will put their output in this terminal window: `/Applications/Blender.app/Contents/MacOS/Blender &`
+- Select `Scripting` from menu along top left of window. This puts the interface into a scripting-friendly state.
+- Click on the `+ New` button of the Text Editor to bring up a new text editor window.
+- Type `print('hello world')` in text editor.
+- Run by clicking the run icon of the Text Editor or hitting `cmd-p` (`alt-p` on Windows) while mouse is anywhere within text editor window.
+
 
 ## Animation
 
@@ -58,3 +66,21 @@
     - [How to Code 3D Objects From Scratch With Blender and Python](https://www.youtube.com/watch?v=tsmkqU25_As) &rarr; excellent
     - [How to Select And Transform Objects With Python in Blender](https://www.youtube.com/watch?v=VAmNUSUdVA0) &rarr; excellent
     - [[2.79] Tutorial: 3D Animation With Python and Blender](https://www.youtube.com/watch?v=ssHiWpVuxTk) &rarr; note older version of Blender so interface is not the same but can figure it out
+
+- [Create 3D objects and animations in Blender with Python API](https://demando.se/blogg/post/dev-generating-a-procedural-solar-system-with-blenders-python-api/)
+
+- `import bpy`
+    - `bpy.context`: it contains getters and readers on read-only values that describe your current working context or even the area (i.e. the panel in your window) that is currently being accessed
+    - `bpy.data`: it gives you access to the resources in your scene (the objects, the materials, the meshes…) so you can load, add or delete them
+    - `bpy.ops`: that’s the real meat of the API – it’s what allows you to perform actions and call operators on your objects or your views; it’s basically how you can simulate user actions via scripting (like selecting an object, entering edit mode, applying subdivisions, changing to “flat” shading, maximising a window…)
+- Start Blender from the command line: `/Applications/Blender.app/Contents/MacOS/Blender &`
+
+---
+
+# Log
+
+## Thursday, 2021-09-02
+
+- Go through [Create 3D objects and animations in Blender with Python API](https://demando.se/blogg/post/dev-generating-a-procedural-solar-system-with-blenders-python-api/), which is excellent!
+    - Complete through Step 4 adding sun and radius rings
+
