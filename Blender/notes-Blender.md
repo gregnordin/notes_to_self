@@ -105,4 +105,18 @@ Rectangular layer-like object centered at `(x,y) = (0,0)` with bottom at `z=0`:
         location=(0, 0, z_layer_size/2)
     )
 
- 
+When re-run script, need to get rid of objects and materials created in previous runs. Run the following code at the beginning of the script to do that:
+
+    def clean_up():
+        # Delete materials from last time script ran
+        original_materials = ['Dots Stroke', 'Material']
+        for mat in bpy.data.materials:
+            print(mat.name)
+            if mat.name not in original_materials:
+                bpy.data.materials.remove(mat)
+        # Delete objects from last time script ran
+        for obj in bpy.data.objects:
+            obj.select_set(True)
+            bpy.ops.object.delete(use_global=False)
+            
+    clean_up()
