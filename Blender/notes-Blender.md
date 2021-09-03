@@ -89,3 +89,20 @@
     - Complete Step 7, autocleaning the scene
     - Complete Step 8, Auto-setting scene properties, render engine, the 3D view settings
 
+## Friday, 2021-09-03
+
+**Objective**: Create 3D rectangular-like object with a color and animate fade in.
+
+Rectangular layer-like object centered at `(x,y) = (0,0)` with bottom at `z=0`:
+    
+    xy_layer_size = 10
+    z_layer_size = 0.5
+    layer_scale = (1, 1, z_layer_size / xy_layer_size)
+    
+    layer = bpy.ops.mesh.primitive_cube_add(
+        size=xy_layer_size, 
+        scale=layer_scale, 
+        location=(0, 0, z_layer_size/2)
+    )
+
+ 
