@@ -120,3 +120,7 @@ When re-run script, need to get rid of objects and materials created in previous
             bpy.ops.object.delete(use_global=False)
             
     clean_up()
+
+Couldn't figure out f-curves in the time available.  
+
+Instead, go through [Color Animation in Blender with Python](https://prosperocoder.com/posts/blender/color-animation/), which is excellent and just what I need for now. Try it out and the colors of a slice continuously change between specified colors.
