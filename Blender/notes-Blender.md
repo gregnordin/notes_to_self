@@ -125,4 +125,4 @@ Couldn't figure out f-curves in the time available.
 
 Instead, go through <span style="color:red; font-size:150%">&#x2605;</span> <span style="color:red; font-size:150%">&#x2605;</span> [Color Animation in Blender with Python](https://prosperocoder.com/posts/blender/color-animation/), which is excellent and just what I need for now. Try it out and the colors of a slice continuously change between specified colors. Then change some of the colors to have `alpha=0` and observe that both the colors and transparency fade in and out.
 
-Next, start new Blender file, `210903_python_3D_layer_alpha_animate.blend`, to create layers and fade them in.
+Next, start new Blender file, `210903_python_3D_layer_alpha_animate.blend`, to create layers and fade them in. First, create code to make a single layer and fade it in.
