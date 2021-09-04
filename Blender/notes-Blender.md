@@ -129,4 +129,12 @@ Next, start new Blender file, `210903_python_3D_layer_alpha_animate.blend`, to c
 
 - Create code to make a single layer and fade it in. 
 - Pull layer and material code into for loop.
+- Create 4 layers
+
+Observations:
+
+- Can see outlines of layers during whole animation, need to eliminate
+- Last part of each layer animation is jerky
+- Need to change camera position
+- Change light position?
 
