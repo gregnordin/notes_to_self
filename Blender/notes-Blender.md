@@ -56,7 +56,7 @@
 - Click on the `+ New` button of the Text Editor to bring up a new text editor window.
 - Type `print('hello world')` in text editor.
 - Run by clicking the run icon of the Text Editor or hitting `cmd-p` (`alt-p` on Windows) while mouse is anywhere within text editor window.
-- <span style="color:red; font-size:150%">&#x2605;</span> <span style="color:red; font-size:150%">&#x2605;</span> [Create 3D objects and animations in Blender with Python API](https://demando.se/blogg/post/dev-generating-a-procedural-solar-system-with-blenders-python-api/)
+- <span style="color:red; font-size:150%">&#x2605;</span> [Create 3D objects and animations in Blender with Python API](https://demando.se/blogg/post/dev-generating-a-procedural-solar-system-with-blenders-python-api/)
 - `import bpy`
     - `bpy.context`: it contains getters and readers on read-only values that describe your current working context or even the area (i.e. the panel in your window) that is currently being accessed
     - `bpy.data`: it gives you access to the resources in your scene (the objects, the materials, the meshes…) so you can load, add or delete them
@@ -123,4 +123,4 @@ When re-run script, need to get rid of objects and materials created in previous
 
 Couldn't figure out f-curves in the time available.  
 
-Instead, go through [Color Animation in Blender with Python](https://prosperocoder.com/posts/blender/color-animation/), which is excellent and just what I need for now. Try it out and the colors of a slice continuously change between specified colors.
+Instead, go through <span style="color:red; font-size:150%">&#x2605;</span> <span style="color:red; font-size:150%">&#x2605;</span> [Color Animation in Blender with Python](https://prosperocoder.com/posts/blender/color-animation/), which is excellent and just what I need for now. Try it out and the colors of a slice continuously change between specified colors. Then change some of the colors to have `alpha=0` and observe that both the colors and transparency fade in and out.
