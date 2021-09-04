@@ -51,6 +51,7 @@
 
 ## Python Scripting
 
+- Edit &rarr; Preferences &rarr; Interface &rarr; click on Python Tooltips checkbox - when hover over something in one of the windows, popup tooltip shows python statement for that thing.  See 16:20 at [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.youtube.com/watch?v=QnvN1dieIAU).
 - Start Blender from the terminal command line so that print statements will put their output in this terminal window: `/Applications/Blender.app/Contents/MacOS/Blender &`
 - Select `Scripting` from menu along top left of window. This puts the interface into a scripting-friendly state.
 - Click on the `+ New` button of the Text Editor to bring up a new text editor window.
@@ -138,3 +139,4 @@ Observations:
 - Need to change camera position
 - Change light position?
 
+Found [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.youtube.com/watch?v=QnvN1dieIAU), which is really good.
