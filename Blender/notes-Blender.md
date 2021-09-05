@@ -157,3 +157,12 @@ Found [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.y
 - a
 
 Use solution at [How to set camera location in the scene while pointing towards an object with a fixed distance](https://blender.stackexchange.com/questions/100414/how-to-set-camera-location-in-the-scene-while-pointing-towards-an-object-with-a) to set camera distance from origin, looking at the origin in `210903_python_3D_layer_alpha_animate.blend`. Works well.
+
+With the camera in the right position, now try rendering a video. To make the render process go much faster, do the following in the output panel:
+
+- Change video resolution to 720x480 (width x height) from 1920x1080.
+- Change file format to Movie &rarr; FFmpeg Video
+- Change container to MPEG-4
+- Make sure video codec is H.264
+
+Next, go to Layout window arrangement and select View &rarr; Viewport Render Animation. This will render the animation. I did a bunch of other stuff and there was only a static image of the final scene for all of the frames in the output.
