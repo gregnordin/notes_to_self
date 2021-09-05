@@ -167,7 +167,7 @@ With the camera in the right position, now try rendering a video. To make the re
 - Change container to MPEG-4
 - Make sure video codec is H.264
 
-Next, go to Layout window arrangement and select View &rarr; Viewport Render Animation. This will render the animation. I did a bunch of other stuff and there was only a static image of the final scene for all of the frames in the output (don't use from the main menu Renderer &rarr; Render Animation). Some good points can be found here, but not the last step as I just noted: [[2.8] Blender : How to Render an Animation in EEVEE](https://www.youtube.com/watch?v=nQXQCT_hKSs).
+Next, go to Layout workspace and select View &rarr; Viewport Render Animation. This will render the animation. I did a bunch of other stuff and there was only a static image of the final scene for all of the frames in the output (don't use from the main menu Renderer &rarr; Render Animation). Some good points can be found here, but not the last step as I just noted: [[2.8] Blender : How to Render an Animation in EEVEE](https://www.youtube.com/watch?v=nQXQCT_hKSs).
 
 - Change resolution back to 1920x180
 - Choose AVI JPEG file format
@@ -181,6 +181,7 @@ Next, go to Layout window arrangement and select View &rarr; Viewport Render Ani
 - Final part of each layer fade-in is still jerky
 - Bottom of 2nd layer is banded, but not other layers
     - Try changing Postprocessing &rarr; Dither from 1.0 to 2.0, but it doesn't help
+- All rendered videos are in `/tmp`
 
-
+Go through [https://docs.blender.org/manual/en/latest/render/output/animation.html](https://docs.blender.org/manual/en/latest/render/output/animation.html) and learn about workflows - the Direct Approach and the Frame Sequence approach.
 
