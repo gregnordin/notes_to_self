@@ -155,3 +155,5 @@ Found [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.y
         - How eliminate object outlines for transparent objects?
         - How remove jerky transparency animation &rarr; use a different interpolation? How?
 - a
+
+Use solution at [How to set camera location in the scene while pointing towards an object with a fixed distance](https://blender.stackexchange.com/questions/100414/how-to-set-camera-location-in-the-scene-while-pointing-towards-an-object-with-a) to set camera distance from origin, looking at the origin in `210903_python_3D_layer_alpha_animate.blend`. Works well.
