@@ -95,7 +95,8 @@
 
 ## Friday, 2021-09-03
 
-**Objective**: Create 3D rectangular-like object with a color and animate fade in.
+**Objective**: Create 3D stacked rectangular-like objects and animate fade in.  
+**Result**: Basic success with some caveats as noted in "Observations".
 
 Rectangular layer-like object centered at `(x,y) = (0,0)` with bottom at `z=0`:
     
@@ -135,7 +136,7 @@ Next, start new Blender file, `210903_python_3D_layer_alpha_animate.blend`, to c
 - Pull layer and material code into for loop.
 - Create 4 layers
 
-Observations:
+**Observations**:
 
 - Can see outlines of layers during whole animation, need to eliminate
 - Last part of each layer animation is jerky
@@ -143,3 +144,14 @@ Observations:
 - Change light position?
 
 Found [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.youtube.com/watch?v=QnvN1dieIAU), which is really good.
+
+## Saturday, 2021-09-04
+
+**To do**
+
+- Create a rendered video and see if it has outlines of layers in it and if last part of each animation is jerky
+    - If everything is great, proceed to make a better animation of conventional 3D printing with layers.
+    - If problems still exist:
+        - How eliminate object outlines for transparent objects?
+        - How remove jerky transparency animation &rarr; use a different interpolation? How?
+- a
