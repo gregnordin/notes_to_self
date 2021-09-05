@@ -149,12 +149,14 @@ Found [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.y
 
 **To do**
 
-- Create a rendered video and see if it has outlines of layers in it and if last part of each animation is jerky
-    - If everything is great, proceed to make a better animation of conventional 3D printing with layers.
-    - If problems still exist:
+- &#9989; Create a rendered video and see if it has outlines of layers in it and if last part of each animation is jerky
+    - &#10060; If everything is great, proceed to make a better animation for conventional 3D printing with layers.
+    - <span style="color:#32cd32; font-size:150%">&#9654;</span> If problems still exist:
         - How eliminate object outlines for transparent objects?
         - How remove jerky transparency animation &rarr; use a different interpolation? How?
-- a
+- Remove background and make it all black or all white?
+
+**Things I tried**
 
 Use solution at [How to set camera location in the scene while pointing towards an object with a fixed distance](https://blender.stackexchange.com/questions/100414/how-to-set-camera-location-in-the-scene-while-pointing-towards-an-object-with-a) to set camera distance from origin, looking at the origin in `210903_python_3D_layer_alpha_animate.blend`. Works well.
 
@@ -165,4 +167,20 @@ With the camera in the right position, now try rendering a video. To make the re
 - Change container to MPEG-4
 - Make sure video codec is H.264
 
-Next, go to Layout window arrangement and select View &rarr; Viewport Render Animation. This will render the animation. I did a bunch of other stuff and there was only a static image of the final scene for all of the frames in the output.
+Next, go to Layout window arrangement and select View &rarr; Viewport Render Animation. This will render the animation. I did a bunch of other stuff and there was only a static image of the final scene for all of the frames in the output (don't use from the main menu Renderer &rarr; Render Animation). Some good points can be found here, but not the last step as I just noted: [[2.8] Blender : How to Render an Animation in EEVEE](https://www.youtube.com/watch?v=nQXQCT_hKSs).
+
+- Change resolution back to 1920x180
+- Choose AVI JPEG file format
+- Set quality to 100%
+- Other settings: 24 fps and render frames 1 to 250
+
+**Results**:
+
+- avi output file is 199 MB! But it renders pretty fast (much, much faster than mpeg-4).
+- Transparent layers still have outlines
+- Final part of each layer fade-in is still jerky
+- Bottom of 2nd layer is banded, but not other layers
+    - Try changing Postprocessing &rarr; Dither from 1.0 to 2.0, but it doesn't help
+
+
+
