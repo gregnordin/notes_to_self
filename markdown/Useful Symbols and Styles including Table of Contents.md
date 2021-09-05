@@ -19,6 +19,8 @@ __<span style="font-size:200%">Contents</span>__
 
 - &#9989;
     - `&#9989;`
+- <span style="color:#32cd32; font-size:150%">&#9654;</span>
+    - `<span style="color:#32cd32; font-size:150%">&#9654;</span>`
 - <span style="color:green">&check;</span>
     - `&check` (html5) or `&#x2713;`
     - With green color: `<span style="color:green">&check;</span>`
