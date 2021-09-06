@@ -185,3 +185,41 @@ Next, go to Layout workspace and select View &rarr; Viewport Render Animation. T
 
 Go through [https://docs.blender.org/manual/en/latest/render/output/animation.html](https://docs.blender.org/manual/en/latest/render/output/animation.html) and learn about workflows - the Direct Approach and the Frame Sequence approach.
 
+**Turn off grid and XY lines**
+
+In the Layout workspace before rendering, click on `Floor` and `X`,`Y` in the dropdown menu as in the image below. Also turn off `Origins` to eliminate the little dot that denotes the center of each object.
+
+![](assets/210903_turn_off_grid_and_XY_lines.png)
+
+**Try more things**
+
+- In `210903_python_3D_layer_alpha_animate.blend`, create `frame_pairs_for_layers` in a for loop with programmatic specification of number of layers and fade-in times
+
+        start_frame = 10
+        num_fadein_frames = 15
+        num_frames_between_fadeins = 20
+        num_layers = 5
+        frame_pairs_for_layers = []
+        for i in range(num_layers):
+            base_frame = start_frame + i * (num_fadein_frames + num_frames_between_fadeins)
+            frame_pairs_for_layers.append(
+                (base_frame, base_frame + num_fadein_frames)
+            )
+        print(frame_pairs_for_layers)
+        
+        # Print output: [(10, 25), (45, 60), (80, 95), (115, 130), (150, 165)]
+
+- In `Output Properties` reduce number of frames from 250 to 185
+
+**Next**
+
+- Create a 90&deg; channel bend 3 layers tall where channel can be seen on the two visible layer stack faces. 
+    - Need function(s) that can create and place the necessary layer shapes for each exposure region.
+        - How create an L-shaped 3D object?
+    - How group them together to have joint keyframes? No &rarr; as shown in [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.youtube.com/watch?v=QnvN1dieIAU), you can just programmatically give objects the same keyframe times.
+- Animate the following cases:
+    - Conventional 3D printing method
+    - Reduced edge dose like we presented in 2017 paper (actually, there we increased the edge dose)
+        - Reduced dose in layers above channel?
+    - Reduced layer thickness along channel edges embedded in 10 &mu;m bulk layers, which is the full generalized 3D printing method in our Nature Communications paper
+- &#10060; Have an underlying surface on which to build the layers that is always visible? This is basically replacing the grid with a solid surface.
