@@ -79,6 +79,8 @@
             exec(compile(open(filename).read(), filename, 'exec'))
     
 - Use VS Code as the external editor
+    - Set up to do autocomplete
+        - Follow [Using Microsoft Visual Studio Code as external IDE for writing Blender scripts/add-ons](https://b3d.interplanety.org/en/using-microsoft-visual-studio-code-as-external-ide-for-writing-blender-scripts-add-ons/) "How to enable the autocomplete for Blender API in Visual Studio Code" using [Korchy/blender_autocomplete](https://github.com/Korchy/blender_autocomplete).
 
 
 
