@@ -17,4 +17,5 @@ python/manim_animations/.local/
 media
 .cache/
 *.blend1
+Blender/.vscode
 
