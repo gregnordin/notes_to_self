@@ -67,6 +67,20 @@
     - `bpy.ops`: that’s the real meat of the API – it’s what allows you to perform actions and call operators on your objects or your views; it’s basically how you can simulate user actions via scripting (like selecting an object, entering edit mode, applying subdivisions, changing to “flat” shading, maximising a window…)
 - Start Blender from the command line: `/Applications/Blender.app/Contents/MacOS/Blender &`
 
+## Use external code editor
+
+- [Blender docs - Use an External Editor](https://docs.blender.org/api/current/info_tips_and_tricks.html#use-an-external-editor)
+    - In Blender in a python editor window, reference and execute external script `myscript.py` relative to the blend-file:
+
+            import bpy
+            import os
+            
+            filename = os.path.join(os.path.dirname(bpy.data.filepath), "myscript.py")
+            exec(compile(open(filename).read(), filename, 'exec'))
+    
+- Use VS Code as the external editor
+
+
 
 ## Animation
 
@@ -223,3 +237,7 @@ In the Layout workspace before rendering, click on `Floor` and `X`,`Y` in the dr
         - Reduced dose in layers above channel?
     - Reduced layer thickness along channel edges embedded in 10 &mu;m bulk layers, which is the full generalized 3D printing method in our Nature Communications paper
 - &#10060; Have an underlying surface on which to build the layers that is always visible? This is basically replacing the grid with a solid surface.
+
+## Monday, 2021-09-06
+
+Try basics of running an external script file within Blender with `210906_use_external_script_file.blend` and `210906_use_external_script_file.py`.
