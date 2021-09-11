@@ -268,4 +268,8 @@ Create video. Do next operations within Blender.
     - Set quality to 100%
     - Other settings: 24 fps and render frames 1 to 170
 - In Layout workspace turn off grid, XY lines, and origin (center points of objects)
+    - Set viewport to be same as active camera: `View` &rarr; `Cameras` &rarr; `Active Camera`
+    - `View` &rarr; `Viewport render animation`. **Works**.
 - Select `Render` &rarr; `Render Animation`. It goes a lot slower than the preview method and creates a movie file with a static image. Why???
+
+[Blender Eevee Tutorial: Animation and Render](https://www.youtube.com/watch?v=9817LRCcnYk) at about 8:40 shows how to change interpolation between keyframes. Timeline &rarr; Dope Sheet &rarr; turn off "Only show selected" arrowhead so that all of the keyframes are shown on the timeline. Then select an object &rarr; Channel &rarr; Extrapolation mode &rarr; Linear Extrapolation (`bpy.ops.action.extrapolation_type(type='LINEAR'`).
