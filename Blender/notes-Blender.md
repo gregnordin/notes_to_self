@@ -28,6 +28,8 @@
 - Rotate - option with 1 finger on trackpad OR 2 fingers unclicked on track pad
 - Move - shift-option with 1 finger clicked on mousepad
 - Recenter on selected object(s) - View menu &rarr; Frame Selected
+- **Set viewport to be the same as the active camera**
+    - `View` &rarr; `Cameras` &rarr; `Active Camera` (same as Numpad 0, but I don't have a number pad)
 
 ## Interface
 
