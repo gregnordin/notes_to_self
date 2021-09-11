@@ -185,7 +185,7 @@ With the camera in the right position, now try rendering a video. To make the re
 
 Next, go to Layout workspace and select View &rarr; Viewport Render Animation. This will render the animation. I did a bunch of other stuff and there was only a static image of the final scene for all of the frames in the output (don't use from the main menu Renderer &rarr; Render Animation). Some good points can be found here, but not the last step as I just noted: [[2.8] Blender : How to Render an Animation in EEVEE](https://www.youtube.com/watch?v=nQXQCT_hKSs).
 
-- Change resolution back to 1920x180
+- Change resolution back to 1920x1080
 - Choose AVI JPEG file format
 - Set quality to 100%
 - Other settings: 24 fps and render frames 1 to 250
@@ -248,6 +248,22 @@ Try basics of running an external script file within Blender with `210906_use_ex
 
 **To do**
 
-- Run code from 2021-09-06 in external file edited with VS Code and produce a video to make sure full workflow still works.
+- Run code from 2021-09-03 in external file edited with VS Code and produce a video to make sure full workflow still works.
 - Increase number of layers and change camera position to accommodate.
 - Start to do L-shaped channel animation.
+
+**Run 2021-09-03 from external file and produce a video**
+
+- Move code verbatim to external python file.
+- Start new blender file, go to Scripting workspace, create edit window, paste in short code to execute external python file.
+
+Create video. Do next operations within Blender.
+
+- Go to Animation workspace
+- In output pane:
+    - Keep 1920x1080 resolution
+    - Choose AVI JPEG file format
+    - Set quality to 100%
+    - Other settings: 24 fps and render frames 1 to 170
+- In Layout workspace turn off grid, XY lines, and origin (center points of objects)
+- Select `Render` &rarr; `Render Animation`. It goes a lot slower than the preview method and creates a movie file with a static image. Why???
