@@ -59,7 +59,7 @@
 - Select `Scripting` from menu along top left of window. This puts the interface into a scripting-friendly state.
 - Click on the `+ New` button of the Text Editor to bring up a new text editor window.
 - Type `print('hello world')` in text editor.
-- Run by clicking the run icon of the Text Editor or hitting `cmd-p` (`alt-p` on Windows) while mouse is anywhere within text editor window.
+- Run by clicking the run icon of the Text Editor or hitting `option-p` (`alt-p` on Windows) while mouse is anywhere within text editor window.
 - <span style="color:red; font-size:150%">&#x2605;</span> [Create 3D objects and animations in Blender with Python API](https://demando.se/blogg/post/dev-generating-a-procedural-solar-system-with-blenders-python-api/)
 - `import bpy`
     - `bpy.context`: it contains getters and readers on read-only values that describe your current working context or even the area (i.e. the panel in your window) that is currently being accessed
@@ -174,7 +174,7 @@ Found [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.y
 
 **Things I tried**
 
-Use solution at [How to set camera location in the scene while pointing towards an object with a fixed distance](https://blender.stackexchange.com/questions/100414/how-to-set-camera-location-in-the-scene-while-pointing-towards-an-object-with-a) to set camera distance from origin, looking at the origin in `210903_python_3D_layer_alpha_animate.blend`. Works well.
+Use solution at [How to set camera location in the scene while pointing towards an object with a fixed distance](https://blender.stackexchange.com/questions/100414/how-to-set-camera-location-in-the-scene-while-pointing-towards-an-object-with-a) to set camera distance from origin, looking at the origin in `210903_python_3D_layer_alpha_animate.blend`. **Works well.**
 
 With the camera in the right position, now try rendering a video. To make the render process go much faster, do the following in the output panel:
 
@@ -242,4 +242,4 @@ In the Layout workspace before rendering, click on `Floor` and `X`,`Y` in the dr
 
 ## Monday, 2021-09-06
 
-Try basics of running an external script file within Blender with `210906_use_external_script_file.blend` and `210906_use_external_script_file.py`.
+Try basics of running an external script file within Blender with `210906_use_external_script_file.blend` and `210906_use_external_script_file.py` and set up VS Code to do blender autocompletes.
