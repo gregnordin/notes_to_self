@@ -243,3 +243,11 @@ In the Layout workspace before rendering, click on `Floor` and `X`,`Y` in the dr
 ## Monday, 2021-09-06
 
 Try basics of running an external script file within Blender with `210906_use_external_script_file.blend` and `210906_use_external_script_file.py` and set up VS Code to do blender autocompletes.
+
+## Saturday, 2021-09-11
+
+**To do**
+
+- Run code from 2021-09-06 in external file edited with VS Code and produce a video to make sure full workflow still works.
+- Increase number of layers and change camera position to accommodate.
+- Start to do L-shaped channel animation.
