@@ -70,7 +70,7 @@ def make_layer(name, xy_layer_size, z_layer_size, z_position):
 
 
 clean_up()
-update_camera(bpy.data.objects["Camera"], distance=22.0)
+update_camera(bpy.data.objects["Camera"], distance=25.0)
 # set_show_floor(False)
 
 xy_layer_size = 10
@@ -84,10 +84,10 @@ final_color_RGBA = (*color_RGB, 1)  # opaque
 # Create list of pairs of frames where keyframes will be inserted.
 # The first frame in each pair is when a layer starts with alpha = 0
 # and the second is when it finishes with alpha = 1.
-start_frame = 10
+start_frame = 5
 num_fadein_frames = 15
-num_frames_between_fadeins = 20
-num_layers = 5
+num_frames_between_fadeins = 10
+num_layers = 6
 frame_pairs_for_layers = []
 for i in range(num_layers):
     base_frame = start_frame + i * (num_fadein_frames + num_frames_between_fadeins)
