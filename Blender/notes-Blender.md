@@ -309,3 +309,12 @@ Or:
     class animated_object:
         object with its material
         set keyframes and colors
+        
+Hmm, trying things out and the `mesh.primitive_cube_add()` is problematic. Need alternatives.
+
+- [Boolean difference modifier](https://docs.blender.org/manual/en/latest/modeling/modifiers/introduction.html#example)
+- [How to join objects with Python?](https://blender.stackexchange.com/questions/13986/how-to-join-objects-with-python)
+- [Shadows on alpha channel PNG's and eevee](https://blender.stackexchange.com/questions/123607/shadows-on-alpha-channel-pngs-and-eevee) &rarr; uses Alpha Clip mode instead of Alpha Blend
+
+
+Learn how to difference 2 objects: [Boolean difference not making any diiference (Python scripting)](https://blender.stackexchange.com/questions/48160/boolean-difference-not-making-any-diiference-python-scripting) - **very good**. Implement it in `210911_difference_two_objects.blend`.
