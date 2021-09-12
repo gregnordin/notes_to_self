@@ -3,7 +3,7 @@
 import bpy
 import os
 
-filename = os.path.join(os.path.dirname(bpy.data.filepath), "210906_use_external_script_file.py")
+filename = os.path.join(os.path.dirname(bpy.data.filepath), "my_script.py")
 exec(compile(open(filename).read(), filename, 'exec'))
 
 """
