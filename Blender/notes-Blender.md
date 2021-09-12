@@ -251,7 +251,7 @@ Try basics of running an external script file within Blender with `210906_use_ex
 **To do**
 
 - &#9989; Run code from 2021-09-03 in external file edited with VS Code and produce a video to make sure full workflow still works.
-- Increase number of layers and change camera position to accommodate.
+- &#9989; Increase number of layers and change camera position to accommodate.
 - Start to do L-shaped channel animation.
 
 **Run 2021-09-03 from external file and produce a video**
@@ -275,3 +275,37 @@ Create video. Do next operations within Blender.
     - [Eevee render not looking same as my viewport!](https://www.reddit.com/r/blender/comments/iioc2m/eevee_render_not_looking_the_same_as_my_viewport/g380a7d/) - good thread.
 - Change output folder for rendered animations to `~/Downloads/renderings` from `/tmp`
 
+**Data structures and algorithm**
+
+    Create z positions as floats
+    Use each z position as a key in a dict
+    For each key, have a list of objects, each with their own material
+    Create a list of frame index tuples like [(frame0, frame1), (frame2, frame3), ...]
+    Create objects and put them into the appropriate z position's list in the dict
+    Loop over the dict
+
+Or:
+    
+    dict:
+    {z_position_1: {
+        'objects': [],
+        'beginning_frame': XX,
+        'ending_frame': YY
+        }
+    }
+
+Or:
+    
+    class Layer:
+        z_position
+        objects
+        beginning_frame
+        ending_frame
+    Create list of objects ordered by increasing z position
+    Loop over the list, setting keyframes and colors?
+
+Or:
+    
+    class animated_object:
+        object with its material
+        set keyframes and colors
