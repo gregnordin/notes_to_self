@@ -250,7 +250,7 @@ Try basics of running an external script file within Blender with `210906_use_ex
 
 **To do**
 
-- Run code from 2021-09-03 in external file edited with VS Code and produce a video to make sure full workflow still works.
+- &#9989; Run code from 2021-09-03 in external file edited with VS Code and produce a video to make sure full workflow still works.
 - Increase number of layers and change camera position to accommodate.
 - Start to do L-shaped channel animation.
 
@@ -271,5 +271,7 @@ Create video. Do next operations within Blender.
     - Set viewport to be same as active camera: `View` &rarr; `Cameras` &rarr; `Active Camera`
     - `View` &rarr; `Viewport render animation`. **Works**.
 - Select `Render` &rarr; `Render Animation`. It goes a lot slower than the preview method and creates a movie file with a static image. Why???
+    - [Blender Eevee Tutorial: Animation and Render](https://www.youtube.com/watch?v=9817LRCcnYk) at about 8:40-9:05 shows how to change interpolation between keyframes. Timeline &rarr; Dope Sheet &rarr; turn off "Only show selected" arrowhead so that all of the keyframes are shown on the timeline. Then select an object &rarr; Channel &rarr; Extrapolation mode &rarr; Linear Extrapolation (`bpy.ops.action.extrapolation_type(type='LINEAR'`). I've tried figuring out how to set this programmatically with python, but no luck for now. I need to move on.
+    - [Eevee render not looking same as my viewport!](https://www.reddit.com/r/blender/comments/iioc2m/eevee_render_not_looking_the_same_as_my_viewport/g380a7d/) - good thread.
+- Change output folder for rendered animations to `~/Downloads/renderings` from `/tmp`
 
-[Blender Eevee Tutorial: Animation and Render](https://www.youtube.com/watch?v=9817LRCcnYk) at about 8:40 shows how to change interpolation between keyframes. Timeline &rarr; Dope Sheet &rarr; turn off "Only show selected" arrowhead so that all of the keyframes are shown on the timeline. Then select an object &rarr; Channel &rarr; Extrapolation mode &rarr; Linear Extrapolation (`bpy.ops.action.extrapolation_type(type='LINEAR'`).
