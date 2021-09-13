@@ -332,3 +332,15 @@ Learn how to difference 2 objects: [Boolean difference not making any diiference
 - Still need to figure out how to render animation rather than viewport render animation.
 
 
+## Monday, 2021-09-13
+
+[2.91 Python API No change after applying boolean modifier operator](https://blender.stackexchange.com/questions/196816/2-91-python-api-no-change-after-applying-boolean-modifier-operator).
+
+- Implement the code in the final answer and see how it works. Works fine. Moves subtractive objects so they are not in the View Layer.
+- Add my `clean_up()` code and it deletes objects in View Layer and then crashes:
+
+        Info: Deleted 3 object(s)
+        Traceback (most recent call last):
+          File "/Users/nordin/Documents/Projects/notes_to_self/Blender/210913_stackexchange_example_difference.blend/Text", line 151, in <module>
+          File "/Users/nordin/Documents/Projects/notes_to_self/Blender/210913_stackexchange_example_difference.blend/Text", line 147, in clean_up
+        RuntimeError: Error: Object 'attach_hulls' can't be selected because it is not in View Layer 'View Layer'!
