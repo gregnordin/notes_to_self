@@ -318,3 +318,17 @@ Hmm, trying things out and the `mesh.primitive_cube_add()` is problematic. Need 
 
 
 Learn how to difference 2 objects: [Boolean difference not making any diiference (Python scripting)](https://blender.stackexchange.com/questions/48160/boolean-difference-not-making-any-diiference-python-scripting) - **very good**. Implement it in `210911_difference_two_objects.blend`.
+
+**Use different method of making a 3D layer object that gets ride of the scaling problem I was having by creating a primitive cube with no arguments and then changing its `.scale` property, followed by changing its `.location` property to put it where I want it.**
+
+**I now have successful boolean difference to create channel layers**.
+
+**To do**
+
+- Problem with `clean_up` where it crashes on objects that are unlinked. **Need to fix.**
+    - [How to delete object from scene through the Blender Python API](https://b3d.interplanety.org/en/how-to-delete-object-from-scene-through-the-blender-python-api/)
+    - in code, print objects in for loop.
+    - Delete by hand?
+- Still need to figure out how to render animation rather than viewport render animation.
+
+

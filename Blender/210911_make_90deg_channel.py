@@ -21,31 +21,72 @@ def make_material(name, diffuse_color, specular_color):
     return mat
 
 
-def make_layer(name, xy_layer_size, z_layer_size, z_position):
-    layer_scale = (1, 1, z_layer_size / xy_layer_size)
-    layer = bpy.ops.mesh.primitive_cube_add(
-        size=xy_layer_size,
-        scale=layer_scale,
-        location=(0, 0, z_layer_size / 2 + z_position),
-    )
-    bpy.context.object.name = name
+def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
+    bpy.ops.mesh.primitive_cube_add(size=1)
+    layer = bpy.context.object
+    layer.scale = (x_layer_size, y_layer_size, z_layer_size)
+    layer.location = (0, 0, z_layer_size / 2 + z_position)
+    layer.name = name
+    print("layer from context object:", layer)
     return layer
 
 
-def make_inner_corner(name, xy_layer_size, z_layer_size, z_position, channel_width):
-    inner_corner_size = (xy_layer_size - channel_width) / 2
-    layer_scale = (1, 1, z_layer_size / inner_corner_size)  # xy_layer_size)
-    inner_corner_location = inner_corner_size + channel_width
-    layer = bpy.ops.mesh.primitive_cube_add(
-        size=inner_corner_size,
-        scale=layer_scale,
-        location=(
-            inner_corner_location / 2,
-            -inner_corner_location / 2,
-            z_layer_size / 2 + z_position,
-        ),
+# First try, but channel object is visible
+def make_channel_layer(
+    name, x_layer_size, y_layer_size, z_layer_size, z_position, channel_width
+):
+    # Make base layer object
+    layer = make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position)
+
+    # Create channel object. Oversize it a bit in x and z so we get a
+    # clean difference operation because surfaces are not coincident.
+    delta_x = 0.5
+    delta_z = 0.2
+    channel = make_layer(
+        name + "_chan",
+        x_layer_size + delta_x,
+        channel_width,
+        z_layer_size + delta_z,
+        z_position - delta_z / 2,
     )
-    bpy.context.object.name = name
+
+    # Add modifier to do a boolean difference between layer and channel
+    mod = layer.modifiers.new("BoolDifference", type="BOOLEAN")
+    mod.operation = "DIFFERENCE"
+    mod.object = channel
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+
+    # Make channel object not visible
+    bpy.context.collection.objects.unlink(channel)
+
+    return layer
+
+
+def make_channel_layer2(
+    name, x_layer_size, y_layer_size, z_layer_size, z_position, channel_width
+):
+    # Make base layer object
+    layer = make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position)
+
+    # Create channel object. Oversize it a bit in x and z so we get a
+    # clean difference operation because surfaces are not coincident.
+    delta_x = 0.5
+    delta_z = 0.2
+    bpy.ops.mesh.primitive_cube_add(size=1)
+    channel = bpy.context.object
+    channel.scale = (x_layer_size + delta_x, channel_width, z_layer_size + delta_z)
+    channel.location = (0, 0, z_layer_size / 2 + z_position)
+    channel.name = name + "_chan"
+
+    # Add modifier to do a boolean difference between layer and channel
+    mod = layer.modifiers.new("SomeName", type="BOOLEAN")
+    mod.operation = "DIFFERENCE"
+    mod.object = channel
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+
+    # Make channel object to not be visible
+    bpy.context.collection.objects.unlink(channel)
+
     return layer
 
 
@@ -77,7 +118,9 @@ print(frame_pairs_for_layers)
 # frame_pairs_for_layers = [(10, 25), (50, 65), (90, 105), (130, 145)]
 
 channel_layer_indices = [1, 2, 3, 4]
+# channel_layer_indices = []
 
+print()
 for i, fp in enumerate(frame_pairs_for_layers):
 
     # Make layer object and material
@@ -85,14 +128,16 @@ for i, fp in enumerate(frame_pairs_for_layers):
     layer_name = f"Layer_{layer_str}"
     z = i * z_layer_size
     if i in channel_layer_indices:
-        layer = make_inner_corner(
-            layer_name, xy_layer_size, z_layer_size, z, channel_width
+        layer = make_channel_layer(
+            layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width
         )
     else:
-        layer = make_layer(layer_name, xy_layer_size, z_layer_size, z)
-    mat = make_material(f"Material_{layer_str}", final_color_RGBA, color_RGB)
-    current_layer = bpy.data.objects[layer_name]
-    current_layer.active_material = mat
+        layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
+    mat = make_material(f"Material_{layer_str}", start_color_RGBA, color_RGB)
+    print(layer)
+    # current_layer = layer  # bpy.data.objects[layer_name]
+    layer.active_material = mat
+    print(i, z, layer.scale, layer.location)
 
     # Start frame for layer
     mat.diffuse_color = start_color_RGBA
@@ -100,5 +145,5 @@ for i, fp in enumerate(frame_pairs_for_layers):
     # End frame for layer
     mat.diffuse_color = final_color_RGBA
     mat.keyframe_insert(data_path="diffuse_color", frame=fp[1], index=-1)
-
+print()
 print("Finished")
