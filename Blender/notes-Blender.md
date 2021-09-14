@@ -419,6 +419,17 @@ Specific shaders
 - View &rarr; Viewport Render Animation &rArr; Good animation!
 - Render &rarr; Render Animation &rArr; **Good animation from camera perspective!**
     - No evidence of edge lines
-    - Smooth fade-in and fade-out animation with no jerk at end of each
+    - Smooth fade-in and fade-out animation with no jerk at end of coming to full transparency
 
 
+## Next:
+
+Apply this to 3D printed layer animation:
+
+- Create material and apply it to objects (need unique material for each?? Can materials be cloned so can set up several base materials at beginning of code and just clone them for each layer?)
+    - How programmatically create material from python?
+- Create animation, adding keyframes and changing alpha of materials, start with just bulk layers
+- Then apply to channel layers made with boolean difference operation
+- Do more complicated boolean difference operation to get 90&deg; channel bends
+- Do edge exposure case with secondary images
+- Do embedded different layer thicknesses and multiple exposure times
