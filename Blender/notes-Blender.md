@@ -397,5 +397,15 @@ Specific shaders
 
 What I've learned:
 
-- Mix Shader Fac controls the ultimate transparency when P-BSDF Alpha &rarr; 1.0.
-- Show Backface does exactly what it says. When checked, Backface Culling removes backface so it looks the same as if Show Backface is unchecked. 
+- For P-BSDF and T-BSDF put through a Mix Shader (with texture image):
+    - Mix Shader Fac controls the ultimate transparency when P-BSDF Alpha &rarr; 1.0.
+    - Show Backface does exactly what it says. When checked, Backface Culling removes backface so it looks the same as if Show Backface is unchecked. 
+- For P-BSDF with texture image:
+    - Varying Alpha changes the overall transparency of the object
+    - Absolutely turn off Show Backface!
+- For P-BSDF with manually set Base Color (no texture image):
+    - Varying Alpha changes the overall transparency of the object
+    - Absolutely turn off Show Backface!
+    - **So, same as if use a texture image**
+
+
