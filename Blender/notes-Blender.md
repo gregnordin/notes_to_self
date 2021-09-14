@@ -344,3 +344,41 @@ Learn how to difference 2 objects: [Boolean difference not making any diiference
           File "/Users/nordin/Documents/Projects/notes_to_self/Blender/210913_stackexchange_example_difference.blend/Text", line 151, in <module>
           File "/Users/nordin/Documents/Projects/notes_to_self/Blender/210913_stackexchange_example_difference.blend/Text", line 147, in clean_up
         RuntimeError: Error: Object 'attach_hulls' can't be selected because it is not in View Layer 'View Layer'!
+
+
+[How to use alpha transparent textures in Blender](https://artisticrender.com/how-to-use-alpha-transparent-textures-in-blender/). See section: "What is the differences between blend modes in Eevee?". Need to use `Alpha Blend`.
+
+[Shader Nodes &rarr; Introduction](https://docs.blender.org/manual/en/latest/render/shader_nodes/introduction.html)
+
+>An important concept to understand when building node setups is that of the shader socket. The output of all surface and volume shaders is a shader, describing lighting interaction at the surface or of the volume, rather than the color of the surface.
+
+>There are a few types of shaders available as nodes:
+
+>BSDF shader  
+Describe light reflection, refraction and absorption at an object surface.
+
+>Emission shader  
+Describe light emission at an object surface or in a volume.
+
+>Volume shader  
+Describe light scattering inside a volume.
+
+>Background shader  
+Describe light emission from the environment.
+
+>Each shader node has a color input, and outputs a shader. These can then be mixed and added together using Mix and Add Shader nodes. No other operations are permitted. The resulting output can then be used by the renderer to compute all light interactions, for direct lighting or global illumination.
+
+Specific shaders
+
+[Transparent BSDF](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/transparent.html) - *used to add transparency without refraction, passing straight through the surface, as if there were no geometry there. ... Note that only pure white transparent shaders are completely transparent.*
+
+[Principled BSDF](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html) - *combines multiple layers into a single easy to use node.*
+
+[Specular BSDF](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/specular_bsdf.html) - Eevee Only - *combines multiple layers into a single easy to use node.*
+
+[Mix Shader](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/mix.html) - *used to mix two shaders together.*
+
+
+# Tuesday, 2021-09-14
+
+<span style="color:red; font-size:150%">&#x2605;</span> Watch [Blender 2.9+ Basic Material Transparency](https://www.youtube.com/watch?v=esIKF8WvaVg) from [Basic Alpha Transparency](https://www.katsbits.com/codex/alpha/#blender-29-transparency).
