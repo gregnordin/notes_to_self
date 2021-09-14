@@ -382,3 +382,20 @@ Specific shaders
 # Tuesday, 2021-09-14
 
 <span style="color:red; font-size:150%">&#x2605;</span> Watch [Blender 2.9+ Basic Material Transparency](https://www.youtube.com/watch?v=esIKF8WvaVg) from [Basic Alpha Transparency](https://www.katsbits.com/codex/alpha/#blender-29-transparency).
+
+- Go to Shading workspace
+- Select `Display render preview` in main 3D window
+- Mix Shader Fac: 0.5
+- Transparent BSDF (T-BSDF) Color: White
+- Principled BSDF (P-BSDF):
+    - In Shading workspace, add Texture &rarr; Image Texture and choose image `golden.png`.
+    - **Vary Alpha to control transparency**
+- Material Settings:
+    - Blend Mode: Alpha Blend
+    - Shadow Mode: None &rarr; critical
+    - `Show Backface` makes object semi-transparent (i.e., can partially see through to backfaces of object) when Alpha set to 1.0. Uncheck and object is transparent but can't see backfaces of object, can see things behind the object. 
+
+What I've learned:
+
+- Mix Shader Fac controls the ultimate transparency when P-BSDF Alpha &rarr; 1.0.
+- Show Backface does exactly what it says. When checked, Backface Culling removes backface so it looks the same as if Show Backface is unchecked. 
