@@ -381,6 +381,8 @@ Specific shaders
 
 # Tuesday, 2021-09-14
 
+## Using nodes for material and shading with transparency
+
 <span style="color:red; font-size:150%">&#x2605;</span> Watch [Blender 2.9+ Basic Material Transparency](https://www.youtube.com/watch?v=esIKF8WvaVg) from [Basic Alpha Transparency](https://www.katsbits.com/codex/alpha/#blender-29-transparency).
 
 - Go to Shading workspace
@@ -395,17 +397,28 @@ Specific shaders
     - Shadow Mode: None &rarr; critical
     - `Show Backface` makes object semi-transparent (i.e., can partially see through to backfaces of object) when Alpha set to 1.0. Uncheck and object is transparent but can't see backfaces of object, can see things behind the object. 
 
-What I've learned:
+### What I've learned:
 
-- For P-BSDF and T-BSDF put through a Mix Shader (with texture image):
+1. For P-BSDF and T-BSDF put through a Mix Shader (with texture image):
     - Mix Shader Fac controls the ultimate transparency when P-BSDF Alpha &rarr; 1.0.
     - Show Backface does exactly what it says. When checked, Backface Culling removes backface so it looks the same as if Show Backface is unchecked. 
-- For P-BSDF with texture image:
+2. For P-BSDF with texture image:
     - Varying Alpha changes the overall transparency of the object
     - Absolutely turn off Show Backface!
-- For P-BSDF with manually set Base Color (no texture image):
+3. For P-BSDF with manually set Base Color (no texture image):
     - Varying Alpha changes the overall transparency of the object
     - Absolutely turn off Show Backface!
     - **So, same as if use a texture image**
+
+## Transparency animation fixing all of my previous problems
+
+- Use #3 above (only P-BSDF with manually set Base Color)
+- Set 3D view Viewport Shading in upper right corner to `Display render preview`
+- Manually add keyframes at frames 1, 30, 45 with Alpha = 1, 0.023, 0.87, respectively
+- In `Output Properties` set `File Format` to `AVI JPEG` and End frame to 65
+- View &rarr; Viewport Render Animation &rArr; Good animation!
+- Render &rarr; Render Animation &rArr; **Good animation from camera perspective!**
+    - No evidence of edge lines
+    - Smooth fade-in and fade-out animation with no jerk at end of each
 
 
