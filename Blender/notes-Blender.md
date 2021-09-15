@@ -397,6 +397,13 @@ Specific shaders
     - Shadow Mode: None &rarr; critical
     - `Show Backface` makes object semi-transparent (i.e., can partially see through to backfaces of object) when Alpha set to 1.0. Uncheck and object is transparent but can't see backfaces of object, can see things behind the object. 
 
+Principled and Transparent BSDF into Mix Shader with image texture:  
+![](assets/Principled and Transparent BSDF into Mix Shader with image texture.png)  
+Principled with base color and Transparent BSDF into Mix Shader:  
+![](assets/Principled and Transparent BSDF into Mix Shader.png)  
+Principled BSDF with base color only:  
+![](assets/Principled BSDF only.png)  
+
 ### What I've learned:
 
 1. For P-BSDF and T-BSDF put through a Mix Shader (with texture image):
