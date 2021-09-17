@@ -480,3 +480,44 @@ Info:
 Try to get `clean_up()` to work, but after an hour it won't so give up and delete everything manually in between runs of the script.
 
 Success making a camera, light source, single layer with Principled BSDF that renders.
+
+### Workflow
+
+- Blender file with all objects and materials deleted but with stub python code to read and execute external python file.
+    - To create blender file, create a new file and save it with some name, `my_file.blend`.
+    - In Blender: 
+        - Position mouse over 3D View window. 
+        - Type `a`, which selects all objects (the Light, Cube, and Camera). 
+        - Type `x` and hit return to delete all objects.
+        - Click the `Scripting` tab to be in the scripting workspace.
+        - At the top of the central window, click `+ New` to create a new text window.
+        - Paste the following python code into the text window:
+
+                import bpy
+                import os
+                
+                filename = os.path.join(os.path.dirname(bpy.data.filepath), "my_file.py")
+                exec(compile(open(filename).read(), filename, 'exec'))
+            
+    - In VS Code:
+        - Create new python file `my_file.py` in the same directory as `my_file.blend`.
+        - Paste following code into python file:
+
+                import bpy
+                from math import pi
+                
+                # Add blender file directory to the python path
+                import sys
+                blender_file_path = str(bpy.path.abspath("//"))
+                if blender_file_path not in sys.path:
+                    sys.path.append(blender_file_path)
+                # print()
+                # print(sys.path)
+
+        - You can now import code from any python modules in the same directory and write code in this file that Blender will execute. If you have set up VS Code properly, you will have Blender code completions, which is extremely useful.
+    - To execute external python code in `my_file.py` in Blender:
+        - Click the `Scripting` tab to be in the scripting workspace.
+        - With mouse anywhere in the python text window, type `option p`, which executes the code in the python text window, which in turn executes the external python file.
+- Execute external python file to try something.
+- Do not save blender file. Instead, re-open original blender file and try new external python code again. It's either that or manually select all objects and materials and delete them before trying modified external python code.
+- To create Camera, Light, and material(s), use info in [Blender 3D — How to create and render a scene in Blender using Python API, by Armindo Cachada | Jun 7, 2021](https://spltech.co.uk/blender-3d%E2%80%8A-%E2%80%8Ahow-to-create-and-render-a-scene-in-blender-using-python-api/).

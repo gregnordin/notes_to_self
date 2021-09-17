@@ -82,7 +82,7 @@ mat.use_nodes = True
 mat_nodes = mat.node_tree.nodes
 # let's set the metallic to 1.0
 mat_nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.0
-mat_nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.2
+mat_nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.4
 mat_nodes["Principled BSDF"].inputs["Base Color"].default_value = (
     *color_RGB,
     1.0,
