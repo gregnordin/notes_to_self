@@ -53,9 +53,11 @@ light_location = (4.0762, 1.0055, 5.9039)
 light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
 
 # Point light
-def point_light(power=1000.0, location=light_location, rotation=light_rotation):
-    light_data = bpy.data.lights.new("Light_pt", type="POINT")
-    light = bpy.data.objects.new("Light_pt", light_data)
+def point_light(
+    power=1000.0, name="Light_pt", location=light_location, rotation=light_rotation
+):
+    light_data = bpy.data.lights.new(name, type="POINT")
+    light = bpy.data.objects.new(name, light_data)
     bpy.context.collection.objects.link(light)
     light.location = light_location
     light.rotation_euler = light_rotation
@@ -64,9 +66,15 @@ def point_light(power=1000.0, location=light_location, rotation=light_rotation):
 
 
 # Sun light
-def sun_light(power=2.5, angle=135, location=light_location, rotation=light_rotation):
-    light_data = bpy.data.lights.new("Light_sun", type="SUN")
-    light = bpy.data.objects.new("Light_sun", light_data)
+def sun_light(
+    power=2.5,
+    angle=135,
+    name="Light_sun",
+    location=light_location,
+    rotation=light_rotation,
+):
+    light_data = bpy.data.lights.new(name, type="SUN")
+    light = bpy.data.objects.new(name, light_data)
     bpy.context.collection.objects.link(light)
     light.location = light_location
     light.rotation_euler = light_rotation
@@ -76,8 +84,30 @@ def sun_light(power=2.5, angle=135, location=light_location, rotation=light_rota
     return light
 
 
-light_pt = point_light()
-light_sun = sun_light()
+# Area light
+def area_light(
+    power=800,
+    size=5.0,
+    name="Light_area",
+    location=light_location,
+    rotation=light_rotation,
+):
+    light_data = bpy.data.lights.new(name, type="AREA")
+    light = bpy.data.objects.new(name, light_data)
+    bpy.context.collection.objects.link(light)
+    light.location = light_location
+    light.rotation_euler = light_rotation
+    light.data.energy = power
+    light.data.specular_factor = 0.2
+    light.data.shape = "SQUARE"
+    light.data.size = size
+    return light
+
+
+# light_sun = sun_light()
+# light_pt = point_light()
+light_area = area_light()
+# light_area2 = area_light(power=1000, size=2.5, name="Light_area2")
 
 # Camera
 # we first create the camera object

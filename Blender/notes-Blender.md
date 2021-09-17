@@ -546,3 +546,5 @@ To create a light and set its properties in python code in the external file:
     light.data.energy = power
     light.data.specular_factor = 0.4
     light.data.angle = angle * pi / 180.0
+
+Create functions to make Sun, Area, and Point lights.
