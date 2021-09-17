@@ -451,4 +451,27 @@ Look up information about creating materials in Blender with Nodes:
 
 # Thursday, 2021-09-16
 
+## Info
+
 <span style="color:red; font-size:150%">&#x2605;</span> [Blender 3D — How to create and render a scene in Blender using Python API, by Armindo Cachada | Jun 7, 2021](https://spltech.co.uk/blender-3d%E2%80%8A-%E2%80%8Ahow-to-create-and-render-a-scene-in-blender-using-python-api/) - *In this article, I will show you how you can create a scene in Blender, using the Python 2.93 Blender API.* - Cube, plane, light source, camera and constraining camera to point at an object (very easy to do).
+
+## Task
+
+### Objective
+
+Create from scratch entire scene (light, camera, layers (no channels), materials) from python. When re-run script, delete everything and start fresh.
+
+Info:
+
+    Camera
+    Location: 16.344, -15.382, 11.012
+    Rotation (XYZ Euler): 63.9, 0.0, 46.7
+    
+    Light
+    Point, 1000 W, Diffuse = Specular = Volume = 1.0, Radius = 0.1 m
+    Location: 4.0762, 1.0055, 5.9039
+    Rotation (XYZ Euler): 37.3, 3.16, 107
+
+### Files
+  
+`210916_uniform_layers_with_materials.py`, `210916_uniform_layers_with_materials.blend`
