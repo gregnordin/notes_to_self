@@ -485,3 +485,64 @@ Success making a camera, light source, single layer with Principled BSDF that re
 # Friday, 2021-09-17
 
 Learn how to set a material's blend mode, shadow, and showing backface from python code.
+
+## Play with light sources
+
+Some reasonable combinations (all sources are at the location and angles mentioned 9/16/21 above.
+
+**Sun**  
+Strength: 1.8
+Diffuse: 1.0  
+Specular: 0.4  
+Volume: 1.0  
+Angle: 0.526 deg
+
+**Sun** - gives better side coverage on the left side  
+Strength: 2.5
+Diffuse: 1.0  
+Specular: 0.4  
+Volume: 1.0  
+Angle: 135 deg
+
+**Point**  
+Power: 1000  
+Diffuse: 1.0  
+Specular: 1.0  
+Volume: 1.0  
+Radius: 0.25 m  
+
+**Area**  
+Power: 800  
+Diffuse: 1.0  
+Specular: 0.2  
+Volume: 1.0  
+Shape: Square  
+Size: 5 m  
+
+To get properties of a light object, in the Blender terminal execute, for example:
+
+    >>> dir(bpy.data.lights['Light_sun'])
+    ['__doc__', '__module__', '__slots__', 'angle', 'animation_data', 'animation_data_clear',
+     'animation_data_create', 'asset_data', 'bl_rna', 'color', 'contact_shadow_bias',
+     'contact_shadow_distance', 'contact_shadow_thickness', 'copy', 'cutoff_distance',
+     'cycles', 'diffuse_factor', 'distance', 'energy', 'evaluated_get', 'is_embedded_data', 
+     'is_evaluated', 'is_library_indirect', 'library', 'make_local', 'name', 'name_full', 
+     'node_tree', 'original', 'override_create', 'override_library', 
+     'override_template_create', 'preview', 'rna_type', 'shadow_buffer_bias', 
+     'shadow_buffer_clip_start', 'shadow_buffer_samples', 'shadow_buffer_size', 
+     'shadow_cascade_count', 'shadow_cascade_exponent', 'shadow_cascade_fade', 
+     'shadow_cascade_max_distance', 'shadow_color', 'shadow_soft_size', 'specular_factor', 
+     'tag', 'type', 'update_tag', 'use_contact_shadow', 'use_custom_distance', 
+     'use_fake_user', 'use_nodes', 'use_shadow', 'user_clear', 'user_of_id', 'user_remap', 
+     'users', 'volume_factor']
+
+To create a light and set its properties in python code in the external file:
+
+    light_data = bpy.data.lights.new("Light_sun", type="SUN")
+    light = bpy.data.objects.new("Light_sun", light_data)
+    bpy.context.collection.objects.link(light)
+    light.location = light_location
+    light.rotation_euler = light_rotation
+    light.data.energy = power
+    light.data.specular_factor = 0.4
+    light.data.angle = angle * pi / 180.0

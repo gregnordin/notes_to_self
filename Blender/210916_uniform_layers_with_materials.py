@@ -48,13 +48,36 @@ color_RGB = (1, 0.7, 0.2)  # golden
 start_color_RGBA = (*color_RGB, 0)  # transparent
 final_color_RGBA = (*color_RGB, 1)  # opaque
 
-# Light
-light_data = bpy.data.lights.new("Light", type="POINT")
-light = bpy.data.objects.new("Light", light_data)
-bpy.context.collection.objects.link(light)
-light.location = (4.0762, 1.0055, 5.9039)
-light.rotation_euler = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
-light.data.energy = 200.0
+# Lights
+light_location = (4.0762, 1.0055, 5.9039)
+light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
+
+# Point light
+def point_light(power=1000.0, location=light_location, rotation=light_rotation):
+    light_data = bpy.data.lights.new("Light_pt", type="POINT")
+    light = bpy.data.objects.new("Light_pt", light_data)
+    bpy.context.collection.objects.link(light)
+    light.location = light_location
+    light.rotation_euler = light_rotation
+    light.data.energy = power
+    return light
+
+
+# Sun light
+def sun_light(power=2.5, angle=135, location=light_location, rotation=light_rotation):
+    light_data = bpy.data.lights.new("Light_sun", type="SUN")
+    light = bpy.data.objects.new("Light_sun", light_data)
+    bpy.context.collection.objects.link(light)
+    light.location = light_location
+    light.rotation_euler = light_rotation
+    light.data.energy = power
+    light.data.specular_factor = 0.4
+    light.data.angle = angle * pi / 180.0
+    return light
+
+
+light_pt = point_light()
+light_sun = sun_light()
 
 # Camera
 # we first create the camera object
@@ -80,24 +103,14 @@ layer.data.materials.append(mat)
 mat.use_nodes = True
 # let's create a variable to store our list of nodes
 mat_nodes = mat.node_tree.nodes
-# let's set the metallic to 1.0
+# Set Principled BSDF values
 mat_nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.0
 mat_nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.4
 mat_nodes["Principled BSDF"].inputs["Base Color"].default_value = (
     *color_RGB,
     1.0,
 )
-print("Blend method:")
-print(mat.blend_method)
+# Change material settings for blend method, show backface, shadow mode
 mat.blend_method = "BLEND"
-print(mat.blend_method)
-print()
-print("Show transparent back:")
-print(mat.show_transparent_back)
 mat.show_transparent_back = False
-print(mat.show_transparent_back)
-print()
-print("Shadow method")
-print(mat.shadow_method)
 mat.shadow_method = "NONE"
-print(mat.shadow_method)
