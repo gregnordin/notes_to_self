@@ -35,7 +35,9 @@ def clean_up(keep_materials=None, keep_objects=None):
         print(obj.name, obj)
         if obj.name not in keep_objects:
             # pass
-            obj.select_set(True)  # , view_layer=bpy.data.scenes[0].view_layers[0])
+            obj.select_set(
+                True
+            )  # , view_layer=bpy.data.scenes[0].view_layers[0]) # https://developer.blender.org/T66725
             bpy.ops.object.delete(use_global=True)  # False)
 
 

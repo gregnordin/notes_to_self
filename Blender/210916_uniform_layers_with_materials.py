@@ -48,17 +48,13 @@ color_RGB = (1, 0.7, 0.2)  # golden
 start_color_RGBA = (*color_RGB, 0)  # transparent
 final_color_RGBA = (*color_RGB, 1)  # opaque
 
-# Single layer
-layer = make_layer(
-    "Test_layer", xy_layer_size, xy_layer_size, z_layer_size, z_position=0.0
-)
-
 # Light
 light_data = bpy.data.lights.new("Light", type="POINT")
 light = bpy.data.objects.new("Light", light_data)
 bpy.context.collection.objects.link(light)
 light.location = (4.0762, 1.0055, 5.9039)
 light.rotation_euler = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
+light.data.energy = 200.0
 
 # Camera
 # we first create the camera object
@@ -71,3 +67,23 @@ scene.camera = cam
 # position and rotate camera
 cam.location = (16.344, -15.382, 11.012)
 cam.rotation_euler = [pi * 63.9 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
+
+# Single layer
+layer = make_layer(
+    "Test_layer", xy_layer_size, xy_layer_size, z_layer_size, z_position=0.0
+)
+
+# Material
+mat = bpy.data.materials.new(name="Material")
+# Assign to layer
+layer.data.materials.append(mat)
+mat.use_nodes = True
+# let's create a variable to store our list of nodes
+mat_nodes = mat.node_tree.nodes
+# let's set the metallic to 1.0
+mat_nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.0
+mat_nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.2
+mat_nodes["Principled BSDF"].inputs["Base Color"].default_value = (
+    *color_RGB,
+    1.0,
+)
