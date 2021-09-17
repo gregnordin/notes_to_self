@@ -434,9 +434,21 @@ Principled BSDF with base color only:
 Apply this to 3D printed layer animation:
 
 - Create material and apply it to objects (need unique material for each?? Can materials be cloned so can set up several base materials at beginning of code and just clone them for each layer?)
-    - How programmatically create material from python?
+    - &#9989; How programmatically create material from python?
 - Create animation, adding keyframes and changing alpha of materials, start with just bulk layers
 - Then apply to channel layers made with boolean difference operation
 - Do more complicated boolean difference operation to get 90&deg; channel bends
 - Do edge exposure case with secondary images
 - Do embedded different layer thicknesses and multiple exposure times
+
+# Wednesday, 2021-09-15
+
+Look up information about creating materials in Blender with Nodes:
+
+- [Transparent material in Blender in render mode (Eevee or Cycles) in Python, Blender 2.93 [closed]](https://blender.stackexchange.com/questions/234268/transparent-material-in-blender-in-render-mode-eevee-or-cycles-in-python-blen)
+- [Principled BSDF via Python API](https://blender.stackexchange.com/questions/160042/principled-bsdf-via-python-api)
+- [Adding new Principled BSDF materials using python scripting](https://stackoverflow.com/questions/63098407/adding-new-principled-bsdf-materials-using-python-scripting)
+
+# Thursday, 2021-09-16
+
+<span style="color:red; font-size:150%">&#x2605;</span> [Blender 3D — How to create and render a scene in Blender using Python API, by Armindo Cachada | Jun 7, 2021](https://spltech.co.uk/blender-3d%E2%80%8A-%E2%80%8Ahow-to-create-and-render-a-scene-in-blender-using-python-api/) - *In this article, I will show you how you can create a scene in Blender, using the Python 2.93 Blender API.* - Cube, plane, light source, camera and constraining camera to point at an object (very easy to do).
