@@ -1,4 +1,5 @@
 import bpy
+from math import pi
 
 # Add blender file directory to the python path
 import sys
@@ -22,19 +23,19 @@ def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
     return layer
 
 
-print("Starting...")
-print(bpy.data.scenes)
-print(bpy.context.window.scene)
-print(bpy.context.window.scene.view_layers)
-for i, s in enumerate(bpy.data.scenes):
-    print(i, s)
-print()
-print(bpy.data.scenes[0].view_layers)
-print(bpy.data.scenes[0].view_layers[0])
-print()
+# print("Starting...")
+# print(bpy.data.scenes)
+# print(bpy.context.window.scene)
+# print(bpy.context.window.scene.view_layers)
+# for i, s in enumerate(bpy.data.scenes):
+#     print(i, s)
+# print()
+# print(bpy.data.scenes[0].view_layers)
+# print(bpy.data.scenes[0].view_layers[0])
+# print()
 
-print("Going into clean_up()...")
-clean_up()
+# print("Going into clean_up()...")
+# clean_up()
 # update_camera(bpy.data.objects["Camera"], distance=25.0)
 # set_show_floor(False)
 
@@ -55,4 +56,4 @@ light_data = bpy.data.lights.new("Light", type="POINT")
 light = bpy.data.objects.new("Light", light_data)
 bpy.context.collection.objects.link(light)
 light.location = (4.0762, 1.0055, 5.9039)
-# bpy.context.collection.objects.new
+light.rotation_euler = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]

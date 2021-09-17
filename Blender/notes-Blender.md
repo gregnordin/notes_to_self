@@ -470,7 +470,8 @@ Info:
     Light
     Point, 1000 W, Diffuse = Specular = Volume = 1.0, Radius = 0.1 m
     Location: 4.0762, 1.0055, 5.9039
-    Rotation (XYZ Euler): 37.3, 3.16, 107
+    # These are degrees and must be converted to radians!
+    Rotation (XYZ Euler): 37.3, 3.16, 107 
 
 ### Files
   
