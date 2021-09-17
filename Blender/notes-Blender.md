@@ -484,3 +484,4 @@ Success making a camera, light source, single layer with Principled BSDF that re
 
 # Friday, 2021-09-17
 
+Learn how to set a material's blend mode, shadow, and showing backface from python code.

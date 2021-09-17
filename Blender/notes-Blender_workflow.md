@@ -63,6 +63,12 @@ Set up VS Code to for Blender code autocomplete:
 - Execute external python file to try some Blender effect and determine what needs to change in the code to try next.
 - Do not re-execute changed code in the same Blender file. Also, do not save the Blender file you just used.
 - Instead, re-open original blender file and try new external python code again. You could possibly select all objects manually and the materials and delete them before running the modified external python code, but this seems to still build up different object and material names.
+    - Keyboard shortcuts:
+        - `shift-cmd o` - Open recents
+        - Hit return to select the most recent blender file
+        - `d` - Don't save currently open file
+        - With mouse in python script window in Scripting view, `option p` to run python code that runs the external python code file
+
 
 # How-to's
 

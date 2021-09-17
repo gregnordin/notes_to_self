@@ -74,7 +74,7 @@ layer = make_layer(
 )
 
 # Material
-mat = bpy.data.materials.new(name="Material")
+mat = bpy.data.materials.new(name="Layer_material")
 # Assign to layer
 layer.data.materials.append(mat)
 mat.use_nodes = True
@@ -87,3 +87,17 @@ mat_nodes["Principled BSDF"].inputs["Base Color"].default_value = (
     *color_RGB,
     1.0,
 )
+print("Blend method:")
+print(mat.blend_method)
+mat.blend_method = "BLEND"
+print(mat.blend_method)
+print()
+print("Show transparent back:")
+print(mat.show_transparent_back)
+mat.show_transparent_back = False
+print(mat.show_transparent_back)
+print()
+print("Shadow method")
+print(mat.shadow_method)
+mat.shadow_method = "NONE"
+print(mat.shadow_method)
