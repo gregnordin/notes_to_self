@@ -63,4 +63,7 @@ Set up VS Code to for Blender code autocomplete:
 - Execute external python file to try some Blender effect and determine what needs to change in the code to try next.
 - Do not re-execute changed code in the same Blender file. Also, do not save the Blender file you just used.
 - Instead, re-open original blender file and try new external python code again. You could possibly select all objects manually and the materials and delete them before running the modified external python code, but this seems to still build up different object and material names.
+
+# How-to's
+
 - To create Camera, Light, and material(s), use info in [Blender 3D — How to create and render a scene in Blender using Python API, by Armindo Cachada | Jun 7, 2021](https://spltech.co.uk/blender-3d%E2%80%8A-%E2%80%8Ahow-to-create-and-render-a-scene-in-blender-using-python-api/).
