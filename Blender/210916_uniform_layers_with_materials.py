@@ -22,7 +22,19 @@ def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
     return layer
 
 
-clean_up(keep_materials=[], keep_objects=[])
+print("Starting...")
+print(bpy.data.scenes)
+print(bpy.context.window.scene)
+print(bpy.context.window.scene.view_layers)
+for i, s in enumerate(bpy.data.scenes):
+    print(i, s)
+print()
+print(bpy.data.scenes[0].view_layers)
+print(bpy.data.scenes[0].view_layers[0])
+print()
+
+print("Going into clean_up()...")
+clean_up()
 # update_camera(bpy.data.objects["Camera"], distance=25.0)
 # set_show_floor(False)
 
@@ -34,3 +46,13 @@ channel_width = 3
 color_RGB = (1, 0.7, 0.2)  # golden
 start_color_RGBA = (*color_RGB, 0)  # transparent
 final_color_RGBA = (*color_RGB, 1)  # opaque
+
+layer = make_layer(
+    "Test_layer", xy_layer_size, xy_layer_size, z_layer_size, z_position=0.0
+)
+
+light_data = bpy.data.lights.new("Light", type="POINT")
+light = bpy.data.objects.new("Light", light_data)
+bpy.context.collection.objects.link(light)
+light.location = (4.0762, 1.0055, 5.9039)
+# bpy.context.collection.objects.new

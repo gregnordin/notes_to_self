@@ -475,3 +475,5 @@ Info:
 ### Files
   
 `210916_uniform_layers_with_materials.py`, `210916_uniform_layers_with_materials.blend`
+
+Try to get `clean_up()` to work, but after an hour it won't so give up and delete everything manually in between runs of the script.

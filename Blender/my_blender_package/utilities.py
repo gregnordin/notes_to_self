@@ -12,6 +12,8 @@ def clean_up(keep_materials=None, keep_objects=None):
     Example:
         clean_up(keep_materials=["Dots Stroke", "Material"], keep_objects=["Camera", "Light"])
     """
+    print("Now in clean_up()...", keep_materials, keep_objects)
+
     if keep_materials is None:
         keep_materials = []
     if keep_objects is None:
@@ -23,11 +25,18 @@ def clean_up(keep_materials=None, keep_objects=None):
         if mat.name not in keep_materials:
             bpy.data.materials.remove(mat)
 
+    # print()
+    # print(bpy.data.scenes[0].view_layers)
+    # print(bpy.data.scenes[0].view_layers[0])
+    # print()
+
     # Delete objects not in list
     for obj in bpy.data.objects:
+        print(obj.name, obj)
         if obj.name not in keep_objects:
-            obj.select_set(True)
-            bpy.ops.object.delete(use_global=False)
+            # pass
+            obj.select_set(True)  # , view_layer=bpy.data.scenes[0].view_layers[0])
+            bpy.ops.object.delete(use_global=True)  # False)
 
 
 def update_camera(camera, focus_point=mathutils.Vector((0.0, 0.0, 0.0)), distance=10.0):
