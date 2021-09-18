@@ -719,6 +719,15 @@ Set last frame to render for animation:
     last_frame = frame_number(end_time + 0.3)
     bpy.data.scenes["Scene"].frame_end = last_frame
 
+## Add layers, adjust camera
+
+Create new files: `210918_channel_animation.py`, `210918_base_blender_file.blend`.
+
+Change to 9 3D printed layers and change camera location and direction to nicely center final 9-layer stack:
+
+    Camera
+    Location: 21.247, -19.997, 14.316
+    Rotation (XYZ Euler): 66.7, 0.0, 46.7
 
 ## Next:
 
