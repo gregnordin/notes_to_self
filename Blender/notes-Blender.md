@@ -541,9 +541,13 @@ Create functions to make Sun, Area, and Point lights.
 
 # Saturday, 2021-09-18
 
+## First steps
+
 First, edit my workflow notes and document using 3D View render preview from camera perspective.
 
 Next, refactor `210916_uniform_layers_with_materials.py` and add docstrings to light object creation functions.
+
+## Object-Material relationships in python using Blender console
 
 Use the `Scripting` workspace and go to the `Console` window. I already have an object defined, `Test_layer`, that has a material, `Layer_material`. Use knowledge of python and Blender API to explore objects and materials and their relationships:
 
@@ -598,8 +602,21 @@ Use the `Scripting` workspace and go to the `Console` window. I already have an 
 
 **Note, when doing this in the Blender interactive python console, *ALL* objects to which the material is attached change instantly in the 3D View render preview mode to any change in material parameters.**
 
+## Animate fade-in for single layer
 
-Good example of how to animate the transparency of a material associated with an object: [Has there been an issue with keyframing the alpha channel of a material when rendering in the GPU since 2.9.0?](https://blender.stackexchange.com/questions/237583/has-there-been-an-issue-with-keyframing-the-alpha-channel-of-a-material-when-ren).
+<span style="color:red; font-size:150%">&#x2605;</span> Good information on how to animate the transparency of a material associated with an object: [Has there been an issue with keyframing the alpha channel of a material when rendering in the GPU since 2.9.0?](https://blender.stackexchange.com/questions/237583/has-there-been-an-issue-with-keyframing-the-alpha-channel-of-a-material-when-ren). Read the `animate_alpha()` function definition. **Key idea: Call `.keyframe_insert("default_value", frame=NN)` on Principled BSDF alpha parameter after setting alpha parameter.** Example:
+
+    layer = bpy.data.objects['Test_layer']
+    mat = layer.active_material
+    mat_nodes = mat.node_tree.nodes
+    mat_alpha_param = mat_nodes["Principled BSDF"].inputs["Alpha"]
+    mat_alpha_param.default_value = 0.0
+    mat_alpha_param.keyframe_insert("default_value", frame=1)
+    mat_alpha_param.default_value = 1.0
+    mat_alpha_param.keyframe_insert("default_value", frame=30)
+
+
+
 
 ## Next:
 
@@ -612,3 +629,4 @@ Good example of how to animate the transparency of a material associated with an
 - Do more complicated boolean difference operation to get 90&deg; channel bends
 - Do edge exposure case with secondary images
 - Do embedded different layer thicknesses and multiple exposure times
+- Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader

@@ -17,6 +17,9 @@ from my_blender_package.utilities import clean_up, update_camera
 # Different types of light objects
 # ----------------------------------------------------------------------------------------
 
+light_location = (4.0762, 1.0055, 5.9039)
+light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
+
 
 def point_light(
     power=1000.0, name="Light_pt", location=light_location, rotation=light_rotation
@@ -117,9 +120,11 @@ def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
     return layer
 
 
-# print("Going into clean_up()...")
-# clean_up()
-# update_camera(bpy.data.objects["Camera"], distance=25.0)
+# ----------------------------------------------------------------------------------------
+# Main code
+# ----------------------------------------------------------------------------------------
+
+
 # set_show_floor(False)
 
 # Layer size
@@ -133,8 +138,6 @@ start_color_RGBA = (*color_RGB, 0)  # transparent
 final_color_RGBA = (*color_RGB, 1)  # opaque
 
 # Lights
-light_location = (4.0762, 1.0055, 5.9039)
-light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
 light_sun = sun_light()
 # light_pt = point_light()
 # light_area = area_light()
@@ -175,3 +178,15 @@ mat_nodes["Principled BSDF"].inputs["Base Color"].default_value = (
 mat.blend_method = "BLEND"
 mat.show_transparent_back = False
 mat.shadow_method = "NONE"
+
+# Fade-in animation
+frame_pairs_for_layers = [(10, 25)]  # , (50, 65), (90, 105), (130, 145)]
+print()
+# for i, fp in enumerate(frame_pairs_for_layers):
+mat = layer.active_material
+mat_nodes = mat.node_tree.nodes
+mat_alpha_param = mat_nodes["Principled BSDF"].inputs["Alpha"]
+mat_alpha_param.default_value = 0.0
+mat_alpha_param.keyframe_insert("default_value", frame=1)
+mat_alpha_param.default_value = 1.0
+mat_alpha_param.keyframe_insert("default_value", frame=30)
