@@ -539,9 +539,13 @@ To create a light and set its properties in python code in the external file:
 Create functions to make Sun, Area, and Point lights.
 
 
+# Saturday, 2021-09-18
+
+
 
 ## Next:
 
+- Animate single layer fade in.
 - Create material and apply it to objects (need unique material for each?? Can materials be cloned so can set up several base materials at beginning of code and just clone them for each layer?)
     - &#9989; How programmatically create material from python?
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun)

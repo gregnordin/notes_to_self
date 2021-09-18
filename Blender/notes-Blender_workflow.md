@@ -75,6 +75,15 @@ Set up VS Code to for Blender python autocomplete:
         - `d` - Don't save currently open file
         - With mouse in python script window in Scripting view, `option p` to run python code that runs the external python code file
 
+## 3D View render mode
+
+When you execute your python code, the 3D View window will be in `Display in solid mode`, which is denoted by the small button shown by the red arrow:  
+![](assets/3Dwindow_display_in_solid_mode.jpg)  
+
+Change this to `Display render preview`:
+![](assets/3Dwindow_display_render_preview_mode.jpg)  
+The reason for the change is that you can't see changes in material properties, such as the alpha value, in solid mode. You also can't see lighting effects. Therefore you need to be in render preview mode.
+
 
 # How-to's
 
