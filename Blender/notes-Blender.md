@@ -708,6 +708,13 @@ Possible improvements or things to try:
     - 3 roof layers, 20 of which have reduced exposure over the channel
     - &rarr; 9 layers total, would need to adjust camera distance
 
+## Set render animation parameters from python
+
+Get frames per second from Blender file:
+
+    frames_per_second = bpy.data.scenes["Scene"].render.fps
+
+
 ## Next:
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun

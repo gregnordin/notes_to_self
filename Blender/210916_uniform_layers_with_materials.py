@@ -165,7 +165,8 @@ def animate_object_transparency(
     mat_alpha_param.keyframe_insert("default_value", frame=end_frame)
 
 
-frames_per_second = 24
+# Get the render frames per second from the Blender file from which this python code file is executed
+frames_per_second = bpy.data.scenes["Scene"].render.fps
 
 
 def frame_number(time_seconds, frames_per_second=frames_per_second):
@@ -190,7 +191,6 @@ def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
     layer.scale = (x_layer_size, y_layer_size, z_layer_size)
     layer.location = (0, 0, z_layer_size / 2 + z_position)
     layer.name = name
-    print("layer from context object:", layer)
     return layer
 
 
@@ -236,7 +236,7 @@ for i in range(num_layers):
 
     z = i * z_layer_size
     end_time = start_time + fadein_duration_seconds
-    print(i, z, start_time, end_time)
+    # print(i, z, start_time, end_time)
 
     layer_str = f"{i:02d}"
     layer_name = f"Layer_{layer_str}"
