@@ -18,14 +18,16 @@ Blender: how ot use an external editor - [Blender docs - Use an External Editor]
 
 See VS Code documentation for how to install.
 
-Set up VS Code to for Blender code autocomplete:
+Set up VS Code to for Blender python autocomplete:
 
 - Follow [Using Microsoft Visual Studio Code as external IDE for writing Blender scripts/add-ons](https://b3d.interplanety.org/en/using-microsoft-visual-studio-code-as-external-ide-for-writing-blender-scripts-add-ons/) "How to enable the autocomplete for Blender API in Visual Studio Code" using [Korchy/blender_autocomplete](https://github.com/Korchy/blender_autocomplete).
 
 
 # Workflow
 
-- Blender file with all objects and materials deleted but with stub python code to read and execute external python file.
+## Set up
+
+- Start with a nearly blank Blender file that has no objects or materials but that has a short python script to read and execute an external python file.
     - To create blender file, create a new file and save it with some name, `my_file.blend`.
     - In Blender: 
         - Position mouse over 3D View window. 
@@ -41,9 +43,10 @@ Set up VS Code to for Blender code autocomplete:
                 filename = os.path.join(os.path.dirname(bpy.data.filepath), "my_file.py")
                 exec(compile(open(filename).read(), filename, 'exec'))
             
+        - Now you have a nearly blank Blender file with just this short python script.
     - In VS Code:
-        - Create new python file `my_file.py` in the same directory as `my_file.blend`.
-        - Paste following code into python file:
+        - Create a new python file `my_file.py` in the same directory as `my_file.blend`.
+        - Paste the following code into python file:
 
                 import bpy
                 from math import pi
@@ -56,14 +59,17 @@ Set up VS Code to for Blender code autocomplete:
                 # print()
                 # print(sys.path)
 
-        - You can now import code from any python modules in the same directory and write code in this file that Blender will execute. If you have set up VS Code properly, you will have Blender code completions, which is extremely useful.
+        - You can now import code from any python modules in the same directory and write code in this file that Blender will execute. If you have set up VS Code properly, you will have Blender code completions, which is extremely useful to explore Blender code possibilities and to remind you of syntax you've used or seen before but don't quite remember.
     - To execute external python code in `my_file.py` in Blender:
         - Click the `Scripting` tab to be in the scripting workspace.
-        - With mouse anywhere in the python text window, type `option p`, which executes the code in the python text window, which in turn executes the external python file.
+        - With the mouse anywhere in the python text window, type `option p`, which executes the code in the python text window, which in turn executes the external python file.
+
+## Process
+
 - Execute external python file to try some Blender effect and determine what needs to change in the code to try next.
 - Do not re-execute changed code in the same Blender file. Also, do not save the Blender file you just used.
-- Instead, re-open original blender file and try new external python code again. You could possibly select all objects manually and the materials and delete them before running the modified external python code, but this seems to still build up different object and material names.
-    - Keyboard shortcuts:
+- Instead, re-open original blender file and try new external python code again. You could possibly select all objects manually and the materials and delete them before running the modified external python code, but this seems to still build up different object and material names so it's better to not save the file you run the code in but just re-open the original nearly blank Blender file to have a fresh start for each time you run your code.
+    - To make this faster, use these keyboard shortcuts:
         - `shift-cmd o` - Open recents
         - Hit return to select the most recent blender file
         - `d` - Don't save currently open file
