@@ -259,6 +259,8 @@ a = 1.3
 cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
+channel_layers = [2, 3, 4, 5]
+
 # Loop to create layers, materials, and keyframes
 fadein_duration_seconds = 1.0
 time_between_layer_fadeins_seconds = 0.5
@@ -273,7 +275,12 @@ for i in range(num_layers):
     layer_name = f"Layer_{layer_str}"
     material_name = f"Material_{layer_str}"
 
-    layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
+    if i in channel_layers:
+        layer = make_channel_layer(
+            layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width
+        )
+    else:
+        layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
     mat = make_material_Principled_BSDF(material_name, color_RGB_default)
     layer.data.materials.append(mat)
 

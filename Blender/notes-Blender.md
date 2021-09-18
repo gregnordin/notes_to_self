@@ -728,6 +728,10 @@ Change to 9 3D printed layers and change camera location and direction to nicely
     Camera
     Location: 21.247, -19.997, 14.316
     Rotation (XYZ Euler): 66.7, 0.0, 46.7
+    
+## Create video of channel creation
+
+Add `make_channel_layer()` function and use it in the layer for loop.
 
 ## Next:
 
@@ -735,7 +739,7 @@ Change to 9 3D printed layers and change camera location and direction to nicely
 - &#9989; How programmatically create material from python?
 - &#9989; Animate single layer fade in.
 - &#9989; Animate sequential layers on top of each other, start with just bulk layers
-- Then apply to channel layers made with boolean difference operation
+- &#9989; Then apply to channel layers made with boolean difference operation
 - Do more complicated boolean difference operation to get 90&deg; channel bends
 - Do edge exposure case with secondary images
 - Do embedded different layer thicknesses and multiple exposure times
