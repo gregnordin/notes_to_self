@@ -13,49 +13,25 @@ if blender_file_path not in sys.path:
 from my_blender_package.utilities import clean_up, update_camera
 
 
-def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
-    bpy.ops.mesh.primitive_cube_add(size=1)
-    layer = bpy.context.object
-    layer.scale = (x_layer_size, y_layer_size, z_layer_size)
-    layer.location = (0, 0, z_layer_size / 2 + z_position)
-    layer.name = name
-    print("layer from context object:", layer)
-    return layer
+# ----------------------------------------------------------------------------------------
+# Different types of light objects
+# ----------------------------------------------------------------------------------------
 
 
-# print("Starting...")
-# print(bpy.data.scenes)
-# print(bpy.context.window.scene)
-# print(bpy.context.window.scene.view_layers)
-# for i, s in enumerate(bpy.data.scenes):
-#     print(i, s)
-# print()
-# print(bpy.data.scenes[0].view_layers)
-# print(bpy.data.scenes[0].view_layers[0])
-# print()
-
-# print("Going into clean_up()...")
-# clean_up()
-# update_camera(bpy.data.objects["Camera"], distance=25.0)
-# set_show_floor(False)
-
-xy_layer_size = 10
-z_layer_size = 0.5
-channel_width = 3
-
-# Define color with transparent and opaque RGBA versions
-color_RGB = (1, 0.7, 0.2)  # golden
-start_color_RGBA = (*color_RGB, 0)  # transparent
-final_color_RGBA = (*color_RGB, 1)  # opaque
-
-# Lights
-light_location = (4.0762, 1.0055, 5.9039)
-light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
-
-# Point light
 def point_light(
     power=1000.0, name="Light_pt", location=light_location, rotation=light_rotation
 ):
+    """Point light.
+
+    Args:
+        power (float, optional): [description]. Defaults to 1000.0.
+        name (str, optional): [description]. Defaults to "Light_pt".
+        location ([type], optional): [description]. Defaults to light_location.
+        rotation ([type], optional): [description]. Defaults to light_rotation.
+
+    Returns:
+        [type]: Light object
+    """
     light_data = bpy.data.lights.new(name, type="POINT")
     light = bpy.data.objects.new(name, light_data)
     bpy.context.collection.objects.link(light)
@@ -65,7 +41,6 @@ def point_light(
     return light
 
 
-# Sun light
 def sun_light(
     power=2.5,
     angle=135,
@@ -73,6 +48,18 @@ def sun_light(
     location=light_location,
     rotation=light_rotation,
 ):
+    """Sun light.
+
+    Args:
+        power (float, optional): [description]. Defaults to 2.5.
+        angle (int, optional): [description]. Defaults to 135.
+        name (str, optional): [description]. Defaults to "Light_sun".
+        location ([type], optional): [description]. Defaults to light_location.
+        rotation ([type], optional): [description]. Defaults to light_rotation.
+
+    Returns:
+        [type]: Light object
+    """
     light_data = bpy.data.lights.new(name, type="SUN")
     light = bpy.data.objects.new(name, light_data)
     bpy.context.collection.objects.link(light)
@@ -84,7 +71,6 @@ def sun_light(
     return light
 
 
-# Area light
 def area_light(
     power=800,
     size=5.0,
@@ -92,6 +78,18 @@ def area_light(
     location=light_location,
     rotation=light_rotation,
 ):
+    """Area light.
+
+    Args:
+        power (int, optional): [description]. Defaults to 800.
+        size (float, optional): [description]. Defaults to 5.0.
+        name (str, optional): [description]. Defaults to "Light_area".
+        location ([type], optional): [description]. Defaults to light_location.
+        rotation ([type], optional): [description]. Defaults to light_rotation.
+
+    Returns:
+        [type]: Light object
+    """
     light_data = bpy.data.lights.new(name, type="AREA")
     light = bpy.data.objects.new(name, light_data)
     bpy.context.collection.objects.link(light)
@@ -104,13 +102,46 @@ def area_light(
     return light
 
 
+# ----------------------------------------------------------------------------------------
+# Layer objects
+# ----------------------------------------------------------------------------------------
+
+
+def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
+    bpy.ops.mesh.primitive_cube_add(size=1)
+    layer = bpy.context.object
+    layer.scale = (x_layer_size, y_layer_size, z_layer_size)
+    layer.location = (0, 0, z_layer_size / 2 + z_position)
+    layer.name = name
+    print("layer from context object:", layer)
+    return layer
+
+
+# print("Going into clean_up()...")
+# clean_up()
+# update_camera(bpy.data.objects["Camera"], distance=25.0)
+# set_show_floor(False)
+
+# Layer size
+xy_layer_size = 10
+z_layer_size = 0.5
+channel_width = 3
+
+# Define color with transparent and opaque RGBA versions
+color_RGB = (1, 0.7, 0.2)  # golden
+start_color_RGBA = (*color_RGB, 0)  # transparent
+final_color_RGBA = (*color_RGB, 1)  # opaque
+
+# Lights
+light_location = (4.0762, 1.0055, 5.9039)
+light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
 light_sun = sun_light()
 # light_pt = point_light()
 # light_area = area_light()
 # light_area2 = area_light(power=1000, size=2.5, name="Light_area2")
 
 # Camera
-# we first create the camera object
+# create the camera object
 cam_data = bpy.data.cameras.new("camera")
 cam = bpy.data.objects.new("camera", cam_data)
 bpy.context.collection.objects.link(cam)

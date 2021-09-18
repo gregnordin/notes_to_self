@@ -541,7 +541,9 @@ Create functions to make Sun, Area, and Point lights.
 
 # Saturday, 2021-09-18
 
+First, edit my workflow notes and document using 3D View render preview from camera perspective.
 
+Next, refactor `210916_uniform_layers_with_materials.py` and add docstrings to light object creation functions.
 
 ## Next:
 
