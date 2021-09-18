@@ -133,6 +133,20 @@ def animate_object_transparency(
     mat_alpha_param.keyframe_insert("default_value", frame=end_frame)
 
 
+frames_per_second = 24
+
+
+def frame_number(time_seconds, frames_per_second=frames_per_second):
+    """Utility function to calculate the frame number for a particular time
+    given the anticipated frames per second for the animation.
+
+    Args:
+        time_seconds (float or int): time in seconds to convert to frames
+        frames_per_second (float or int): number of frames per second in animation
+    """
+    return round(frames_per_second * time_seconds)
+
+
 # ----------------------------------------------------------------------------------------
 # Layer objects
 # ----------------------------------------------------------------------------------------
@@ -154,7 +168,6 @@ def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
 
 
 # set_show_floor(False)
-frames_per_second = 24
 
 # Layer size
 xy_layer_size = 10
@@ -208,16 +221,13 @@ mat.blend_method = "BLEND"
 mat.show_transparent_back = False
 mat.shadow_method = "NONE"
 
-animate_object_transparency(layer, 1, 30)
+start_frame = 1
+end_time_seconds = 1.0
+end_frame = frame_number(end_time_seconds)
+print(start_frame, end_time_seconds, frames_per_second, end_frame)
+animate_object_transparency(layer, start_frame, end_frame)
 
 # # Fade-in animation
 # frame_pairs_for_layers = [(10, 25)]  # , (50, 65), (90, 105), (130, 145)]
 # print()
 # # for i, fp in enumerate(frame_pairs_for_layers):
-# mat = layer.active_material
-# mat_nodes = mat.node_tree.nodes
-# mat_alpha_param = mat_nodes["Principled BSDF"].inputs["Alpha"]
-# mat_alpha_param.default_value = 0.0
-# mat_alpha_param.keyframe_insert("default_value", frame=1)
-# mat_alpha_param.default_value = 1.0
-# mat_alpha_param.keyframe_insert("default_value", frame=30)
