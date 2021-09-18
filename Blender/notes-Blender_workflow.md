@@ -84,6 +84,10 @@ Change this to `Display render preview`:
 ![](assets/3Dwindow_display_render_preview_mode.jpg)  
 The reason for the change is that you can't see changes in material properties, such as the alpha value, in solid mode. You also can't see lighting effects. Therefore you need to be in render preview mode.
 
+Also change to the camera view so that you know what your scene will look like when you ultimately render your animation:  
+![](assets/3Dwindow_camera_view.jpg)  
+
+
 
 # How-to's
 
