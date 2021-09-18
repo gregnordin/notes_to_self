@@ -43,6 +43,9 @@ Set up VS Code to for Blender python autocomplete:
                 filename = os.path.join(os.path.dirname(bpy.data.filepath), "my_file.py")
                 exec(compile(open(filename).read(), filename, 'exec'))
             
+        - In `Output Properties` tab on right side of window, do the following:
+            - Set the Output folder to `~/Downloads/renderings/` instead of `/tmp/`
+            - Set the File Format to `AVI JPEG`
         - Now you have a nearly blank Blender file with just this short python script.
     - In VS Code:
         - Create a new python file `my_file.py` in the same directory as `my_file.blend`.
