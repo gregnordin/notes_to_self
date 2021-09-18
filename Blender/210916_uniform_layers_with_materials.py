@@ -106,6 +106,34 @@ def area_light(
 
 
 # ----------------------------------------------------------------------------------------
+# Animation helpers
+# ----------------------------------------------------------------------------------------
+
+
+def animate_object_transparency(
+    obj, start_frame, end_frame, initial_value=0.0, final_value=1.0
+):
+    """Given an object with an active material that uses nodes and has a Principled BSDF node,
+    create keyframes to animate the object's transparency (alpha value) from an initial to a
+    final value.
+
+    Args:
+        obj (Blender object - bpy_types.Object): Object to animate transparency
+        start_frame (int): Frame on which to start animation
+        end_frame (int): Frame on which to end animation
+        initial_value (float, optional): Starting alpha value. Defaults to 0.0.
+        final_value (float, optional): Ending alpha value. Defaults to 1.0.
+    """
+    mat = obj.active_material
+    mat_nodes = mat.node_tree.nodes
+    mat_alpha_param = mat_nodes["Principled BSDF"].inputs["Alpha"]
+    mat_alpha_param.default_value = initial_value
+    mat_alpha_param.keyframe_insert("default_value", frame=start_frame)
+    mat_alpha_param.default_value = final_value
+    mat_alpha_param.keyframe_insert("default_value", frame=end_frame)
+
+
+# ----------------------------------------------------------------------------------------
 # Layer objects
 # ----------------------------------------------------------------------------------------
 
@@ -126,6 +154,7 @@ def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
 
 
 # set_show_floor(False)
+frames_per_second = 24
 
 # Layer size
 xy_layer_size = 10
@@ -179,14 +208,16 @@ mat.blend_method = "BLEND"
 mat.show_transparent_back = False
 mat.shadow_method = "NONE"
 
-# Fade-in animation
-frame_pairs_for_layers = [(10, 25)]  # , (50, 65), (90, 105), (130, 145)]
-print()
-# for i, fp in enumerate(frame_pairs_for_layers):
-mat = layer.active_material
-mat_nodes = mat.node_tree.nodes
-mat_alpha_param = mat_nodes["Principled BSDF"].inputs["Alpha"]
-mat_alpha_param.default_value = 0.0
-mat_alpha_param.keyframe_insert("default_value", frame=1)
-mat_alpha_param.default_value = 1.0
-mat_alpha_param.keyframe_insert("default_value", frame=30)
+animate_object_transparency(layer, 1, 30)
+
+# # Fade-in animation
+# frame_pairs_for_layers = [(10, 25)]  # , (50, 65), (90, 105), (130, 145)]
+# print()
+# # for i, fp in enumerate(frame_pairs_for_layers):
+# mat = layer.active_material
+# mat_nodes = mat.node_tree.nodes
+# mat_alpha_param = mat_nodes["Principled BSDF"].inputs["Alpha"]
+# mat_alpha_param.default_value = 0.0
+# mat_alpha_param.keyframe_insert("default_value", frame=1)
+# mat_alpha_param.default_value = 1.0
+# mat_alpha_param.keyframe_insert("default_value", frame=30)

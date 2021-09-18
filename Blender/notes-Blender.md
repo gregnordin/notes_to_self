@@ -620,7 +620,7 @@ Use the `Scripting` workspace and go to the `Console` window. I already have an 
 
 ## Next:
 
-- Animate single layer fade in.
+- &#9989; Animate single layer fade in.
 - Create material and apply it to objects (need unique material for each?? Can materials be cloned so can set up several base materials at beginning of code and just clone them for each layer?)
     - &#9989; How programmatically create material from python?
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun)
