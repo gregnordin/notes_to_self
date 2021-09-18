@@ -106,6 +106,38 @@ def area_light(
 
 
 # ----------------------------------------------------------------------------------------
+# Materials
+# ----------------------------------------------------------------------------------------
+
+
+def make_material_Principled_BSDF(name, color_RGB):
+    """Create a Pincipled BSDF material.
+
+    Args:
+        name (str): Name to give new material
+        color_RGB (3-element tuple or list of floats): RGB color (each element is in range of 0.0 to 1.0))
+
+    Returns:
+        [type]: [description]
+    """
+    mat = bpy.data.materials.new(name=name)
+    mat.use_nodes = True
+    mat_nodes = mat.node_tree.nodes
+    # Set Principled BSDF values
+    mat_nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.0
+    mat_nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.4
+    mat_nodes["Principled BSDF"].inputs["Base Color"].default_value = (
+        *color_RGB,
+        1.0,
+    )
+    # Change material settings for blend method, show backface, shadow mode
+    mat.blend_method = "BLEND"
+    mat.show_transparent_back = False
+    mat.shadow_method = "NONE"
+    return mat
+
+
+# ----------------------------------------------------------------------------------------
 # Animation helpers
 # ----------------------------------------------------------------------------------------
 
@@ -169,15 +201,14 @@ def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
 
 # set_show_floor(False)
 
-# Layer size
+# Layers
 xy_layer_size = 10
 z_layer_size = 0.5
 channel_width = 3
+num_layers = 6
 
-# Define color with transparent and opaque RGBA versions
-color_RGB = (1, 0.7, 0.2)  # golden
-start_color_RGBA = (*color_RGB, 0)  # transparent
-final_color_RGBA = (*color_RGB, 1)  # opaque
+# Define colors
+color_RGB_default = (1, 0.7, 0.2)  # golden
 
 # Lights
 light_sun = sun_light()
@@ -202,32 +233,11 @@ layer = make_layer(
     "Test_layer", xy_layer_size, xy_layer_size, z_layer_size, z_position=0.0
 )
 
-# Material
-mat = bpy.data.materials.new(name="Layer_material")
-# Assign to layer
+mat = make_material_Principled_BSDF("Material_00", color_RGB_default)
 layer.data.materials.append(mat)
-mat.use_nodes = True
-# let's create a variable to store our list of nodes
-mat_nodes = mat.node_tree.nodes
-# Set Principled BSDF values
-mat_nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.0
-mat_nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.4
-mat_nodes["Principled BSDF"].inputs["Base Color"].default_value = (
-    *color_RGB,
-    1.0,
-)
-# Change material settings for blend method, show backface, shadow mode
-mat.blend_method = "BLEND"
-mat.show_transparent_back = False
-mat.shadow_method = "NONE"
 
 start_frame = 1
 end_time_seconds = 1.0
 end_frame = frame_number(end_time_seconds)
 print(start_frame, end_time_seconds, frames_per_second, end_frame)
 animate_object_transparency(layer, start_frame, end_frame)
-
-# # Fade-in animation
-# frame_pairs_for_layers = [(10, 25)]  # , (50, 65), (90, 105), (130, 145)]
-# print()
-# # for i, fp in enumerate(frame_pairs_for_layers):

@@ -656,6 +656,33 @@ Move alpha animation code to a function. Also create a helper function to conver
     end_frame = frame_number(end_time_seconds)
     animate_object_transparency(layer, start_frame, end_frame)
 
+## Refactor material creation into a function
+
+    def make_material_Principled_BSDF(name, color_RGB):
+        """Create a Pincipled BSDF material.
+    
+        Args:
+            name (str): Name to give new material
+            color_RGB (3-element tuple or list of floats): RGB color (each element is in range of 0.0 to 1.0))
+    
+        Returns:
+            [type]: [description]
+        """
+        mat = bpy.data.materials.new(name=name)
+        mat.use_nodes = True
+        mat_nodes = mat.node_tree.nodes
+        # Set Principled BSDF values
+        mat_nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.0
+        mat_nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.4
+        mat_nodes["Principled BSDF"].inputs["Base Color"].default_value = (
+            *color_RGB,
+            1.0,
+        )
+        # Change material settings for blend method, show backface, shadow mode
+        mat.blend_method = "BLEND"
+        mat.show_transparent_back = False
+        mat.shadow_method = "NONE"
+        return mat
 
 ## Next:
 
