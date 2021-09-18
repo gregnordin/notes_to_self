@@ -684,6 +684,15 @@ Move alpha animation code to a function. Also create a helper function to conver
         mat.shadow_method = "NONE"
         return mat
 
+Usage:
+
+    layer = make_layer(
+        "Test_layer", xy_layer_size, xy_layer_size, z_layer_size, z_position=0.0
+    )
+    layer.data.materials.append(
+        make_material_Principled_BSDF("Material_00", color_RGB_default)
+    )
+
 ## Next:
 
 - &#9989; Animate single layer fade in.

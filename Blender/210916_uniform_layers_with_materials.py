@@ -232,9 +232,9 @@ cam.rotation_euler = [pi * 63.9 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 layer = make_layer(
     "Test_layer", xy_layer_size, xy_layer_size, z_layer_size, z_position=0.0
 )
-
-mat = make_material_Principled_BSDF("Material_00", color_RGB_default)
-layer.data.materials.append(mat)
+layer.data.materials.append(
+    make_material_Principled_BSDF("Material_00", color_RGB_default)
+)
 
 start_frame = 1
 end_time_seconds = 1.0
