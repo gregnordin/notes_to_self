@@ -429,18 +429,6 @@ Principled BSDF with base color only:
     - Smooth fade-in and fade-out animation with no jerk at end of coming to full transparency
 
 
-## Next:
-
-Apply this to 3D printed layer animation:
-
-- Create material and apply it to objects (need unique material for each?? Can materials be cloned so can set up several base materials at beginning of code and just clone them for each layer?)
-    - &#9989; How programmatically create material from python?
-- Create animation, adding keyframes and changing alpha of materials, start with just bulk layers
-- Then apply to channel layers made with boolean difference operation
-- Do more complicated boolean difference operation to get 90&deg; channel bends
-- Do edge exposure case with secondary images
-- Do embedded different layer thicknesses and multiple exposure times
-
 # Wednesday, 2021-09-15
 
 Look up information about creating materials in Blender with Nodes:
@@ -448,6 +436,7 @@ Look up information about creating materials in Blender with Nodes:
 - [Transparent material in Blender in render mode (Eevee or Cycles) in Python, Blender 2.93 [closed]](https://blender.stackexchange.com/questions/234268/transparent-material-in-blender-in-render-mode-eevee-or-cycles-in-python-blen)
 - [Principled BSDF via Python API](https://blender.stackexchange.com/questions/160042/principled-bsdf-via-python-api)
 - [Adding new Principled BSDF materials using python scripting](https://stackoverflow.com/questions/63098407/adding-new-principled-bsdf-materials-using-python-scripting)
+
 
 # Thursday, 2021-09-16
 
@@ -548,3 +537,16 @@ To create a light and set its properties in python code in the external file:
     light.data.angle = angle * pi / 180.0
 
 Create functions to make Sun, Area, and Point lights.
+
+
+
+## Next:
+
+- Create material and apply it to objects (need unique material for each?? Can materials be cloned so can set up several base materials at beginning of code and just clone them for each layer?)
+    - &#9989; How programmatically create material from python?
+- &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun)
+- Create animation, adding keyframes and changing alpha of materials, start with just bulk layers
+- Then apply to channel layers made with boolean difference operation
+- Do more complicated boolean difference operation to get 90&deg; channel bends
+- Do edge exposure case with secondary images
+- Do embedded different layer thicknesses and multiple exposure times

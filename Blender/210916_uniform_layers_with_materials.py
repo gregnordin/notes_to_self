@@ -104,9 +104,9 @@ def area_light(
     return light
 
 
-# light_sun = sun_light()
+light_sun = sun_light()
 # light_pt = point_light()
-light_area = area_light()
+# light_area = area_light()
 # light_area2 = area_light(power=1000, size=2.5, name="Light_area2")
 
 # Camera
