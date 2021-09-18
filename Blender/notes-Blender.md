@@ -693,15 +693,34 @@ Usage:
         make_material_Principled_BSDF("Material_00", color_RGB_default)
     )
 
+## Create video of bulk layer creation
+
+Looks great--nicely animated with no artifacts. 5 layers.
+
+Possible improvements or things to try:
+
+- Outline each layer (static) so that animation fills in the layers
+    - Right now there is no visual cue for layers after they fade in
+- Alternatively, slant each layer edge so the edgefaces of the 3D print have a serrated look
+- Different number of layers:
+    - 2 uniform base layers
+    - 4 channel layers
+    - 3 roof layers, 20 of which have reduced exposure over the channel
+    - &rarr; 9 layers total, would need to adjust camera distance
+
 ## Next:
 
+- &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun
+- &#9989; How programmatically create material from python?
 - &#9989; Animate single layer fade in.
-- Create material and apply it to objects (need unique material for each?? Can materials be cloned so can set up several base materials at beginning of code and just clone them for each layer?)
-    - &#9989; How programmatically create material from python?
-- &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun)
-- Create animation, adding keyframes and changing alpha of materials, start with just bulk layers
+- &#9989; Animate sequential layers on top of each other, start with just bulk layers
 - Then apply to channel layers made with boolean difference operation
 - Do more complicated boolean difference operation to get 90&deg; channel bends
 - Do edge exposure case with secondary images
 - Do embedded different layer thicknesses and multiple exposure times
 - Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader
+- Make layers visually apparent
+    - Slant layer edges so 3D printed edgefaces have a serrated look?
+    - Wireframe outline for each layer that fades in with the layer?
+    - Or, have all layer outlines statically present throughout video such that they get successively filled in during the animation?
+- Rotate camera after 3D print completes to see how the object looks

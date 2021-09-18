@@ -228,16 +228,24 @@ scene.camera = cam
 cam.location = (16.344, -15.382, 11.012)
 cam.rotation_euler = [pi * 63.9 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
-# Single layer
-layer = make_layer(
-    "Test_layer", xy_layer_size, xy_layer_size, z_layer_size, z_position=0.0
-)
-layer.data.materials.append(
-    make_material_Principled_BSDF("Material_00", color_RGB_default)
-)
+# Loop to create layers, materials, and keyframes
+fadein_duration_seconds = 1.0
+time_between_layer_fadeins_seconds = 0.5
+start_time = 0.3
+for i in range(num_layers):
 
-start_frame = 1
-end_time_seconds = 1.0
-end_frame = frame_number(end_time_seconds)
-print(start_frame, end_time_seconds, frames_per_second, end_frame)
-animate_object_transparency(layer, start_frame, end_frame)
+    z = i * z_layer_size
+    end_time = start_time + fadein_duration_seconds
+    print(i, z, start_time, end_time)
+
+    layer_str = f"{i:02d}"
+    layer_name = f"Layer_{layer_str}"
+    material_name = f"Material_{layer_str}"
+
+    layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
+    mat = make_material_Principled_BSDF(material_name, color_RGB_default)
+    layer.data.materials.append(mat)
+
+    animate_object_transparency(layer, frame_number(start_time), frame_number(end_time))
+
+    start_time = end_time + time_between_layer_fadeins_seconds
