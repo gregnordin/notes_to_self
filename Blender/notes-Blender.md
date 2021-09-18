@@ -545,6 +545,62 @@ First, edit my workflow notes and document using 3D View render preview from cam
 
 Next, refactor `210916_uniform_layers_with_materials.py` and add docstrings to light object creation functions.
 
+Use the `Scripting` workspace and go to the `Console` window. I already have an object defined, `Test_layer`, that has a material, `Layer_material`. Use knowledge of python and Blender API to explore objects and materials and their relationships:
+
+    # Objects
+    >>> bpy.data.objects
+    <bpy_collection[3], BlendDataObjects>
+    >>> bpy.data.objects.items()
+    [('camera', bpy.data.objects['camera']), ('Light_sun', bpy.data.objects['Light_sun']), ('Test_layer', bpy.data.objects['Test_layer'])]
+
+    # Materials
+    >>> bpy.data.materials
+    <bpy_collection[3], BlendDataMaterials>
+    >>> bpy.data.materials.items()
+    [('Dots Stroke', bpy.data.materials['Dots Stroke']), ('Layer_material', bpy.data.materials['Layer_material']), ('Material', bpy.data.materials['Material'])]
+    
+    # Test_layer
+    >>> bpy.data.objects['Test_layer']
+    bpy.data.objects['Test_layer']
+    
+    # 3 ways to access its material
+    >>> bpy.data.objects['Test_layer'].data.materials.items()
+    [('Layer_material', bpy.data.materials['Layer_material'])]
+    >>> bpy.data.objects['Test_layer'].data.materials[0]
+    bpy.data.materials['Layer_material']
+    >>> bpy.data.objects['Test_layer'].active_material
+    bpy.data.materials['Layer_material']
+    
+    # Set up variables for layer and its material to make things more concise
+    >>> layer = bpy.data.objects['Test_layer']
+    >>> layer.active_material
+    bpy.data.materials['Layer_material']
+    >>> mat = layer.active_material
+    >>> mat
+    bpy.data.materials['Layer_material']
+    >>> mat_nodes = mat.node_tree.nodes
+    >>> mat_nodes
+    bpy.data.materials['Layer_material'].node_tree.nodes
+    >>> mat_nodes.items()
+    [('Principled BSDF', bpy.data.materials['Layer_material'].node_tree.nodes["Principled BSDF"]), ('Material Output', bpy.data.materials['Layer_material'].node_tree.nodes["Material Output"])]
+    
+    # Variable for material's alpha parameter to control transparency
+    >>> mat_nodes["Principled BSDF"].inputs["Alpha"]
+    bpy.data.materials['Layer_material'].node_tree.nodes["Principled BSDF"].inputs[19]
+    >>> mat_alpha_param = mat_nodes["Principled BSDF"].inputs["Alpha"]
+    >>> mat_alpha_param
+    bpy.data.materials['Layer_material'].node_tree.nodes["Principled BSDF"].inputs[19]
+    >>> mat_alpha_param.default_value
+    1.0
+    >>> mat_alpha_param.default_value = 0.5
+    >>> mat_alpha_param.default_value
+    0.5
+
+**Note, when doing this in the Blender interactive python console, *ALL* objects to which the material is attached change instantly in the 3D View render preview mode to any change in material parameters.**
+
+
+Good example of how to animate the transparency of a material associated with an object: [Has there been an issue with keyframing the alpha channel of a material when rendering in the GPU since 2.9.0?](https://blender.stackexchange.com/questions/237583/has-there-been-an-issue-with-keyframing-the-alpha-channel-of-a-material-when-ren).
+
 ## Next:
 
 - Animate single layer fade in.
