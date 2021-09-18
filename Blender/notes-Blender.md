@@ -714,6 +714,11 @@ Get frames per second from Blender file:
 
     frames_per_second = bpy.data.scenes["Scene"].render.fps
 
+Set last frame to render for animation:
+
+    last_frame = frame_number(end_time + 0.3)
+    bpy.data.scenes["Scene"].frame_end = last_frame
+
 
 ## Next:
 

@@ -249,3 +249,8 @@ for i in range(num_layers):
     animate_object_transparency(layer, frame_number(start_time), frame_number(end_time))
 
     start_time = end_time + time_between_layer_fadeins_seconds
+
+# Set last frame to be rendered for animation
+last_frame = frame_number(end_time + 0.3)
+print(f"Last frame: {last_frame}")
+bpy.data.scenes["Scene"].frame_end = last_frame
