@@ -733,6 +733,14 @@ Change to 9 3D printed layers and change camera location and direction to nicely
 
 Add `make_channel_layer()` function and use it in the layer for loop.
 
+## How do secondary images in one layer?
+
+One possibility:
+
+- Have primary and secondary image objects, each with different colors.
+- Transition both from transparent to secondary image color.
+- Then transition primary object from secondary image color to primary image color.
+
 ## Next:
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun
@@ -740,10 +748,11 @@ Add `make_channel_layer()` function and use it in the layer for loop.
 - &#9989; Animate single layer fade in.
 - &#9989; Animate sequential layers on top of each other, start with just bulk layers
 - &#9989; Then apply to channel layers made with boolean difference operation
-- Do more complicated boolean difference operation to get 90&deg; channel bends
+- Set AVI JPEG video quality to 100% with python
 - Do edge exposure case with secondary images
 - Do embedded different layer thicknesses and multiple exposure times
 - Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader
+- Do more complicated boolean difference operation to get 90&deg; channel bends
 - Make layers visually apparent
     - Slant layer edges so 3D printed edgefaces have a serrated look?
     - Wireframe outline for each layer that fades in with the layer?
