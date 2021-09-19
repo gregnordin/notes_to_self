@@ -17,7 +17,7 @@ from my_blender_package.utilities import clean_up, update_camera
 # Different types of light objects
 # ----------------------------------------------------------------------------------------
 
-light_location = (4.0762, 1.0055, 5.9039)
+light_location = (8.1524, 2.0110, 11.808)
 light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
 
 
@@ -259,7 +259,9 @@ a = 1.3
 cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
-channel_layers = [2, 3, 4, 5]
+secondary_image_channel_layers = [3]
+channel_layers = [2, 4, 5]
+# channel_layers = [2, 3, 4, 5]
 # channel_layers = []
 
 # Loop to create layers, materials, and keyframes
@@ -280,6 +282,8 @@ for i in range(num_layers):
         layer = make_channel_layer(
             layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width
         )
+    elif i in secondary_image_channel_layers:
+        pass
     else:
         layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
     mat = make_material_Principled_BSDF(material_name, color_RGB_default)

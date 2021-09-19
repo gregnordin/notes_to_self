@@ -17,7 +17,7 @@ from my_blender_package.utilities import clean_up, update_camera
 # Different types of light objects
 # ----------------------------------------------------------------------------------------
 
-light_location = (4.0762, 1.0055, 5.9039)
+light_location = (8.1524, 2.0110, 11.808)
 light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
 
 

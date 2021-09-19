@@ -733,6 +733,14 @@ Change to 9 3D printed layers and change camera location and direction to nicely
 
 Add `make_channel_layer()` function and use it in the layer for loop.
 
+## Move light source further away by factor of 2
+
+    Light
+    Location: 8.1524, 2.0110, 11.808
+    # These are degrees and must be converted to radians!
+    Rotation (XYZ Euler): 37.3, 3.16, 107 
+
+
 ## How do secondary images in one layer?
 
 One possibility:
@@ -748,6 +756,7 @@ One possibility:
 - &#9989; Animate single layer fade in.
 - &#9989; Animate sequential layers on top of each other, start with just bulk layers
 - &#9989; Then apply to channel layers made with boolean difference operation
+- Move sun light source further away?
 - Set AVI JPEG video quality to 100% with python
 - Do edge exposure case with secondary images
 - Do embedded different layer thicknesses and multiple exposure times
