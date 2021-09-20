@@ -64,14 +64,35 @@ def make_material_Principled_BSDF(name, color_RGB):
     return mat
 
 
+# Get the render frames per second from the Blender file from which this python code file is executed
+frames_per_second = bpy.data.scenes["Scene"].render.fps
+
+
+def frame_number(time_seconds, frames_per_second=frames_per_second):
+    """Utility function to calculate the frame number for a particular time
+    given the anticipated frames per second for the animation.
+
+    Args:
+        time_seconds (float or int): time in seconds to convert to frames
+        frames_per_second (float or int): number of frames per second in animation
+    """
+    return round(frames_per_second * time_seconds)
+
+
 class Layer3DObject:
-    def __init__(self):
+    def __init__(self, obj):
         # Specify which type of layer object (bulk, channel, channel with edge, roof with reduced exposure region)
         # Use Factory Method design pattern to create objects?? And then initialize object with whatever parameters it needs?
         # Build layer object:
-        # self.obj = ...
+        self.object = obj
+        self.material = self.object.active_material
+        self.material_nodes = self.material.node_tree.nodes
+        self.material_alpha_param = self.material_nodes["Principled BSDF"].inputs[
+            "Alpha"
+        ]
+        self.set_fully_transparent()
         # Record scale values:
-        # self.save_scale = obj.scale  # .scale
+        self.save_scale = self.object.scale  # .scale
         # Is alpha 0?
         # Is visible at start of animation? If no, set alpha to 0.
         # Fade-in assumes object starting state is fully transparent
@@ -94,25 +115,23 @@ class Layer3DObject:
         #
         pass
 
-    def fade_in(self, start_frame, end_frame):
-        #
-        pass
+    def fade_in(self, start_frame, end_frame, initial_value=0.0, final_value=1.0):
+        self.set_transparency_value(initial_value)
+        self.material_alpha_param.keyframe_insert("default_value", frame=start_frame)
+        self.set_transparency_value(final_value)
+        self.material_alpha_param.keyframe_insert("default_value", frame=end_frame)
 
     def fade_out(self, start_frame, end_frame):
-        #
-        pass
+        self.fade_in(start_frame, end_frame, initial_value=1.0, final_value=0.0)
 
     def set_transparency_value(self, value):
-        #
-        pass
+        self.material_alpha_param.default_value = value
 
     def set_fully_transparent(self):
         self.set_transparency_value(0.0)
-        pass
 
     def set_least_transparent(self):
         self.set_transparency_value(1.0)
-        pass
 
 
 # Layers
@@ -145,3 +164,13 @@ z = 0.0
 layer = make_layer("Test_Layer", xy_layer_size, xy_layer_size, z_layer_size, z)
 mat = make_material_Principled_BSDF("Test_Material", color_RGB_default)
 layer.data.materials.append(mat)
+
+test_layer = Layer3DObject(layer)
+
+start_frame, end_frame = 5, 25
+test_layer.fade_in(start_frame, end_frame)
+start_frame, end_frame = 40, 55
+test_layer.fade_out(start_frame, end_frame)
+
+# Set last frame to be rendered for animation
+bpy.data.scenes["Scene"].frame_end = end_frame + 10
