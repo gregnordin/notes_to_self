@@ -785,7 +785,13 @@ Also use [RGB to HEX Color Converter](https://www.rgbtohex.net) and [Hex to RGB 
     Complementary: 
     Greenish - RGB (0.2, 1.0, 0.71) = (51, 255, 180) = HEX #33ffb4
     Purple - RGB (0.71, 0.2, 1.0) = (180, 51, 255) = HEX #b433ff  
-    
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140">
+    <g fill="none" fill-rule="evenodd">
+        <rect id="#ffb433" width="140" height="140" x="0" fill="#ffb433"/>,<rect id="#33ffb4" width="140" height="140" x="160" fill="#33ffb4"/>,<rect id="#b433ff" width="140" height="140" x="320" fill="#b433ff"/>
+    </g>
+</svg>
+
 From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tools/data-color-picker.html), here are 5 nice colors together:
 
     #003f5c - Teal-ish
@@ -801,6 +807,15 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
         <rect id="#003f5c" width="140" height="140" x="0" fill="#003f5c"/>,<rect id="#58508d" width="140" height="140" x="160" fill="#58508d"/>,<rect id="#bc5090" width="140" height="140" x="320" fill="#bc5090"/>,<rect id="#ff6361" width="140" height="140" x="480" fill="#ff6361"/>,<rect id="#ffa600" width="140" height="140" x="640" fill="#ffa600"/>
     </g>
 </svg>
+
+
+# Monday, 2021-09-20
+
+`210920_manual_animate_growing_cube_in_z.blend` - animate a layer growing from 0 to final thickness in z.
+
+[How to hide a certain object in blender 2.8?](https://blender.stackexchange.com/questions/133468/how-to-hide-a-certain-object-in-blender-2-8): `bpy.context.object.hide_set(True)`.
+
+Try 
 
 ## Next:
 
@@ -829,3 +844,4 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
     - Wireframe outline for each layer that fades in with the layer?
     - Or, have all layer outlines statically present throughout video such that they get successively filled in during the animation?
 - Rotate camera after 3D print completes to see how the object looks
+- **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction, which is easy to animate**. You could also have the whole stack of layers move up between each grow operation. And look at it from below.
