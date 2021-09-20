@@ -811,6 +811,7 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 
 # Monday, 2021-09-20
 
+## Grow object in z from 2D, make visible and invisible
 
 [How to hide a certain object in blender 2.8?](https://blender.stackexchange.com/questions/133468/how-to-hide-a-certain-object-in-blender-2-8): `bpy.context.object.hide_set(True)`.
 
@@ -823,7 +824,11 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
         - `user2658640`'s answer for Blender 2.9 at [How to make an object invisible at a particular keyframe without moving it in Blender (2.59)?](https://stackoverflow.com/questions/8844389/how-to-make-an-object-invisible-at-a-particular-keyframe-without-moving-it-in-bl)
     - How keep track of the objects scale values to reapply them? Create a class that keeps track of them? Use composition, not inheritance. Can also add method to class to do the keyframing animation. 
 
-Try 
+## Python class with animation methods
+
+`210920_python_class_with_animation_methods.py`
+
+
 
 ## Next:
 
@@ -852,4 +857,4 @@ Try
     - Wireframe outline for each layer that fades in with the layer?
     - Or, have all layer outlines statically present throughout video such that they get successively filled in during the animation?
 - Rotate camera after 3D print completes to see how the object looks
-- **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction, which is easy to animate**. You could also have the whole stack of layers move up between each grow operation. And look at it from below.
+- **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction, which is easy to animate**. You could also have the whole stack of layers move up between each grow operation (group already-visible layers into a collection and apply translation to collection as a whole?). And look at it from below. Or have the stack drop down to make a new layer and look at it from above, noting in presentation that the process actually happens upside down.

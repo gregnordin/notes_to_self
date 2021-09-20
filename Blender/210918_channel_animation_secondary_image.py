@@ -263,7 +263,6 @@ bpy.context.collection.objects.link(cam)
 scene = bpy.context.scene
 scene.camera = cam
 # position and rotate camera
-a = 1.3
 cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
