@@ -33,3 +33,16 @@ Use [Color Calculator - Sessions College](https://www.sessions.edu/color-calcula
         <rect id="#ffb433" width="140" height="140" x="0" fill="#ffb433"/>,<rect id="#33ffb4" width="140" height="140" x="160" fill="#33ffb4"/>,<rect id="#b433ff" width="140" height="140" x="320" fill="#b433ff"/>
     </g>
 </svg>
+
+## Some nice colors to consider
+
+### Purplish
+
+ #4C1BCC  
+ <svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140">
+    <g fill="none" fill-rule="evenodd">
+        <rect id="#4C1BCC" width="140" height="140" x="0" fill="#4C1BCC"/>
+    </g>
+</svg>
+
+ 

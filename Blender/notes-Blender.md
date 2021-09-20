@@ -811,9 +811,17 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 
 # Monday, 2021-09-20
 
-`210920_manual_animate_growing_cube_in_z.blend` - animate a layer growing from 0 to final thickness in z.
 
 [How to hide a certain object in blender 2.8?](https://blender.stackexchange.com/questions/133468/how-to-hide-a-certain-object-in-blender-2-8): `bpy.context.object.hide_set(True)`.
+
+`210920_manual_animate_growing_cube_in_z_and_object_disappear_reappear.blend` 
+
+- Animate a layer growing from 0 to final thickness in z.
+    - Have to simultaneously increase thickness and move upward in z.
+- Animate an object disappearing and reappearing.
+    - From one frame to another change all 3 scale values to 0 to disappear, and do the reverse to reappear. 
+        - `user2658640`'s answer for Blender 2.9 at [How to make an object invisible at a particular keyframe without moving it in Blender (2.59)?](https://stackoverflow.com/questions/8844389/how-to-make-an-object-invisible-at-a-particular-keyframe-without-moving-it-in-bl)
+    - How keep track of the objects scale values to reapply them? Create a class that keeps track of them? Use composition, not inheritance. Can also add method to class to do the keyframing animation. 
 
 Try 
 
