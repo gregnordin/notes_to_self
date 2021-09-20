@@ -235,10 +235,18 @@ def make_channel_layer(
 xy_layer_size = 10
 z_layer_size = 0.5
 channel_width = 3
+edge_width = 1
 num_layers = 9
 
 # Define colors
-color_RGB_default = (1, 0.7, 0.2)  # golden
+# Primary color - golden
+color_RGB_default = (1, 0.71, 0.2)  # RGB (255, 180, 51) = #FFB433 hex
+color_RGBA_default = (*color_RGB_default, 1)  # Includes alpha channel
+# Triadic color #1 - greenish
+color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
+color_RGBA_edge = (*color_RGB_edge, 1)  # Includes alpha channel
+# Triadic color #2 - purple
+# RGB (0.71, 0.2, 1.0) = (180, 51, 255) = HEX #b433ff
 
 # Lights
 light_sun = sun_light()
@@ -259,10 +267,20 @@ a = 1.3
 cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
-secondary_image_channel_layers = [3]
-channel_layers = [2, 4, 5]
-# channel_layers = [2, 3, 4, 5]
-# channel_layers = []
+# Select which case to run
+# case = 'bulk'
+# case = 'channel'
+chan_layers = [2, 3, 4, 5]
+case = "channel with edge dose"
+if case == "bulk":
+    channel_layers = []
+    secondary_image_channel_layers = []
+elif case == "channel":
+    channel_layers = chan_layers
+    secondary_image_channel_layers = []
+elif case == "channel with edge dose":
+    channel_layers = []
+    secondary_image_channel_layers = chan_layers
 
 # Loop to create layers, materials, and keyframes
 fadein_duration_seconds = 1.0
@@ -282,14 +300,87 @@ for i in range(num_layers):
         layer = make_channel_layer(
             layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width
         )
+        mat = make_material_Principled_BSDF(material_name, color_RGB_default)
+        layer.data.materials.append(mat)
+        animate_object_transparency(
+            layer, frame_number(start_time), frame_number(end_time)
+        )
     elif i in secondary_image_channel_layers:
-        pass
+        # Make primary image object with channel width = channel_width + edge_width
+        # Make secondary image object
+        #   Make layer object 2 with channel width = channel_width
+        #   Make edge object as difference between layer object 2 and primary image object
+        # Assign secondary color to primary and edge objects (or make identical materials with same color, one for each)
+        # Keyframe animation fade-in for both objects by doing alpha keyframe for both materials
+        # Assign primary color to primary object material
+        # Keyframe animation primary object from secondary color to primary color
+
+        # Create primary layer
+        layer_primary = make_channel_layer(
+            layer_name,
+            xy_layer_size,
+            xy_layer_size,
+            z_layer_size,
+            z,
+            channel_width + 2 * edge_width,
+        )
+
+        # Create edge layer
+        layer_edge = make_channel_layer(
+            layer_name,
+            xy_layer_size,
+            xy_layer_size,
+            z_layer_size,
+            z,
+            channel_width,
+        )
+        delta_xy = 0.3
+        delta_z = 0.1
+        object_to_delete = make_channel_layer(
+            layer_name,
+            xy_layer_size + delta_xy,
+            xy_layer_size + delta_xy,
+            z_layer_size + delta_z,
+            z - delta_z / 2,
+            channel_width + 2 * edge_width,
+        )
+        # Add modifier to do a boolean difference between layer and channel
+        mod = layer_edge.modifiers.new("BoolDifferenceSecondary", type="BOOLEAN")
+        mod.operation = "DIFFERENCE"
+        mod.object = object_to_delete
+        # layer_edge.select_set(True)
+        bpy.context.view_layer.objects.active = layer_edge
+        bpy.ops.object.modifier_apply(modifier=mod.name)
+        # Make channel object not visible
+        bpy.context.collection.objects.unlink(object_to_delete)
+
+        mat_primary = make_material_Principled_BSDF(material_name, color_RGB_edge)
+        layer_primary.data.materials.append(mat_primary)
+        animate_object_transparency(
+            layer_primary, frame_number(start_time), frame_number(end_time)
+        )
+        mat_secondary = make_material_Principled_BSDF(material_name, color_RGB_edge)
+        layer_edge.data.materials.append(mat_secondary)
+        animate_object_transparency(
+            layer_edge, frame_number(start_time), frame_number(end_time)
+        )
+
+        start_time = end_time + time_between_layer_fadeins_seconds
+        end_time = start_time + fadein_duration_seconds
+        mat = layer_primary.active_material
+        mat_nodes = mat.node_tree.nodes
+        mat_color_param = mat_nodes["Principled BSDF"].inputs["Base Color"]
+        mat_color_param.default_value = color_RGBA_edge
+        mat_color_param.keyframe_insert("default_value", frame=frame_number(start_time))
+        mat_color_param.default_value = color_RGBA_default
+        mat_color_param.keyframe_insert("default_value", frame=frame_number(end_time))
     else:
         layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
-    mat = make_material_Principled_BSDF(material_name, color_RGB_default)
-    layer.data.materials.append(mat)
-
-    animate_object_transparency(layer, frame_number(start_time), frame_number(end_time))
+        mat = make_material_Principled_BSDF(material_name, color_RGB_default)
+        layer.data.materials.append(mat)
+        animate_object_transparency(
+            layer, frame_number(start_time), frame_number(end_time)
+        )
 
     start_time = end_time + time_between_layer_fadeins_seconds
 

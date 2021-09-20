@@ -749,6 +749,59 @@ One possibility:
 - Transition both from transparent to secondary image color.
 - Then transition primary object from secondary image color to primary image color.
 
+## Error applying boolean difference and fix for it
+
+    Traceback (most recent call last):
+      File "/Users/nordin/Documents/Projects/notes_to_self/Blender/210918_base_blender_file.blend/Text", line 11, in <module>
+      File "/Users/nordin/Documents/Projects/notes_to_self/Blender/210918_channel_animation_secondary_image.py", line 330, in <module>
+        bpy.ops.object.modifier_apply(modifier=mod.name)
+      File "/Applications/Blender.app/Contents/Resources/2.93/scripts/modules/bpy/ops.py", line 132, in __call__
+        ret = _op_call(self.idname_py(), None, kw)
+    RuntimeError: Operator bpy.ops.object.modifier_apply.poll() failed, context is incorrect
+    Error: Python script failed, check the message in the system console
+
+**Solution**: It works if the primary object for the difference operation is the active object, which is different than being the selected object. See below for what this means and how to set the active object.
+
+[Active object vs selected object](https://docs.blender.org/manual/en/latest/scene_layout/object/selecting.html):
+
+![](assets/Active_object.png)
+
+To select an object: `obj.select_set(True)`.  
+To set active object: `bpy.context.view_layer.objects.active = obj`.  
+To check which object is active from Blender console: `bpy.context.active_object` (this is a read-only parameter and cannot be direction set--use the command in the previous line so set the active object).  
+See [Set active object with python](https://blender.stackexchange.com/questions/78359/set-active-object-with-python).  
+
+## Animate edge dose for channel layers
+
+Success!
+
+### Colors
+
+Use [Color Calculator - Sessions College](https://www.sessions.edu/color-calculator/) to get complementary colors.  
+Also use [RGB to HEX Color Converter](https://www.rgbtohex.net) and [Hex to RGB Color Converter](https://www.rapidtables.com/convert/color/hex-to-rgb.html)  
+
+    Primary:  
+    Golden - RGB (1.0, 0.71, 0.2) = (255, 180, 51) = HEX #FFB433  
+    Complementary: 
+    Greenish - RGB (0.2, 1.0, 0.71) = (51, 255, 180) = HEX #33ffb4
+    Purple - RGB (0.71, 0.2, 1.0) = (180, 51, 255) = HEX #b433ff  
+    
+From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tools/data-color-picker.html), here are 5 nice colors together:
+
+    #003f5c - Teal-ish
+    #58508d - Purple-ish
+    #bc5090 - Lavender-ish
+    #ff6361 - Orangey-pinkish
+    #ffa600 - Golden
+
+ #003f5c, #58508d, #bc5090, #ff6361, #ffa600
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140">
+    <g fill="none" fill-rule="evenodd">
+        <rect id="#003f5c" width="140" height="140" x="0" fill="#003f5c"/>,<rect id="#58508d" width="140" height="140" x="160" fill="#58508d"/>,<rect id="#bc5090" width="140" height="140" x="320" fill="#bc5090"/>,<rect id="#ff6361" width="140" height="140" x="480" fill="#ff6361"/>,<rect id="#ffa600" width="140" height="140" x="640" fill="#ffa600"/>
+    </g>
+</svg>
+
 ## Next:
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun
@@ -756,10 +809,19 @@ One possibility:
 - &#9989; Animate single layer fade in.
 - &#9989; Animate sequential layers on top of each other, start with just bulk layers
 - &#9989; Then apply to channel layers made with boolean difference operation
-- Move sun light source further away?
-- Set AVI JPEG video quality to 100% with python
-- Do edge exposure case with secondary images
+- &#9989; Move sun light source further away?
+- &#9989; Do edge exposure case with secondary images
+- Change edge exposure layers to get rid of artificial edge/bulk boundary
+    - Create 3 layer objects:
+        - Channel
+        - Eroded channel
+        - Edge
+    - First, use channel and fade-in to edge dose color
+    - Next, replace channel with eroded channel and edge objects at full edge dose color
+    - Next, animate eroded channel from edge dose color to bulk color
+- Add roof exposures above channel
 - Do embedded different layer thicknesses and multiple exposure times
+- Set AVI JPEG video quality to 100% with python
 - Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader
 - Do more complicated boolean difference operation to get 90&deg; channel bends
 - Make layers visually apparent
