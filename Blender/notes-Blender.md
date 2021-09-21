@@ -826,9 +826,10 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 
 ## Python class with animation methods
 
-`210920_python_class_with_animation_methods.py` - develop class `Layer3DObject`.
+`210920_python_class_with_animation_methods.py` - develop class `Animated3DObject`.
 
-Successfully implemented fade-in.
+Successfully implemented fade-in and fade-out.  
+Successfully implemented disappear and reappear.  
 
 
 ## Next:

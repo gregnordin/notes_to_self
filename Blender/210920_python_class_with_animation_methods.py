@@ -79,7 +79,7 @@ def frame_number(time_seconds, frames_per_second=frames_per_second):
     return round(frames_per_second * time_seconds)
 
 
-class Layer3DObject:
+class Animated3DObject:
     def __init__(self, obj):
         # Specify which type of layer object (bulk, channel, channel with edge, roof with reduced exposure region)
         # Use Factory Method design pattern to create objects?? And then initialize object with whatever parameters it needs?
@@ -91,29 +91,35 @@ class Layer3DObject:
             "Alpha"
         ]
         self.set_fully_transparent()
-        # Record scale values:
-        self.save_scale = self.object.scale  # .scale
-        # Is alpha 0?
-        # Is visible at start of animation? If no, set alpha to 0.
-        # Fade-in assumes object starting state is fully transparent
-        # Fade-out assumes the opposite
-        pass
+        # Record scale value. Must make a copy, otherwise self.save_scale just points to the object's scale:
+        self.save_scale = self.object.scale.copy()
 
-    def invisible(self):
-        # Set scale to 0
-        pass
+    def set_scale(self, value):
+        # print(f"in set_scale...")
+        # print("Before", self.object.scale, value)
+        self.object.scale = value
+        # print("After", self.object.scale, value)
 
-    def visible(self):
-        # Set scale to saved values
-        pass
+    def set_visible(self, visibility_flag):
+        if visibility_flag:
+            self.set_scale(self.save_scale)
+        else:
+            new_scale = (0.0, 0.0, 0.0)
+            self.set_scale(new_scale)
 
     def appear_at_frame(self, frame):
-        #
-        pass
+        # print(f"Appear at frame {frame}")
+        self.set_visible(False)
+        self.object.keyframe_insert(data_path="scale", frame=frame - 1)
+        self.set_visible(True)
+        self.object.keyframe_insert(data_path="scale", frame=frame)
 
     def disappear_at_frame(self, frame):
-        #
-        pass
+        # print(f"Disappear at frame {frame}")
+        self.set_visible(True)
+        self.object.keyframe_insert(data_path="scale", frame=frame - 1)
+        self.set_visible(False)
+        self.object.keyframe_insert(data_path="scale", frame=frame)
 
     def fade_in(self, start_frame, end_frame, initial_value=0.0, final_value=1.0):
         self.set_transparency_value(initial_value)
@@ -165,11 +171,13 @@ layer = make_layer("Test_Layer", xy_layer_size, xy_layer_size, z_layer_size, z)
 mat = make_material_Principled_BSDF("Test_Material", color_RGB_default)
 layer.data.materials.append(mat)
 
-test_layer = Layer3DObject(layer)
+test_layer = Animated3DObject(layer)
 
 start_frame, end_frame = 5, 25
 test_layer.fade_in(start_frame, end_frame)
-start_frame, end_frame = 40, 55
+test_layer.disappear_at_frame(end_frame + 20)
+test_layer.appear_at_frame(end_frame + 40)
+start_frame, end_frame = 80, 95
 test_layer.fade_out(start_frame, end_frame)
 
 # Set last frame to be rendered for animation
