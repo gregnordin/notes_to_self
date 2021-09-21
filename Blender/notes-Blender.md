@@ -773,7 +773,7 @@ See [Set active object with python](https://blender.stackexchange.com/questions/
 
 ## Animate edge dose for channel layers
 
-Success!
+`210918_channel_animation_secondary_image.py` - **Success!**
 
 ### Colors
 
@@ -828,8 +828,12 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 
 `210920_python_class_with_animation_methods.py` - develop class `Animated3DObject`.
 
-Successfully implemented fade-in and fade-out.  
-Successfully implemented disappear and reappear.  
+- Successfully implemented fade-in and fade-out.  
+- Successfully implemented disappear and reappear.  
+
+`210918_channel_animation_secondary_image.py`
+
+- Copy `Animated3DObject` and convert `bulk` case to use it successfully
 
 
 ## Next:
@@ -842,6 +846,7 @@ Successfully implemented disappear and reappear.
 - &#9989; Move sun light source further away?
 - &#9989; Do edge exposure case with secondary images
 - &#9989; Develop `Animate3DObject` class with appear, disappear, fade-in, fade-out, and color change animation methods
+- &#9989; Put `Animate3DObject` in `210918_channel_animation.py` to do next bullet
 - Change edge exposure layers to get rid of artificial edge/bulk boundary
     - Create 3 layer objects:
         - Channel

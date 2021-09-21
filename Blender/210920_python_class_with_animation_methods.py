@@ -80,7 +80,26 @@ def frame_number(time_seconds, frames_per_second=frames_per_second):
 
 
 class Animated3DObject:
-    """Given a Blender 3D object, make it easy to do fade-in, fade-out, disappear, appear."""
+    """Given a Blender 3D object, make it easy to do fade-in, fade-out, disappear,
+    appear, and color change animations.
+
+    Example usage:
+        # Make an object with a material
+        layer = make_layer("Test_Layer", xy_layer_size, xy_layer_size, z_layer_size, z)
+        mat = make_material_Principled_BSDF("Test_Material", color_RGB_default)
+        layer.data.materials.append(mat)
+
+        # Try class animations
+        test_layer = Animated3DObject(layer)
+        start_frame, end_frame = 5, 25
+        test_layer.fade_in(start_frame, end_frame)
+        test_layer.disappear_at_frame(end_frame + 20)
+        test_layer.appear_at_frame(end_frame + 40)
+        test_layer.animate_change_color(color_RGBA_edge, end_frame + 50, end_frame + 65)
+        start_frame, end_frame = end_frame + 80, end_frame + 95
+        test_layer.fade_out(start_frame, end_frame)
+
+    """
 
     def __init__(self, obj):
         # Specify which type of layer object (bulk, channel, channel with edge, roof with reduced exposure region)
