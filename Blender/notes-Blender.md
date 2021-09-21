@@ -51,6 +51,10 @@
 - Single finger drag away from original object and you'll have a 2nd object that you can place
 - To more finely position object when it is selected, go into Object Properties and type in coordinates for x, y, z
 
+## More in-depth info on using GUI and keyboard interface
+
+[[2.92] Blender Tutorial: Quick Physics Simulation for Beginners](https://www.youtube.com/watch?v=ymhEH-shXMo) - great illustration of **how to manually interact with, duplicate, and modify objects and the timeline**. Also very good introduction to using the physics engine.
+
 ## Python Scripting
 
 - [Blender Tutorial - Animating With Python, UNLOCK the power](https://www.youtube.com/watch?v=QnvN1dieIAU)
@@ -97,6 +101,12 @@
     - [[2.79] Tutorial: 3D Animation With Python and Blender](https://www.youtube.com/watch?v=ssHiWpVuxTk) &rarr; note older version of Blender so interface is not the same but can figure it out
 - [Create 3D objects and animations in Blender with Python API](https://demando.se/blogg/post/dev-generating-a-procedural-solar-system-with-blenders-python-api/)
 - With cursor over 3D view, hit `space` to toggle animation running
+
+**Turn png image file sequence into a video**
+
+Very easy: [[2.8] Blender Tutorial: How to Convert Images from Renders into Videos - Olav3D](https://www.youtube.com/watch?v=vO7Cndxkx08)  
+[How To Turn Transparent PNGs into Videos With Transparency - Olav3D](https://www.youtube.com/watch?v=rKSykH1HZ3M)
+
 
 ---
 
@@ -838,6 +848,11 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 - Use for `channel with edge dose` case
 
 
+# Tuesday, 2021-09-21
+
+[[2.92] Blender Tutorial: Quick Physics Simulation for Beginners](https://www.youtube.com/watch?v=ymhEH-shXMo) - great illustration of how to manually interact with, duplicate, and modify objects and the timeline. Also very good introduction to using the physics engine.
+
+
 ## Next:
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun
@@ -859,7 +874,8 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
     - Next, animate eroded channel from edge dose color to bulk color
 - Add roof exposures above channel
 - Do embedded different layer thicknesses and multiple exposure times
-- Set AVI JPEG video quality to 100% with python
+- &#10060; Set AVI JPEG video quality to 100% with python
+    - **No, going from 90% to 100% changes the file size from 32 MB to 269 MB!**
 - Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader
 - Do more complicated boolean difference operation to get 90&deg; channel bends
 - Make layers visually apparent
