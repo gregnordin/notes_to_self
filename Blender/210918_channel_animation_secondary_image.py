@@ -427,20 +427,31 @@ scene.camera = cam
 cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
-# Select which case to run
+# Specify channel and roof layers
+chan_layers = [2, 3, 4, 5]
+roof_layers = [6, 7]
+
+# Select which case to run by uncommenting one of the following 4 lines
 # case = "bulk"
 # case = "channel"
-chan_layers = [2, 3, 4, 5]
-case = "channel with edge dose"
+# case = "channel with edge dose"
+case = "channel with edge dose and roof dose"
 if case == "bulk":
     channel_layers = []
     secondary_image_channel_layers = []
+    secondary_image_roof_layers = []
 elif case == "channel":
     channel_layers = chan_layers
     secondary_image_channel_layers = []
+    secondary_image_roof_layers = []
 elif case == "channel with edge dose":
     channel_layers = []
     secondary_image_channel_layers = chan_layers
+    secondary_image_roof_layers = []
+elif case == "channel with edge dose and roof dose":
+    channel_layers = []
+    secondary_image_channel_layers = chan_layers
+    secondary_image_roof_layers = roof_layers
 
 # Loop to create layers, materials, and keyframes
 fadein_duration_seconds = 1.0
@@ -457,6 +468,7 @@ for i in range(num_layers):
     material_name = f"Material_{layer_str}"
 
     if i in channel_layers:
+
         layer = make_channel_layer(
             layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width
         )
@@ -464,6 +476,7 @@ for i in range(num_layers):
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
         layer.fade_in(frame_number(start_time), frame_number(end_time))
+
     elif i in secondary_image_channel_layers:
         # Make primary image object with channel width = channel_width + edge_width
         # Create 3 layer objects:
@@ -541,7 +554,69 @@ for i in range(num_layers):
         layer_eroded_channel.animate_change_color(
             color_RGB_default, frame_number(start_time), frame_number(end_time)
         )
+
+    elif i in secondary_image_roof_layers:
+
+        # Create layers
+        layer_roof = make_layer(
+            layer_name, xy_layer_size, xy_layer_size, z_layer_size, z
+        )
+        layer_roof_bulk = make_channel_layer(
+            layer_name,
+            xy_layer_size,
+            xy_layer_size,
+            z_layer_size,
+            z,
+            channel_width + 2 * edge_width,
+        )
+        layer_roof_reduced_dose = make_layer(
+            layer_name,
+            xy_layer_size,
+            channel_width + 2 * edge_width,
+            z_layer_size,
+            z,
+        )
+
+        # Make materials. All layer objects begin with the edge dose color
+        mat_roof = make_material_Principled_BSDF(material_name, color_RGB_edge)
+        mat_roof_bulk = make_material_Principled_BSDF(material_name, color_RGB_edge)
+        mat_roof_reduced_dose = make_material_Principled_BSDF(
+            material_name, color_RGB_edge
+        )
+        layer_roof.data.materials.append(mat_roof)
+        layer_roof_bulk.data.materials.append(mat_roof_bulk)
+        layer_roof_reduced_dose.data.materials.append(mat_roof_reduced_dose)
+
+        # Create animation objects for each layer object
+        layer_roof = Animated3DObject(layer_roof)
+        layer_roof_bulk = Animated3DObject(layer_roof_bulk)
+        layer_roof_reduced_dose = Animated3DObject(layer_roof_reduced_dose)
+
+        # Set initial conditions
+        layer_roof_bulk.set_visible(False)
+        layer_roof_bulk.set_opaque()
+        layer_roof_reduced_dose.set_visible(False)
+        layer_roof_reduced_dose.set_opaque()
+
+        # Fade-in edge dose
+        layer_roof.fade_in(frame_number(start_time), frame_number(end_time))
+
+        # Adjust start and end times to do bulk dose
+        start_time = end_time + time_between_layer_fadeins_seconds
+        end_time = start_time + fadein_duration_seconds
+
+        # Swap out layer channel for edge and eroded channel layers
+        layer_roof.disappear_at_frame(frame_number(start_time))
+        layer_roof_bulk.appear_at_frame(frame_number(start_time))
+        layer_roof_reduced_dose.appear_at_frame(frame_number(start_time))
+
+        # Animate color change for bulk region
+        layer_roof_bulk.animate_change_color(
+            color_RGB_default, frame_number(start_time), frame_number(end_time)
+        )
+
     else:
+
         layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
         mat = make_material_Principled_BSDF(material_name, color_RGB_default)
         layer.data.materials.append(mat)

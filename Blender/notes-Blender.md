@@ -855,6 +855,7 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 `210918_channel_animation_secondary_image.py`
 
 - Put edge layer creation into a function
+- Do case with reduced roof dose and channel edge dose
 
 ## Next:
 
@@ -876,7 +877,7 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
     - Next, replace channel with eroded channel and edge objects at full edge dose color
     - Next, animate eroded channel from edge dose color to bulk color
 - &#9989; Put edge layer creation into a function
-- Add roof exposures above channel
+- &#9989; Add roof exposures above channel
 - Do embedded different layer thicknesses and multiple exposure times
 - Change from 24 fps to 30 fps?
 - &#10060; Set AVI JPEG video quality to 100% with python
