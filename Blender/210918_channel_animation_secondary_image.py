@@ -330,6 +330,61 @@ def make_channel_layer(
     return layer
 
 
+def make_edge_layer(
+    name,
+    x_layer_size,
+    y_layer_size,
+    z_layer_size,
+    z_position,
+    channel_width,
+    edge_width,
+):
+    """Create 3D edge layer object (2 strips on either side of a channel) by creating
+    a channel layer object and subtracting a channel layer object where the channel is
+    wider by 2 * edge_width (edge_width is the erosion amount when doing secondary images).
+
+    Args:
+        name (str): Object name
+        x_layer_size (float or int): layer size in x
+        y_layer_size (float or int): layer size in y
+        z_layer_size (float or int): layer thickness
+        z_position (float or int): position of bottom of layer
+        channel_width (float or int): width of channel
+        edge_width (float or int): width of each edge
+    """
+    layer_edge = make_channel_layer(
+        name,
+        x_layer_size,
+        y_layer_size,
+        z_layer_size,
+        z_position,
+        channel_width,
+    )
+    # Oversize the object to delete so that difference operation doesn't have to
+    # deal with co-located surfaces.
+    delta_xy = 0.3
+    delta_z = 0.1
+    object_to_delete = make_channel_layer(
+        name,
+        x_layer_size + delta_xy,
+        y_layer_size + delta_xy,
+        z_layer_size + delta_z,
+        z_position - delta_z / 2,
+        channel_width + 2 * edge_width,
+    )
+    # Add modifier to layer object to do a boolean difference between channel
+    mod = layer_edge.modifiers.new("BoolDifferenceSecondary", type="BOOLEAN")
+    mod.operation = "DIFFERENCE"
+    mod.object = object_to_delete
+    # Make layer_edge active to have right context to apply modifier
+    bpy.context.view_layer.objects.active = layer_edge
+    # Apply modifier, which performs difference operation
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+    # Ensure object_to_delete is not visible
+    bpy.context.collection.objects.unlink(object_to_delete)
+    return layer_edge
+
+
 # ----------------------------------------------------------------------------------------
 # Main code
 # ----------------------------------------------------------------------------------------
@@ -440,35 +495,16 @@ for i in range(num_layers):
             channel_width + 2 * edge_width,
         )
 
-        # Create Edge layer (TODO: put this in a function)
-        layer_edge = make_channel_layer(
+        # Create Edge layer
+        layer_edge = make_edge_layer(
             layer_name,
             xy_layer_size,
             xy_layer_size,
             z_layer_size,
             z,
             channel_width,
+            edge_width,
         )
-        delta_xy = 0.3
-        delta_z = 0.1
-        object_to_delete = make_channel_layer(
-            layer_name,
-            xy_layer_size + delta_xy,
-            xy_layer_size + delta_xy,
-            z_layer_size + delta_z,
-            z - delta_z / 2,
-            channel_width + 2 * edge_width,
-        )
-        # Add modifier to do a boolean difference between layer and channel
-        mod = layer_edge.modifiers.new("BoolDifferenceSecondary", type="BOOLEAN")
-        mod.operation = "DIFFERENCE"
-        mod.object = object_to_delete
-        # Make layer_edge active to have right context to apply modifier
-        bpy.context.view_layer.objects.active = layer_edge
-        # Apply modifier, which performs difference operation
-        bpy.ops.object.modifier_apply(modifier=mod.name)
-        # Ensure object_to_delete is not visible
-        bpy.context.collection.objects.unlink(object_to_delete)
 
         # Make materials. All layer objects begin with the edge dose color
         mat_channel = make_material_Principled_BSDF(material_name, color_RGB_edge)

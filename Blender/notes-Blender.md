@@ -852,6 +852,9 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 
 [[2.92] Blender Tutorial: Quick Physics Simulation for Beginners](https://www.youtube.com/watch?v=ymhEH-shXMo) - great illustration of how to manually interact with, duplicate, and modify objects and the timeline. Also very good introduction to using the physics engine.
 
+`210918_channel_animation_secondary_image.py`
+
+- Put edge layer creation into a function
 
 ## Next:
 
@@ -872,8 +875,10 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
     - First, use channel and fade-in to edge dose color
     - Next, replace channel with eroded channel and edge objects at full edge dose color
     - Next, animate eroded channel from edge dose color to bulk color
+- &#9989; Put edge layer creation into a function
 - Add roof exposures above channel
 - Do embedded different layer thicknesses and multiple exposure times
+- Change from 24 fps to 30 fps?
 - &#10060; Set AVI JPEG video quality to 100% with python
     - **No, going from 90% to 100% changes the file size from 32 MB to 269 MB!**
 - Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader
