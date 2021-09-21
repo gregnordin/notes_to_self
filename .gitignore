@@ -18,4 +18,4 @@ media
 .cache/
 *.blend1
 Blender/.vscode
-
+untracked_with_git
