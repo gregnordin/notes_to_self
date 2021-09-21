@@ -841,6 +841,7 @@ Successfully implemented disappear and reappear.
 - &#9989; Then apply to channel layers made with boolean difference operation
 - &#9989; Move sun light source further away?
 - &#9989; Do edge exposure case with secondary images
+- &#9989; Develop `Animate3DObject` class with appear, disappear, fade-in, fade-out, and color change animation methods
 - Change edge exposure layers to get rid of artificial edge/bulk boundary
     - Create 3 layer objects:
         - Channel

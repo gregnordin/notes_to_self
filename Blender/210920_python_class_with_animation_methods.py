@@ -80,6 +80,8 @@ def frame_number(time_seconds, frames_per_second=frames_per_second):
 
 
 class Animated3DObject:
+    """Given a Blender 3D object, make it easy to do fade-in, fade-out, disappear, appear."""
+
     def __init__(self, obj):
         # Specify which type of layer object (bulk, channel, channel with edge, roof with reduced exposure region)
         # Use Factory Method design pattern to create objects?? And then initialize object with whatever parameters it needs?
@@ -91,6 +93,10 @@ class Animated3DObject:
             "Alpha"
         ]
         self.set_fully_transparent()
+        # Color shortcut
+        self.material_color_param = self.material_nodes["Principled BSDF"].inputs[
+            "Base Color"
+        ]
         # Record scale value. Must make a copy, otherwise self.save_scale just points to the object's scale:
         self.save_scale = self.object.scale.copy()
 
@@ -139,6 +145,16 @@ class Animated3DObject:
     def set_least_transparent(self):
         self.set_transparency_value(1.0)
 
+    def set_color(self, new_color):
+        self.material_color_param.default_value = new_color
+
+    def animate_change_color(self, new_color, start_frame, end_frame):
+        current_color = self.material_color_param.default_value
+        self.set_color(current_color)
+        self.material_color_param.keyframe_insert("default_value", frame=start_frame)
+        self.set_color(new_color)
+        self.material_color_param.keyframe_insert("default_value", frame=end_frame)
+
 
 # Layers
 xy_layer_size = 10
@@ -151,7 +167,11 @@ num_layers = 9
 # Primary color - golden
 color_RGB_default = (1, 0.71, 0.2)  # RGB (255, 180, 51) = #FFB433 hex
 color_RGBA_default = (*color_RGB_default, 1)  # Includes alpha channel
+# Triadic color #1 - greenish
+color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
+color_RGBA_edge = (*color_RGB_edge, 1)  # Includes alpha channel
 
+# Light
 light_sun = point_light()
 
 # Camera
@@ -166,18 +186,20 @@ scene.camera = cam
 cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
+# Test object
 z = 0.0
 layer = make_layer("Test_Layer", xy_layer_size, xy_layer_size, z_layer_size, z)
 mat = make_material_Principled_BSDF("Test_Material", color_RGB_default)
 layer.data.materials.append(mat)
 
+# Try new class animations
 test_layer = Animated3DObject(layer)
-
 start_frame, end_frame = 5, 25
 test_layer.fade_in(start_frame, end_frame)
 test_layer.disappear_at_frame(end_frame + 20)
 test_layer.appear_at_frame(end_frame + 40)
-start_frame, end_frame = 80, 95
+test_layer.animate_change_color(color_RGBA_edge, end_frame + 50, end_frame + 65)
+start_frame, end_frame = end_frame + 80, end_frame + 95
 test_layer.fade_out(start_frame, end_frame)
 
 # Set last frame to be rendered for animation
