@@ -227,6 +227,11 @@ class Animated3DObject:
         # print("After", self.object.scale, value)
 
     def set_visible(self, visibility_flag):
+        """Set whether object is visible or not.
+
+        Args:
+            visibility_flag (Boolean): True = visible, False = not visible.
+        """
         if visibility_flag:
             self.set_scale(self.save_scale)
         else:
@@ -266,6 +271,11 @@ class Animated3DObject:
         self.set_transparency_value(1.0)
 
     def set_color(self, new_color):
+        # If receive an RGB color, convert to RGBA
+        if len(new_color) == 3:
+            new_color = (*new_color, 1.0)
+        # Make sure we have an RGBA color
+        assert len(new_color) == 4
         self.material_color_param.default_value = new_color
 
     def animate_change_color(self, new_color, start_frame, end_frame):
@@ -363,10 +373,10 @@ cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
 # Select which case to run
-case = "bulk"
-# case = 'channel'
+# case = "bulk"
+# case = "channel"
 chan_layers = [2, 3, 4, 5]
-# case = "channel with edge dose"
+case = "channel with edge dose"
 if case == "bulk":
     channel_layers = []
     secondary_image_channel_layers = []
@@ -397,21 +407,31 @@ for i in range(num_layers):
         )
         mat = make_material_Principled_BSDF(material_name, color_RGB_default)
         layer.data.materials.append(mat)
-        animate_object_transparency(
-            layer, frame_number(start_time), frame_number(end_time)
-        )
+        layer = Animated3DObject(layer)
+        layer.fade_in(frame_number(start_time), frame_number(end_time))
     elif i in secondary_image_channel_layers:
         # Make primary image object with channel width = channel_width + edge_width
-        # Make secondary image object
-        #   Make layer object 2 with channel width = channel_width
-        #   Make edge object as difference between layer object 2 and primary image object
-        # Assign secondary color to primary and edge objects (or make identical materials with same color, one for each)
-        # Keyframe animation fade-in for both objects by doing alpha keyframe for both materials
-        # Assign primary color to primary object material
-        # Keyframe animation primary object from secondary color to primary color
+        # Create 3 layer objects:
+        #     Channel (channel size = channel_width)
+        #     Eroded Channel (channel size = channel_width + 2*edge_width)
+        #     Edge (2 strips, each of width edge_width, on each side of channel)
+        # Animate edge dose applied to full layer except channel
+        #     Use Channel object and fade-in with edge dose color
+        # Instantaneously replace Channel object with Eroded Channel and Edge objects just before starting next step
+        # Animate Eroded Channel from edge dose color to bulk color
 
-        # Create primary layer
-        layer_primary = make_channel_layer(
+        # Create Channel layer
+        layer_channel = make_channel_layer(
+            layer_name,
+            xy_layer_size,
+            xy_layer_size,
+            z_layer_size,
+            z,
+            channel_width,
+        )
+
+        # Create Eroded Channel layer
+        layer_eroded_channel = make_channel_layer(
             layer_name,
             xy_layer_size,
             xy_layer_size,
@@ -420,7 +440,7 @@ for i in range(num_layers):
             channel_width + 2 * edge_width,
         )
 
-        # Create edge layer
+        # Create Edge layer (TODO: put this in a function)
         layer_edge = make_channel_layer(
             layer_name,
             xy_layer_size,
@@ -443,41 +463,54 @@ for i in range(num_layers):
         mod = layer_edge.modifiers.new("BoolDifferenceSecondary", type="BOOLEAN")
         mod.operation = "DIFFERENCE"
         mod.object = object_to_delete
-        # layer_edge.select_set(True)
+        # Make layer_edge active to have right context to apply modifier
         bpy.context.view_layer.objects.active = layer_edge
+        # Apply modifier, which performs difference operation
         bpy.ops.object.modifier_apply(modifier=mod.name)
-        # Make channel object not visible
+        # Ensure object_to_delete is not visible
         bpy.context.collection.objects.unlink(object_to_delete)
 
-        mat_primary = make_material_Principled_BSDF(material_name, color_RGB_edge)
-        layer_primary.data.materials.append(mat_primary)
-        animate_object_transparency(
-            layer_primary, frame_number(start_time), frame_number(end_time)
-        )
-        mat_secondary = make_material_Principled_BSDF(material_name, color_RGB_edge)
-        layer_edge.data.materials.append(mat_secondary)
-        animate_object_transparency(
-            layer_edge, frame_number(start_time), frame_number(end_time)
-        )
+        # Make materials. All layer objects begin with the edge dose color
+        mat_channel = make_material_Principled_BSDF(material_name, color_RGB_edge)
+        mat_eroded = make_material_Principled_BSDF(material_name, color_RGB_edge)
+        mat_edge = make_material_Principled_BSDF(material_name, color_RGB_edge)
+        layer_channel.data.materials.append(mat_channel)
+        layer_eroded_channel.data.materials.append(mat_eroded)
+        layer_edge.data.materials.append(mat_edge)
 
+        # Create animation objects for each layer object
+        layer_channel = Animated3DObject(layer_channel)
+        layer_eroded_channel = Animated3DObject(layer_eroded_channel)
+        layer_edge = Animated3DObject(layer_edge)
+
+        # Set initial conditions
+        layer_eroded_channel.set_visible(False)
+        layer_eroded_channel.set_least_transparent()
+        layer_edge.set_visible(False)
+        layer_edge.set_least_transparent()
+
+        # Fade-in edge dose
+        layer_channel.fade_in(frame_number(start_time), frame_number(end_time))
+
+        # Adjust start and end times to do bulk dose
         start_time = end_time + time_between_layer_fadeins_seconds
         end_time = start_time + fadein_duration_seconds
-        mat = layer_primary.active_material
-        mat_nodes = mat.node_tree.nodes
-        mat_color_param = mat_nodes["Principled BSDF"].inputs["Base Color"]
-        mat_color_param.default_value = color_RGBA_edge
-        mat_color_param.keyframe_insert("default_value", frame=frame_number(start_time))
-        mat_color_param.default_value = color_RGBA_default
-        mat_color_param.keyframe_insert("default_value", frame=frame_number(end_time))
+
+        # Swap out layer channel for edge and eroded channel layers
+        layer_channel.disappear_at_frame(frame_number(start_time))
+        layer_eroded_channel.appear_at_frame(frame_number(start_time))
+        layer_edge.appear_at_frame(frame_number(start_time))
+
+        # Animate color change for bulk region
+        layer_eroded_channel.animate_change_color(
+            color_RGB_default, frame_number(start_time), frame_number(end_time)
+        )
     else:
         layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
         mat = make_material_Principled_BSDF(material_name, color_RGB_default)
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
         layer.fade_in(frame_number(start_time), frame_number(end_time))
-        # animate_object_transparency(
-        #     layer, frame_number(start_time), frame_number(end_time)
-        # )
 
     start_time = end_time + time_between_layer_fadeins_seconds
 

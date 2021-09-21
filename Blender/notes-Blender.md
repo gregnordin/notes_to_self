@@ -834,6 +834,8 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 `210918_channel_animation_secondary_image.py`
 
 - Copy `Animated3DObject` and convert `bulk` case to use it successfully
+- Use for `channel` case
+- Use for `channel with edge dose` case
 
 
 ## Next:
@@ -846,8 +848,8 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 - &#9989; Move sun light source further away?
 - &#9989; Do edge exposure case with secondary images
 - &#9989; Develop `Animate3DObject` class with appear, disappear, fade-in, fade-out, and color change animation methods
-- &#9989; Put `Animate3DObject` in `210918_channel_animation.py` to do next bullet
-- Change edge exposure layers to get rid of artificial edge/bulk boundary
+- &#9989; Put `Animate3DObject` in `210918_channel_animation.py` so can do next bullet
+- &#9989; Change edge exposure layers to get rid of artificial edge/bulk boundary
     - Create 3 layer objects:
         - Channel
         - Eroded channel
