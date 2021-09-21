@@ -267,7 +267,7 @@ class Animated3DObject:
     def set_fully_transparent(self):
         self.set_transparency_value(0.0)
 
-    def set_least_transparent(self):
+    def set_opaque(self):
         self.set_transparency_value(1.0)
 
     def set_color(self, new_color):
@@ -485,9 +485,9 @@ for i in range(num_layers):
 
         # Set initial conditions
         layer_eroded_channel.set_visible(False)
-        layer_eroded_channel.set_least_transparent()
+        layer_eroded_channel.set_opaque()
         layer_edge.set_visible(False)
-        layer_edge.set_least_transparent()
+        layer_edge.set_opaque()
 
         # Fade-in edge dose
         layer_channel.fade_in(frame_number(start_time), frame_number(end_time))
