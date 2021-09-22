@@ -857,6 +857,23 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 - Put edge layer creation into a function
 - Do case with reduced roof dose and channel edge dose
 
+
+# Wednesday, 2021-09-22
+
+`210918_channel_animation_secondary_image.py`
+
+Do channel animation where channel edges are comprised of 3 smaller layers. Plan:
+
+- Create first small edge layer at z = z0.
+- Animate it going to small edge color (and have it take less time than a full layer).
+- Create 2nd small edge layer at z = z0 + z_layer/3
+- Animate it going to small edge color (and have it take less time than a full layer).
+- Create 2rd small edge layer at z = z0 + z_layer/3
+- Create eroded channel layer
+- Animate both of these goint to small edge color
+- The animate eroded channel layer going to bulk layer color
+
+
 ## Next:
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun

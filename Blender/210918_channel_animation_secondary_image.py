@@ -353,12 +353,7 @@ def make_edge_layer(
         edge_width (float or int): width of each edge
     """
     layer_edge = make_channel_layer(
-        name,
-        x_layer_size,
-        y_layer_size,
-        z_layer_size,
-        z_position,
-        channel_width,
+        name, x_layer_size, y_layer_size, z_layer_size, z_position, channel_width,
     )
     # Oversize the object to delete so that difference operation doesn't have to
     # deal with co-located surfaces.
@@ -478,24 +473,18 @@ for i in range(num_layers):
         layer.fade_in(frame_number(start_time), frame_number(end_time))
 
     elif i in secondary_image_channel_layers:
-        # Make primary image object with channel width = channel_width + edge_width
         # Create 3 layer objects:
         #     Channel (channel size = channel_width)
         #     Eroded Channel (channel size = channel_width + 2*edge_width)
         #     Edge (2 strips, each of width edge_width, on each side of channel)
-        # Animate edge dose applied to full layer except channel
-        #     Use Channel object and fade-in with edge dose color
+        # Use Channel object and fade-in with edge dose color
         # Instantaneously replace Channel object with Eroded Channel and Edge objects just before starting next step
-        # Animate Eroded Channel from edge dose color to bulk color
+        #     Eroded Channel and Edge are already at full edge dose color
+        # Animate Eroded Channel color from edge dose color to bulk color
 
         # Create Channel layer
         layer_channel = make_channel_layer(
-            layer_name,
-            xy_layer_size,
-            xy_layer_size,
-            z_layer_size,
-            z,
-            channel_width,
+            layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width,
         )
 
         # Create Eroded Channel layer
@@ -570,11 +559,7 @@ for i in range(num_layers):
             channel_width + 2 * edge_width,
         )
         layer_roof_reduced_dose = make_layer(
-            layer_name,
-            xy_layer_size,
-            channel_width + 2 * edge_width,
-            z_layer_size,
-            z,
+            layer_name, xy_layer_size, channel_width + 2 * edge_width, z_layer_size, z,
         )
 
         # Make materials. All layer objects begin with the edge dose color
@@ -614,6 +599,16 @@ for i in range(num_layers):
         layer_roof_bulk.animate_change_color(
             color_RGB_default, frame_number(start_time), frame_number(end_time)
         )
+
+    elif i in []:
+        # Create Multiple layer objects:
+        #     Channel (channel size = channel_width)
+        #     Eroded Channel (channel size = channel_width + 2*edge_width)
+        #     Edge (2 strips, each of width edge_width, on each side of channel)
+        # Use Channel object and fade-in with edge dose color
+        # Instantaneously replace Channel object with Eroded Channel and Edge objects just before starting next step
+        #     Eroded Channel and Edge are already at full edge dose color
+        # Animate Eroded Channel color from edge dose color to bulk color
 
     else:
 
