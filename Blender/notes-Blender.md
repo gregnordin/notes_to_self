@@ -924,14 +924,26 @@ In Blender scripting window from default new file:
 
     # Create node shortcuts
     >>> node_mix = mat_nodes['Mix Shader']
-    >>> node_output = mat_nodes["Material Output"]
     >>> node_mix
     bpy.data.materials['Material'].node_tree.nodes["Mix Shader"]
+    >>> node_output = mat_nodes["Material Output"]
+    >>> node_prin = mat_nodes['Principled BSDF']
+    >>> node_tran = mat_nodes['Transparent BSDF']
     
     # Create links between nodes
+    >>> links = mat.node_tree.links
     >>> link_mix_out = links.new(node_mix.outputs[0], node_output.inputs[0])
+    >>> link_prin_mix = links.new(node_prin.outputs[0], node_mix.inputs[1])
+    >>> link_tran_mix = links.new(node_tran.outputs[0], node_mix.inputs[2])
+    
+    # Change material settings to get nice transparency
+    >>> mat.blend_method = "BLEND"
+    >>> mat.show_transparent_back = False
+    >>> mat.shadow_method = "NONE"
 
-
+    # Change Mix Shader mixing factor 
+    # (0 is all Principled BSDF, 1 is all Transparent Shader)
+    >>> node_mix.inputs['Fac'].default_value = 0.3
 
 ## Next:
 
