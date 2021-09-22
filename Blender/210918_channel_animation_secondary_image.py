@@ -393,6 +393,8 @@ z_layer_size = 0.5
 channel_width = 3
 edge_width = 1
 num_layers = 9
+num_small_layers_per_layer = 3
+z_small_layer_size = z_layer_size / num_small_layers_per_layer
 # Specify channel and roof layers
 chan_layers = [2, 3, 4, 5]
 roof_layers = [6, 7]
@@ -454,6 +456,8 @@ elif case == "channel with small edge layers and roof dose":
 # Loop to create layers, materials, and animation keyframes
 fadein_duration_seconds = 1.0
 time_between_layer_fadeins_seconds = 0.5
+fadein_duration_seconds_small_layer = 0.6
+time_between_layer_fadeins_seconds_small_layer = 0.25
 start_time = 0.3
 for i in range(num_layers):
 
@@ -547,8 +551,51 @@ for i in range(num_layers):
             color_RGB_bulk, frame_number(start_time), frame_number(end_time)
         )
 
-    elif i in []:
-        pass
+    elif i in secondary_image_small_channel_layers:
+
+        # Do N-1 small layers (last small layer has to be treated separately)
+        for j in range(num_small_layers_per_layer):
+            end_time = start_time + fadein_duration_seconds_small_layer
+            layer_small_edge = make_edge_layer(
+                layer_name,
+                xy_layer_size,
+                xy_layer_size,
+                z_small_layer_size,
+                z + j * z_small_layer_size,
+                channel_width,
+                edge_width,
+            )
+            mat_small_edge = make_material_Principled_BSDF(
+                material_name, color_RGB_small_edge
+            )
+            layer_small_edge.data.materials.append(mat_small_edge)
+            layer_small_edge = Animated3DObject(layer_small_edge)
+            layer_small_edge.fade_in(frame_number(start_time), frame_number(end_time))
+            if j < num_small_layers_per_layer - 1:
+                start_time = end_time + time_between_layer_fadeins_seconds_small_layer
+
+        # Create Eroded Channel layer
+        layer_eroded_channel = make_channel_layer(
+            layer_name,
+            xy_layer_size,
+            xy_layer_size,
+            z_layer_size,
+            z,
+            channel_width + 2 * edge_width,
+        )
+        mat_eroded = make_material_Principled_BSDF(material_name, color_RGB_small_edge)
+        layer_eroded_channel.data.materials.append(mat_eroded)
+        layer_eroded_channel = Animated3DObject(layer_eroded_channel)
+
+        # Fade in eroded channel layer at the same time as last small edge layer
+        layer_eroded_channel.fade_in(frame_number(start_time), frame_number(end_time))
+        # Adjust start and end times to do bulk dose for eroded channel layer
+        start_time = end_time
+        end_time = start_time + fadein_duration_seconds
+        # Animate color change for bulk region
+        layer_eroded_channel.animate_change_color(
+            color_RGB_bulk, frame_number(start_time), frame_number(end_time)
+        )
 
     elif i in secondary_image_roof_layers:
 

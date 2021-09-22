@@ -862,7 +862,9 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 
 `210918_channel_animation_secondary_image.py`
 
-Do channel animation where channel edges are comprised of 3 smaller layers. Plan:
+- Do case with small channel edge layers and reduced roof dose
+
+Approach: Do channel animation where channel edges are comprised of 3 smaller layers. Plan:
 
 - Create first small edge layer at z = z0.
 - Animate it going to small edge color (and have it take less time than a full layer).
@@ -871,7 +873,7 @@ Do channel animation where channel edges are comprised of 3 smaller layers. Plan
 - Create 2rd small edge layer at z = z0 + z_layer/3
 - Create eroded channel layer
 - Animate both of these goint to small edge color
-- The animate eroded channel layer going to bulk layer color
+- Then animate eroded channel layer going to bulk layer color
 
 
 ## Next:
