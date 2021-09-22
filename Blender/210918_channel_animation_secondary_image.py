@@ -187,7 +187,7 @@ class Animated3DObject:
     Example usage:
         # Make an object with a material
         layer = make_layer("Test_Layer", xy_layer_size, xy_layer_size, z_layer_size, z)
-        mat = make_material_Principled_BSDF("Test_Material", color_RGB_default)
+        mat = make_material_Principled_BSDF("Test_Material", color_RGB_bulk)
         layer.data.materials.append(mat)
 
         # Try class animations
@@ -196,7 +196,7 @@ class Animated3DObject:
         test_layer.fade_in(start_frame, end_frame)
         test_layer.disappear_at_frame(end_frame + 20)
         test_layer.appear_at_frame(end_frame + 40)
-        test_layer.animate_change_color(color_RGBA_edge, end_frame + 50, end_frame + 65)
+        test_layer.animate_change_color(color_RGB_edge, end_frame + 50, end_frame + 65)
         start_frame, end_frame = end_frame + 80, end_frame + 95
         test_layer.fade_out(start_frame, end_frame)
 
@@ -393,16 +393,20 @@ z_layer_size = 0.5
 channel_width = 3
 edge_width = 1
 num_layers = 9
+# Specify channel and roof layers
+chan_layers = [2, 3, 4, 5]
+roof_layers = [6, 7]
 
 # Define colors
 # Primary color - golden
-color_RGB_default = (1, 0.71, 0.2)  # RGB (255, 180, 51) = #FFB433 hex
-color_RGBA_default = (*color_RGB_default, 1)  # Includes alpha channel
+color_RGB_bulk = (1, 0.71, 0.2)  # RGB (255, 180, 51) = #FFB433 hex
+# color_RGBA_default = (*color_RGB_bulk, 1)  # Includes alpha channel
 # Triadic color #1 - greenish
 color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
-color_RGBA_edge = (*color_RGB_edge, 1)  # Includes alpha channel
+# color_RGBA_edge = (*color_RGB_edge, 1)  # Includes alpha channel
 # Triadic color #2 - purple
-# RGB (0.71, 0.2, 1.0) = (180, 51, 255) = HEX #b433ff
+color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
+# color_RGBA_small_edge = (*color_RGB_small_edge, 1)  # Includes alpha channel
 
 # Lights
 light_sun = sun_light()
@@ -422,33 +426,32 @@ scene.camera = cam
 cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
-# Specify channel and roof layers
-chan_layers = [2, 3, 4, 5]
-roof_layers = [6, 7]
-
-# Select which case to run by uncommenting one of the following 4 lines
+# Select which case to run by uncommenting one of the following 5 lines
 # case = "bulk"
 # case = "channel"
 # case = "channel with edge dose"
-case = "channel with edge dose and roof dose"
+# case = "channel with edge dose and roof dose"
+case = "channel with small edge layers and roof dose"
+
+# Set up layer lists for specific case chosen
+channel_layers = []
+secondary_image_channel_layers = []
+secondary_image_small_channel_layers = []
+secondary_image_roof_layers = []
 if case == "bulk":
-    channel_layers = []
-    secondary_image_channel_layers = []
-    secondary_image_roof_layers = []
+    pass
 elif case == "channel":
     channel_layers = chan_layers
-    secondary_image_channel_layers = []
-    secondary_image_roof_layers = []
 elif case == "channel with edge dose":
-    channel_layers = []
     secondary_image_channel_layers = chan_layers
-    secondary_image_roof_layers = []
 elif case == "channel with edge dose and roof dose":
-    channel_layers = []
     secondary_image_channel_layers = chan_layers
     secondary_image_roof_layers = roof_layers
+elif case == "channel with small edge layers and roof dose":
+    secondary_image_small_channel_layers = chan_layers
+    secondary_image_roof_layers = roof_layers
 
-# Loop to create layers, materials, and keyframes
+# Loop to create layers, materials, and animation keyframes
 fadein_duration_seconds = 1.0
 time_between_layer_fadeins_seconds = 0.5
 start_time = 0.3
@@ -467,7 +470,7 @@ for i in range(num_layers):
         layer = make_channel_layer(
             layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width
         )
-        mat = make_material_Principled_BSDF(material_name, color_RGB_default)
+        mat = make_material_Principled_BSDF(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
         layer.fade_in(frame_number(start_time), frame_number(end_time))
@@ -541,8 +544,11 @@ for i in range(num_layers):
 
         # Animate color change for bulk region
         layer_eroded_channel.animate_change_color(
-            color_RGB_default, frame_number(start_time), frame_number(end_time)
+            color_RGB_bulk, frame_number(start_time), frame_number(end_time)
         )
+
+    elif i in []:
+        pass
 
     elif i in secondary_image_roof_layers:
 
@@ -597,23 +603,13 @@ for i in range(num_layers):
 
         # Animate color change for bulk region
         layer_roof_bulk.animate_change_color(
-            color_RGB_default, frame_number(start_time), frame_number(end_time)
+            color_RGB_bulk, frame_number(start_time), frame_number(end_time)
         )
-
-    elif i in []:
-        # Create Multiple layer objects:
-        #     Channel (channel size = channel_width)
-        #     Eroded Channel (channel size = channel_width + 2*edge_width)
-        #     Edge (2 strips, each of width edge_width, on each side of channel)
-        # Use Channel object and fade-in with edge dose color
-        # Instantaneously replace Channel object with Eroded Channel and Edge objects just before starting next step
-        #     Eroded Channel and Edge are already at full edge dose color
-        # Animate Eroded Channel color from edge dose color to bulk color
 
     else:
 
         layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
-        mat = make_material_Principled_BSDF(material_name, color_RGB_default)
+        mat = make_material_Principled_BSDF(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
         layer.fade_in(frame_number(start_time), frame_number(end_time))
