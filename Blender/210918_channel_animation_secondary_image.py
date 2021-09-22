@@ -193,7 +193,7 @@ class Animated3DObject:
     Example usage:
         # Make an object with a material
         layer = make_layer("Test_Layer", xy_layer_size, xy_layer_size, z_layer_size, z)
-        mat = make_material_Principled_BSDF("Test_Material", color_RGB_bulk)
+        mat = make_material("Test_Material", color_RGB_bulk)
         layer.data.materials.append(mat)
 
         # Try class animations
@@ -434,6 +434,9 @@ scene.camera = cam
 cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
+# Select which material type by uncommenting one of the following 2 lines
+make_material = make_material_Principled_BSDF
+
 # Select which case to run by uncommenting one of the following 5 lines
 # case = "bulk"
 # case = "channel"
@@ -480,7 +483,7 @@ for i in range(num_layers):
         layer = make_channel_layer(
             layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width
         )
-        mat = make_material_Principled_BSDF(material_name, color_RGB_bulk)
+        mat = make_material(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
         layer.fade_in(frame_number(start_time), frame_number(end_time))
@@ -522,9 +525,9 @@ for i in range(num_layers):
         )
 
         # Make materials. All layer objects begin with the edge dose color
-        mat_channel = make_material_Principled_BSDF(material_name, color_RGB_edge)
-        mat_eroded = make_material_Principled_BSDF(material_name, color_RGB_edge)
-        mat_edge = make_material_Principled_BSDF(material_name, color_RGB_edge)
+        mat_channel = make_material(material_name, color_RGB_edge)
+        mat_eroded = make_material(material_name, color_RGB_edge)
+        mat_edge = make_material(material_name, color_RGB_edge)
         layer_channel.data.materials.append(mat_channel)
         layer_eroded_channel.data.materials.append(mat_eroded)
         layer_edge.data.materials.append(mat_edge)
@@ -571,9 +574,7 @@ for i in range(num_layers):
                 channel_width,
                 edge_width,
             )
-            mat_small_edge = make_material_Principled_BSDF(
-                material_name, color_RGB_small_edge
-            )
+            mat_small_edge = make_material(material_name, color_RGB_small_edge)
             layer_small_edge.data.materials.append(mat_small_edge)
             layer_small_edge = Animated3DObject(layer_small_edge)
             layer_small_edge.fade_in(frame_number(start_time), frame_number(end_time))
@@ -589,7 +590,7 @@ for i in range(num_layers):
             z,
             channel_width + 2 * edge_width,
         )
-        mat_eroded = make_material_Principled_BSDF(material_name, color_RGB_small_edge)
+        mat_eroded = make_material(material_name, color_RGB_small_edge)
         layer_eroded_channel.data.materials.append(mat_eroded)
         layer_eroded_channel = Animated3DObject(layer_eroded_channel)
 
@@ -622,11 +623,9 @@ for i in range(num_layers):
         )
 
         # Make materials. All layer objects begin with the edge dose color
-        mat_roof = make_material_Principled_BSDF(material_name, color_RGB_edge)
-        mat_roof_bulk = make_material_Principled_BSDF(material_name, color_RGB_edge)
-        mat_roof_reduced_dose = make_material_Principled_BSDF(
-            material_name, color_RGB_edge
-        )
+        mat_roof = make_material(material_name, color_RGB_edge)
+        mat_roof_bulk = make_material(material_name, color_RGB_edge)
+        mat_roof_reduced_dose = make_material(material_name, color_RGB_edge)
         layer_roof.data.materials.append(mat_roof)
         layer_roof_bulk.data.materials.append(mat_roof_bulk)
         layer_roof_reduced_dose.data.materials.append(mat_roof_reduced_dose)
@@ -662,7 +661,7 @@ for i in range(num_layers):
     else:
 
         layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
-        mat = make_material_Principled_BSDF(material_name, color_RGB_bulk)
+        mat = make_material(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
         layer.fade_in(frame_number(start_time), frame_number(end_time))
