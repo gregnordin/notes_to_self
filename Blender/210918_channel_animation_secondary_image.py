@@ -168,6 +168,12 @@ def animate_object_transparency(
 # Get the render frames per second from the Blender file from which this python code file is executed
 frames_per_second = bpy.data.scenes["Scene"].render.fps
 
+# Change to 30 fps
+# frames_per_second_original = bpy.data.scenes["Scene"].render.fps
+# # Set frames per second
+# bpy.data.scenes["Scene"].render.fps = 30
+# frames_per_second = bpy.data.scenes["Scene"].render.fps
+
 
 def frame_number(time_seconds, frames_per_second=frames_per_second):
     """Utility function to calculate the frame number for a particular time

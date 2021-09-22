@@ -17,9 +17,9 @@
 
 - Select - click object
 - Unselect - click empty space
-- a - select all
-- option-a - deselect all
-- x - delete whatever is selected
+- `a` - select all
+- `option-a` - deselect all
+- `x` - delete whatever is selected
 
 ### Navigation
 
@@ -54,6 +54,10 @@
 ## More in-depth info on using GUI and keyboard interface
 
 [[2.92] Blender Tutorial: Quick Physics Simulation for Beginners](https://www.youtube.com/watch?v=ymhEH-shXMo) - great illustration of **how to manually interact with, duplicate, and modify objects and the timeline**. Also very good introduction to using the physics engine.
+
+- `G` - grab object, it will now move with the mouse
+- `S` - scale object, it will scale as move mouse
+- `Shift-A` - brings up menu to add an object
 
 ## Python Scripting
 
@@ -860,11 +864,11 @@ From [Data Color Picker, powered by Learn UI Design](https://learnui.design/tool
 
 # Wednesday, 2021-09-22
 
-`210918_channel_animation_secondary_image.py`
-
-- Do case with small channel edge layers and reduced roof dose
+## Do case with small channel edge layers and reduced roof dose
 
 Approach: Do channel animation where channel edges are comprised of 3 smaller layers. Plan:
+
+`210918_channel_animation_secondary_image.py`
 
 - Create first small edge layer at z = z0.
 - Animate it going to small edge color (and have it take less time than a full layer).
@@ -874,6 +878,59 @@ Approach: Do channel animation where channel edges are comprised of 3 smaller la
 - Create eroded channel layer
 - Animate both of these goint to small edge color
 - Then animate eroded channel layer going to bulk layer color
+
+## Make semi-transparent material
+
+**See [p2or/blender-generate-mix-shader-example.py](https://gist.github.com/p2or/1ffcd6ed57bc8d857afbd3659c9a0089) for example how to create material with python.**
+
+In Blender scripting window from default new file:
+
+    # Get Blender default object
+    >>> cube =  bpy.data.objects['Cube']
+    >>> cube
+    bpy.data.objects['Cube']
+    
+    # Get default material and nodes
+    >>> cube.active_material
+    bpy.data.materials['Material']
+    >>> mat = cube.active_material
+    >>> mat
+    >>> mat_nodes = mat.node_tree.nodes
+    >>> mat_nodes.items()
+    [('Material Output', bpy.data.materials['Material'].node_tree.nodes["Material Output"]),
+     ('Principled BSDF', bpy.data.materials['Material'].node_tree.nodes["Principled BSDF"])]
+    
+    # Set color
+    >>> mat_nodes['Principled BSDF'].inputs["Base Color"].default_value = [0.2, 0.0, 0.8, 1.0]
+        
+    # Add Transparent Shader and Mix Shader
+    >>> mat_nodes.new(type="ShaderNodeBsdfTransparent")
+    bpy.data.materials['Material'].node_tree.nodes["Transparent BSDF"]
+    >>> mat_nodes.new(type="ShaderNodeMixShader")
+    bpy.data.materials['Material'].node_tree.nodes["Mix Shader"]
+    >>> mat_nodes.items()
+    [('Transparent BSDF', bpy.data.materials['Material'].node_tree.nodes["Transparent BSDF"]),
+    ('Principled BSDF', bpy.data.materials['Material'].node_tree.nodes["Principled BSDF"]),
+    ('Material Output', bpy.data.materials['Material'].node_tree.nodes["Material Output"]),
+    ('Mix Shader', bpy.data.materials['Material'].node_tree.nodes["Mix Shader"])]
+
+    # Set shader positions in Shader View window
+    >>> mat_nodes['Transparent BSDF'].location = (-10, 500)
+    >>> mat_nodes['Transparent BSDF'].location
+    Vector((-6.449999809265137, 500.0))
+    >>> mat_nodes['Principled BSDF'].location =  (-10, 350)
+    >>> mat_nodes['Mix Shader'].location =       (310, 430)    
+    >>> mat_nodes['Material Output'].location =  (530, 300)
+
+    # Create node shortcuts
+    >>> node_mix = mat_nodes['Mix Shader']
+    >>> node_output = mat_nodes["Material Output"]
+    >>> node_mix
+    bpy.data.materials['Material'].node_tree.nodes["Mix Shader"]
+    
+    # Create links between nodes
+    >>> link_mix_out = links.new(node_mix.outputs[0], node_output.inputs[0])
+
 
 
 ## Next:
@@ -897,7 +954,7 @@ Approach: Do channel animation where channel edges are comprised of 3 smaller la
     - Next, animate eroded channel from edge dose color to bulk color
 - &#9989; Put edge layer creation into a function
 - &#9989; Add roof exposures above channel
-- Do embedded different layer thicknesses and multiple exposure times
+- &#9989; Do embedded different layer thicknesses and multiple exposure times
 - Change from 24 fps to 30 fps?
 - &#10060; Set AVI JPEG video quality to 100% with python
     - **No, going from 90% to 100% changes the file size from 32 MB to 269 MB!**
