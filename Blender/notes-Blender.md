@@ -883,6 +883,8 @@ Approach: Do channel animation where channel edges are comprised of 3 smaller la
 
 **See [p2or/blender-generate-mix-shader-example.py](https://gist.github.com/p2or/1ffcd6ed57bc8d857afbd3659c9a0089) for example how to create material with python.**
 
+### Blender scripting window
+
 In Blender scripting window from default new file:
 
     # Get Blender default object
@@ -944,6 +946,13 @@ In Blender scripting window from default new file:
     # Change Mix Shader mixing factor 
     # (0 is all Principled BSDF, 1 is all Transparent Shader)
     >>> node_mix.inputs['Fac'].default_value = 0.3
+
+### In python file
+
+`210918_channel_animation_secondary_image.py`
+
+- Make function `make_material_Principled_and_Transparent_BSDF()` and try it with only 20% transparency mixed in.
+
 
 ## Next:
 
