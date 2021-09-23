@@ -979,11 +979,19 @@ In Blender scripting window from default new file:
 - Change from 24 fps to 30 fps?
 - &#10060; Set AVI JPEG video quality to 100% with python
     - **No, going from 90% to 100% changes the file size from 32 MB to 269 MB!**
-- Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader
-- Do more complicated boolean difference operation to get 90&deg; channel bends
-- Make layers visually apparent
+- &#9989; Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader &rarr; **does not look good**
+- Feedback from my research group on 9/23/21:
+    - Use darker colors for higher dose.
+    - Add legend for colors and dose.
+    - Render at 60 fps so the animation is smooth. Dallin found 24 fps to be choppy.
+    - Chandler: in presentation, stop video after 2 layers and explain what is going on.
+    - Adam: Possibly put video on a repeated loop.
+    - Emma suggested having the layer grow in z rather than using a transparency fade-in, which is the same as the idea noted below.
+- **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction (actually, -z direction), which is easy to animate**. You could also have the whole stack of layers move down between each grow operation (group already-visible layers into a collection and apply translation to collection as a whole?). Have the stack drop down to make a new layer and look at it from above, noting in presentation that the process actually happens upside down.
+- &#10060; Do more complicated boolean difference operation to get 90&deg; channel bends?
+- &#10060; Make layers visually apparent
     - Slant layer edges so 3D printed edgefaces have a serrated look?
     - Wireframe outline for each layer that fades in with the layer?
     - Or, have all layer outlines statically present throughout video such that they get successively filled in during the animation?
-- Rotate camera after 3D print completes to see how the object looks
-- **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction, which is easy to animate**. You could also have the whole stack of layers move up between each grow operation (group already-visible layers into a collection and apply translation to collection as a whole?). And look at it from below. Or have the stack drop down to make a new layer and look at it from above, noting in presentation that the process actually happens upside down.
+- &#10060; Rotate camera after 3D print completes to see how the object looks
+- Do a more complicated microfluidic component, like a valve, or maybe half a valve so we can see the cross section?

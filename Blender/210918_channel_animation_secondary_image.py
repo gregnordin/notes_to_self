@@ -491,8 +491,8 @@ cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
 # Select which material type by uncommenting one of the following 2 lines
-# make_material = make_material_Principled_BSDF
-make_material = make_material_Principled_and_Transparent_BSDF
+make_material = make_material_Principled_BSDF
+# make_material = make_material_Principled_and_Transparent_BSDF
 
 # Select which case to run by uncommenting one of the following 5 lines
 # case = "bulk"
