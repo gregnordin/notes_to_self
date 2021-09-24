@@ -1128,6 +1128,22 @@ Try 60 fps. I can't really tell a difference with 24 fps.
         parent_layer.keyframe_insert(data_path="location", frame=end_frame)
 
 
+# Friday, 2021-09-24
+
+## Semi-transparent emissive object
+
+See [Create 3D objects and animations in Blender with Python API](https://demando.se/blogg/post/dev-generating-a-procedural-solar-system-with-blenders-python-api/) for basics of creating an emissive object. Note the really nice material creation function.
+
+Watch [Glow Objects in Blender in 2 minutes](https://www.youtube.com/watch?v=WTFj9B6eFgk) and learn how to make an object glow or bloom:
+
+- Select on right of screen `Render Properties`
+- Check box `Bloom`
+- Increase its intensity (0.100)
+
+`210924_emissive_semitransparent_object.blend` - Add Emission Shader, Transparent Shader, Mix Shader, and Ouput Material in the Shading view:
+
+![](assets/Emissive_semitransparent_glowing_object_shaders.jpg)
+
 
 ## Next:
 
