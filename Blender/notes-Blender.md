@@ -1213,6 +1213,7 @@ Good function to create semi-transparent emission shader material:
 `210918_channel_animation_secondary_image.py` and `blender_tools/`
 
 - Move lights code to `blender_tools/lights.py`
+- Move materials code to `blender_tools/materials.py`
 
 ## Next:
 
