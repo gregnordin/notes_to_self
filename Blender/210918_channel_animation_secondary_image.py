@@ -1,5 +1,6 @@
 import bpy
 from math import pi
+from functools import partial
 
 # Add blender file directory to the python path
 import sys
@@ -15,54 +16,13 @@ from blender_tools.materials import (
     make_material_Principled_BSDF,
     make_material_Principled_and_Transparent_BSDF,
 )
+from blender_tools.layer_objects import make_layer, make_channel_layer, make_edge_layer
+from blender_tools.animation import animate_object_transparency, frame_number
+
 
 # ----------------------------------------------------------------------------------------
 # Animation helpers
 # ----------------------------------------------------------------------------------------
-
-
-def animate_object_transparency(
-    obj, start_frame, end_frame, initial_value=0.0, final_value=1.0
-):
-    """Given an object with an active material that uses nodes and has a Principled BSDF node,
-    create keyframes to animate the object's transparency (alpha value) from an initial to a
-    final value.
-
-    Args:
-        obj (Blender object - bpy_types.Object): Object to animate transparency
-        start_frame (int): Frame on which to start animation
-        end_frame (int): Frame on which to end animation
-        initial_value (float, optional): Starting alpha value. Defaults to 0.0.
-        final_value (float, optional): Ending alpha value. Defaults to 1.0.
-    """
-    mat = obj.active_material
-    mat_nodes = mat.node_tree.nodes
-    mat_alpha_param = mat_nodes["Principled BSDF"].inputs["Alpha"]
-    mat_alpha_param.default_value = initial_value
-    mat_alpha_param.keyframe_insert("default_value", frame=start_frame)
-    mat_alpha_param.default_value = final_value
-    mat_alpha_param.keyframe_insert("default_value", frame=end_frame)
-
-
-# Get the render frames per second from the Blender file from which this python code file is executed
-frames_per_second = bpy.data.scenes["Scene"].render.fps
-
-# Change to 30 fps
-# frames_per_second_original = bpy.data.scenes["Scene"].render.fps
-# # Set frames per second
-# bpy.data.scenes["Scene"].render.fps = 60
-# frames_per_second = bpy.data.scenes["Scene"].render.fps
-
-
-def frame_number(time_seconds, frames_per_second=frames_per_second):
-    """Utility function to calculate the frame number for a particular time
-    given the anticipated frames per second for the animation.
-
-    Args:
-        time_seconds (float or int): time in seconds to convert to frames
-        frames_per_second (float or int): number of frames per second in animation
-    """
-    return round(frames_per_second * time_seconds)
 
 
 class Animated3DObject:
@@ -172,100 +132,6 @@ class Animated3DObject:
 
 
 # ----------------------------------------------------------------------------------------
-# Layer objects
-# ----------------------------------------------------------------------------------------
-
-
-def make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position):
-    bpy.ops.mesh.primitive_cube_add(size=1)
-    layer = bpy.context.object
-    layer.scale = (x_layer_size, y_layer_size, z_layer_size)
-    layer.location = (0, 0, z_layer_size / 2 + z_position)
-    layer.name = name
-    return layer
-
-
-def make_channel_layer(
-    name, x_layer_size, y_layer_size, z_layer_size, z_position, channel_width
-):
-    # Make base layer object
-    layer = make_layer(name, x_layer_size, y_layer_size, z_layer_size, z_position)
-
-    # Create channel object. Oversize it a bit in x and z so we get a
-    # clean difference operation because surfaces are not coincident.
-    delta_x = 0.5
-    delta_z = 0.2
-    channel = make_layer(
-        name + "_chan",
-        x_layer_size + delta_x,
-        channel_width,
-        z_layer_size + delta_z,
-        z_position - delta_z / 2,
-    )
-
-    # Add modifier to do a boolean difference between layer and channel
-    mod = layer.modifiers.new("BoolDifference", type="BOOLEAN")
-    mod.operation = "DIFFERENCE"
-    mod.object = channel
-    bpy.ops.object.modifier_apply(modifier=mod.name)
-
-    # Make channel object not visible
-    bpy.context.collection.objects.unlink(channel)
-
-    return layer
-
-
-def make_edge_layer(
-    name,
-    x_layer_size,
-    y_layer_size,
-    z_layer_size,
-    z_position,
-    channel_width,
-    edge_width,
-):
-    """Create 3D edge layer object (2 strips on either side of a channel) by creating
-    a channel layer object and subtracting a channel layer object where the channel is
-    wider by 2 * edge_width (edge_width is the erosion amount when doing secondary images).
-
-    Args:
-        name (str): Object name
-        x_layer_size (float or int): layer size in x
-        y_layer_size (float or int): layer size in y
-        z_layer_size (float or int): layer thickness
-        z_position (float or int): position of bottom of layer
-        channel_width (float or int): width of channel
-        edge_width (float or int): width of each edge
-    """
-    layer_edge = make_channel_layer(
-        name, x_layer_size, y_layer_size, z_layer_size, z_position, channel_width,
-    )
-    # Oversize the object to delete so that difference operation doesn't have to
-    # deal with co-located surfaces.
-    delta_xy = 0.3
-    delta_z = 0.1
-    object_to_delete = make_channel_layer(
-        name,
-        x_layer_size + delta_xy,
-        y_layer_size + delta_xy,
-        z_layer_size + delta_z,
-        z_position - delta_z / 2,
-        channel_width + 2 * edge_width,
-    )
-    # Add modifier to layer object to do a boolean difference between channel
-    mod = layer_edge.modifiers.new("BoolDifferenceSecondary", type="BOOLEAN")
-    mod.operation = "DIFFERENCE"
-    mod.object = object_to_delete
-    # Make layer_edge active to have right context to apply modifier
-    bpy.context.view_layer.objects.active = layer_edge
-    # Apply modifier, which performs difference operation
-    bpy.ops.object.modifier_apply(modifier=mod.name)
-    # Ensure object_to_delete is not visible
-    bpy.context.collection.objects.unlink(object_to_delete)
-    return layer_edge
-
-
-# ----------------------------------------------------------------------------------------
 # Main code
 # ----------------------------------------------------------------------------------------
 
@@ -287,13 +153,18 @@ roof_layers = [6, 7]
 # Define colors
 # Primary color - golden
 color_RGB_bulk = (1, 0.71, 0.2)  # RGB (255, 180, 51) = #FFB433 hex
-# color_RGBA_default = (*color_RGB_bulk, 1)  # Includes alpha channel
 # Triadic color #1 - greenish
 color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
-# color_RGBA_edge = (*color_RGB_edge, 1)  # Includes alpha channel
 # Triadic color #2 - purple
 color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
-# color_RGBA_small_edge = (*color_RGB_small_edge, 1)  # Includes alpha channel
+
+# Animation setup
+frames_per_second = bpy.data.scenes["Scene"].render.fps
+# # Change to 60 fps
+# bpy.data.scenes["Scene"].render.fps = 60
+# frames_per_second = bpy.data.scenes["Scene"].render.fps
+# Set up function to return frame number given time in seconds
+frame_num = partial(frame_number, frames_per_second=frames_per_second)
 
 # Lights
 light_location = (8.1524, 2.0110, 11.808)
@@ -368,7 +239,7 @@ for i in range(num_layers):
         mat = make_material(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
-        layer.fade_in(frame_number(start_time), frame_number(end_time))
+        layer.fade_in(frame_num(start_time), frame_num(end_time))
 
     elif i in secondary_image_channel_layers:
         # Create 3 layer objects:
@@ -426,20 +297,20 @@ for i in range(num_layers):
         layer_edge.set_opaque()
 
         # Fade-in edge dose
-        layer_channel.fade_in(frame_number(start_time), frame_number(end_time))
+        layer_channel.fade_in(frame_num(start_time), frame_num(end_time))
 
         # Adjust start and end times to do bulk dose
         start_time = end_time + time_between_layer_fadeins_seconds
         end_time = start_time + fadein_duration_seconds
 
         # Swap out layer channel for edge and eroded channel layers
-        layer_channel.disappear_at_frame(frame_number(start_time))
-        layer_eroded_channel.appear_at_frame(frame_number(start_time))
-        layer_edge.appear_at_frame(frame_number(start_time))
+        layer_channel.disappear_at_frame(frame_num(start_time))
+        layer_eroded_channel.appear_at_frame(frame_num(start_time))
+        layer_edge.appear_at_frame(frame_num(start_time))
 
         # Animate color change for bulk region
         layer_eroded_channel.animate_change_color(
-            color_RGB_bulk, frame_number(start_time), frame_number(end_time)
+            color_RGB_bulk, frame_num(start_time), frame_num(end_time)
         )
 
     elif i in secondary_image_small_channel_layers:
@@ -459,7 +330,7 @@ for i in range(num_layers):
             mat_small_edge = make_material(material_name, color_RGB_small_edge)
             layer_small_edge.data.materials.append(mat_small_edge)
             layer_small_edge = Animated3DObject(layer_small_edge)
-            layer_small_edge.fade_in(frame_number(start_time), frame_number(end_time))
+            layer_small_edge.fade_in(frame_num(start_time), frame_num(end_time))
             if j < num_small_layers_per_layer - 1:
                 start_time = end_time + time_between_layer_fadeins_seconds_small_layer
 
@@ -477,13 +348,13 @@ for i in range(num_layers):
         layer_eroded_channel = Animated3DObject(layer_eroded_channel)
 
         # Fade in eroded channel layer at the same time as last small edge layer
-        layer_eroded_channel.fade_in(frame_number(start_time), frame_number(end_time))
+        layer_eroded_channel.fade_in(frame_num(start_time), frame_num(end_time))
         # Adjust start and end times to do bulk dose for eroded channel layer
         start_time = end_time
         end_time = start_time + fadein_duration_seconds
         # Animate color change for bulk region
         layer_eroded_channel.animate_change_color(
-            color_RGB_bulk, frame_number(start_time), frame_number(end_time)
+            color_RGB_bulk, frame_num(start_time), frame_num(end_time)
         )
 
     elif i in secondary_image_roof_layers:
@@ -524,20 +395,20 @@ for i in range(num_layers):
         layer_roof_reduced_dose.set_opaque()
 
         # Fade-in edge dose
-        layer_roof.fade_in(frame_number(start_time), frame_number(end_time))
+        layer_roof.fade_in(frame_num(start_time), frame_num(end_time))
 
         # Adjust start and end times to do bulk dose
         start_time = end_time + time_between_layer_fadeins_seconds
         end_time = start_time + fadein_duration_seconds
 
         # Swap out layer channel for edge and eroded channel layers
-        layer_roof.disappear_at_frame(frame_number(start_time))
-        layer_roof_bulk.appear_at_frame(frame_number(start_time))
-        layer_roof_reduced_dose.appear_at_frame(frame_number(start_time))
+        layer_roof.disappear_at_frame(frame_num(start_time))
+        layer_roof_bulk.appear_at_frame(frame_num(start_time))
+        layer_roof_reduced_dose.appear_at_frame(frame_num(start_time))
 
         # Animate color change for bulk region
         layer_roof_bulk.animate_change_color(
-            color_RGB_bulk, frame_number(start_time), frame_number(end_time)
+            color_RGB_bulk, frame_num(start_time), frame_num(end_time)
         )
 
     else:
@@ -546,11 +417,11 @@ for i in range(num_layers):
         mat = make_material(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
-        layer.fade_in(frame_number(start_time), frame_number(end_time))
+        layer.fade_in(frame_num(start_time), frame_num(end_time))
 
     start_time = end_time + time_between_layer_fadeins_seconds
 
 # Set last frame to be rendered for animation
-last_frame = frame_number(end_time + 0.3)
+last_frame = frame_num(end_time + 0.3)
 print(f"Last frame: {last_frame}")
 bpy.data.scenes["Scene"].frame_end = last_frame
