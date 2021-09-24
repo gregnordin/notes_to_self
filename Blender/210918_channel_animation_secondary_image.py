@@ -10,99 +10,7 @@ if blender_file_path not in sys.path:
 # print()
 # print(sys.path)
 
-from blender_tools.utilities import clean_up, update_camera
-
-
-# ----------------------------------------------------------------------------------------
-# Different types of light objects
-# ----------------------------------------------------------------------------------------
-
-light_location = (8.1524, 2.0110, 11.808)
-light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
-
-
-def point_light(
-    power=1000.0, name="Light_pt", location=light_location, rotation=light_rotation
-):
-    """Point light.
-
-    Args:
-        power (float, optional): [description]. Defaults to 1000.0.
-        name (str, optional): [description]. Defaults to "Light_pt".
-        location ([type], optional): [description]. Defaults to light_location.
-        rotation ([type], optional): [description]. Defaults to light_rotation.
-
-    Returns:
-        [type]: Light object
-    """
-    light_data = bpy.data.lights.new(name, type="POINT")
-    light = bpy.data.objects.new(name, light_data)
-    bpy.context.collection.objects.link(light)
-    light.location = light_location
-    light.rotation_euler = light_rotation
-    light.data.energy = power
-    return light
-
-
-def sun_light(
-    power=2.5,
-    angle=135,
-    name="Light_sun",
-    location=light_location,
-    rotation=light_rotation,
-):
-    """Sun light.
-
-    Args:
-        power (float, optional): [description]. Defaults to 2.5.
-        angle (int, optional): [description]. Defaults to 135.
-        name (str, optional): [description]. Defaults to "Light_sun".
-        location ([type], optional): [description]. Defaults to light_location.
-        rotation ([type], optional): [description]. Defaults to light_rotation.
-
-    Returns:
-        [type]: Light object
-    """
-    light_data = bpy.data.lights.new(name, type="SUN")
-    light = bpy.data.objects.new(name, light_data)
-    bpy.context.collection.objects.link(light)
-    light.location = light_location
-    light.rotation_euler = light_rotation
-    light.data.energy = power
-    light.data.specular_factor = 0.4
-    light.data.angle = angle * pi / 180.0
-    return light
-
-
-def area_light(
-    power=800,
-    size=5.0,
-    name="Light_area",
-    location=light_location,
-    rotation=light_rotation,
-):
-    """Area light.
-
-    Args:
-        power (int, optional): [description]. Defaults to 800.
-        size (float, optional): [description]. Defaults to 5.0.
-        name (str, optional): [description]. Defaults to "Light_area".
-        location ([type], optional): [description]. Defaults to light_location.
-        rotation ([type], optional): [description]. Defaults to light_rotation.
-
-    Returns:
-        [type]: Light object
-    """
-    light_data = bpy.data.lights.new(name, type="AREA")
-    light = bpy.data.objects.new(name, light_data)
-    bpy.context.collection.objects.link(light)
-    light.location = light_location
-    light.rotation_euler = light_rotation
-    light.data.energy = power
-    light.data.specular_factor = 0.2
-    light.data.shape = "SQUARE"
-    light.data.size = size
-    return light
+from blender_tools.lights import point_light, sun_light, area_light
 
 
 # ----------------------------------------------------------------------------------------
@@ -473,10 +381,12 @@ color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
 # color_RGBA_small_edge = (*color_RGB_small_edge, 1)  # Includes alpha channel
 
 # Lights
-light_sun = sun_light()
-# light_pt = point_light()
-# light_area = area_light()
-# light_area2 = area_light(power=1000, size=2.5, name="Light_area2")
+light_location = (8.1524, 2.0110, 11.808)
+light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
+light_sun = sun_light(location=light_location, rotation=light_rotation)
+# light_pt = my_point_light(location=light_location, rotation=light_rotation)
+# light_area = my_area_light(location=light_location, rotation=light_rotation)
+# light_area2 = my_area_light(location=light_location, rotation=light_rotation. power=1000, size=2.5, name="Light_area2")
 
 # Camera
 # create the camera object

@@ -1208,6 +1208,11 @@ Good function to create semi-transparent emission shader material:
     
         return mat
 
+## Refactor
+
+`210918_channel_animation_secondary_image.py` and `blender_tools/`
+
+- Move lights code to `blender_tools/lights.py`
 
 ## Next:
 
