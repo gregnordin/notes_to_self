@@ -1153,6 +1153,12 @@ Nice combination:
     Mix Shader
         Fac: 0.6
 
+Make sure to turn on `Bloom` in `Render Properties` using python and set intensity:
+
+    # Set up Rendering to use bloom
+    bpy.context.scene.eevee.use_bloom = True
+    bpy.data.scenes['Scene'].eevee.bloom_intensity = 0.1
+
 Good function to create semi-transparent emission shader material:
 
     def create_semitransparent_emission_shader(name, color, strength=5, mix_fac=0.6):
