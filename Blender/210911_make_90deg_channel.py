@@ -9,7 +9,7 @@ if blender_file_path not in sys.path:
 # print()
 # print(sys.path)
 
-from my_blender_package.utilities import clean_up, update_camera
+from blender_tools.utilities import clean_up, update_camera
 
 
 def make_material(name, diffuse_color, specular_color):
