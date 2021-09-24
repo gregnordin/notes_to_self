@@ -984,6 +984,51 @@ Try 60 fps. I can't really tell a difference with 24 fps.
         cube = bpy.data.objects['Cube']
         cube.location = (0, 0, 3)
 
+## Animate growing cube in -z direction
+
+`210923_animate_growing_cube_in_negative_z.blend`
+
+- First do this manually with default cube.
+    - 2 keyframes at frame=1
+        - location with z = 1.0
+        - scale with z = 0.0
+    - 2 keyframes at frame=40
+        - location with z = 0.5
+        - scale with z = 0.5
+- Next, do it with python code:
+
+        import bpy
+        
+        # Parameters
+        x_layer_size, y_layer_size, z_layer_size = 8, 6, 1
+        xy_location = (0, 9)
+        start_frame = 20
+        end_frame = 60
+        
+        # Create initial layer object
+        bpy.ops.mesh.primitive_cube_add(size=1)
+        layer = bpy.context.object
+        layer.name = "Test"
+        layer.scale = (0, 0, 0)
+        layer.location = (*xy_location, z_layer_size)
+        
+        # Make layer appear at frame start_frame
+        layer.keyframe_insert(data_path="scale", frame=start_frame-1)
+        layer.scale = (x_layer_size, y_layer_size, 0)
+        layer.keyframe_insert(data_path="scale", frame=start_frame)
+        
+        layer.keyframe_insert(data_path="scale", frame=start_frame)
+        layer.keyframe_insert(data_path="location", frame=start_frame)
+            
+        layer.scale = (x_layer_size, y_layer_size, z_layer_size)
+        layer.location = (*xy_location, z_layer_size / 2)
+        
+        layer.keyframe_insert(data_path="scale", frame=end_frame)
+        layer.keyframe_insert(data_path="location", frame=end_frame)
+ 
+    - Works great!
+
+
 
 ## Next:
 
