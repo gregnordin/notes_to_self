@@ -1217,6 +1217,11 @@ Good function to create semi-transparent emission shader material:
 - Move layer object code to `blender_tools/layer_objects.py`
 - Move some animation code to `blender_tools/animation.py`
 
+`210924_channel_animation_grow_in_z_with_illumination.py`
+
+- Add emissive glowing material to `blender_tools/materials.py`
+
+
 ## Next:
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun
