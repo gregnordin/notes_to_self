@@ -227,7 +227,7 @@ frames_per_second = bpy.data.scenes["Scene"].render.fps
 # Change to 30 fps
 # frames_per_second_original = bpy.data.scenes["Scene"].render.fps
 # # Set frames per second
-# bpy.data.scenes["Scene"].render.fps = 30
+# bpy.data.scenes["Scene"].render.fps = 60
 # frames_per_second = bpy.data.scenes["Scene"].render.fps
 
 
@@ -474,9 +474,9 @@ color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
 
 # Lights
 light_sun = sun_light()
-light_pt = point_light()
+# light_pt = point_light()
 # light_area = area_light()
-light_area2 = area_light(power=1000, size=2.5, name="Light_area2")
+# light_area2 = area_light(power=1000, size=2.5, name="Light_area2")
 
 # Camera
 # create the camera object

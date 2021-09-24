@@ -876,7 +876,7 @@ Approach: Do channel animation where channel edges are comprised of 3 smaller la
 - Animate it going to small edge color (and have it take less time than a full layer).
 - Create 2rd small edge layer at z = z0 + z_layer/3
 - Create eroded channel layer
-- Animate both of these goint to small edge color
+- Animate both of these going to small edge color
 - Then animate eroded channel layer going to bulk layer color
 
 ## Make semi-transparent material
@@ -953,6 +953,37 @@ In Blender scripting window from default new file:
 
 - Make function `make_material_Principled_and_Transparent_BSDF()` and try it with only 20% transparency mixed in.
 
+### Conclusion
+
+A semi-transparent material does not look good. Opaque is much better.
+
+
+# Thursday, 2021-09-23
+
+Get feedback from my group on animations. See notes under `Next` below.
+
+Try 60 fps. I can't really tell a difference with 24 fps.
+
+## Use parent object to move multiple objects together
+
+`210923_manual_parent_object.blend`
+
+- Start with default new file with cube.
+- Manually create 2nd object, a cylinder. Make sure it is selected.
+- Hold down shift key and select cube. Cube is outlined yellow (indicating it's the ACTIVE object) while the 2nd object is outlined in orange (indicating it's just selected).
+- From `Object` menu, select `Parent` &rarr; `Object`. The 2nd object is now a child of the Cube.
+- Manually create a 3rd object, a sphere. Make sure only it is selected.
+- Hold down shift key and select cube. Cube is ACTIVE, sphere is SELECTED.
+- From `Object` menu, select `Parent` &rarr; `Object`. The 3rd object is now a child of the Cube. Note that is at the same child level as the 2nd object (i.e., both the 2nd and 3rd objects are children of the Cube object).
+- Create 2 more cubes, select them, then select the original cube, create a parent relationship, the new cubes are children just like the cylinder and sphere
+- When I manually select and move just the original cube, everything else moves with it, maintaining the same spatial relationships to Cube.
+- Now confirm I can move all of the object together by just moving Cube. Create a python script edit window with the following code. Change the location values and run the code (`option-p`) and watch all of the objects change position accordingly.
+
+        import bpy
+        
+        cube = bpy.data.objects['Cube']
+        cube.location = (0, 0, 3)
+
 
 ## Next:
 
@@ -987,7 +1018,10 @@ In Blender scripting window from default new file:
     - Chandler: in presentation, stop video after 2 layers and explain what is going on.
     - Adam: Possibly put video on a repeated loop.
     - Emma suggested having the layer grow in z rather than using a transparency fade-in, which is the same as the idea noted below.
-- **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction (actually, -z direction), which is easy to animate**. You could also have the whole stack of layers move down between each grow operation (group already-visible layers into a collection and apply translation to collection as a whole?). Have the stack drop down to make a new layer and look at it from above, noting in presentation that the process actually happens upside down.
+- **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction (actually, -z direction), which is easy to animate**. 
+    - You could also have the whole stack of layers move down between each grow operation (group already-visible layers into a collection and apply translation to collection as a whole?). Look at it from somewhat above, noting in presentation that the process actually happens upside down.
+    - Also include a transparent violet representation of the photopolymerizing light that uses an emissive material so that it glows.
+    - How have the whole stack move down? Attach each successive layer to the first layer with the first layer being the parent so that when the first layer moves, all of the other layers move too?
 - &#10060; Do more complicated boolean difference operation to get 90&deg; channel bends?
 - &#10060; Make layers visually apparent
     - Slant layer edges so 3D printed edgefaces have a serrated look?
