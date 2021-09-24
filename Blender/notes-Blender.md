@@ -986,7 +986,7 @@ Try 60 fps. I can't really tell a difference with 24 fps.
 
 ## Animate growing cube in -z direction
 
-`210923_animate_growing_cube_in_negative_z.blend`
+`210923_animate_growing_cube_in_negative_z_then_move_down_and_do_another_layer.blend`
 
 - First do this manually with default cube.
     - 2 keyframes at frame=1
@@ -995,7 +995,7 @@ Try 60 fps. I can't really tell a difference with 24 fps.
     - 2 keyframes at frame=40
         - location with z = 0.5
         - scale with z = 0.5
-- Next, do it with python code:
+- Next, do it with python code (Note for all of the python code I manually set the material so it will have some color when looking with render preview):
 
         import bpy
         
@@ -1027,6 +1027,105 @@ Try 60 fps. I can't really tell a difference with 24 fps.
         layer.keyframe_insert(data_path="location", frame=end_frame)
  
     - Works great!
+- Now add in movement down by 1 layer and create a 2nd layer - also works great:
+
+        import bpy
+        
+        # Parameters
+        x_layer_size, y_layer_size, z_layer_size = 8, 6, 1
+        xy_location = (0, 9)
+        start_frame = 20
+        grow_duration = 40
+        end_frame = start_frame + grow_duration
+        move_down_delay = 10
+        move_down_duration = 15
+        between_layer_delay = 20
+        
+        # Create initial layer object
+        bpy.ops.mesh.primitive_cube_add(size=1)
+        layer = bpy.context.object
+        layer.name = "Test"
+        layer.scale = (0, 0, 0)
+        layer.location = (*xy_location, z_layer_size)
+        
+        # Make layer appear at frame start_frame
+        layer.keyframe_insert(data_path="scale", frame=start_frame-1)
+        layer.scale = (x_layer_size, y_layer_size, 0)
+        layer.keyframe_insert(data_path="scale", frame=start_frame)
+        
+        # Set up keyframes to start growing in -z
+        layer.keyframe_insert(data_path="scale", frame=start_frame)
+        layer.keyframe_insert(data_path="location", frame=start_frame)
+        
+        # Set up values and keyframes to define end of growth in -z
+        layer.scale = (x_layer_size, y_layer_size, z_layer_size)
+        layer.location = (*xy_location, z_layer_size / 2)
+        layer.keyframe_insert(data_path="scale", frame=end_frame)
+        layer.keyframe_insert(data_path="location", frame=end_frame)
+        
+        # Set start and end frames for -z move
+        start_frame = end_frame +  move_down_delay
+        end_frame = start_frame + move_down_duration
+        
+        # Move layer down by z_layer_size
+        layer.keyframe_insert(data_path="location", frame=start_frame)
+        current_z = layer.location[2]
+        layer.location = (*xy_location, current_z - z_layer_size)
+        layer.keyframe_insert(data_path="location", frame=end_frame)
+        
+        
+        # Create 2nd layer object
+        bpy.ops.mesh.primitive_cube_add(size=1)
+        layer = bpy.context.object
+        layer.name = "Test2"
+        layer.scale = (0, 0, 0)
+        layer.location = (*xy_location, z_layer_size)
+        
+        # Set start and end frames for 2nd layer
+        start_frame = end_frame +  between_layer_delay
+        end_frame = start_frame + grow_duration
+        
+        # Make layer appear at frame start_frame
+        layer.keyframe_insert(data_path="scale", frame=start_frame-1)
+        layer.scale = (x_layer_size, y_layer_size, 0)
+        layer.keyframe_insert(data_path="scale", frame=start_frame)
+        
+        # Set up keyframes to start growing in -z
+        layer.keyframe_insert(data_path="scale", frame=start_frame)
+        layer.keyframe_insert(data_path="location", frame=start_frame)
+        
+        # Set up values and keyframes to define end of growth in -z
+        layer.scale = (x_layer_size, y_layer_size, z_layer_size)
+        layer.location = (*xy_location, z_layer_size / 2)
+        layer.keyframe_insert(data_path="scale", frame=end_frame)
+        layer.keyframe_insert(data_path="location", frame=end_frame)
+
+## Make one object the parent of another
+
+[How to make object A a parent of object B via Blender's Python API?](https://blender.stackexchange.com/questions/9200/how-to-make-object-a-a-parent-of-object-b-via-blenders-python-api)
+
+- To prevent parent objects' location and scale transforms from being applied to the child (see Justa's answer at the above link):
+
+        layer.parent = parent_layer
+        layer.matrix_parent_inverse = parent_layer.matrix_world.inverted()
+
+- Success moving both layers from above code together using:
+
+        # We are going to use the first layer as the parent object
+        parent_layer = bpy.data.objects['Test']
+        
+        # Set parent layer for the 2nd layer
+        layer.parent = parent_layer
+        layer.matrix_parent_inverse = parent_layer.matrix_world.inverted()
+        
+        # Move parent layer and confirm that child layer moves too
+        start_frame = end_frame + move_down_delay
+        end_frame = start_frame + move_down_duration
+        # Move layer down by z_layer_size
+        parent_layer.keyframe_insert(data_path="location", frame=start_frame)
+        current_z = parent_layer.location[2]
+        parent_layer.location = (*xy_location, current_z - z_layer_size)
+        parent_layer.keyframe_insert(data_path="location", frame=end_frame)
 
 
 
