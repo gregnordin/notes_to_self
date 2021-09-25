@@ -1220,6 +1220,8 @@ Good function to create semi-transparent emission shader material:
 `210924_channel_animation_grow_in_z_with_illumination.py`
 
 - Add emissive glowing material to `blender_tools/materials.py`
+- Add `grow_in_negative_z()` method to `Animated3DObject`
+- Successfully grow each layer downward in `bulk` layer case
 
 
 ## Next:

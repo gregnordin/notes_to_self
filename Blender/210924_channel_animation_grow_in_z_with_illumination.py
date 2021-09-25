@@ -58,13 +58,14 @@ class Animated3DObject:
         self.material_alpha_param = self.material_nodes["Principled BSDF"].inputs[
             "Alpha"
         ]
-        self.set_fully_transparent()
+        # self.set_fully_transparent()
         # Color shortcut
         self.material_color_param = self.material_nodes["Principled BSDF"].inputs[
             "Base Color"
         ]
         # Record scale value. Must make a copy, otherwise self.save_scale just points to the object's scale:
         self.save_scale = self.object.scale.copy()
+        self.save_location = self.object.location.copy()
 
     def set_scale(self, value):
         # print(f"in set_scale...")
@@ -131,6 +132,30 @@ class Animated3DObject:
         self.set_color(new_color)
         self.material_color_param.keyframe_insert("default_value", frame=end_frame)
 
+    def grow_in_negative_z(self, start_frame, end_frame, z_position):
+        # Assumes self.object.scale is already (0, 0, 0)
+
+        # Make layer appear at frame start_frame
+        self.object.keyframe_insert(data_path="scale", frame=start_frame - 1)
+        xy_scale = (self.save_scale[0], self.save_scale[1], 0)
+        self.set_scale(xy_scale)
+        self.object.keyframe_insert(data_path="scale", frame=start_frame)
+
+        # Set up keyframes to start growing in -z
+        self.object.keyframe_insert(data_path="scale", frame=start_frame)
+        self.object.keyframe_insert(data_path="location", frame=start_frame)
+
+        # Set up values and keyframes to define end of growth in -z
+        self.set_scale(self.save_scale)
+        new_location = (
+            self.save_location[0],
+            self.save_location[1],
+            z_position,  # - self.save_scale[2] / 2,
+        )
+        self.object.location = new_location
+        self.object.keyframe_insert(data_path="scale", frame=end_frame)
+        self.object.keyframe_insert(data_path="location", frame=end_frame)
+
 
 # ----------------------------------------------------------------------------------------
 # Main code
@@ -155,11 +180,14 @@ roof_layers = [6, 7]
 
 # Define colors
 # Primary color - golden
-color_RGB_bulk = (1, 0.71, 0.2)  # RGB (255, 180, 51) = #FFB433 hex
+color_RGB_bulk = (1, 0.71, 0.2)  # RGB (255, 180, 51) = HEX #FFB433
 # Triadic color #1 - greenish
 color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
 # Triadic color #2 - purple
 color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
+# LED emission color
+color_emission = (0.08, 0.03, 1.0)  # RGB (20, 8, 255) = HEX #1408FF
+
 
 # Animation setup
 frames_per_second = bpy.data.scenes["Scene"].render.fps
@@ -200,11 +228,11 @@ make_LED_material = partial(
 
 
 # Select which case to run by uncommenting one of the following 5 lines
-# case = "bulk"
+case = "bulk"
 # case = "channel"
 # case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
-case = "channel with small edge layers and roof dose"
+# case = "channel with small edge layers and roof dose"
 
 # Set up layer lists for specific case chosen
 channel_layers = []
@@ -232,7 +260,7 @@ time_between_layer_fadeins_seconds_small_layer = 0.25
 start_time = 0.3
 for i in range(num_layers):
 
-    z = i * z_layer_size
+    z = i * z_layer_size - z_layer_size / 2
     end_time = start_time + fadein_duration_seconds
     # print(i, z, start_time, end_time)
 
@@ -426,7 +454,8 @@ for i in range(num_layers):
         mat = make_material(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
         layer = Animated3DObject(layer)
-        layer.fade_in(frame_num(start_time), frame_num(end_time))
+        layer.set_visible(False)
+        layer.grow_in_negative_z(frame_num(start_time), frame_num(end_time), z)
 
     start_time = end_time + time_between_layer_fadeins_seconds
 
