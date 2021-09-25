@@ -257,11 +257,15 @@ fadein_duration_seconds = 1.0
 time_between_layer_fadeins_seconds = 0.5
 fadein_duration_seconds_small_layer = 0.6
 time_between_layer_fadeins_seconds_small_layer = 0.25
+grow_duration = 1.4
+move_down_delay = 0.4
+move_down_duration = 0.6
+between_layer_delay = 0.8
 start_time = 0.3
 for i in range(num_layers):
 
     z = i * z_layer_size - z_layer_size / 2
-    end_time = start_time + fadein_duration_seconds
+    end_time = start_time + grow_duration
     # print(i, z, start_time, end_time)
 
     layer_str = f"{i:02d}"
@@ -448,16 +452,51 @@ for i in range(num_layers):
             color_RGB_bulk, frame_num(start_time), frame_num(end_time)
         )
 
+        layer_roof.parent = parent_layer
+        layer_roof.matrix_parent_inverse = parent_layer.matrix_world.inverted()
+        layer_roof_reduced_dose.parent = parent_layer
+        layer_roof_reduced_dose.matrix_parent_inverse = (
+            parent_layer.matrix_world.inverted()
+        )
+        layer_roof_bulk.parent = parent_layer
+        layer_roof_bulk.matrix_parent_inverse = parent_layer.matrix_world.inverted()
+
     else:
+        z = -z_layer_size / 2
 
         layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
         mat = make_material(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
-        layer = Animated3DObject(layer)
-        layer.set_visible(False)
-        layer.grow_in_negative_z(frame_num(start_time), frame_num(end_time), z)
+        layer_anim = Animated3DObject(layer)
+        layer_anim.set_visible(False)
+        layer_anim.grow_in_negative_z(frame_num(start_time), frame_num(end_time), z)
+        if i == 0:
+            parent_layer = layer_anim.object
+        else:
+            layer_anim.object.parent = parent_layer
+            layer_anim.object.matrix_parent_inverse = (
+                parent_layer.matrix_world.inverted()
+            )
+        current_parent_location = parent_layer.location
+        new_parent_location = (
+            current_parent_location[0],
+            current_parent_location[1],
+            current_parent_location[2] - z_layer_size,
+        )
 
-    start_time = end_time + time_between_layer_fadeins_seconds
+        # New start & end time
+        start_time = end_time + move_down_delay
+        end_time = start_time + move_down_duration
+
+        # Keyframe current location to begin move down
+        parent_layer.keyframe_insert(data_path="location", frame=frame_num(start_time))
+
+        # Keyframe new location to end move down
+        parent_layer.location = new_parent_location
+        parent_layer.keyframe_insert(data_path="location", frame=frame_num(end_time))
+
+    start_time = end_time + between_layer_delay
+
 
 # Set last frame to be rendered for animation
 last_frame = frame_num(end_time + 0.3)
