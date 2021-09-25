@@ -1223,6 +1223,16 @@ Good function to create semi-transparent emission shader material:
 - Add `grow_in_negative_z()` method to `Animated3DObject`
 - Successfully grow each layer downward in `bulk` layer case
 
+**Observations/next**:
+
+- Sudden appearance of 2D layer is disconcerting: have it fade-in quickly, followed by growing downward? &rarr; Wait for now.
+- Top of first layer is at z = 0. Keep here? &rarr; Yes.
+- Make each successive layer a child of the first layer and move them all down between layers by moving the first layer down by a layer thickness and keep generation of latest layer at z = 0.
+- Adjust camera so full stack of layers stay in field of view?
+- Add LED illumination
+    - Make layer object same xy footprint as latest layer but considerably taller. Have it extend beyond the viewport of the camera.
+    - Have it appear a few frames before top of latest layer appears
+    - Have it disappear a number of frames after latest layer z height reaches top of previous layer
 
 ## Next:
 
