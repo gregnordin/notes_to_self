@@ -1226,15 +1226,12 @@ Good function to create semi-transparent emission shader material:
 - Successfully grow each layer downward in `bulk` layer case
 - Successfully move existing layers down by one layer before starting to grow next layer
 
-**Observations/next**:
+**Next**:
 
-- Sudden appearance of 2D layer is disconcerting: have it fade-in quickly, followed by growing downward? &rarr; Wait for now.
-- Top of first layer is at z = 0. Keep here? &rarr; Yes.
-- Make each successive layer a child of the first layer and move them all down between layers by moving the first layer down by a layer thickness and keep generation of latest layer at z = 0.
-- Adjust camera so full stack of layers stay in field of view?
-- Add LED illumination
+- &#9989; Make each successive layer a child of the first layer and move them all down between layers by moving the first layer down by a layer thickness and keep generation of latest layer at z = 0. **Start with bulk case only**.
+- &#9989; Adjust camera so full stack of layers stay in field of view?
+- &#9989; Add LED illumination
     - Make layer object same xy footprint as latest layer but considerably taller. Have it extend beyond the viewport of the camera.
-    - Have it appear a few frames before top of latest layer appears
     - Have it disappear a number of frames after latest layer z height reaches top of previous layer
 
 ## Next:
@@ -1270,10 +1267,18 @@ Good function to create semi-transparent emission shader material:
     - Chandler: in presentation, stop video after 2 layers and explain what is going on.
     - Adam: Possibly put video on a repeated loop.
     - Emma suggested having the layer grow in z rather than using a transparency fade-in, which is the same as the idea noted below.
-- **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction (actually, -z direction), which is easy to animate**. 
+- &#9989; **IDEA: to create a layer, instead of using transparency fade-in, have it grow in the z direction (actually, -z direction), which is easy to animate**. 
     - You could also have the whole stack of layers move down between each grow operation (group already-visible layers into a collection and apply translation to collection as a whole?). Look at it from somewhat above, noting in presentation that the process actually happens upside down.
     - Also include a transparent violet representation of the photopolymerizing light that uses an emissive material so that it glows.
     - How have the whole stack move down? Attach each successive layer to the first layer with the first layer being the parent so that when the first layer moves, all of the other layers move too?
+- Clean up code for bulk case, put things in functions.
+    - Make use of method `grow_in_negative_z()`
+    - LED illumination and animation in one function?
+    - Setting parent object
+- Do next cases:
+    - Channel
+    - Channel with edge dose
+    - Channel with small edge layers (make exposure time for small layer less than for normal thickness layers)
 - &#10060; Do more complicated boolean difference operation to get 90&deg; channel bends?
 - &#10060; Make layers visually apparent
     - Slant layer edges so 3D printed edgefaces have a serrated look?

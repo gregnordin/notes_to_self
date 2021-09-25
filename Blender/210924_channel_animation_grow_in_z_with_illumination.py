@@ -55,14 +55,14 @@ class Animated3DObject:
         self.object = obj
         self.material = self.object.active_material
         self.material_nodes = self.material.node_tree.nodes
-        self.material_alpha_param = self.material_nodes["Principled BSDF"].inputs[
-            "Alpha"
-        ]
+        # self.material_alpha_param = self.material_nodes["Principled BSDF"].inputs[
+        #     "Alpha"
+        # ]
         # self.set_fully_transparent()
         # Color shortcut
-        self.material_color_param = self.material_nodes["Principled BSDF"].inputs[
-            "Base Color"
-        ]
+        # self.material_color_param = self.material_nodes["Principled BSDF"].inputs[
+        #     "Base Color"
+        # ]
         # Record scale value. Must make a copy, otherwise self.save_scale just points to the object's scale:
         self.save_scale = self.object.scale.copy()
         self.save_location = self.object.location.copy()
@@ -169,6 +169,7 @@ bpy.data.scenes["Scene"].eevee.bloom_intensity = 0.1
 # Layers
 xy_layer_size = 10
 z_layer_size = 0.5
+z_size_illum = 15
 channel_width = 3
 edge_width = 1
 num_layers = 9
@@ -215,7 +216,7 @@ scene = bpy.context.scene
 scene.camera = cam
 # position and rotate camera
 cam.location = (21.247, -19.997, 14.316)
-cam.rotation_euler = [pi * 66.7 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
+cam.rotation_euler = [pi * 59.9 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
 # Materials
 # Select which layer material type by uncommenting one of the following 2 lines
@@ -258,7 +259,8 @@ time_between_layer_fadeins_seconds = 0.5
 fadein_duration_seconds_small_layer = 0.6
 time_between_layer_fadeins_seconds_small_layer = 0.25
 grow_duration = 1.4
-move_down_delay = 0.4
+extra_time_LED_is_on = 0.3
+move_down_delay = extra_time_LED_is_on + 0.2
 move_down_duration = 0.6
 between_layer_delay = 0.8
 start_time = 0.3
@@ -271,6 +273,8 @@ for i in range(num_layers):
     layer_str = f"{i:02d}"
     layer_name = f"Layer_{layer_str}"
     material_name = f"Material_{layer_str}"
+    emission_obj_name = f"Emission_{layer_str}"
+    emission_material_name = f"Emission_Material_{layer_str}"
 
     if i in channel_layers:
 
@@ -464,12 +468,26 @@ for i in range(num_layers):
     else:
         z = -z_layer_size / 2
 
+        # Make new layer and animate it growing in -z direction
         layer = make_layer(layer_name, xy_layer_size, xy_layer_size, z_layer_size, z)
         mat = make_material(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
         layer_anim = Animated3DObject(layer)
         layer_anim.set_visible(False)
         layer_anim.grow_in_negative_z(frame_num(start_time), frame_num(end_time), z)
+
+        # Make LED illumination and turn it on during previous layer growth
+        LED_illum = make_layer(
+            emission_obj_name, xy_layer_size, xy_layer_size, z_size_illum, 0.0,
+        )
+        mat = make_LED_material(emission_material_name, color_emission)
+        LED_illum.data.materials.append(mat)
+        LED_illum_anim = Animated3DObject(LED_illum)
+        LED_illum_anim.set_visible(False)
+        LED_illum_anim.appear_at_frame(frame_num(start_time))
+        LED_illum_anim.disappear_at_frame(frame_num(end_time + extra_time_LED_is_on))
+
+        # Set parent object so all current layers move with parent object
         if i == 0:
             parent_layer = layer_anim.object
         else:
@@ -477,16 +495,18 @@ for i in range(num_layers):
             layer_anim.object.matrix_parent_inverse = (
                 parent_layer.matrix_world.inverted()
             )
+
+        # New start & end time for moving layers down
+        start_time = end_time + move_down_delay
+        end_time = start_time + move_down_duration
+
+        # Start and end locations
         current_parent_location = parent_layer.location
         new_parent_location = (
             current_parent_location[0],
             current_parent_location[1],
             current_parent_location[2] - z_layer_size,
         )
-
-        # New start & end time
-        start_time = end_time + move_down_delay
-        end_time = start_time + move_down_duration
 
         # Keyframe current location to begin move down
         parent_layer.keyframe_insert(data_path="location", frame=frame_num(start_time))
