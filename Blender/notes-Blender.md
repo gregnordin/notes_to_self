@@ -1278,6 +1278,17 @@ See [50 Beautiful Color Combinations](https://visme.co/blog/color-combinations/)
 <rect id="#f1e0d6" width="140" height="140" x="0" fill="#dac6ac"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#efa747"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#8c7547"/>
 </g> </svg>
 
+After playing around with colors in Blender file `210925_try_3_dose_colors.blend`, this looks pretty good:
+
+    (0.906, 0.96, 0.87) = RGB (231, 245, 222) = HEX #e7f5de
+    (0.36, 0.53, 0.55) = RGB (92, 135, 140) = HEX #5C878C
+    (0.09, 0.135, 0.14) = RGB (23, 34, 36) = HEX #172224
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f1e0d6" width="140" height="140" x="0" fill="#e7f5de"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#5C878C"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#172224"/>
+</g> </svg>
+
+
 
 ## Next:
 
