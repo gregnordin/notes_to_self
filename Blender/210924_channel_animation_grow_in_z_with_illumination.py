@@ -132,7 +132,7 @@ class Animated3DObject:
         self.set_color(new_color)
         self.material_color_param.keyframe_insert("default_value", frame=end_frame)
 
-    def grow_in_negative_z(self, start_frame, end_frame, z_position):
+    def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
         # Assumes self.object.scale is already (0, 0, 0)
 
         # Make layer appear at frame start_frame
@@ -155,6 +155,10 @@ class Animated3DObject:
         self.object.location = new_location
         self.object.keyframe_insert(data_path="scale", frame=end_frame)
         self.object.keyframe_insert(data_path="location", frame=end_frame)
+
+    def set_parent(self, new_parent):
+        self.object.parent = new_parent
+        self.object.matrix_parent_inverse = new_parent.matrix_world.inverted()
 
 
 # ----------------------------------------------------------------------------------------
@@ -229,8 +233,8 @@ make_LED_material = partial(
 
 
 # Select which case to run by uncommenting one of the following 5 lines
-case = "bulk"
-# case = "channel"
+# case = "bulk"
+case = "channel"
 # case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
 # case = "channel with small edge layers and roof dose"
@@ -259,7 +263,7 @@ time_between_layer_fadeins_seconds = 0.5
 fadein_duration_seconds_small_layer = 0.6
 time_between_layer_fadeins_seconds_small_layer = 0.25
 grow_duration = 1.4
-extra_time_LED_is_on = 0.3
+extra_time_LED_is_on = 0.5
 move_down_delay = extra_time_LED_is_on + 0.2
 move_down_duration = 0.6
 between_layer_delay = 0.8
@@ -277,14 +281,53 @@ for i in range(num_layers):
     emission_material_name = f"Emission_Material_{layer_str}"
 
     if i in channel_layers:
+        z = -z_layer_size / 2
 
         layer = make_channel_layer(
             layer_name, xy_layer_size, xy_layer_size, z_layer_size, z, channel_width
         )
         mat = make_material(material_name, color_RGB_bulk)
         layer.data.materials.append(mat)
-        layer = Animated3DObject(layer)
-        layer.fade_in(frame_num(start_time), frame_num(end_time))
+        layer_anim = Animated3DObject(layer)
+        layer_anim.set_visible(False)
+        layer_anim.grow_in_negative_z(frame_num(start_time), frame_num(end_time), z)
+
+        layer_anim.set_parent(parent_layer)
+
+        # Make LED illumination and turn it on during previous layer growth
+        LED_illum = make_channel_layer(
+            emission_obj_name,
+            xy_layer_size,
+            xy_layer_size,
+            z_size_illum,
+            0.0,
+            channel_width,
+        )
+        mat = make_LED_material(emission_material_name, color_emission)
+        LED_illum.data.materials.append(mat)
+        LED_illum_anim = Animated3DObject(LED_illum)
+        LED_illum_anim.set_visible(False)
+        LED_illum_anim.appear_at_frame(frame_num(start_time))
+        LED_illum_anim.disappear_at_frame(frame_num(end_time + extra_time_LED_is_on))
+
+        # New start & end time for moving layers down
+        start_time = end_time + move_down_delay
+        end_time = start_time + move_down_duration
+
+        # Start and end locations
+        current_parent_location = parent_layer.location
+        new_parent_location = (
+            current_parent_location[0],
+            current_parent_location[1],
+            current_parent_location[2] - z_layer_size,
+        )
+
+        # Keyframe current location to begin move down
+        parent_layer.keyframe_insert(data_path="location", frame=frame_num(start_time))
+
+        # Keyframe new location to end move down
+        parent_layer.location = new_parent_location
+        parent_layer.keyframe_insert(data_path="location", frame=frame_num(end_time))
 
     elif i in secondary_image_channel_layers:
         # Create 3 layer objects:
@@ -489,12 +532,10 @@ for i in range(num_layers):
 
         # Set parent object so all current layers move with parent object
         if i == 0:
+            # Assume layer 0 is always a bulk layer so only set parent_layer here
             parent_layer = layer_anim.object
         else:
-            layer_anim.object.parent = parent_layer
-            layer_anim.object.matrix_parent_inverse = (
-                parent_layer.matrix_world.inverted()
-            )
+            layer_anim.set_parent(parent_layer)
 
         # New start & end time for moving layers down
         start_time = end_time + move_down_delay

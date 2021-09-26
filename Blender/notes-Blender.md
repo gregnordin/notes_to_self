@@ -1328,11 +1328,11 @@ After playing around with colors in Blender file `210925_try_3_dose_colors.blend
     - Also include a transparent violet representation of the photopolymerizing light that uses an emissive material so that it glows.
     - How have the whole stack move down? Attach each successive layer to the first layer with the first layer being the parent so that when the first layer moves, all of the other layers move too?
 - Clean up code for bulk case, put things in functions.
-    - Make use of method `grow_in_negative_z()`
     - LED illumination and animation in one function?
-    - Setting parent object
+    - &#9989; Setting parent object
 - Do next cases:
     - Channel
+        - Fix bug where channel does not go all the way through layer as grow in negative z and then channel goes away as move stack in negative z &rarr; **Make channel using cubes instead of Boolean difference?? And then union them, or join them, or just assign them the same material, or make one the parent of the other so when one moves the other one does, or put them in a list and do all operations/animations on every object in the list, or make a copy of the other in which case everything that is done to one is done to the other?**
     - Channel with edge dose
     - Channel with small edge layers (make exposure time for small layer less than for normal thickness layers)
 - Change layer color with increasing dose
