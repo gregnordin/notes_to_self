@@ -1234,6 +1234,51 @@ Good function to create semi-transparent emission shader material:
     - Make layer object same xy footprint as latest layer but considerably taller. Have it extend beyond the viewport of the camera.
     - Have it disappear a number of frames after latest layer z height reaches top of previous layer
 
+
+# Saturday, 2021-09-25
+
+## Possible colors
+
+Change layer color with increasing dose. Go with different colors so the colors transition in increasing darkness c1 &rarr; c2 &rarr; c3.
+
+See [50 Beautiful Color Combinations](https://visme.co/blog/color-combinations/)  
+
+1 <svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f3cd05" width="140" height="140" x="0" fill="#f3cd05"/>,<rect id="#f49f05" width="140" height="140" x="160" fill="#f49f05"/>,<rect id="#f18904" width="140" height="140" x="320" fill="#f18904"/>
+</g> </svg>  
+
+1-variation <svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f3cd05" width="140" height="140" x="0" fill="#f3cd05"/>,<rect id="#f49f05" width="140" height="140" x="160" fill="#f49f05"/>,<rect id="#f18904" width="140" height="140" x="320" fill="#ba7404"/>,<rect id="#ab6c05" width="140" height="140" x="480" fill="#ab6c05"/>
+</g> </svg>  
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f3e96b" width="140" height="140" x="0" fill="#f3e96b"/>,<rect id="#f28a30" width="140" height="140" x="160" fill="#f28a30"/>,<rect id="#f05837" width="140" height="140" x="320" fill="#f05837"/>
+</g> </svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f1e0d6" width="140" height="140" x="0" fill="#f1e0d6"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#bf988f"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#483e2e"/>
+</g> </svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f1e0d6" width="140" height="140" x="0" fill="#f3d4a0"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#f1931b"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#8f715b"/>
+</g> </svg>
+
+27 <svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140">
+    <g fill="none" fill-rule="evenodd">
+        <rect id="#003f5c" width="140" height="140" x="0" fill="#e7f5de"/>,<rect id="#58508d" width="140" height="140" x="160" fill="#c8d6ca"/>,<rect id="#bc5090" width="140" height="140" x="320" fill="#99bfaa"/>,<rect id="#ff6361" width="140" height="140" x="480" fill="#5c868d"/>
+    </g>
+</svg>
+
+30 <svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f1e0d6" width="140" height="140" x="0" fill="#f08b33"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#d75404"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#8a2c02"/>
+</g> </svg>
+
+38 <svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f1e0d6" width="140" height="140" x="0" fill="#dac6ac"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#efa747"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#8c7547"/>
+</g> </svg>
+
+
 ## Next:
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun
@@ -1279,6 +1324,14 @@ Good function to create semi-transparent emission shader material:
     - Channel
     - Channel with edge dose
     - Channel with small edge layers (make exposure time for small layer less than for normal thickness layers)
+- Change layer color with increasing dose
+    - How many colors (doses) do we need? From lighter (lesser dose) to darker (higher dose):
+        - Thin edge layers
+        - Regular thickness edge layers and roof
+        - Bulk
+    - &#10060;Single color with different amounts of black mixed in? or white?
+    - Go with different colors so the colors transition in increasing darkness c1 &rarr; c2 &rarr; c3. Need to create a color animation function to transition through the colors. Use time duration to determine which color to end at?
+
 - &#10060; Do more complicated boolean difference operation to get 90&deg; channel bends?
 - &#10060; Make layers visually apparent
     - Slant layer edges so 3D printed edgefaces have a serrated look?
