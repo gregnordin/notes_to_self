@@ -1288,7 +1288,41 @@ After playing around with colors in Blender file `210925_try_3_dose_colors.blend
 <rect id="#f1e0d6" width="140" height="140" x="0" fill="#e7f5de"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#5C878C"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#172224"/>
 </g> </svg>
 
+## Channel grow in z bug
 
+I think the problem has to do with using a Boolean difference to make a channel layer. When changing its z scale from 0 to 1 and moving the layer down with its parent, the channel in the layer is not preserved. **Solution**: ditch the Boolean difference operation and just make the channel with 2 appropriately sized and located cubes. 
+
+Try this out manually in a new blender file using the default cube.
+
+- Basic duplication and parent-child (unscaled original cube)
+    - Duplicate the cube.
+    - Change the color of the original cube or the duplicated cube. In either case the color of both cubes changes. However, they can be moved independently.
+    - Make the original cube the parent of the duplicated cube. Now when move the original cube the duplicated cube also moves.
+    - Animating the position of the original cube causes the duplicated cube to be identically animated, maintaining the same position relative to the original cube.
+- Try the same thing except first change the scale of the original cube. Everything works the same.
+
+Algorithm for the `make_channel_layer` function:
+
+- Make first half of channel layer and position it
+    - Size
+        - in x: `x_layer/2 - x_chan/2`
+        - in y: `y_layer`
+        - in z: `z_layer`
+    - Location
+        - `x = (x_layer/2 - x_chan/2)/2 + x_chan/2`
+        - `y = 0`
+        - `z = -z_layer / 2`
+- Assign it a material
+- Duplicate it and position the duplicate
+- Make the original the parent of the duplicate
+- Return the original
+
+`210926_try_make_channel_layer_directly_with_cubes.blend`
+
+- Do the above algorithm in python in this file &rarr; works fine.
+- Make a layer underneath the channel layer and make it the parent of the channel layer &rarr; move underneath layer and both parts of the channel layer move with it.
+
+Next morning: Write down thoughts and ideas about how to do Blender animation with scaled discrete cube objects instead of using Boolean differencing, think through timelines, animation events, object locations and sizes.
 
 ## Next:
 
@@ -1327,6 +1361,8 @@ After playing around with colors in Blender file `210925_try_3_dose_colors.blend
     - You could also have the whole stack of layers move down between each grow operation (group already-visible layers into a collection and apply translation to collection as a whole?). Look at it from somewhat above, noting in presentation that the process actually happens upside down.
     - Also include a transparent violet representation of the photopolymerizing light that uses an emissive material so that it glows.
     - How have the whole stack move down? Attach each successive layer to the first layer with the first layer being the parent so that when the first layer moves, all of the other layers move too?
+- Make function for `make_channel_layer` that creates a cube, duplicates it and positions it, sets the original cube as the parent for the duplicated cube, and returns the original cube.
+- Do the same for edge layer case.
 - Clean up code for bulk case, put things in functions.
     - LED illumination and animation in one function?
     - &#9989; Setting parent object
