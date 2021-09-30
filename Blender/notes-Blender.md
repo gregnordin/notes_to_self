@@ -1324,6 +1324,16 @@ Algorithm for the `make_channel_layer` function:
 
 Next morning: Write down thoughts and ideas about how to do Blender animation with scaled discrete cube objects instead of using Boolean differencing, think through timelines, animation events, object locations and sizes.
 
+
+# Thursday, 2021-09-30
+
+## Refactor
+
+`210926_try_make_channel_layer_directly_with_cubes.blend`
+
+- Break out functions for bulk layer and channel layer, including material and parent
+
+
 ## Next:
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun
@@ -1346,7 +1356,8 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
 - &#9989; Put edge layer creation into a function
 - &#9989; Add roof exposures above channel
 - &#9989; Do embedded different layer thicknesses and multiple exposure times
-- Change from 24 fps to 30 fps?
+- &#9989; Change from 24 fps to 30 fps?
+    - **Use 24 fps to preview things because it is so much faster to generate. Use 60 fps when I make the actual videos to use in talks.**
 - &#10060; Set AVI JPEG video quality to 100% with python
     - **No, going from 90% to 100% changes the file size from 32 MB to 269 MB!**
 - &#9989; Try a semi-transparent material by using a Principled BSDF, Transparent BSDF, and Mix Shader &rarr; **does not look good**
