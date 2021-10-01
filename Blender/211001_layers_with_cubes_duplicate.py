@@ -85,21 +85,53 @@ def make_cube(name, size, position):
 
 
 def attach_to_parent(child_obj, parent_obj):
+    """Make parent_obj the parent of child_obj.
+
+    Args:
+        child_obj (Blender object): Object to be the child
+        parent_obj (Blender object): Object to be the parent
+    """
     child_obj.parent = parent_obj
     # Prevent parent transforms from being applied to child object
     child_obj.matrix_parent_inverse = parent_obj.matrix_world.inverted()
 
 
-def duplicate_object(obj, invert_y_position=True):
+def duplicate_object(obj, invert_y_position=True, parent_relationship=True):
+    """Duplicate an object, move the duplicate in relation to the original,
+    and make the original the parent object of the duplicate.
+
+    Args:
+        obj (Blender object): Object to duplicate
+        invert_y_position (Boolean, optional): Whether to invert the y-position of
+            the duplicated object. Defaults to True.
+        parent (Boolean, optional): Make the original object the parent
+            of the duplicate.
+    """
     bpy.ops.object.duplicate()  # linked=True)
     obj_dupl = bpy.context.selected_objects[0]
-    position = obj.location
-    obj_dupl.location = (position[0], -position[1], position[2])
-    # Make original object the parent of the duplicate
-    attach_to_parent(obj_dupl, obj)
+    if invert_y_position:
+        position = obj.location
+        obj_dupl.location = (position[0], -position[1], position[2])
+    if parent_relationship:
+        attach_to_parent(obj_dupl, obj)
 
 
 def make_bulk_layer(name, layer_size, color_RGB, z_position=0.0, parent=None):
+    """Create a 3D print bulk layer.
+
+    Args:
+        name (str): Name to give the object.
+        layer_size (3-element tuple or list of floats or ints): x,y,z size
+        color_RGB (3-element tuple or list of floats): RGB color with each value
+            in range 0.0-1.0.
+        z_position (float, optional): Where to place object in z direction. 
+            Defaults to 0.0.
+        parent (Blender object, optional): Use this object as parent for new layer. 
+            Defaults to None.
+
+    Returns:
+        Blender object: Newly created layer.
+    """
     position = (0.0, 0.0, z_position)
     layer = make_cube(name, layer_size, position)
     mat = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
@@ -114,6 +146,22 @@ def make_bulk_layer(name, layer_size, color_RGB, z_position=0.0, parent=None):
 def make_channel_layer(
     name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None
 ):
+    """Create a 3D print channel layer.
+
+    Args:
+        name (str): Name to give the object.
+        layer_size (3-element tuple or list of floats or ints): x,y,z size
+        channel_width (float or int): Width of channel.
+        color_RGB (3-element tuple or list of floats): RGB color with each value
+            in range 0.0-1.0.
+        z_position (float, optional): Where to place object in z direction. 
+            Defaults to 0.0.
+        parent (Blender object, optional): Use this object as parent for new layer. 
+            Defaults to None.
+
+    Returns:
+        Blender object: Newly created layer.
+    """
     lx, ly, lz = layer_size
     c = channel_width
 
@@ -134,6 +182,22 @@ def make_channel_layer(
 def make_channelfill_layer(
     name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None
 ):
+    """Create a 3D print layer that consists of filled channel.
+
+    Args:
+        name (str): Name to give the object.
+        layer_size (3-element tuple or list of floats or ints): x,y,z size
+        channel_width (float or int): Width of channel.
+        color_RGB (3-element tuple or list of floats): RGB color with each value
+            in range 0.0-1.0.
+        z_position (float, optional): Where to place object in z direction. 
+            Defaults to 0.0.
+        parent (Blender object, optional): Use this object as parent for new layer. 
+            Defaults to None.
+
+    Returns:
+        Blender object: Newly created layer.
+    """
     lx, ly, lz = layer_size
     c = channel_width
 
@@ -152,6 +216,23 @@ def make_channelfill_layer(
 def make_channel_eroded_layer(
     name, layer_size, channel_width, edge_width, color_RGB, z_position=0.0, parent=None
 ):
+    """Create a 3D print eroded channel layer.
+
+    Args:
+        name (str): Name to give the object.
+        layer_size (3-element tuple or list of floats or ints): x,y,z size
+        channel_width (float or int): Width of channel.
+        edge_width (float or int): Width of edge on each side of channel.
+        color_RGB (3-element tuple or list of floats): RGB color with each value
+            in range 0.0-1.0.
+        z_position (float, optional): Where to place object in z direction. 
+            Defaults to 0.0.
+        parent (Blender object, optional): Use this object as parent for new layer. 
+            Defaults to None.
+
+    Returns:
+        Blender object: Newly created layer.
+    """
     return make_channel_layer(
         name,
         layer_size,
@@ -165,6 +246,23 @@ def make_channel_eroded_layer(
 def make_channel_edge_layer(
     name, layer_size, channel_width, edge_width, color_RGB, z_position=0.0, parent=None
 ):
+    """Create a 3D print layer with two edge objects at each side of a channel.
+
+    Args:
+        name (str): Name to give the object.
+        layer_size (3-element tuple or list of floats or ints): x,y,z size
+        channel_width (float or int): Width of channel.
+        edge_width (float or int): Width of edge on each side of channel.
+        color_RGB (3-element tuple or list of floats): RGB color with each value
+            in range 0.0-1.0.
+        z_position (float, optional): Where to place object in z direction. 
+            Defaults to 0.0.
+        parent (Blender object, optional): Use this object as parent for new layer. 
+            Defaults to None.
+
+    Returns:
+        Blender object: Newly created layer.
+    """
     lx, ly, lz = layer_size
     c = channel_width
     e = edge_width

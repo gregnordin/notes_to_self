@@ -1344,6 +1344,7 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
 
 - Refactor, make last layer type (channel fill)
 - Create stack with each type of layer as an example
+- Add docstrings to each make layer function
 
 
 ## Next:
