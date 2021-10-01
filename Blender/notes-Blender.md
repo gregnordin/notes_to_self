@@ -1346,6 +1346,10 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
 - Create stack with each type of layer as an example
 - Add docstrings to each make layer function
 
+`211001_dev_animation_classes.py`, `blender_tools/layer_objects.py`
+
+- Put layer creation functions in `blender_tools/layer_objects.py`
+- Start `211001_dev_animation_classes.py` and just make bulk layers on top of each other
 
 ## Next:
 
