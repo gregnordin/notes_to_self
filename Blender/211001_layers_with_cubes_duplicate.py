@@ -86,7 +86,7 @@ def make_cube(name, size, position):
 
 def attach_to_parent(child_obj, parent_obj):
     child_obj.parent = parent_obj
-    # Do not apply parent transforms to child object
+    # Prevent parent transforms from being applied to child object
     child_obj.matrix_parent_inverse = parent_obj.matrix_world.inverted()
 
 
@@ -102,7 +102,7 @@ def duplicate_object(obj, invert_y_position=True):
 def make_bulk_layer(name, layer_size, color_RGB, z_position=0.0, parent=None):
     position = (0.0, 0.0, z_position)
     layer = make_cube(name, layer_size, position)
-    mat = make_material_Principled_BSDF(f"{name}_mat", color_RGB_bulk)
+    mat = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
     layer.data.materials.append(mat)
 
     if parent:
@@ -118,12 +118,30 @@ def make_channel_layer(
     c = channel_width
 
     size = (lx, ly / 2.0 - c / 2.0, lz)
-    position = (0, -((ly / 2.0 - c / 2.0) / 2.0 + c / 2.0), z_position)
+    position = (0.0, -((ly / 2.0 - c / 2.0) / 2.0 + c / 2.0), z_position)
     layer_chan = make_cube(name, size, position)
     mat = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
     layer_chan.data.materials.append(mat)
 
     duplicate_object(layer_chan)
+
+    if parent:
+        attach_to_parent(layer_chan, parent)
+
+    return layer_chan
+
+
+def make_channelfill_layer(
+    name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None
+):
+    lx, ly, lz = layer_size
+    c = channel_width
+
+    size = (lx, c, lz)
+    position = (0.0, 0.0, z_position)
+    layer_chan = make_cube(name, size, position)
+    mat = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
+    layer_chan.data.materials.append(mat)
 
     if parent:
         attach_to_parent(layer_chan, parent)
@@ -184,25 +202,40 @@ color_RGB_bulk = (1, 0.71, 0.2)
 color_RGB_channel = (0.1, 0.4, 0.7)
 color_RGB_edge = (0.7, 0.1, 0.4)
 color_RGB_eroded = (0.4, 0.7, 0.1)
+color_RGB_channelfill = (0.4, 0.1, 0.2)
 
 size = (xy_layer_size, xy_layer_size, z_layer_size)
 position = (0, 0, 0)
 
-layer = make_bulk_layer("First Layer", size, color_RGB_bulk, z_position=0.0)
+# Bulk layer
+z = 0 * z_layer_size
+layer = make_bulk_layer("First Layer", size, color_RGB_bulk, z)
+
+# Channel layer
+z = 1 * z_layer_size
 layer_chan = make_channel_layer(
-    "Chan01", size, channel_width, color_RGB_channel, z_layer_size, parent=layer
-)
-layer_chan = make_channel_layer(
-    "Chan02", size, channel_width, color_RGB_channel, 2 * z_layer_size, parent=layer
-)
-layer_top = make_bulk_layer(
-    "Top Layer", size, color_RGB_bulk, z_position=3 * z_layer_size, parent=layer
+    "Chan01", size, channel_width, color_RGB_channel, z, parent=layer
 )
 
-z = 4 * z_layer_size
+# Channel with edge dose
+z = 2 * z_layer_size
 layer_edge = make_channel_edge_layer(
     "Edge01", size, channel_width, edge_width, color_RGB_edge, z, parent=layer
 )
 layer_eroded = make_channel_eroded_layer(
     "Eroded01", size, channel_width, edge_width, color_RGB_eroded, z, parent=layer
 )
+
+# Roof layer
+z = 3 * z_layer_size
+layer_chanfill = make_channelfill_layer(
+    "ChanFill01", size, channel_width, color_RGB_channelfill, z, parent=layer,
+)
+layer_chan = make_channel_layer(
+    "Chan02", size, channel_width, color_RGB_channel, z, parent=layer
+)
+
+# Bulk layer
+z = 4 * z_layer_size
+layer_top = make_bulk_layer("Top Layer", size, color_RGB_bulk, z, parent=layer)
+

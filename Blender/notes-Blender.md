@@ -1327,13 +1327,23 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
 
 # Thursday, 2021-09-30
 
-## Refactor
+## Refactor & start to make functions for different layer types
 
 `210926_try_make_channel_layer_directly_with_cubes.blend`
 
 - Break out functions for bulk layer and channel layer, including material and parent
 - Refactor, create functions for edge and erosion layers, and utility functions for making duplicate objects and setting parent object
 - Delete `210926_try_make_channel_layer_directly_with_cubes.blend` and put code into `211001_layers_with_cubes_duplicate.py` 
+
+
+# Friday, 2021-10-01
+
+## Finish making functions for different layer types
+
+`211001_layers_with_cubes_duplicate.py`
+
+- Refactor, make last layer type (channel fill)
+- Create stack with each type of layer as an example
 
 
 ## Next:
@@ -1374,8 +1384,6 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
     - You could also have the whole stack of layers move down between each grow operation (group already-visible layers into a collection and apply translation to collection as a whole?). Look at it from somewhat above, noting in presentation that the process actually happens upside down.
     - Also include a transparent violet representation of the photopolymerizing light that uses an emissive material so that it glows.
     - How have the whole stack move down? Attach each successive layer to the first layer with the first layer being the parent so that when the first layer moves, all of the other layers move too?
-- Make function for `make_channel_layer` that creates a cube, duplicates it and positions it, sets the original cube as the parent for the duplicated cube, and returns the original cube.
-- Do the same for edge layer case.
 - Clean up code for bulk case, put things in functions.
     - LED illumination and animation in one function?
     - &#9989; Setting parent object
@@ -1383,8 +1391,8 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
 - Create docstrings for layer functions.
 - Do next cases:
     - Channel
-        - Fix bug where channel does not go all the way through layer as grow in negative z and then channel goes away as move stack in negative z &rarr; **Make channel using cubes instead of Boolean difference?? And then union them, or join them, or just assign them the same material, or make one the parent of the other so when one moves the other one does, or put them in a list and do all operations/animations on every object in the list, or make a copy of the other in which case everything that is done to one is done to the other?**
-    - Channel with edge dose
+        - &#9989; Fix bug where channel does not go all the way through layer as grow in negative z and then channel goes away as move stack in negative z &rarr; **Make channel using cubes instead of Boolean difference?? And then union them, or join them, or just assign them the same material, or make one the parent of the other so when one moves the other one does, or put them in a list and do all operations/animations on every object in the list, or make a copy of the other in which case everything that is done to one is done to the other?**
+    - &#9989; Channel with edge dose
     - Channel with small edge layers (make exposure time for small layer less than for normal thickness layers)
 - Change layer color with increasing dose
     - How many colors (doses) do we need? From lighter (lesser dose) to darker (higher dose):
