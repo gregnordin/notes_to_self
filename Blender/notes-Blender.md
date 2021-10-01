@@ -1333,6 +1333,7 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
 
 - Break out functions for bulk layer and channel layer, including material and parent
 - Refactor, create functions for edge and erosion layers, and utility functions for making duplicate objects and setting parent object
+- Delete `210926_try_make_channel_layer_directly_with_cubes.blend` and put code into `211001_layers_with_cubes_duplicate.py` 
 
 
 ## Next:
@@ -1379,6 +1380,7 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
     - LED illumination and animation in one function?
     - &#9989; Setting parent object
 - Move Blender work to its own repository since Blender files can be so big.
+- Create docstrings for layer functions.
 - Do next cases:
     - Channel
         - Fix bug where channel does not go all the way through layer as grow in negative z and then channel goes away as move stack in negative z &rarr; **Make channel using cubes instead of Boolean difference?? And then union them, or join them, or just assign them the same material, or make one the parent of the other so when one moves the other one does, or put them in a list and do all operations/animations on every object in the list, or make a copy of the other in which case everything that is done to one is done to the other?**
