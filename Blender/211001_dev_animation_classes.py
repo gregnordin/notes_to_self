@@ -30,6 +30,56 @@ from blender_tools.animation import frame_number
 # ----------------------------------------------------------------------------------------
 
 
+class AnimateZMotion:
+    def __init__(self, obj):
+        self.object = obj
+
+    def animate_z_move(
+        self, start_time, end_time, delta_z, move_in_negative_z_direction=True
+    ):
+        sign = -1.0 if move_in_negative_z_direction else 1.0
+        # Start and end locations
+        current_location = self.object.location
+        new_location = (
+            current_location[0],
+            current_location[1],
+            current_location[2] + sign * delta_z,
+        )
+
+        # Keyframe current location to begin move
+        self.object.keyframe_insert(data_path="location", frame=frame_num(start_time))
+
+        # Keyframe new location to end move
+        self.object.location = new_location
+        self.object.keyframe_insert(data_path="location", frame=frame_num(end_time))
+
+
+# class MixinZMotion:
+#     def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
+#         # Assumes self.object.scale is already (0, 0, 0)
+
+#         # Make layer appear at frame start_frame
+#         self.object.keyframe_insert(data_path="scale", frame=start_frame - 1)
+#         xy_scale = (self.save_scale[0], self.save_scale[1], 0)
+#         self.set_scale(xy_scale)
+#         self.object.keyframe_insert(data_path="scale", frame=start_frame)
+
+#         # Set up keyframes to start growing in -z
+#         self.object.keyframe_insert(data_path="scale", frame=start_frame)
+#         self.object.keyframe_insert(data_path="location", frame=start_frame)
+
+#         # Set up values and keyframes to define end of growth in -z
+#         self.set_scale(self.save_scale)
+#         new_location = (
+#             self.save_location[0],
+#             self.save_location[1],
+#             z_position,  # - self.save_scale[2] / 2,
+#         )
+#         self.object.location = new_location
+#         self.object.keyframe_insert(data_path="scale", frame=end_frame)
+#         self.object.keyframe_insert(data_path="location", frame=end_frame)
+
+
 # ----------------------------------------------------------------------------------------
 # Animation classes
 # ----------------------------------------------------------------------------------------
@@ -154,7 +204,17 @@ for i in range(num_layers):
     layer_name = f"Layer_{layer_str}"
     if i == 0:
         parent_layer = make_bulk_layer(layer_name, layer_size, color_RGB_bulk)
+        z_animation = AnimateZMotion(parent_layer)
     else:
         layer = make_bulk_layer(
             layer_name, layer_size, color_RGB_bulk, parent=parent_layer
         )
+
+    z_animation.animate_z_move(start_time, end_time, z_layer_size)
+
+    start_time = end_time + between_layer_delay
+
+# Set last frame to be rendered for animation
+last_frame = frame_num(end_time + 0.3)
+print(f"Last frame: {last_frame}")
+bpy.data.scenes["Scene"].frame_end = last_frame
