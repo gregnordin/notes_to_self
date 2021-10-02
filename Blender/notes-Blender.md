@@ -1363,7 +1363,11 @@ Files: `211001_dev_animation_classes.py`, `blender_tools/layer_objects.py`
 
 - Mixin for growth in z direction
 - Try with other layer types
+- Make layer animators for other layer types
 - Color change with exposure time
+- Mess with z locations or leave as-is??
+- How specify and manage what is going to be in each layer? Dict: {0: 'Bulk', 1: 'Channel', ...}
+- How manage animation durations and waits?
 
 ## Next:
 

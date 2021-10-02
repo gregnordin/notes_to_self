@@ -37,8 +37,9 @@ class MixinScale:
     versa (turn visibility on).
     """
 
-    def initialize_scale(self):
+    def _initialize_scale(self):
         self.original_scale = self.object.scale.copy()
+        self._invisible_scale_value = (0.0, 0.0, 0.0)
         self.set_visible(False)
 
     def set_scale(self, value):
@@ -54,8 +55,12 @@ class MixinScale:
         if visibility_flag:
             self.set_scale(self.original_scale)
         else:
-            new_scale = (0.0, 0.0, 0.0)
-            self.set_scale(new_scale)
+            self.set_scale(self._invisible_scale_value)
+
+    def is_visible(self):
+        if self.object.scale == self._invisible_scale_value:
+            return False
+        return True
 
     def appear_at_frame(self, frame):
         # print(f"Appear at frame {frame}")
@@ -72,35 +77,40 @@ class MixinScale:
         self.object.keyframe_insert(data_path="scale", frame=frame)
 
 
-# ----------------------------------------------------------------------------------------
-# Needs adapted or rewritten
-# class MixinGrowInZ:
-#     def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
-#         # Assumes self.object.scale is already (0, 0, 0)
+class MixinGrowInZ:
+    """Relies on MixinScale so new class must inherit from both.
+    """
 
-#         # Make layer appear at frame start_frame
-#         self.object.keyframe_insert(data_path="scale", frame=start_frame - 1)
-#         xy_scale = (self.save_scale[0], self.save_scale[1], 0)
-#         self.set_scale(xy_scale)
-#         self.object.keyframe_insert(data_path="scale", frame=start_frame)
+    def _initialize_location(self):
+        self.original_location = self.object.location.copy()
 
-#         # Set up keyframes to start growing in -z
-#         self.object.keyframe_insert(data_path="scale", frame=start_frame)
-#         self.object.keyframe_insert(data_path="location", frame=start_frame)
+    def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
+        # Assumes self.object.scale is already (0, 0, 0). Double check to make sure it's true.
+        if not self.is_visible():
+            raise ValueError(
+                f"Before growing layer in z, it must be invisible (scale={self._invisible_scale_value})"
+            )
 
-#         # Set up values and keyframes to define end of growth in -z
-#         self.set_scale(self.save_scale)
-#         new_location = (
-#             self.save_location[0],
-#             self.save_location[1],
-#             z_position,  # - self.save_scale[2] / 2,
-#         )
-#         self.object.location = new_location
-#         self.object.keyframe_insert(data_path="scale", frame=end_frame)
-#         self.object.keyframe_insert(data_path="location", frame=end_frame)
+        # Make layer appear at frame start_frame with zero thickness
+        self.object.keyframe_insert(data_path="scale", frame=start_frame - 1)
+        xy_scale = (self.original_scale[0], self.original_scale[1], 0)
+        self.set_scale(xy_scale)
+        self.object.keyframe_insert(data_path="scale", frame=start_frame)
 
+        # Set up keyframes to start growing in -z
+        self.object.keyframe_insert(data_path="scale", frame=start_frame)
+        self.object.keyframe_insert(data_path="location", frame=start_frame)
 
-# ----------------------------------------------------------------------------------------
+        # Set up values and keyframes to define end of growth in -z
+        self.set_scale(self.original_scale)
+        new_location = (
+            self.original_location[0],
+            self.original_location[1],
+            z_position,  # - self.original_location[2] / 2,
+        )
+        self.object.location = new_location
+        self.object.keyframe_insert(data_path="scale", frame=end_frame)
+        self.object.keyframe_insert(data_path="location", frame=end_frame)
 
 
 # ----------------------------------------------------------------------------------------
@@ -108,10 +118,11 @@ class MixinScale:
 # ----------------------------------------------------------------------------------------
 
 
-class AnimateLayer(MixinScale):
+class AnimateLayer(MixinScale, MixinGrowInZ):
     def __init__(self, obj):
         self.object = obj
-        self.initialize_scale()
+        self._initialize_scale()
+        self._initialize_location()
 
 
 class AnimateZMotion:
@@ -198,9 +209,7 @@ cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 59.9 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
 # Materials
-# Select which layer material type by uncommenting one of the following 2 lines
 make_material = make_material_Principled_BSDF
-# make_material = make_material_Principled_and_Transparent_BSDF
 # Emissive material
 make_LED_material = partial(
     make_semitransparent_emission_shader, strength=5, mix_fac=0.6
@@ -209,8 +218,8 @@ make_LED_material = partial(
 
 # Select which case to run by uncommenting one of the following 5 lines
 # case = "bulk"
-case = "channel"
-# case = "channel with edge dose"
+# case = "channel"
+case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
 # case = "channel with small edge layers and roof dose"
 
@@ -232,31 +241,48 @@ elif case == "channel with small edge layers and roof dose":
     secondary_image_small_channel_layers = chan_layers
     secondary_image_roof_layers = roof_layers
 
-# Loop to create layers, materials, and animation keyframes
-grow_duration = 0.2  # 1.4
+# Set up timing parameters
+grow_duration = 0.4  # 1.4
 extra_time_LED_is_on = 0.5
 move_down_delay = extra_time_LED_is_on + 0.2
 move_down_duration = 0.6
 between_layer_delay = 0.2
 start_time = 0.3
 
+# Loop to create layers and corresponding animation
 for i in range(num_layers):
-
     end_time = start_time + grow_duration
-
+    # Make layer
     layer_str = f"{i:02d}"
     layer_name = f"Layer_{layer_str}"
     if i == 0:
         # Parent layer
         layer = make_bulk_layer(layer_name, layer_size, color_RGB_bulk)
         z_animation = AnimateZMotion(layer)
+    elif i in channel_layers:
+        layer = make_channel_layer(
+            layer_name,
+            layer_size,
+            channel_width,
+            color_RGB_bulk,
+            parent=z_animation.object,
+        )
+    elif i in secondary_image_channel_layers:
+        layer = make_channel_edge_layer(
+            layer_name,
+            layer_size,
+            channel_width,
+            edge_width,
+            color_RGB_edge,
+            parent=z_animation.object,
+        )
     else:
         layer = make_bulk_layer(
             layer_name, layer_size, color_RGB_bulk, parent=z_animation.object
         )
-
+    # Animate layer
     layer_animator = AnimateLayer(layer)
-    layer_animator.appear_at_frame(frame_num(start_time))
+    layer_animator.grow_in_negative_z(frame_num(start_time), frame_num(end_time))
 
     # New start & end time for moving layers down
     start_time = end_time + move_down_delay
