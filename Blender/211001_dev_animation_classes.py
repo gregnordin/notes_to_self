@@ -11,6 +11,7 @@ if blender_file_path not in sys.path:
 # print()
 # print(sys.path)
 
+# Import things from my Blender package
 from blender_tools.lights import sun_light
 from blender_tools.materials import (
     make_material_Principled_BSDF,
@@ -71,30 +72,35 @@ class MixinScale:
         self.object.keyframe_insert(data_path="scale", frame=frame)
 
 
-class MixinGrowInZ:
-    def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
-        # Assumes self.object.scale is already (0, 0, 0)
+# ----------------------------------------------------------------------------------------
+# Needs adapted or rewritten
+# class MixinGrowInZ:
+#     def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
+#         # Assumes self.object.scale is already (0, 0, 0)
 
-        # Make layer appear at frame start_frame
-        self.object.keyframe_insert(data_path="scale", frame=start_frame - 1)
-        xy_scale = (self.save_scale[0], self.save_scale[1], 0)
-        self.set_scale(xy_scale)
-        self.object.keyframe_insert(data_path="scale", frame=start_frame)
+#         # Make layer appear at frame start_frame
+#         self.object.keyframe_insert(data_path="scale", frame=start_frame - 1)
+#         xy_scale = (self.save_scale[0], self.save_scale[1], 0)
+#         self.set_scale(xy_scale)
+#         self.object.keyframe_insert(data_path="scale", frame=start_frame)
 
-        # Set up keyframes to start growing in -z
-        self.object.keyframe_insert(data_path="scale", frame=start_frame)
-        self.object.keyframe_insert(data_path="location", frame=start_frame)
+#         # Set up keyframes to start growing in -z
+#         self.object.keyframe_insert(data_path="scale", frame=start_frame)
+#         self.object.keyframe_insert(data_path="location", frame=start_frame)
 
-        # Set up values and keyframes to define end of growth in -z
-        self.set_scale(self.save_scale)
-        new_location = (
-            self.save_location[0],
-            self.save_location[1],
-            z_position,  # - self.save_scale[2] / 2,
-        )
-        self.object.location = new_location
-        self.object.keyframe_insert(data_path="scale", frame=end_frame)
-        self.object.keyframe_insert(data_path="location", frame=end_frame)
+#         # Set up values and keyframes to define end of growth in -z
+#         self.set_scale(self.save_scale)
+#         new_location = (
+#             self.save_location[0],
+#             self.save_location[1],
+#             z_position,  # - self.save_scale[2] / 2,
+#         )
+#         self.object.location = new_location
+#         self.object.keyframe_insert(data_path="scale", frame=end_frame)
+#         self.object.keyframe_insert(data_path="location", frame=end_frame)
+
+
+# ----------------------------------------------------------------------------------------
 
 
 # ----------------------------------------------------------------------------------------
@@ -112,16 +118,13 @@ class AnimateZMotion:
     def __init__(self, obj):
         self.object = obj
 
-    def animate_z_move(
-        self, start_time, end_time, delta_z, move_in_negative_z_direction=True
-    ):
-        sign = -1.0 if move_in_negative_z_direction else 1.0
+    def animate_z_move(self, start_time, end_time, delta_z):
         # Start and end locations
         current_location = self.object.location
         new_location = (
             current_location[0],
             current_location[1],
-            current_location[2] + sign * delta_z,
+            current_location[2] + delta_z,
         )
 
         # Keyframe current location to begin move
@@ -259,7 +262,7 @@ for i in range(num_layers):
     start_time = end_time + move_down_delay
     end_time = start_time + move_down_duration
 
-    z_animation.animate_z_move(start_time, end_time, z_layer_size)
+    z_animation.animate_z_move(start_time, end_time, -z_layer_size)
 
     start_time = end_time + between_layer_delay
 

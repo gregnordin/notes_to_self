@@ -1340,18 +1340,30 @@ Next morning: Write down thoughts and ideas about how to do Blender animation wi
 
 ## Finish making functions for different layer types
 
-`211001_layers_with_cubes_duplicate.py`
+File: `211001_layers_with_cubes_duplicate.py`
 
 - Refactor, make last layer type (channel fill)
 - Create stack with each type of layer as an example
 - Add docstrings to each make layer function
 
-`211001_dev_animation_classes.py`, `blender_tools/layer_objects.py`
+## Start making animation classes
+
+Files: `211001_dev_animation_classes.py`, `blender_tools/layer_objects.py`
 
 - Put layer creation functions in `blender_tools/layer_objects.py`
 - Start `211001_dev_animation_classes.py` and just make bulk layers on top of each other
 - Animate z motion with `AnimateZMotion` class
 - Create `MixinScale` and `AnimateLayer` class and try out
+
+
+# Saturday, 2021-10-02
+
+
+## Next:
+
+- Mixin for growth in z direction
+- Try with other layer types
+- Color change with exposure time
 
 ## Next:
 
