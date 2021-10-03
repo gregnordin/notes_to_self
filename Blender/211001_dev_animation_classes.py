@@ -179,7 +179,7 @@ bpy.data.scenes["Scene"].eevee.bloom_intensity = 0.1
 
 # Layers
 xy_layer_size = 10
-z_layer_size = 0.5
+x_layer_size, y_layer_size, z_layer_size = xy_layer_size, xy_layer_size, 0.5
 layer_size = (xy_layer_size, xy_layer_size, z_layer_size)
 z_size_illum = 15
 channel_width = 3
@@ -200,6 +200,14 @@ color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
 color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
 # LED emission color
 color_emission = (0.08, 0.03, 1.0)  # RGB (20, 8, 255) = HEX #1408FF
+
+layer_params = {
+    "name": "",
+    "layer_size": (x_layer_size, y_layer_size, z_layer_size),
+    "channel_width": channel_width,
+    "edge_width": edge_width,
+    "color_RGB": color_RGB_small_edge,
+}
 
 
 # Animation setup
@@ -281,9 +289,12 @@ for i in range(num_layers):
     # Make layer
     layer_str = f"{i:02d}"
     layer_name = f"Layer_{layer_str}"
+    layer_params["name"] = f"Layer_{i:02d}"
     if i == 0:
         # Parent layer
-        layer = make_bulk_layer(layer_name, layer_size, color_RGB_bulk)
+        layer = make_bulk_layer(
+            **layer_params
+        )  # layer_name, layer_size, color_RGB_bulk)
         z_animation = AnimateZMotion(layer)
     elif i in channel_layers:
         layer = make_channel_layer(

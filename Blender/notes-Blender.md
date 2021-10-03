@@ -1358,10 +1358,13 @@ Files: `211001_dev_animation_classes.py`, `blender_tools/layer_objects.py`
 
 # Saturday, 2021-10-02
 
+## Continue code development
+
 File: `211001_dev_animation_classes.py`
 
 - Mixin for growth in z direction
 - Create `timings` dict and refactor code
+- Add **kwargs to make layer function arguments so can pass dict with more parameters than needed to make code easier to implement
 
 ## Next:
 

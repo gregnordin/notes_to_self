@@ -69,7 +69,7 @@ def make_cube(name, size, position):
 # ----------------------------------------------------------------------------------------
 
 
-def make_bulk_layer(name, layer_size, color_RGB, z_position=0.0, parent=None):
+def make_bulk_layer(name, layer_size, color_RGB, z_position=0.0, parent=None, **kwargs):
     """Create a 3D print bulk layer.
 
     Args:
@@ -97,7 +97,7 @@ def make_bulk_layer(name, layer_size, color_RGB, z_position=0.0, parent=None):
 
 
 def make_channel_layer(
-    name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None
+    name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None, **kwargs
 ):
     """Create a 3D print channel layer.
 
@@ -133,7 +133,7 @@ def make_channel_layer(
 
 
 def make_channelfill_layer(
-    name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None
+    name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None, **kwargs
 ):
     """Create a 3D print layer that consists of filled channel.
 
@@ -167,7 +167,14 @@ def make_channelfill_layer(
 
 
 def make_channel_eroded_layer(
-    name, layer_size, channel_width, edge_width, color_RGB, z_position=0.0, parent=None
+    name,
+    layer_size,
+    channel_width,
+    edge_width,
+    color_RGB,
+    z_position=0.0,
+    parent=None,
+    **kwargs,
 ):
     """Create a 3D print eroded channel layer.
 
@@ -197,7 +204,14 @@ def make_channel_eroded_layer(
 
 
 def make_channel_edge_layer(
-    name, layer_size, channel_width, edge_width, color_RGB, z_position=0.0, parent=None
+    name,
+    layer_size,
+    channel_width,
+    edge_width,
+    color_RGB,
+    z_position=0.0,
+    parent=None,
+    **kwargs,
 ):
     """Create a 3D print layer with two edge objects at each side of a channel.
 
