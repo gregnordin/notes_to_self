@@ -292,31 +292,14 @@ for i in range(num_layers):
     layer_params["name"] = f"Layer_{i:02d}"
     if i == 0:
         # Parent layer
-        layer = make_bulk_layer(
-            **layer_params
-        )  # layer_name, layer_size, color_RGB_bulk)
+        layer = make_bulk_layer(**layer_params)
         z_animation = AnimateZMotion(layer)
     elif i in channel_layers:
-        layer = make_channel_layer(
-            layer_name,
-            layer_size,
-            channel_width,
-            color_RGB_bulk,
-            parent=z_animation.object,
-        )
+        layer = make_channel_layer(**layer_params, parent=z_animation.object,)
     elif i in secondary_image_channel_layers:
-        layer = make_channel_edge_layer(
-            layer_name,
-            layer_size,
-            channel_width,
-            edge_width,
-            color_RGB_edge,
-            parent=z_animation.object,
-        )
+        layer = make_channel_edge_layer(**layer_params, parent=z_animation.object,)
     else:
-        layer = make_bulk_layer(
-            layer_name, layer_size, color_RGB_bulk, parent=z_animation.object
-        )
+        layer = make_bulk_layer(**layer_params, parent=z_animation.object)
     # Animate layer
     layer_animator = AnimateLayer(layer)
     layer_animator.grow_in_negative_z(
