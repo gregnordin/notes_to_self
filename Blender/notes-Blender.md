@@ -1361,6 +1361,7 @@ Files: `211001_dev_animation_classes.py`, `blender_tools/layer_objects.py`
 File: `211001_dev_animation_classes.py`
 
 - Mixin for growth in z direction
+- Create `timings` dict and refactor code
 
 ## Next:
 

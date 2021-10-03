@@ -264,16 +264,20 @@ elif case == "channel with small edge layers and roof dose":
     secondary_image_roof_layers = roof_layers
 
 # Set up timing parameters
-grow_duration = 0.4  # 1.4
-extra_time_LED_is_on = 0.5
-move_down_delay = extra_time_LED_is_on + 0.2
-move_down_duration = 0.6
-between_layer_delay = 0.2
-start_time = 0.3
+timings = {
+    "start time": 0.3,
+    "end time": None,
+    "grow duration": 0.4,
+    "extra time LED is on": 0.3,
+    "move down delay after LED": 0.2,
+    "move down duration": 0.6,
+    "between layer delay": 0.2,
+}
+t = timings  # Need shorthand for timings to reduce clutter
 
 # Loop to create layers and corresponding animation
 for i in range(num_layers):
-    end_time = start_time + grow_duration
+    t["end time"] = t["start time"] + t["grow duration"]
     # Make layer
     layer_str = f"{i:02d}"
     layer_name = f"Layer_{layer_str}"
@@ -304,17 +308,21 @@ for i in range(num_layers):
         )
     # Animate layer
     layer_animator = AnimateLayer(layer)
-    layer_animator.grow_in_negative_z(frame_num(start_time), frame_num(end_time))
+    layer_animator.grow_in_negative_z(
+        frame_num(t["start time"]), frame_num(t["end time"])
+    )
 
     # New start & end time for moving layers down
-    start_time = end_time + move_down_delay
-    end_time = start_time + move_down_duration
+    t["start time"] = (
+        t["end time"] + t["extra time LED is on"] + t["move down delay after LED"]
+    )
+    t["end time"] = t["start time"] + t["move down duration"]
 
-    z_animation.animate_z_move(start_time, end_time, -z_layer_size)
+    z_animation.animate_z_move(t["start time"], t["end time"], -z_layer_size)
 
-    start_time = end_time + between_layer_delay
+    t["start time"] = t["end time"] + t["between layer delay"]
 
 # Set last frame to be rendered for animation
-last_frame = frame_num(end_time + 0.3)
+last_frame = frame_num(t["end time"] + 0.3)
 print(f"Last frame: {last_frame}")
 bpy.data.scenes["Scene"].frame_end = last_frame
