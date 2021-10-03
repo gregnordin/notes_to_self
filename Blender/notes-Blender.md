@@ -1358,18 +1358,23 @@ Files: `211001_dev_animation_classes.py`, `blender_tools/layer_objects.py`
 
 # Saturday, 2021-10-02
 
+File: `211001_dev_animation_classes.py`
+
+- Mixin for growth in z direction
 
 ## Next:
 
-- Mixin for growth in z direction
-- Try with other layer types
-- Make layer animators for other layer types
 - Color change with exposure time
+    - Try `MixinColorAnimation`
+- Make layer animators for other layer types using fundamental layer types
+- Try other layer type animators
 - Mess with z locations or leave as-is??
 - How specify and manage what is going to be in each layer? Dict: {0: 'Bulk', 1: 'Channel', ...}
 - How manage animation durations and waits?
+- Put in LED illumination
 
-## Next:
+
+# To-do's
 
 - &#9989; Create different types of lights and play with parameters to get ones I like (point, area, sun) &rarr; go with sun
 - &#9989; How programmatically create material from python?

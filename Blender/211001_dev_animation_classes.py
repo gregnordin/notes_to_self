@@ -113,6 +113,28 @@ class MixinGrowInZ:
         self.object.keyframe_insert(data_path="location", frame=end_frame)
 
 
+class MixinColorAnimation:
+    def _initialize_color_for_animation(self):
+        self.material = self.object.active_material
+        self.nodes = self.material.node_tree.nodes
+        self.material_color = self.nodes["Principled BSDF"].inputs["Base Color"]
+
+    def set_color(self, new_color):
+        # If receive an RGB color, convert to RGBA
+        if len(new_color) == 3:
+            new_color = (*new_color, 1.0)
+        # Make sure we have an RGBA color
+        assert len(new_color) == 4
+        self.material_color.default_value = new_color
+
+    def animate_change_color(self, new_color, start_frame, end_frame):
+        current_color = self.material_color.default_value
+        self.set_color(current_color)
+        self.material_color.keyframe_insert("default_value", frame=start_frame)
+        self.set_color(new_color)
+        self.material_color.keyframe_insert("default_value", frame=end_frame)
+
+
 # ----------------------------------------------------------------------------------------
 # Animation classes
 # ----------------------------------------------------------------------------------------
