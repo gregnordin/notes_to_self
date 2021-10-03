@@ -140,11 +140,12 @@ class MixinColorAnimation:
 # ----------------------------------------------------------------------------------------
 
 
-class AnimateLayer(MixinScale, MixinGrowInZ):
+class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
     def __init__(self, obj):
         self.object = obj
         self._initialize_scale()
         self._initialize_location()
+        self._initialize_color_for_animation()
 
 
 class AnimateZMotion:
@@ -209,6 +210,12 @@ layer_params = {
     "color_RGB": color_RGB_small_edge,
 }
 
+# Color sequence for layer exposure
+colors = {
+    0: color_RGB_small_edge,
+    1: color_RGB_edge,
+    2: color_RGB_bulk,
+}
 
 # Animation setup
 frames_per_second = bpy.data.scenes["Scene"].render.fps
@@ -272,11 +279,16 @@ elif case == "channel with small edge layers and roof dose":
     secondary_image_roof_layers = roof_layers
 
 # Set up timing parameters
+z_grow_duration = 0.4
+color_c0_to_c1 = 0.2
+color_c1_to_c2 = 0.2
 timings = {
     "start time": 0.3,
     "end time": None,
-    "grow duration": 0.4,
-    "extra time LED is on": 0.3,
+    "z grow duration": z_grow_duration,
+    "color c0 to c1": color_c0_to_c1,
+    "color c1 to c2": color_c1_to_c2,
+    "extra time LED is on": color_c0_to_c1 + color_c1_to_c2,
     "move down delay after LED": 0.2,
     "move down duration": 0.6,
     "between layer delay": 0.2,
@@ -285,11 +297,12 @@ t = timings  # Need shorthand for timings to reduce clutter
 
 # Loop to create layers and corresponding animation
 for i in range(num_layers):
-    t["end time"] = t["start time"] + t["grow duration"]
+    t["end time"] = t["start time"] + t["z grow duration"]
     # Make layer
     layer_str = f"{i:02d}"
     layer_name = f"Layer_{layer_str}"
     layer_params["name"] = f"Layer_{i:02d}"
+    layer_params["color_RGB"] = color_RGB_small_edge
     if i == 0:
         # Parent layer
         layer = make_bulk_layer(**layer_params)
@@ -299,6 +312,7 @@ for i in range(num_layers):
     elif i in secondary_image_channel_layers:
         layer = make_channel_edge_layer(**layer_params, parent=z_animation.object,)
     else:
+        layer_params["color_RGB"] = color_RGB_bulk
         layer = make_bulk_layer(**layer_params, parent=z_animation.object)
     # Animate layer
     layer_animator = AnimateLayer(layer)
