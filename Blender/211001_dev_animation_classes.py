@@ -136,6 +136,11 @@ class MixinColorAnimation:
 
 
 # ----------------------------------------------------------------------------------------
+# Timing class
+# ----------------------------------------------------------------------------------------
+
+
+# ----------------------------------------------------------------------------------------
 # Animation classes
 # ----------------------------------------------------------------------------------------
 
@@ -146,6 +151,23 @@ class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
         self._initialize_scale()
         self._initialize_location()
         self._initialize_color_for_animation()
+
+
+class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
+    def __init__(self, layer_params, timings, colors, z_animator):
+        self.object = make_bulk_layer(**layer_params, parent=z_animator.object)
+        self._initialize_scale()
+        self._initialize_location()
+        self._initialize_color_for_animation()
+        self.layer_params = layer_params
+        self.t = timings
+        self.c = colors
+
+    def animate_layer(self):
+        self.set_color = self.c[0]
+        self.grow_in_negative_z(
+            frame_num(self.t["start time"]), frame_num(self.t["end time"])
+        )
 
 
 class AnimateZMotion:
@@ -293,11 +315,38 @@ timings = {
     "move down duration": 0.6,
     "between layer delay": 0.2,
 }
-t = timings  # Need shorthand for timings to reduce clutter
+tt = timings  # Need shorthand for timings to reduce clutter
+
+
+class Timings:
+    def __init__(self):
+        self.start_time = 0.3
+        self.end_time = self.start_time
+        self.duration_z_grow = 0.4
+        self.color_c0_to_c1 = 0.2
+        self.color_c1_to_c2 = 0.2
+        self.extra_time_LED_is_on = self.color_c0_to_c1 + self.color_c1_to_c2
+        self.delay_move_down_after_LED = 0.2
+        self.duration_move_down = 0.6
+        self.delay_between_layers = 0.2
+
+    def update_start_time(self, delta_t=0.0):
+        self.start_time = self.end_time + delta_t
+
+    def update_end_time(self, delta_t=0.0):
+        self.end_time = self.start_time + delta_t
+
+
+t = Timings()
 
 # Loop to create layers and corresponding animation
 for i in range(num_layers):
-    t["end time"] = t["start time"] + t["z grow duration"]
+    t.update_end_time(t.duration_z_grow)
+    tt["end time"] = (
+        tt["start time"] + tt["z grow duration"]
+    )  # Need to put this in layer animation classes
+    print("Start", i, tt["start time"], tt["end time"])
+    print("     ", i, t.start_time, t.end_time)
     # Make layer
     layer_str = f"{i:02d}"
     layer_name = f"Layer_{layer_str}"
@@ -307,30 +356,46 @@ for i in range(num_layers):
         # Parent layer
         layer = make_bulk_layer(**layer_params)
         z_animation = AnimateZMotion(layer)
+        parent_z_animator = AnimateLayer(layer)
+        parent_z_animator.grow_in_negative_z(
+            frame_num(t.start_time), frame_num(t.end_time)
+        )
     elif i in channel_layers:
         layer = make_channel_layer(**layer_params, parent=z_animation.object,)
+        layer_animator = AnimateLayer(layer)
+        layer_animator.grow_in_negative_z(
+            frame_num(tt["start time"]), frame_num(tt["end time"])
+        )
     elif i in secondary_image_channel_layers:
         layer = make_channel_edge_layer(**layer_params, parent=z_animation.object,)
+        layer_animator = AnimateLayer(layer)
+        layer_animator.grow_in_negative_z(
+            frame_num(tt["start time"]), frame_num(tt["end time"])
+        )
     else:
         layer_params["color_RGB"] = color_RGB_bulk
         layer = make_bulk_layer(**layer_params, parent=z_animation.object)
-    # Animate layer
-    layer_animator = AnimateLayer(layer)
-    layer_animator.grow_in_negative_z(
-        frame_num(t["start time"]), frame_num(t["end time"])
-    )
+        layer_animator = AnimateLayer(layer)
+        layer_animator.grow_in_negative_z(
+            frame_num(t.start_time), frame_num(t.end_time)
+        )
 
     # New start & end time for moving layers down
-    t["start time"] = (
-        t["end time"] + t["extra time LED is on"] + t["move down delay after LED"]
+    tt["start time"] = (
+        tt["end time"] + tt["extra time LED is on"] + tt["move down delay after LED"]
     )
-    t["end time"] = t["start time"] + t["move down duration"]
+    tt["end time"] = tt["start time"] + tt["move down duration"]
+    t.update_start_time(t.extra_time_LED_is_on + t.delay_move_down_after_LED)
+    t.update_end_time(t.duration_move_down)
+    print("  End", i, tt["start time"], tt["end time"])
+    print("     ", i, t.start_time, t.end_time)
 
-    z_animation.animate_z_move(t["start time"], t["end time"], -z_layer_size)
+    z_animation.animate_z_move(tt["start time"], tt["end time"], -z_layer_size)
 
-    t["start time"] = t["end time"] + t["between layer delay"]
+    tt["start time"] = tt["end time"] + tt["between layer delay"]
+    t.update_start_time(t.delay_between_layers)
 
 # Set last frame to be rendered for animation
-last_frame = frame_num(t["end time"] + 0.3)
+last_frame = frame_num(tt["end time"] + 0.3)
 print(f"Last frame: {last_frame}")
 bpy.data.scenes["Scene"].frame_end = last_frame
