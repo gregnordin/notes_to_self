@@ -1395,8 +1395,11 @@ File: `211001_dev_animation_classes.py`
 
 # Monday, 2021-10-04
 
+## More layer animation classes
 
+File: `211001_dev_animation_classes.py`
 
+- Successful AnimateChannelLayer class
 
 ## Next:
 

@@ -109,7 +109,7 @@ def make_channel_layer(
     name,
     layer_size,
     channel_width,
-    color_RGB,
+    color_RGB=None,
     z_position=0.0,
     parent=None,
     material=None,

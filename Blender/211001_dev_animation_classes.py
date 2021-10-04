@@ -195,6 +195,75 @@ class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
         self._initialize_color_for_animation()
 
 
+class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
+    def __init__(self, layer_params, timings, colors, z_animator=None):
+        if z_animator is None:
+            self.object = make_channel_layer(**layer_params)
+            self.z_animator = AnimateZMotion(self.object)
+        else:
+            self.z_animator = z_animator
+            self.object = make_channel_layer(**layer_params, parent=z_animator.object)
+
+        self._initialize_scale()
+        self._initialize_location()
+        self._initialize_color_for_animation()
+        self.layer_params = layer_params
+        self.timings = timings
+        self.colors = colors
+        self.z_layer_size = self.layer_params["layer_size"][2]
+
+        # Set up LED
+        name_LED = self.layer_params["name"] + "_LED"
+        mat_LED = make_LED_material(name_LED + "mat")
+        illum_LED = make_channel_layer(
+            name=name_LED,
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.layer_params["z_size_illum"],
+            ),
+            channel_width=self.layer_params["channel_width"],
+            z_position=self.z_layer_size / 2.0,
+            material=mat_LED,
+        )
+        self.LED_animator = AnimateAppearDisappear(illum_LED)
+        print(illum_LED.location)
+
+        self.animate_layer()
+
+    def animate_layer(self):
+        self.set_color(self.colors[0])
+        self.timings.prep_move_down()
+        start_time_LED = self.timings.start_time
+        self.grow_in_negative_z(
+            frame_num(self.timings.start_time), frame_num(self.timings.end_time)
+        )
+
+        self.timings.prep_color_c0_to_c1()
+        self.animate_change_color(
+            self.colors[1],
+            frame_num(self.timings.start_time),
+            frame_num(self.timings.end_time),
+        )
+
+        self.timings.prep_color_c1_to_c2()
+        end_time_LED = self.timings.end_time
+        self.animate_change_color(
+            self.colors[2],
+            frame_num(self.timings.start_time),
+            frame_num(self.timings.end_time),
+        )
+
+        self.timings.prep_animate_z_move()
+        self.z_animator.animate_z_move(
+            self.timings.start_time, self.timings.end_time, -self.z_layer_size
+        )
+
+        # Animate LED
+        self.LED_animator.appear_at_frame(frame_num(start_time_LED))
+        self.LED_animator.disappear_at_frame(frame_num(end_time_LED))
+
+
 class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
     def __init__(self, layer_params, timings, colors, z_animator=None):
         if z_animator is None:
@@ -293,6 +362,15 @@ class AnimateZMotion:
 bpy.context.scene.eevee.use_bloom = True
 bpy.data.scenes["Scene"].eevee.bloom_intensity = 0.1
 
+# Animation setup
+frames_per_second = bpy.data.scenes["Scene"].render.fps
+# # Change to 60 fps
+# bpy.data.scenes["Scene"].render.fps = 60
+# frames_per_second = bpy.data.scenes["Scene"].render.fps
+# Set up function to return frame number given time in seconds
+frame_num = partial(frame_number, frames_per_second=frames_per_second)
+
+
 # Layer parameters
 xy_layer_size = 10
 x_layer_size, y_layer_size, z_layer_size = xy_layer_size, xy_layer_size, 0.5
@@ -315,15 +393,6 @@ roof_layers = [6, 7]
 # # Triadic color #2 - purple
 # color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
 
-layer_params = {
-    "name": "",
-    "layer_size": (x_layer_size, y_layer_size, z_layer_size),
-    "channel_width": channel_width,
-    "edge_width": edge_width,
-    "color_RGB": color_RGB_small_edge,
-    "z_size_illum": z_size_illum,
-}
-
 # color_RGB_small_edge = (0.906, 0.96, 0.87)  # HEX #e7f5de
 # color_RGB_edge = (0.36, 0.53, 0.55)  # HEX #5C878C
 # color_RGB_bulk = (0.09, 0.135, 0.14)  # HEX #172224
@@ -331,6 +400,9 @@ layer_params = {
 color_RGB_small_edge = (0.988, 0.835, 0.533)  # HEX #fcd588
 color_RGB_edge = (0.800, 0.588, 0.161)  # HEX #cc9629
 color_RGB_bulk = (0.549, 0.424, 0.129)  # HEX #8c6c21
+
+# LED emission color
+color_emission = (0.08, 0.03, 1.0)  # RGB (20, 8, 255) = HEX #1408FF
 
 # Color sequence for layer exposure
 colors = {
@@ -340,16 +412,14 @@ colors = {
     "LED": color_emission,
 }
 
-# LED emission color
-color_emission = (0.08, 0.03, 1.0)  # RGB (20, 8, 255) = HEX #1408FF
-
-# Animation setup
-frames_per_second = bpy.data.scenes["Scene"].render.fps
-# # Change to 60 fps
-# bpy.data.scenes["Scene"].render.fps = 60
-# frames_per_second = bpy.data.scenes["Scene"].render.fps
-# Set up function to return frame number given time in seconds
-frame_num = partial(frame_number, frames_per_second=frames_per_second)
+layer_params = {
+    "name": "",
+    "layer_size": (x_layer_size, y_layer_size, z_layer_size),
+    "channel_width": channel_width,
+    "edge_width": edge_width,
+    "color_RGB": color_RGB_small_edge,
+    "z_size_illum": z_size_illum,
+}
 
 # Light
 light_location = (8.1524, 2.0110, 11.808)
@@ -381,8 +451,8 @@ make_LED_material = partial(
 
 
 # Select which case to run by uncommenting one of the following 5 lines
-case = "bulk"
-# case = "channel"
+# case = "bulk"
+case = "channel"
 # case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
 # case = "channel with small edge layers and roof dose"
@@ -433,11 +503,12 @@ for i in range(num_layers):
         overall_parent_layer = AnimateBulkLayer(layer_params, timings, colors)
         z_animator = overall_parent_layer.z_animator
     elif i in channel_layers:
-        layer = make_channel_layer(**layer_params, parent=z_animator.object,)
-        layer_animator = AnimateLayer(layer)
-        layer_animator.grow_in_negative_z(
-            frame_num(tt["start time"]), frame_num(tt["end time"])
-        )
+        channel = AnimateChannelLayer(layer_params, timings, colors, z_animator)
+        # layer = make_channel_layer(**layer_params, parent=z_animator.object,)
+        # layer_animator = AnimateLayer(layer)
+        # layer_animator.grow_in_negative_z(
+        #     frame_num(tt["start time"]), frame_num(tt["end time"])
+        # )
     elif i in secondary_image_channel_layers:
         layer = make_channel_edge_layer(**layer_params, parent=z_animator.object,)
         layer_animator = AnimateLayer(layer)
