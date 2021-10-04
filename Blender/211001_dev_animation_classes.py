@@ -204,8 +204,6 @@ class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
             self.z_animator = z_animator
             self.object = make_bulk_layer(**layer_params, parent=z_animator.object)
 
-        print(self.object.active_material)
-
         self._initialize_scale()
         self._initialize_location()
         self._initialize_color_for_animation()
@@ -295,7 +293,7 @@ class AnimateZMotion:
 bpy.context.scene.eevee.use_bloom = True
 bpy.data.scenes["Scene"].eevee.bloom_intensity = 0.1
 
-# Layers
+# Layer parameters
 xy_layer_size = 10
 x_layer_size, y_layer_size, z_layer_size = xy_layer_size, xy_layer_size, 0.5
 layer_size = (xy_layer_size, xy_layer_size, z_layer_size)
@@ -311,13 +309,11 @@ roof_layers = [6, 7]
 
 # Define colors
 # Primary color - golden
-color_RGB_bulk = (1, 0.71, 0.2)  # RGB (255, 180, 51) = HEX #FFB433
-# Triadic color #1 - greenish
-color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
-# Triadic color #2 - purple
-color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
-# LED emission color
-color_emission = (0.08, 0.03, 1.0)  # RGB (20, 8, 255) = HEX #1408FF
+# color_RGB_bulk = (1, 0.71, 0.2)  # RGB (255, 180, 51) = HEX #FFB433
+# # Triadic color #1 - greenish
+# color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
+# # Triadic color #2 - purple
+# color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
 
 layer_params = {
     "name": "",
@@ -336,7 +332,6 @@ color_RGB_small_edge = (0.988, 0.835, 0.533)  # HEX #fcd588
 color_RGB_edge = (0.800, 0.588, 0.161)  # HEX #cc9629
 color_RGB_bulk = (0.549, 0.424, 0.129)  # HEX #8c6c21
 
-
 # Color sequence for layer exposure
 colors = {
     0: color_RGB_small_edge,
@@ -345,6 +340,8 @@ colors = {
     "LED": color_emission,
 }
 
+# LED emission color
+color_emission = (0.08, 0.03, 1.0)  # RGB (20, 8, 255) = HEX #1408FF
 
 # Animation setup
 frames_per_second = bpy.data.scenes["Scene"].render.fps
@@ -354,7 +351,7 @@ frames_per_second = bpy.data.scenes["Scene"].render.fps
 # Set up function to return frame number given time in seconds
 frame_num = partial(frame_number, frames_per_second=frames_per_second)
 
-# Lights
+# Light
 light_location = (8.1524, 2.0110, 11.808)
 light_rotation = [pi * 37.3 / 180, pi * 3.16 / 180, pi * 107 / 180]
 light_sun = sun_light(location=light_location, rotation=light_rotation)
@@ -375,8 +372,9 @@ cam.location = (21.247, -19.997, 14.316)
 cam.rotation_euler = [pi * 59.9 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 
 # Materials
+# Layer material
 make_material = make_material_Principled_BSDF
-# Emissive material
+# Emissive LED material
 make_LED_material = partial(
     make_semitransparent_emission_shader, color=color_emission, strength=5, mix_fac=0.6
 )

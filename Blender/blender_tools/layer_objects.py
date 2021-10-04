@@ -106,7 +106,14 @@ def make_bulk_layer(
 
 
 def make_channel_layer(
-    name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None, **kwargs
+    name,
+    layer_size,
+    channel_width,
+    color_RGB,
+    z_position=0.0,
+    parent=None,
+    material=None,
+    **kwargs,
 ):
     """Create a 3D print channel layer.
 
@@ -130,8 +137,9 @@ def make_channel_layer(
     size = (lx, ly / 2.0 - c / 2.0, lz)
     position = (0.0, -((ly / 2.0 - c / 2.0) / 2.0 + c / 2.0), z_position)
     layer_chan = make_cube(name, size, position)
-    mat = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
-    layer_chan.data.materials.append(mat)
+    if material is None:
+        material = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
+    layer_chan.data.materials.append(material)
 
     duplicate_object(layer_chan)
 

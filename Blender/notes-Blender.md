@@ -1358,7 +1358,7 @@ Files: `211001_dev_animation_classes.py`, `blender_tools/layer_objects.py`
 
 # Saturday, 2021-10-02
 
-## Continue code development
+## Continue code development - Timings and AnimateBulkLayer classes
 
 File: `211001_dev_animation_classes.py`
 
@@ -1371,7 +1371,7 @@ File: `211001_dev_animation_classes.py`
 - Finish working AnimateBulkLayer class and successfully use it to animate bulk layer-only case
 - Try the last set of 3 colors above in "Possible colors" section
 
-Colors
+## Colors
 
 [Sessions College color calculator](https://www.sessions.edu/color-calculator/)
 
@@ -1383,6 +1383,7 @@ Colors
 <rect id="#ffb433" width="140" height="140" x="0" fill="#ffb433"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#cc9629"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#8c6c21"/>
 </g> </svg>
 
+    # Values for the colors below.
     (0.988, 0.835, 0.533) = RGB (252, 213, 136) = HEX #fcd588
     (0.800, 0.588, 0.161) = RGB (204, 150, 41) = HEX #cc9629
     (0.549, 0.424, 0.129) = RGB (140, 108, 33) = HEX #8c6c21
@@ -1390,6 +1391,11 @@ Colors
 <svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
 <rect id="#ffb433" width="140" height="140" x="0" fill="#fcd588"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#cc9629"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#8c6c21"/>
 </g> </svg>
+
+
+# Monday, 2021-10-04
+
+
 
 
 ## Next:
@@ -1456,6 +1462,7 @@ Colors
         - Bulk
     - &#10060;Single color with different amounts of black mixed in? or white?
     - Go with different colors so the colors transition in increasing darkness c1 &rarr; c2 &rarr; c3. Need to create a color animation function to transition through the colors. Use time duration to determine which color to end at?
+- Bevel the edge of each layer like a real 3D printed layer. This will show the layers on each side face of a 3D print.
 
 - &#10060; Do more complicated boolean difference operation to get 90&deg; channel bends?
 - &#10060; Make layers visually apparent
