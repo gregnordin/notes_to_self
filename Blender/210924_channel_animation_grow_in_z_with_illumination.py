@@ -17,7 +17,11 @@ from blender_tools.materials import (
     make_material_Principled_and_Transparent_BSDF,
     make_semitransparent_emission_shader,
 )
-from blender_tools.layer_objects import make_layer, make_channel_layer, make_edge_layer
+from blender_tools.layer_objects_old_boolean_differences import (
+    make_layer,
+    make_channel_layer,
+    make_edge_layer,
+)
 from blender_tools.animation import animate_object_transparency, frame_number
 
 

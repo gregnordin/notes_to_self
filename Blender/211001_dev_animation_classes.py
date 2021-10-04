@@ -136,8 +136,43 @@ class MixinColorAnimation:
 
 
 # ----------------------------------------------------------------------------------------
-# Timing class
+# Timings class
 # ----------------------------------------------------------------------------------------
+class Timings:
+    def __init__(self):
+        self.start_time = 0.3
+        self.end_time = self.start_time
+        self.duration_z_grow = 0.4
+        self.color_c0_to_c1 = 0.6
+        self.color_c1_to_c2 = 0.6
+        self.extra_time_LED_is_on = self.color_c0_to_c1 + self.color_c1_to_c2
+        self.delay_move_down_after_LED = 0.2
+        self.duration_move_down = 0.6
+        self.delay_between_layers = 0.4
+
+    def update_start_time(self, delta_t=0.0):
+        self.start_time = self.end_time + delta_t
+
+    def update_end_time(self, delta_t=0.0):
+        self.end_time = self.start_time + delta_t
+
+    def update_start_and_end_time(self, delta_t_start=0.0, delta_t_end=0.0):
+        self.update_start_time(delta_t_start)
+        self.update_end_time(delta_t_end)
+
+    def prep_move_down(self):
+        self.update_start_and_end_time(self.delay_between_layers, self.duration_z_grow)
+
+    def prep_color_c0_to_c1(self):
+        self.update_start_and_end_time(0.0, self.color_c0_to_c1)
+
+    def prep_color_c1_to_c2(self):
+        self.update_start_and_end_time(0.0, self.color_c1_to_c2)
+
+    def prep_animate_z_move(self):
+        self.update_start_and_end_time(
+            self.delay_move_down_after_LED, self.duration_move_down
+        )
 
 
 # ----------------------------------------------------------------------------------------
@@ -145,6 +180,13 @@ class MixinColorAnimation:
 # ----------------------------------------------------------------------------------------
 
 
+class AnimateAppearDisappear(MixinScale):
+    def __init__(self, obj):
+        self.object = obj
+        self._initialize_scale()
+
+
+# This needs deleted once I do the code for non-bulk layer types
 class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
     def __init__(self, obj):
         self.object = obj
@@ -154,37 +196,73 @@ class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
 
 
 class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
-    def __init__(self, layer_params, timings, colors, z_animator):
-        self.object = make_bulk_layer(**layer_params, parent=z_animator.object)
+    def __init__(self, layer_params, timings, colors, z_animator=None):
+        if z_animator is None:
+            self.object = make_bulk_layer(**layer_params)
+            self.z_animator = AnimateZMotion(self.object)
+        else:
+            self.z_animator = z_animator
+            self.object = make_bulk_layer(**layer_params, parent=z_animator.object)
+
+        print(self.object.active_material)
+
         self._initialize_scale()
         self._initialize_location()
         self._initialize_color_for_animation()
         self.layer_params = layer_params
-        self.t = timings
-        self.c = colors
+        self.timings = timings
+        self.colors = colors
+        self.z_layer_size = self.layer_params["layer_size"][2]
+
+        # Set up LED
+        name_LED = self.layer_params["name"] + "_LED"
+        mat_LED = make_LED_material(name_LED + "mat")
+        illum_LED = make_bulk_layer(
+            name=name_LED,
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.layer_params["z_size_illum"],
+            ),
+            z_position=self.z_layer_size / 2.0,
+            material=mat_LED,
+        )
+        self.LED_animator = AnimateAppearDisappear(illum_LED)
+        print(illum_LED.location)
 
         self.animate_layer()
 
     def animate_layer(self):
-        self.set_color(self.c[0])
-        # print(
-        #     "  ", self.material_color.default_value, self.t.start_time, self.t.end_time
-        # )
+        self.set_color(self.colors[0])
+        self.timings.prep_move_down()
+        start_time_LED = self.timings.start_time
         self.grow_in_negative_z(
-            frame_num(self.t.start_time), frame_num(self.t.end_time)
+            frame_num(self.timings.start_time), frame_num(self.timings.end_time)
         )
-        self.t.update_start_time()
-        self.t.update_end_time(self.t.color_c0_to_c1)
+
+        self.timings.prep_color_c0_to_c1()
         self.animate_change_color(
-            self.c[1], frame_num(self.t.start_time), frame_num(self.t.end_time)
+            self.colors[1],
+            frame_num(self.timings.start_time),
+            frame_num(self.timings.end_time),
         )
-        self.t.update_start_time()
-        self.t.update_end_time(self.t.color_c1_to_c2)
+
+        self.timings.prep_color_c1_to_c2()
+        end_time_LED = self.timings.end_time
         self.animate_change_color(
-            self.c[2], frame_num(self.t.start_time), frame_num(self.t.end_time)
+            self.colors[2],
+            frame_num(self.timings.start_time),
+            frame_num(self.timings.end_time),
         )
-        self.t.update_start_time(self.t.delay_move_down_after_LED)
-        self.t.update_end_time(self.t.duration_move_down)
+
+        self.timings.prep_animate_z_move()
+        self.z_animator.animate_z_move(
+            self.timings.start_time, self.timings.end_time, -self.z_layer_size
+        )
+
+        # Animate LED
+        self.LED_animator.appear_at_frame(frame_num(start_time_LED))
+        self.LED_animator.disappear_at_frame(frame_num(end_time_LED))
 
 
 class AnimateZMotion:
@@ -247,14 +325,26 @@ layer_params = {
     "channel_width": channel_width,
     "edge_width": edge_width,
     "color_RGB": color_RGB_small_edge,
+    "z_size_illum": z_size_illum,
 }
+
+# color_RGB_small_edge = (0.906, 0.96, 0.87)  # HEX #e7f5de
+# color_RGB_edge = (0.36, 0.53, 0.55)  # HEX #5C878C
+# color_RGB_bulk = (0.09, 0.135, 0.14)  # HEX #172224
+
+color_RGB_small_edge = (0.988, 0.835, 0.533)  # HEX #fcd588
+color_RGB_edge = (0.800, 0.588, 0.161)  # HEX #cc9629
+color_RGB_bulk = (0.549, 0.424, 0.129)  # HEX #8c6c21
+
 
 # Color sequence for layer exposure
 colors = {
     0: color_RGB_small_edge,
     1: color_RGB_edge,
     2: color_RGB_bulk,
+    "LED": color_emission,
 }
+
 
 # Animation setup
 frames_per_second = bpy.data.scenes["Scene"].render.fps
@@ -288,7 +378,7 @@ cam.rotation_euler = [pi * 59.9 / 180, pi * 0.0 / 180, pi * 46.7 / 180]
 make_material = make_material_Principled_BSDF
 # Emissive material
 make_LED_material = partial(
-    make_semitransparent_emission_shader, strength=5, mix_fac=0.6
+    make_semitransparent_emission_shader, color=color_emission, strength=5, mix_fac=0.6
 )
 
 
@@ -335,47 +425,15 @@ timings_dict = {
 tt = timings_dict  # Need shorthand for timings to reduce clutter
 
 
-class Timings:
-    def __init__(self):
-        self.start_time = 0.3
-        self.end_time = self.start_time
-        self.duration_z_grow = 0.4
-        self.color_c0_to_c1 = 0.3
-        self.color_c1_to_c2 = 0.3
-        self.extra_time_LED_is_on = self.color_c0_to_c1 + self.color_c1_to_c2
-        self.delay_move_down_after_LED = 0.2
-        self.duration_move_down = 0.6
-        self.delay_between_layers = 0.4
-
-    def update_start_time(self, delta_t=0.0):
-        self.start_time = self.end_time + delta_t
-
-    def update_end_time(self, delta_t=0.0):
-        self.end_time = self.start_time + delta_t
-
-
 timings = Timings()
 
 # Loop to create layers and corresponding animation
 for i in range(num_layers):
-    timings.update_end_time(timings.duration_z_grow)
-    tt["end time"] = (
-        tt["start time"] + tt["z grow duration"]
-    )  # Need to put this in layer animation classes
-    print("Start", i)
-    # Make layer
-    layer_str = f"{i:02d}"
-    layer_name = f"Layer_{layer_str}"
     layer_params["name"] = f"Layer_{i:02d}"
     layer_params["color_RGB"] = color_RGB_small_edge
     if i == 0:
-        # Parent layer
-        layer = make_bulk_layer(**layer_params)
-        z_animator = AnimateZMotion(layer)
-        parent_z_animator = AnimateLayer(layer)
-        parent_z_animator.grow_in_negative_z(
-            frame_num(tt["start time"]), frame_num(tt["end time"])
-        )
+        overall_parent_layer = AnimateBulkLayer(layer_params, timings, colors)
+        z_animator = overall_parent_layer.z_animator
     elif i in channel_layers:
         layer = make_channel_layer(**layer_params, parent=z_animator.object,)
         layer_animator = AnimateLayer(layer)
@@ -389,32 +447,9 @@ for i in range(num_layers):
             frame_num(tt["start time"]), frame_num(tt["end time"])
         )
     else:
-        # layer_params["color_RGB"] = color_RGB_bulk
-        # layer = make_bulk_layer(**layer_params, parent=z_animator.object)
-        # layer_animator = AnimateLayer(layer)
-        # layer_animator.grow_in_negative_z(
-        #     frame_num(t.start_time), frame_num(t.end_time)
-        # )
         bulk = AnimateBulkLayer(layer_params, timings, colors, z_animator)
 
-    # New start & end time for moving layers down
-    tt["start time"] = (
-        tt["end time"] + tt["extra time LED is on"] + tt["move down delay after LED"]
-    )
-    tt["end time"] = tt["start time"] + tt["move down duration"]
-    timings.update_start_time(
-        timings.extra_time_LED_is_on + timings.delay_move_down_after_LED
-    )
-    timings.update_end_time(timings.duration_move_down)
-    # print("  End", i, tt["start time"], tt["end time"])
-    # print("     ", i, t.start_time, t.end_time)
-
-    z_animator.animate_z_move(tt["start time"], tt["end time"], -z_layer_size)
-
-    tt["start time"] = tt["end time"] + tt["between layer delay"]
-    timings.update_start_time(timings.delay_between_layers)
-
 # Set last frame to be rendered for animation
-last_frame = frame_num(tt["end time"] + 0.3)
+last_frame = frame_num(timings.end_time + 0.3)
 print(f"Last frame: {last_frame}")
 bpy.data.scenes["Scene"].frame_end = last_frame

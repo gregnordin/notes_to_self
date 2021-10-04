@@ -69,7 +69,15 @@ def make_cube(name, size, position):
 # ----------------------------------------------------------------------------------------
 
 
-def make_bulk_layer(name, layer_size, color_RGB, z_position=0.0, parent=None, **kwargs):
+def make_bulk_layer(
+    name,
+    layer_size,
+    color_RGB=None,
+    z_position=0.0,
+    parent=None,
+    material=None,
+    **kwargs,
+):
     """Create a 3D print bulk layer.
 
     Args:
@@ -87,8 +95,9 @@ def make_bulk_layer(name, layer_size, color_RGB, z_position=0.0, parent=None, **
     """
     position = (0.0, 0.0, z_position)
     layer = make_cube(name, layer_size, position)
-    mat = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
-    layer.data.materials.append(mat)
+    if material is None:
+        material = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
+    layer.data.materials.append(material)
 
     if parent:
         attach_to_parent(layer, parent)

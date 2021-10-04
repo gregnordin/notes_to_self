@@ -1368,17 +1368,37 @@ File: `211001_dev_animation_classes.py`
 - Convert make layer function arguments to `**layer_params`, a dict with all possible layer parameters
 - Make `Timings` class
 - In the middle of switching usage to Timings class and creating AnimateBulkLayer
+- Finish working AnimateBulkLayer class and successfully use it to animate bulk layer-only case
+- Try the last set of 3 colors above in "Possible colors" section
+
+Colors
+
+[Sessions College color calculator](https://www.sessions.edu/color-calculator/)
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#f1e0d6" width="140" height="140" x="0" fill="#80b5c2"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#5c878c"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#48646b"/>
+</g> </svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#ffb433" width="140" height="140" x="0" fill="#ffb433"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#cc9629"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#8c6c21"/>
+</g> </svg>
+
+    (0.988, 0.835, 0.533) = RGB (252, 213, 136) = HEX #fcd588
+    (0.800, 0.588, 0.161) = RGB (204, 150, 41) = HEX #cc9629
+    (0.549, 0.424, 0.129) = RGB (140, 108, 33) = HEX #8c6c21
+
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="140" viewBox="0 0 780 140"> <g fill="none" fill-rule="evenodd">
+<rect id="#ffb433" width="140" height="140" x="0" fill="#fcd588"/>,<rect id="#bf988f" width="140" height="140" x="160" fill="#cc9629"/>,<rect id="#483e2e" width="140" height="140" x="320" fill="#8c6c21"/>
+</g> </svg>
+
 
 ## Next:
 
-- Color change with exposure time
-    - Try `MixinColorAnimation`
+- Play with other colors for different exposure times
 - Make layer animators for other layer types using fundamental layer types
 - Try other layer type animators
 - Mess with z locations or leave as-is??
 - How specify and manage what is going to be in each layer? Dict: {0: 'Bulk', 1: 'Channel', ...}
-- How manage animation durations and waits?
-- Put in LED illumination
 
 
 # To-do's
