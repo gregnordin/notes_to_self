@@ -1423,6 +1423,7 @@ File: `211001_dev_animation_classes.py`
 - Move z motion to start of each layer
     - `AnimateBulkLayer` 
     - `AnimateChannelLayer`
+    - `AnimateChannelWithEdgeLayer`
 
 ## Next:
 

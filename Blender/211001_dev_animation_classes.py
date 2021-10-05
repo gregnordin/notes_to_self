@@ -488,12 +488,26 @@ class AnimateRoofLayer:
 
 class AnimateChannelWithEdgeLayer:
     def __init__(self, layer_params, timings, colors, z_animator=None):
-        if z_animator is None:
-            raise ValueError("Must provide a z_animator function argument")
-        self.z_animator = z_animator
-        name_save = layer_params["name"]
+
+        self.layer_params = layer_params
+        self.timings = timings
+        self.colors = colors
+        self.z_layer_size = self.layer_params["layer_size"][2]
+
+        if z_animator:  # If parent object exists...
+            # Move parent object down in z, which moves all of its children too
+            self.z_animator = z_animator
+            self.timings.prep_animate_z_move()
+            self.z_animator.animate_z_move(
+                self.timings.start_time, self.timings.end_time, -self.z_layer_size
+            )
+        else:  # If parent object does not exist, this object will be the parent object
+            raise ValueError(
+                "AnimateChannelWithEdgeLayer: must provide a z_animator function argument"
+            )
 
         # Make required animator objects
+        name_save = layer_params["name"]
         layer_params["name"] = name_save + "_chan"
         layer_chan = make_channel_layer(**layer_params, parent=z_animator.object)
         layer_params["name"] = name_save + "_eroded"
@@ -507,13 +521,7 @@ class AnimateChannelWithEdgeLayer:
         self.chan = AnimateLayer(layer_chan)
         self.chan_eroded = AnimateLayer(layer_chan_eroded)
         self.chan_edge = AnimateLayer(layer_chan_edge)
-
-        # Collect various parameters
         layer_params["name"] = name_save
-        self.layer_params = layer_params
-        self.timings = timings
-        self.colors = colors
-        self.z_layer_size = self.layer_params["layer_size"][2]
 
         # Set up LEDs
 
@@ -552,12 +560,6 @@ class AnimateChannelWithEdgeLayer:
 
         # Create layer animations
         self.animate_layer()
-
-        # Move in z
-        self.timings.prep_animate_z_move()
-        self.z_animator.animate_z_move(
-            self.timings.start_time, self.timings.end_time, -self.z_layer_size
-        )
 
     def animate_layer(self):
         # Set initial colors for all layer objects
@@ -856,8 +858,8 @@ make_LED_material = partial(
 
 # Select which case to run by uncommenting one of the following 5 lines
 # case = "bulk"
-case = "channel"
-# case = "channel with edge dose"
+# case = "channel"
+case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
 # case = "channel with small edge layers and roof dose"
 
