@@ -1399,10 +1399,15 @@ File: `211001_dev_animation_classes.py`
 
 File: `211001_dev_animation_classes.py`
 
-- Successful AnimateChannelLayer class
+- Successful `AnimateChannelLayer` class
+- `AnimateChannelWithEdgeLayer` class
+    - Have to make an `AnimateLayer` object for each of 3 layer types
+    - Need to do the same for corresponding LED `AnimateAppearDisappear` objects
+    - Then need to create `animate_layer()` function that orchestrates all of the timings 
 
 ## Next:
 
+- **Finish AnimateChannelWithEdgeLayer by writing animate_layer() function**
 - Play with other colors for different exposure times
 - Make layer animators for other layer types using fundamental layer types
 - Try other layer type animators

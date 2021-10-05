@@ -89,6 +89,13 @@ def make_bulk_layer(
             Defaults to 0.0.
         parent (Blender object, optional): Use this object as parent for new layer. 
             Defaults to None.
+        material (Blender Material object, optional): Use this object as the material
+            for the new layer. Defaults to None.
+        kwargs (dict): all other keyword arguments that may have been passed to the
+            function. This is here for flexibility, i.e., you can pass a dict
+            of keyword arguments with more than the required arguments, which
+            means all possible layer arguments can be put in a single dict in
+            the calling code and passed to every type of layer creation function.
 
     Returns:
         Blender object: Newly created layer.
@@ -127,6 +134,8 @@ def make_channel_layer(
             Defaults to 0.0.
         parent (Blender object, optional): Use this object as parent for new layer. 
             Defaults to None.
+        material (Blender Material object, optional): Use this object as the material
+            for the new layer. Defaults to None.
 
     Returns:
         Blender object: Newly created layer.
@@ -150,7 +159,14 @@ def make_channel_layer(
 
 
 def make_channelfill_layer(
-    name, layer_size, channel_width, color_RGB, z_position=0.0, parent=None, **kwargs
+    name,
+    layer_size,
+    channel_width,
+    color_RGB=None,
+    z_position=0.0,
+    parent=None,
+    material=None,
+    **kwargs,
 ):
     """Create a 3D print layer that consists of filled channel.
 
@@ -164,6 +180,8 @@ def make_channelfill_layer(
             Defaults to 0.0.
         parent (Blender object, optional): Use this object as parent for new layer. 
             Defaults to None.
+        material (Blender Material object, optional): Use this object as the material
+            for the new layer. Defaults to None.
 
     Returns:
         Blender object: Newly created layer.
@@ -174,8 +192,9 @@ def make_channelfill_layer(
     size = (lx, c, lz)
     position = (0.0, 0.0, z_position)
     layer_chan = make_cube(name, size, position)
-    mat = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
-    layer_chan.data.materials.append(mat)
+    if material is None:
+        material = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
+    layer_chan.data.materials.append(material)
 
     if parent:
         attach_to_parent(layer_chan, parent)
@@ -188,9 +207,10 @@ def make_channel_eroded_layer(
     layer_size,
     channel_width,
     edge_width,
-    color_RGB,
+    color_RGB=None,
     z_position=0.0,
     parent=None,
+    material=None,
     **kwargs,
 ):
     """Create a 3D print eroded channel layer.
@@ -206,6 +226,8 @@ def make_channel_eroded_layer(
             Defaults to 0.0.
         parent (Blender object, optional): Use this object as parent for new layer. 
             Defaults to None.
+        material (Blender Material object, optional): Use this object as the material
+            for the new layer. Defaults to None.
 
     Returns:
         Blender object: Newly created layer.
@@ -215,8 +237,10 @@ def make_channel_eroded_layer(
         layer_size,
         channel_width + 2 * edge_width,
         color_RGB,
-        z_position=z_position,
-        parent=parent,
+        z_position,
+        parent,
+        material,
+        **kwargs,
     )
 
 
@@ -225,9 +249,10 @@ def make_channel_edge_layer(
     layer_size,
     channel_width,
     edge_width,
-    color_RGB,
+    color_RGB=None,
     z_position=0.0,
     parent=None,
+    material=None,
     **kwargs,
 ):
     """Create a 3D print layer with two edge objects at each side of a channel.
@@ -243,6 +268,8 @@ def make_channel_edge_layer(
             Defaults to 0.0.
         parent (Blender object, optional): Use this object as parent for new layer. 
             Defaults to None.
+        material (Blender Material object, optional): Use this object as the material
+            for the new layer. Defaults to None.
 
     Returns:
         Blender object: Newly created layer.
@@ -256,8 +283,9 @@ def make_channel_edge_layer(
     position = (0, -(c / 2.0 + e / 2.0), z_position)
     edge_name = f"{name}_edge"
     layer_edge = make_cube(edge_name, size, position)
-    mat = make_material_Principled_BSDF(f"{edge_name}_mat", color_RGB)
-    layer_edge.data.materials.append(mat)
+    if material is None:
+        material = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
+    layer_edge.data.materials.append(material)
 
     duplicate_object(layer_edge)
 
