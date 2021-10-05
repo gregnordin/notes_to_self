@@ -1406,6 +1406,15 @@ File: `211001_dev_animation_classes.py`
     - Then need to create `animate_layer()` function that orchestrates all of the timings 
     - Strange bug where eroded and edge layers are above correct location by half a layer. Can be fixed by manually creating them half a layer lower. **Need to figure out why this is happening and correct it.** **Fix by figuring out why bulk and channel layers are half layer lower than I expect, or by figuring out why edge and eroded layers are different?**
 
+
+# Tuesday, 2021-10-05
+
+File: `211001_dev_animation_classes.py`
+
+**`AnimateChannelWithEdgeLayer`**
+
+- Fixed edge layer z position problem - set z=0.0 in `_initialize_location` in `MixinGrowInZ`
+
 ## Next:
 
 - **Finish AnimateChannelWithEdgeLayer by writing animate_layer() function**

@@ -281,8 +281,7 @@ def make_channel_edge_layer(
     # Make edges
     size = (lx, e, lz)
     position = (0, -(c / 2.0 + e / 2.0), z_position)
-    edge_name = f"{name}_edge"
-    layer_edge = make_cube(edge_name, size, position)
+    layer_edge = make_cube(name, size, position)
     if material is None:
         material = make_material_Principled_BSDF(f"{name}_mat", color_RGB)
     layer_edge.data.materials.append(material)

@@ -83,7 +83,17 @@ class MixinGrowInZ:
 
     def _initialize_location(self):
         self.original_location = self.object.location.copy()
-        print(self.object.location)
+        # Reset layer z location to 0.0, meaning object is centered in z at 0.0.
+        self.object.location = (
+            self.original_location[0],
+            self.original_location[1],
+            0.0,
+        )
+        # print(
+        #     f"    _initialize_location {self.object.name}:",
+        #     self.object.location,
+        #     self.original_location,
+        # )
 
     def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
         # Assumes self.object.scale is already (0, 0, 0). Double check to make sure it's true.
@@ -203,15 +213,15 @@ class AnimateChannelWithEdgeLayer:
         name_save = layer_params["name"]
 
         # Make required animator objects
-        layer_params["name"] = name_save + "chan"
+        layer_params["name"] = name_save + "_chan"
         layer_chan = make_channel_layer(**layer_params, parent=z_animator.object)
-        layer_params["name"] = name_save + "eroded"
+        layer_params["name"] = name_save + "_eroded"
         layer_chan_eroded = make_channel_eroded_layer(
-            z_position=-0.25, **layer_params, parent=z_animator.object
+            **layer_params, parent=z_animator.object
         )
-        layer_params["name"] = name_save + "edge"
+        layer_params["name"] = name_save + "_edge"
         layer_chan_edge = make_channel_edge_layer(
-            z_position=-0.25, **layer_params, parent=z_animator.object
+            **layer_params, parent=z_animator.object
         )
         self.chan = AnimateLayer(layer_chan)
         self.chan_eroded = AnimateLayer(layer_chan_eroded)
@@ -293,12 +303,6 @@ class AnimateChannelWithEdgeLayer:
         self.chan.disappear_at_frame(frame_num(self.timings.end_time))
         self.chan_edge.appear_at_frame(frame_num(self.timings.end_time))
         self.chan_eroded.appear_at_frame(frame_num(self.timings.end_time))
-        print(
-            "    ",
-            self.chan.object.location,
-            self.chan_edge.object.location,
-            self.chan_eroded.object.location,
-        )
 
         self.timings.prep_color_c0_to_c1()
         self.chan_eroded.animate_change_color(
@@ -352,7 +356,7 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
             material=mat_LED,
         )
         self.LED_animator = AnimateAppearDisappear(illum_LED)
-        print(illum_LED.location)
+        print("Channel layer - LED location:", illum_LED.location)
 
         self.animate_layer()
 
@@ -420,7 +424,7 @@ class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
             material=mat_LED,
         )
         self.LED_animator = AnimateAppearDisappear(illum_LED)
-        print(illum_LED.location)
+        print("Bulk layer - LED location:", illum_LED.location)
 
         self.animate_layer()
 
