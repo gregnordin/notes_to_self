@@ -161,11 +161,29 @@ class Timings:
         self.duration_move_down = 0.6
         self.delay_between_layers = 0.4
 
-    def update_start_time(self, delta_t=0.0):
-        self.start_time = self.end_time + delta_t
+    def update_start_time(self, delay_t=0.0):
+        """Make new start time as sum of old end time and a time delay.
 
-    def update_end_time(self, delta_t=0.0):
-        self.end_time = self.start_time + delta_t
+        Args:
+            delay_t (float, optional): Delay time. Defaults to 0.0.
+        """
+        self.start_time = self.end_time + delay_t
+
+    def update_end_time(self, delay_t=0.0):
+        """Make new end time as sum of start time and a time delay.
+
+        Args:
+            delay_t (float, optional): Delay time. Defaults to 0.0.
+        """
+        self.end_time = self.start_time + delay_t
+
+    def increase_end_time(self, delta_t=0.0):
+        """Add delta_t to end_time.
+
+        Args:
+            delta_t (float, optional): time increment. Defaults to 0.0.
+        """
+        self.end_time = self.end_time + delta_t
 
     def update_start_and_end_time(self, delta_t_start=0.0, delta_t_end=0.0):
         self.update_start_time(delta_t_start)
@@ -227,6 +245,7 @@ class AnimateChannelWithEdgeLayer:
         self.chan_eroded = AnimateLayer(layer_chan_eroded)
         self.chan_edge = AnimateLayer(layer_chan_edge)
 
+        # Collect various parameters
         layer_params["name"] = name_save
         self.layer_params = layer_params
         self.timings = timings
@@ -268,23 +287,7 @@ class AnimateChannelWithEdgeLayer:
         )
         self.eroded_LED_animator = AnimateAppearDisappear(illum_LED)
 
-        # Edge of channel LED
-        name_LED = self.layer_params["name"] + "chan_LED"
-        mat_LED = make_LED_material(name_LED + "mat")
-        illum_LED = make_channel_eroded_layer(
-            name=name_LED,
-            layer_size=(
-                self.layer_params["layer_size"][0],
-                self.layer_params["layer_size"][1],
-                self.layer_params["z_size_illum"],
-            ),
-            channel_width=self.layer_params["channel_width"],
-            edge_width=self.layer_params["edge_width"],
-            z_position=self.z_layer_size / 2.0,
-            material=mat_LED,
-        )
-        self.edge_LED_animator = AnimateAppearDisappear(illum_LED)
-
+        # Create layer animations
         self.animate_layer()
 
         # Move in z
@@ -294,34 +297,42 @@ class AnimateChannelWithEdgeLayer:
         )
 
     def animate_layer(self):
+        # Set initial colors for all layer objects
         self.chan.set_color(self.colors[0])
+        self.chan_eroded.set_color(self.colors[1])
+        self.chan_edge.set_color(self.colors[1])
+
+        # First animation series -> grow layer in z then transition color to c1
         self.timings.prep_grow_in_z()
-        start_time_LED = self.timings.start_time
+        self.chan_LED_animator.appear_at_frame(frame_num(self.timings.start_time))
         self.chan.grow_in_negative_z(
             frame_num(self.timings.start_time), frame_num(self.timings.end_time)
         )
-        self.chan.disappear_at_frame(frame_num(self.timings.end_time))
-        self.chan_edge.appear_at_frame(frame_num(self.timings.end_time))
-        self.chan_eroded.appear_at_frame(frame_num(self.timings.end_time))
-
         self.timings.prep_color_c0_to_c1()
-        self.chan_eroded.animate_change_color(
+        self.chan.animate_change_color(
             self.colors[1],
             frame_num(self.timings.start_time),
             frame_num(self.timings.end_time),
         )
+        self.chan_LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
 
+        # Swap layer objects to set up for next animation series
+        self.chan.disappear_at_frame(frame_num(self.timings.end_time))
+        self.chan_edge.appear_at_frame(frame_num(self.timings.end_time))
+        self.chan_eroded.appear_at_frame(frame_num(self.timings.end_time))
+
+        # Add a small time delay before beginning next animation series
+        self.timings.increase_end_time(0.05)
+
+        # Animate transition color to c2 in eroded layer (bulk) region
         self.timings.prep_color_c1_to_c2()
-        end_time_LED = self.timings.end_time
+        self.eroded_LED_animator.appear_at_frame(frame_num(self.timings.start_time))
         self.chan_eroded.animate_change_color(
             self.colors[2],
             frame_num(self.timings.start_time),
             frame_num(self.timings.end_time),
         )
-
-        # # Animate LED
-        # self.LED_animator.appear_at_frame(frame_num(start_time_LED))
-        # self.LED_animator.disappear_at_frame(frame_num(end_time_LED))
+        self.eroded_LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
 
 
 class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):

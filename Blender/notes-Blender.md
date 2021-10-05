@@ -1414,14 +1414,15 @@ File: `211001_dev_animation_classes.py`
 **`AnimateChannelWithEdgeLayer`**
 
 - Fixed edge layer z position problem - set z=0.0 in `_initialize_location` in `MixinGrowInZ`
+- Add LED light source animation
 
 ## Next:
 
 - **Finish AnimateChannelWithEdgeLayer by writing animate_layer() function**
-- Play with other colors for different exposure times
+    - Add LED light source animation
 - Make layer animators for other layer types using fundamental layer types
-- Try other layer type animators
-- Mess with z locations or leave as-is??
+    - Small edge layer case
+- Play with other colors for different exposure times
 - How specify and manage what is going to be in each layer? Dict: {0: 'Bulk', 1: 'Channel', ...}
 
 
