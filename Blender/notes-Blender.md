@@ -1420,7 +1420,9 @@ File: `211001_dev_animation_classes.py`
     - Add method to `Timings` to create short transition between LED patterns
 - `AnimateChannelWithSmallEdgesLayer`
     - **NEED TO MOVE Z MOTION TO START OF EACH LAYER**
-- `AnimateBulkLayer` - move z motion to start of each layer
+- Move z motion to start of each layer
+    - `AnimateBulkLayer` 
+    - `AnimateChannelLayer`
 
 ## Next:
 

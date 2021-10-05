@@ -600,20 +600,28 @@ class AnimateChannelWithEdgeLayer:
 
 class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
     def __init__(self, layer_params, timings, colors, z_animator=None):
-        if z_animator is None:
-            self.object = make_channel_layer(**layer_params)
-            self.z_animator = AnimateZMotion(self.object)
-        else:
-            self.z_animator = z_animator
-            self.object = make_channel_layer(**layer_params, parent=z_animator.object)
 
-        self._initialize_scale()
-        self._initialize_location()
-        self._initialize_color_for_animation()
         self.layer_params = layer_params
         self.timings = timings
         self.colors = colors
         self.z_layer_size = self.layer_params["layer_size"][2]
+
+        if z_animator:  # If parent object exists...
+            # Move parent object down in z, which moves all of its children too
+            self.z_animator = z_animator
+            self.timings.prep_animate_z_move()
+            self.z_animator.animate_z_move(
+                self.timings.start_time, self.timings.end_time, -self.z_layer_size
+            )
+            # Create new layer and make it a child of the parent object
+            self.object = make_channel_layer(**layer_params, parent=z_animator.object)
+        else:  # If parent object does not exist, this object will be the parent object
+            self.object = make_channel_layer(**layer_params)
+            self.z_animator = AnimateZMotion(self.object)
+
+        self._initialize_scale()
+        self._initialize_location()
+        self._initialize_color_for_animation()
 
         # Set up LED
         name_LED = self.layer_params["name"] + "_LED"
@@ -637,7 +645,7 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
     def animate_layer(self):
         self.set_color(self.colors[0])
         self.timings.prep_grow_in_z()
-        start_time_LED = self.timings.start_time
+        self.LED_animator.appear_at_frame(frame_num(self.timings.start_time))
         self.grow_in_negative_z(
             frame_num(self.timings.start_time), frame_num(self.timings.end_time)
         )
@@ -656,15 +664,7 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
             frame_num(self.timings.start_time),
             frame_num(self.timings.end_time),
         )
-
-        self.timings.prep_animate_z_move()
-        self.z_animator.animate_z_move(
-            self.timings.start_time, self.timings.end_time, -self.z_layer_size
-        )
-
-        # Animate LED
-        self.LED_animator.appear_at_frame(frame_num(start_time_LED))
-        self.LED_animator.disappear_at_frame(frame_num(end_time_LED))
+        self.LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
 
 
 class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
@@ -855,8 +855,8 @@ make_LED_material = partial(
 
 
 # Select which case to run by uncommenting one of the following 5 lines
-case = "bulk"
-# case = "channel"
+# case = "bulk"
+case = "channel"
 # case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
 # case = "channel with small edge layers and roof dose"
