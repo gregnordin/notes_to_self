@@ -1411,19 +1411,24 @@ File: `211001_dev_animation_classes.py`
 
 File: `211001_dev_animation_classes.py`
 
-**`AnimateChannelWithEdgeLayer`**
-
-- Fixed edge layer z position problem - set z=0.0 in `_initialize_location` in `MixinGrowInZ`
-- Add LED light source animation
-- Fix bugs so `grow_in_negative_z works` correctly for layers
+- `AnimateChannelWithEdgeLayer`
+    - Fixed edge layer z position problem - set z=0.0 in `_initialize_location` in `MixinGrowInZ`
+    - Add LED light source animation
+    - Fix bugs so `grow_in_negative_z works` correctly for layers
+- `AnimateRoofLayer`
+    - Successfully create and animate
+    - Add method to `Timings` to create short transition between LED patterns
+- `AnimateChannelWithSmallEdgesLayer`
+    - **NEED TO MOVE Z MOTION TO START OF EACH LAYER**
+- `AnimateBulkLayer` - move z motion to start of each layer
 
 ## Next:
 
-- **Finish AnimateChannelWithEdgeLayer by writing animate_layer() function**
-    - Add LED light source animation
+- **NEED TO MOVE Z MOTION TO START OF EACH LAYER**
 - Make layer animators for other layer types using fundamental layer types
     - Small edge layer case
 - Play with other colors for different exposure times
+- Fiddle with timings so animations look good
 - How specify and manage what is going to be in each layer? Dict: {0: 'Bulk', 1: 'Channel', ...}
 
 

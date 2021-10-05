@@ -168,13 +168,17 @@ class Timings:
     def __init__(self):
         self.start_time = 0.3
         self.end_time = self.start_time
-        self.duration_z_grow = 0.4
+        self.duration_z_grow = 0.6
         self.color_c0_to_c1 = 0.6
         self.color_c1_to_c2 = 0.6
         self.extra_time_LED_is_on = self.color_c0_to_c1 + self.color_c1_to_c2
         self.delay_move_down_after_LED = 0.2
         self.duration_move_down = 0.6
         self.delay_between_layers = 0.4
+        self.delay_between_switch_LED_patterns = 0.1
+        self.duration_small_z_grow = 0.4
+        self.delay_between_small_layers = 0.3
+        self.duration_move_down_small_z = 0.3
 
     def update_start_time(self, delay_t=0.0):
         """Make new start time as sum of old end time and a time delay.
@@ -200,6 +204,9 @@ class Timings:
         """
         self.end_time = self.end_time + delta_t
 
+    def set_delay_between_switch_LED_patterns(self):
+        self.increase_end_time(self.delay_between_switch_LED_patterns)
+
     def update_start_and_end_time(self, delta_t_start=0.0, delta_t_end=0.0):
         self.update_start_time(delta_t_start)
         self.update_end_time(delta_t_end)
@@ -216,6 +223,16 @@ class Timings:
     def prep_animate_z_move(self):
         self.update_start_and_end_time(
             self.delay_move_down_after_LED, self.duration_move_down
+        )
+
+    def prep_grow_in_z_small_layer(self):
+        self.update_start_and_end_time(
+            self.delay_between_small_layers, self.duration_small_z_grow
+        )
+
+    def prep_animate_z_move_small(self):
+        self.update_start_and_end_time(
+            self.delay_move_down_after_LED, self.duration_move_down_small_z
         )
 
 
@@ -236,6 +253,237 @@ class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
         self._initialize_scale()
         self._initialize_location()
         self._initialize_color_for_animation()
+
+
+class AnimateChannelWithSmallEdgesLayer:
+    def __init__(self, layer_params, timings, colors, z_animator=None):
+        if z_animator is None:
+            raise ValueError("Must provide a z_animator function argument")
+        self.z_animator = z_animator
+
+        # Collect various parameters
+        name_save = layer_params["name"]
+        self.layer_params = layer_params
+        self.timings = timings
+        self.colors = colors
+        self.z_layer_size = self.layer_params["layer_size"][2]
+        self.z_layer_size_small = self.z_layer_size / 3.0
+
+        # Small layer 1
+        layer_params["name"] = name_save + "_smalledge1"
+        layer_edge1 = make_channel_edge_layer(**layer_params, parent=z_animator.object)
+
+        #
+        #
+        #
+        #
+
+        # Make required animator objects
+        layer_params["name"] = name_save + "_chan"
+        layer_chan = make_channel_layer(**layer_params, parent=z_animator.object)
+        layer_params["name"] = name_save + "_eroded"
+        layer_chan_eroded = make_channel_eroded_layer(
+            **layer_params, parent=z_animator.object
+        )
+        layer_params["name"] = name_save + "_edge"
+        layer_chan_edge = make_channel_edge_layer(
+            **layer_params, parent=z_animator.object
+        )
+        self.chan = AnimateLayer(layer_chan)
+        self.chan_eroded = AnimateLayer(layer_chan_eroded)
+        self.chan_edge = AnimateLayer(layer_chan_edge)
+
+        layer_params["name"] = name_save
+
+        # Set up LEDs
+
+        # Channel LED
+        name_LED = self.layer_params["name"] + "chan_LED"
+        mat_LED = make_LED_material(name_LED + "mat")
+        illum_LED = make_channel_layer(
+            name=name_LED,
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.layer_params["z_size_illum"],
+            ),
+            channel_width=self.layer_params["channel_width"],
+            z_position=self.z_layer_size / 2.0,
+            material=mat_LED,
+        )
+        self.chan_LED_animator = AnimateAppearDisappear(illum_LED)
+
+        # Eroded channel LED
+        name_LED = self.layer_params["name"] + "chan_LED"
+        mat_LED = make_LED_material(name_LED + "mat")
+        illum_LED = make_channel_eroded_layer(
+            name=name_LED,
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.layer_params["z_size_illum"],
+            ),
+            channel_width=self.layer_params["channel_width"],
+            edge_width=self.layer_params["edge_width"],
+            z_position=self.z_layer_size / 2.0,
+            material=mat_LED,
+        )
+        self.eroded_LED_animator = AnimateAppearDisappear(illum_LED)
+
+        # Create layer animations
+        self.animate_layer()
+
+    def animate_layer(self):
+        # Set initial colors for all layer objects
+        self.chan.set_color(self.colors[0])
+        self.chan_eroded.set_color(self.colors[1])
+        self.chan_edge.set_color(self.colors[1])
+
+        # First animation series -> grow layer in z then transition color to c1
+        self.timings.prep_grow_in_z()
+        self.chan_LED_animator.appear_at_frame(frame_num(self.timings.start_time))
+        self.chan.grow_in_negative_z(
+            frame_num(self.timings.start_time), frame_num(self.timings.end_time)
+        )
+        self.timings.prep_color_c0_to_c1()
+        self.chan.animate_change_color(
+            self.colors[1],
+            frame_num(self.timings.start_time),
+            frame_num(self.timings.end_time),
+        )
+        self.chan_LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
+
+        # Swap layer objects to set up for next animation series
+        self.chan.disappear_at_frame(frame_num(self.timings.end_time))
+        self.chan_edge.appear_at_frame(frame_num(self.timings.end_time))
+        self.chan_eroded.appear_at_frame(frame_num(self.timings.end_time))
+
+        # Add a small time delay before beginning next animation series
+        self.timings.set_delay_between_switch_LED_patterns()
+
+        # Animate transition color to c2 in eroded layer (bulk) region
+        self.timings.prep_color_c1_to_c2()
+        self.eroded_LED_animator.appear_at_frame(frame_num(self.timings.start_time))
+        self.chan_eroded.animate_change_color(
+            self.colors[2],
+            frame_num(self.timings.start_time),
+            frame_num(self.timings.end_time),
+        )
+        self.eroded_LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
+
+        # Move in z
+        self.timings.prep_animate_z_move()
+        self.z_animator.animate_z_move(
+            self.timings.start_time, self.timings.end_time, -self.z_layer_size
+        )
+
+
+class AnimateRoofLayer:
+    def __init__(self, layer_params, timings, colors, z_animator=None):
+        if z_animator is None:
+            raise ValueError("Must provide a z_animator function argument")
+        self.z_animator = z_animator
+        name_save = layer_params["name"]
+
+        # Make required animator objects
+        layer_params["name"] = name_save + "_bulk"
+        layer_bulk = make_bulk_layer(**layer_params, parent=z_animator.object)
+        layer_params["name"] = name_save + "_chan"
+        layer_chan = make_channel_layer(**layer_params, parent=z_animator.object)
+        layer_params["name"] = name_save + "_chanfill"
+        layer_chanfill = make_channelfill_layer(
+            **layer_params, parent=z_animator.object
+        )
+        self.bulk = AnimateLayer(layer_bulk)
+        self.chan = AnimateLayer(layer_chan)
+        self.chanfill = AnimateLayer(layer_chanfill)
+
+        # Collect various parameters
+        layer_params["name"] = name_save
+        self.layer_params = layer_params
+        self.timings = timings
+        self.colors = colors
+        self.z_layer_size = self.layer_params["layer_size"][2]
+
+        # Set up LEDs
+
+        # Bulk LED
+        name_LED = self.layer_params["name"] + "_bulk_LED"
+        mat_LED = make_LED_material(name_LED + "_mat")
+        illum_LED = make_bulk_layer(
+            name=name_LED,
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.layer_params["z_size_illum"],
+            ),
+            z_position=self.z_layer_size / 2.0,
+            material=mat_LED,
+        )
+        self.bulk_LED_animator = AnimateAppearDisappear(illum_LED)
+
+        # Channel LED
+        name_LED = self.layer_params["name"] + "_chan_LED"
+        mat_LED = make_LED_material(name_LED + "_mat")
+        illum_LED = make_channel_layer(
+            name=name_LED,
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.layer_params["z_size_illum"],
+            ),
+            channel_width=self.layer_params["channel_width"],
+            z_position=self.z_layer_size / 2.0,
+            material=mat_LED,
+        )
+        self.chan_LED_animator = AnimateAppearDisappear(illum_LED)
+
+        # Create layer animations
+        self.animate_layer()
+
+        # Move in z
+        self.timings.prep_animate_z_move()
+        self.z_animator.animate_z_move(
+            self.timings.start_time, self.timings.end_time, -self.z_layer_size
+        )
+
+    def animate_layer(self):
+        # Set initial colors for all layer objects
+        self.bulk.set_color(self.colors[0])
+        self.chan.set_color(self.colors[1])
+        self.chanfill.set_color(self.colors[1])
+
+        # First animation series -> grow layer in z then transition color to c1
+        self.timings.prep_grow_in_z()
+        self.bulk_LED_animator.appear_at_frame(frame_num(self.timings.start_time))
+        self.bulk.grow_in_negative_z(
+            frame_num(self.timings.start_time), frame_num(self.timings.end_time)
+        )
+        self.timings.prep_color_c0_to_c1()
+        self.bulk.animate_change_color(
+            self.colors[1],
+            frame_num(self.timings.start_time),
+            frame_num(self.timings.end_time),
+        )
+        self.bulk_LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
+
+        # Swap layer objects to set up for next animation series
+        self.bulk.disappear_at_frame(frame_num(self.timings.end_time))
+        self.chan.appear_at_frame(frame_num(self.timings.end_time))
+        self.chanfill.appear_at_frame(frame_num(self.timings.end_time))
+
+        # Add a small time delay before beginning next animation series
+        self.timings.set_delay_between_switch_LED_patterns()
+
+        # Animate transition color to c2 in eroded layer (bulk) region
+        self.timings.prep_color_c1_to_c2()
+        self.chan_LED_animator.appear_at_frame(frame_num(self.timings.start_time))
+        self.chan.animate_change_color(
+            self.colors[2],
+            frame_num(self.timings.start_time),
+            frame_num(self.timings.end_time),
+        )
+        self.chan_LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
 
 
 class AnimateChannelWithEdgeLayer:
@@ -337,7 +585,7 @@ class AnimateChannelWithEdgeLayer:
         self.chan_eroded.appear_at_frame(frame_num(self.timings.end_time))
 
         # Add a small time delay before beginning next animation series
-        self.timings.increase_end_time(0.05)
+        self.timings.set_delay_between_switch_LED_patterns()
 
         # Animate transition color to c2 in eroded layer (bulk) region
         self.timings.prep_color_c1_to_c2()
@@ -369,7 +617,7 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
 
         # Set up LED
         name_LED = self.layer_params["name"] + "_LED"
-        mat_LED = make_LED_material(name_LED + "mat")
+        mat_LED = make_LED_material(name_LED + "_mat")
         illum_LED = make_channel_layer(
             name=name_LED,
             layer_size=(
@@ -421,24 +669,32 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
 
 class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
     def __init__(self, layer_params, timings, colors, z_animator=None):
-        if z_animator is None:
-            self.object = make_bulk_layer(**layer_params)
-            self.z_animator = AnimateZMotion(self.object)
-        else:
-            self.z_animator = z_animator
-            self.object = make_bulk_layer(**layer_params, parent=z_animator.object)
 
-        self._initialize_scale()
-        self._initialize_location()
-        self._initialize_color_for_animation()
         self.layer_params = layer_params
         self.timings = timings
         self.colors = colors
         self.z_layer_size = self.layer_params["layer_size"][2]
 
+        if z_animator:  # If parent object exists...
+            # Move parent object down in z, which moves all of its children too
+            self.z_animator = z_animator
+            self.timings.prep_animate_z_move()
+            self.z_animator.animate_z_move(
+                self.timings.start_time, self.timings.end_time, -self.z_layer_size
+            )
+            # Create new layer and make it a child of the parent object
+            self.object = make_bulk_layer(**layer_params, parent=z_animator.object)
+        else:  # If parent object does not exist, this object will be the parent object
+            self.object = make_bulk_layer(**layer_params)
+            self.z_animator = AnimateZMotion(self.object)
+
+        self._initialize_scale()
+        self._initialize_location()
+        self._initialize_color_for_animation()
+
         # Set up LED
         name_LED = self.layer_params["name"] + "_LED"
-        mat_LED = make_LED_material(name_LED + "mat")
+        mat_LED = make_LED_material(name_LED + "_mat")
         illum_LED = make_bulk_layer(
             name=name_LED,
             layer_size=(
@@ -455,9 +711,10 @@ class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
         self.animate_layer()
 
     def animate_layer(self):
+
         self.set_color(self.colors[0])
         self.timings.prep_grow_in_z()
-        start_time_LED = self.timings.start_time
+        self.LED_animator.appear_at_frame(frame_num(self.timings.start_time))
         self.grow_in_negative_z(
             frame_num(self.timings.start_time), frame_num(self.timings.end_time)
         )
@@ -476,15 +733,7 @@ class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
             frame_num(self.timings.start_time),
             frame_num(self.timings.end_time),
         )
-
-        self.timings.prep_animate_z_move()
-        self.z_animator.animate_z_move(
-            self.timings.start_time, self.timings.end_time, -self.z_layer_size
-        )
-
-        # Animate LED
-        self.LED_animator.appear_at_frame(frame_num(start_time_LED))
-        self.LED_animator.disappear_at_frame(frame_num(end_time_LED))
+        self.LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
 
 
 class AnimateZMotion:
@@ -606,9 +855,9 @@ make_LED_material = partial(
 
 
 # Select which case to run by uncommenting one of the following 5 lines
-# case = "bulk"
+case = "bulk"
 # case = "channel"
-case = "channel with edge dose"
+# case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
 # case = "channel with small edge layers and roof dose"
 
@@ -660,14 +909,15 @@ for i in range(num_layers):
     elif i in channel_layers:
         channel = AnimateChannelLayer(layer_params, timings, colors, z_animator)
     elif i in secondary_image_channel_layers:
-        channe_with_edge = AnimateChannelWithEdgeLayer(
+        channel_with_edge = AnimateChannelWithEdgeLayer(
             layer_params, timings, colors, z_animator
         )
-        # layer = make_channel_edge_layer(**layer_params, parent=z_animator.object,)
-        # layer_animator = AnimateLayer(layer)
-        # layer_animator.grow_in_negative_z(
-        #     frame_num(tt["start time"]), frame_num(tt["end time"])
-        # )
+    elif i in secondary_image_small_channel_layers:
+        channel_with_edge = AnimateChannelWithSmallEdgesLayer(
+            layer_params, timings, colors, z_animator
+        )
+    elif i in secondary_image_roof_layers:
+        roof = AnimateRoofLayer(layer_params, timings, colors, z_animator)
     else:
         bulk = AnimateBulkLayer(layer_params, timings, colors, z_animator)
 
