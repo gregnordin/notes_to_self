@@ -1424,6 +1424,7 @@ File: `211001_dev_animation_classes.py`
     - `AnimateBulkLayer` 
     - `AnimateChannelLayer`
     - `AnimateChannelWithEdgeLayer`
+    - `AnimateRoofLayer`
 
 ## Next:
 
