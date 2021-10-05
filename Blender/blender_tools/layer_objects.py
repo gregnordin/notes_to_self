@@ -237,9 +237,9 @@ def make_channel_eroded_layer(
         layer_size,
         channel_width + 2 * edge_width,
         color_RGB,
-        z_position,
-        parent,
-        material,
+        z_position=z_position,
+        parent=parent,
+        material=material,
         **kwargs,
     )
 

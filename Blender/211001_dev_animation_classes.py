@@ -83,6 +83,7 @@ class MixinGrowInZ:
 
     def _initialize_location(self):
         self.original_location = self.object.location.copy()
+        print(self.object.location)
 
     def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
         # Assumes self.object.scale is already (0, 0, 0). Double check to make sure it's true.
@@ -160,7 +161,7 @@ class Timings:
         self.update_start_time(delta_t_start)
         self.update_end_time(delta_t_end)
 
-    def prep_move_down(self):
+    def prep_grow_in_z(self):
         self.update_start_and_end_time(self.delay_between_layers, self.duration_z_grow)
 
     def prep_color_c0_to_c1(self):
@@ -206,11 +207,11 @@ class AnimateChannelWithEdgeLayer:
         layer_chan = make_channel_layer(**layer_params, parent=z_animator.object)
         layer_params["name"] = name_save + "eroded"
         layer_chan_eroded = make_channel_eroded_layer(
-            **layer_params, parent=z_animator.object
+            z_position=-0.25, **layer_params, parent=z_animator.object
         )
         layer_params["name"] = name_save + "edge"
         layer_chan_edge = make_channel_edge_layer(
-            **layer_params, parent=z_animator.object
+            z_position=-0.25, **layer_params, parent=z_animator.object
         )
         self.chan = AnimateLayer(layer_chan)
         self.chan_eroded = AnimateLayer(layer_chan_eroded)
@@ -274,7 +275,7 @@ class AnimateChannelWithEdgeLayer:
         )
         self.edge_LED_animator = AnimateAppearDisappear(illum_LED)
 
-        # self.animate_layer()
+        self.animate_layer()
 
         # Move in z
         self.timings.prep_animate_z_move()
@@ -283,15 +284,24 @@ class AnimateChannelWithEdgeLayer:
         )
 
     def animate_layer(self):
-        self.set_color(self.colors[0])
-        self.timings.prep_move_down()
+        self.chan.set_color(self.colors[0])
+        self.timings.prep_grow_in_z()
         start_time_LED = self.timings.start_time
-        self.grow_in_negative_z(
+        self.chan.grow_in_negative_z(
             frame_num(self.timings.start_time), frame_num(self.timings.end_time)
+        )
+        self.chan.disappear_at_frame(frame_num(self.timings.end_time))
+        self.chan_edge.appear_at_frame(frame_num(self.timings.end_time))
+        self.chan_eroded.appear_at_frame(frame_num(self.timings.end_time))
+        print(
+            "    ",
+            self.chan.object.location,
+            self.chan_edge.object.location,
+            self.chan_eroded.object.location,
         )
 
         self.timings.prep_color_c0_to_c1()
-        self.animate_change_color(
+        self.chan_eroded.animate_change_color(
             self.colors[1],
             frame_num(self.timings.start_time),
             frame_num(self.timings.end_time),
@@ -299,20 +309,15 @@ class AnimateChannelWithEdgeLayer:
 
         self.timings.prep_color_c1_to_c2()
         end_time_LED = self.timings.end_time
-        self.animate_change_color(
+        self.chan_eroded.animate_change_color(
             self.colors[2],
             frame_num(self.timings.start_time),
             frame_num(self.timings.end_time),
         )
 
-        self.timings.prep_animate_z_move()
-        self.z_animator.animate_z_move(
-            self.timings.start_time, self.timings.end_time, -self.z_layer_size
-        )
-
-        # Animate LED
-        self.LED_animator.appear_at_frame(frame_num(start_time_LED))
-        self.LED_animator.disappear_at_frame(frame_num(end_time_LED))
+        # # Animate LED
+        # self.LED_animator.appear_at_frame(frame_num(start_time_LED))
+        # self.LED_animator.disappear_at_frame(frame_num(end_time_LED))
 
 
 class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
@@ -353,7 +358,7 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
 
     def animate_layer(self):
         self.set_color(self.colors[0])
-        self.timings.prep_move_down()
+        self.timings.prep_grow_in_z()
         start_time_LED = self.timings.start_time
         self.grow_in_negative_z(
             frame_num(self.timings.start_time), frame_num(self.timings.end_time)
@@ -421,7 +426,7 @@ class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
 
     def animate_layer(self):
         self.set_color(self.colors[0])
-        self.timings.prep_move_down()
+        self.timings.prep_grow_in_z()
         start_time_LED = self.timings.start_time
         self.grow_in_negative_z(
             frame_num(self.timings.start_time), frame_num(self.timings.end_time)

@@ -1404,6 +1404,7 @@ File: `211001_dev_animation_classes.py`
     - Have to make an `AnimateLayer` object for each of 3 layer types
     - Need to do the same for corresponding LED `AnimateAppearDisappear` objects
     - Then need to create `animate_layer()` function that orchestrates all of the timings 
+    - Strange bug where eroded and edge layers are above correct location by half a layer. Can be fixed by manually creating them half a layer lower. **Need to figure out why this is happening and correct it.** **Fix by figuring out why bulk and channel layers are half layer lower than I expect, or by figuring out why edge and eroded layers are different?**
 
 ## Next:
 
