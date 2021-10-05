@@ -1415,6 +1415,7 @@ File: `211001_dev_animation_classes.py`
 
 - Fixed edge layer z position problem - set z=0.0 in `_initialize_location` in `MixinGrowInZ`
 - Add LED light source animation
+- Fix bugs so `grow_in_negative_z works` correctly for layers
 
 ## Next:
 

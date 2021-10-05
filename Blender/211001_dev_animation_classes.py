@@ -78,7 +78,11 @@ class MixinScale:
 
 
 class MixinGrowInZ:
-    """Relies on MixinScale so new class must inherit from both.
+    """Relies on MixinScale so new class must inherit from MixinScale and
+    MixinGrowInZ. Grows a layer in z direction starting from a 2D layer at
+    z = z_layer_size/2, ending up with a 3D layer with thickness z_layer_size
+    positioned at z = 0.0 such that the layer extends in z from -z_layer_size/2
+    to +z_layer_size/2.
     """
 
     def _initialize_location(self):
@@ -95,12 +99,23 @@ class MixinGrowInZ:
         #     self.original_location,
         # )
 
-    def grow_in_negative_z(self, start_frame, end_frame, z_position=0.0):
+    def grow_in_negative_z(self, start_frame, end_frame):
         # Assumes self.object.scale is already (0, 0, 0). Double check to make sure it's true.
         if not self.is_visible():
             raise ValueError(
-                f"Before growing layer in z, it must be invisible (scale={self._invisible_scale_value})"
+                f"Before growing {self.object.name} in z, it must be invisible (scale={self._invisible_scale_value}), not {self.object.scale}"
             )
+
+        # Set initial location to be at top of layer in z
+        # (layer z position spans -z_layer_size/2 to +z_layer_size/2)
+        z_layer_size = self.original_scale[2]
+        z_position = z_layer_size / 2.0
+        new_location = (
+            self.original_location[0],
+            self.original_location[1],
+            z_position,
+        )
+        self.object.location = new_location
 
         # Make layer appear at frame start_frame with zero thickness
         self.object.keyframe_insert(data_path="scale", frame=start_frame - 1)
@@ -117,7 +132,7 @@ class MixinGrowInZ:
         new_location = (
             self.original_location[0],
             self.original_location[1],
-            z_position,  # - self.original_location[2] / 2,
+            0.0,
         )
         self.object.location = new_location
         self.object.keyframe_insert(data_path="scale", frame=end_frame)
