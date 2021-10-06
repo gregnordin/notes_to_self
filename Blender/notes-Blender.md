@@ -1443,6 +1443,14 @@ File: `211001_dev_animation_classes.py`
     - `AnimateRoofLayer`
     - `AnimateChannelWithSmallEdgesLayer`
 
+
+# Wednesday, 2021-10-06
+
+File: `211001_dev_animation_classes.py`
+
+- Fix timing so that small edge layer and regular layer grow in z at same rate
+
+
 ## Next:
 
 - Fix speed of growing in z for last layer in `AnimateChannelWithSmallEdgesLayer` so thin region and thick region grow at the same speed
