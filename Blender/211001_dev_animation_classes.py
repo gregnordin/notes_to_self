@@ -102,6 +102,10 @@ class MixinGrowInZ:
         self.starting_scale = (self.original_scale[0], self.original_scale[1], 0)
         self.ending_scale = self.original_scale
 
+        # Must set location to final location so that objects that do not
+        # grow in negative z will be in correct position when they appear
+        self.object.location = self.ending_location
+
     def grow_in_negative_z(self, start_frame, end_frame):
 
         # Make layer appear at frame start_frame with zero thickness
@@ -540,7 +544,7 @@ class AnimateRoofLayer:
 
 
 class AnimateChannelWithEdgeLayer:
-    def __init__(self, layer_params, timings, colors, z_animator=None):
+    def __init__(self, layer_params, timings, colors, LED_animators, z_animator=None):
 
         self.layer_params = layer_params
         self.timings = timings
@@ -576,40 +580,21 @@ class AnimateChannelWithEdgeLayer:
         self.chan_edge = AnimateLayer(layer_chan_edge)
         layer_params["name"] = name_save
 
+        print(
+            f"{layer_params['i']} chan loc,scale: {self.chan.object.location}, {self.chan.object.scale}"
+        )
+        print(
+            f"{layer_params['i']} edge loc,scale: {self.chan_edge.object.location}, {self.chan_edge.object.scale}"
+        )
+        print(
+            f"{layer_params['i']} erod loc,scale: {self.chan_eroded.object.location}, {self.chan_eroded.object.scale}"
+        )
+
         # Set up LEDs
-
         # Channel LED
-        name_LED = self.layer_params["name"] + "chan_LED"
-        mat_LED = make_LED_material(name_LED + "mat")
-        illum_LED = make_channel_layer(
-            name=name_LED,
-            layer_size=(
-                self.layer_params["layer_size"][0],
-                self.layer_params["layer_size"][1],
-                self.layer_params["z_size_illum"],
-            ),
-            channel_width=self.layer_params["channel_width"],
-            z_position=self.z_layer_size / 2.0,
-            material=mat_LED,
-        )
-        self.chan_LED_animator = AnimateAppearDisappear(illum_LED)
-
+        self.chan_LED_animator = LED_animators["Channel"]
         # Eroded channel LED
-        name_LED = self.layer_params["name"] + "chan_LED"
-        mat_LED = make_LED_material(name_LED + "mat")
-        illum_LED = make_channel_eroded_layer(
-            name=name_LED,
-            layer_size=(
-                self.layer_params["layer_size"][0],
-                self.layer_params["layer_size"][1],
-                self.layer_params["z_size_illum"],
-            ),
-            channel_width=self.layer_params["channel_width"],
-            edge_width=self.layer_params["edge_width"],
-            z_position=self.z_layer_size / 2.0,
-            material=mat_LED,
-        )
-        self.eroded_LED_animator = AnimateAppearDisappear(illum_LED)
+        self.eroded_LED_animator = LED_animators["Eroded channel"]
 
         # Create layer animations
         self.animate_layer()
@@ -654,7 +639,7 @@ class AnimateChannelWithEdgeLayer:
 
 
 class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
-    def __init__(self, layer_params, timings, colors, z_animator=None):
+    def __init__(self, layer_params, timings, colors, LED_animators, z_animator=None):
 
         self.layer_params = layer_params
         self.timings = timings
@@ -678,21 +663,7 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
         self._initialize_color_for_animation()
 
         # Set up LED
-        name_LED = self.layer_params["name"] + "_LED"
-        mat_LED = make_LED_material(name_LED + "_mat")
-        illum_LED = make_channel_layer(
-            name=name_LED,
-            layer_size=(
-                self.layer_params["layer_size"][0],
-                self.layer_params["layer_size"][1],
-                self.layer_params["z_size_illum"],
-            ),
-            channel_width=self.layer_params["channel_width"],
-            z_position=self.z_layer_size / 2.0,
-            material=mat_LED,
-        )
-        self.LED_animator = AnimateAppearDisappear(illum_LED)
-        print("Channel layer - LED location:", illum_LED.location)
+        self.LED_animator = LED_animators["Channel"]
 
         self.animate_layer()
 
@@ -818,10 +789,21 @@ def create_LED_animators(layer_params, LED_material):
 
     name = "Channel"
     LED_animators[name] = AnimateAppearDisappear(
-        make_bulk_layer(
+        make_channel_layer(
             name=name,
             layer_size=layer_size,
             channel_width=layer_params["channel_width"],
+            material=LED_material,
+        )
+    )
+
+    name = "Eroded channel"
+    LED_animators[name] = AnimateAppearDisappear(
+        make_channel_eroded_layer(
+            name=name,
+            layer_size=layer_size,
+            channel_width=layer_params["channel_width"],
+            edge_width=layer_params["edge_width"],
             material=LED_material,
         )
     )
@@ -862,13 +844,6 @@ chan_layers = [2, 3, 4, 5]
 roof_layers = [6, 7]
 
 # Define colors
-# Primary color - golden
-# color_RGB_bulk = (1, 0.71, 0.2)  # RGB (255, 180, 51) = HEX #FFB433
-# # Triadic color #1 - greenish
-# color_RGB_edge = (0.2, 1.0, 0.71)  # RGB (51, 255, 180) = HEX #33ffb4
-# # Triadic color #2 - purple
-# color_RGB_small_edge = (0.71, 0.2, 1.0)  # RGB (180, 51, 255) = HEX #b433ff
-
 # color_RGB_small_edge = (0.906, 0.96, 0.87)  # HEX #e7f5de
 # color_RGB_edge = (0.36, 0.53, 0.55)  # HEX #5C878C
 # color_RGB_bulk = (0.09, 0.135, 0.14)  # HEX #172224
@@ -929,9 +904,9 @@ LED_animators = create_LED_animators(layer_params, make_LED_material("LED"))
 
 
 # Select which case to run by uncommenting one of the following 5 lines
-case = "bulk"
+# case = "bulk"
 # case = "channel"
-# case = "channel with edge dose"
+case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
 # case = "channel with small edge layers and roof dose"
 
@@ -977,16 +952,19 @@ timings = Timings()
 for i in range(num_layers):
     layer_params["name"] = f"Layer_{i:02d}"
     layer_params["color_RGB"] = color_RGB_small_edge
+    layer_params["i"] = i
     if i == 0:
         overall_parent_layer = AnimateBulkLayer(
             layer_params, timings, colors, LED_animators
         )
         z_animator = overall_parent_layer.z_animator
     elif i in channel_layers:
-        channel = AnimateChannelLayer(layer_params, timings, colors, z_animator)
+        channel = AnimateChannelLayer(
+            layer_params, timings, colors, LED_animators, z_animator
+        )
     elif i in secondary_image_channel_layers:
         channel_with_edge = AnimateChannelWithEdgeLayer(
-            layer_params, timings, colors, z_animator
+            layer_params, timings, colors, LED_animators, z_animator
         )
     elif i in secondary_image_small_channel_layers:
         channel_with_edge = AnimateChannelWithSmallEdgesLayer(
