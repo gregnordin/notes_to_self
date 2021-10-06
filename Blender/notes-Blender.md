@@ -1425,6 +1425,15 @@ File: `211001_dev_animation_classes.py`
     - `AnimateChannelLayer`
     - `AnimateChannelWithEdgeLayer`
     - `AnimateRoofLayer`
+- `AnimateChannelWithSmallEdgesLayer`
+    - Need to fix:
+        - Growth of 3rd small edge vs growth of eroded region
+        - Initial z movement for only the first layer should have extra z_layer_size/2
+        - Last z movement for last layer needs an extra (z_layer_size - z_layer_size_small)/2
+        - LED eroded layer needs moved down to top of layer
+            - **Bottom of LED illumination should always be in the same place, but it's not for small edge layers!!**
+            - Make my own animate in z function for small edge layers??
+            - **No, need to set the bottom of the LED illumination at the z=0 plane. Re-do grow in z function and its initialization to place layers one half layer thickness below this plane.**
 
 ## Next:
 

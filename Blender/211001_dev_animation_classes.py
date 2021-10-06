@@ -367,31 +367,14 @@ class AnimateChannelWithSmallEdgesLayer:
             parent=z_animator.object,
         )
         self.chan_edge_3 = AnimateLayer(layer_edge)
-
-        # Make eroded layer
-        # Make channel LED to do z growth
-        # Make eroded channel LED to do c0 -> c2 color transition for eroded layer region
-        # Do animation for 3rd layer
-
-        if True:
-            return
-
+        # Eroded channel layer object
+        name_save = layer_params["name"]
         layer_params["name"] = name_save + "_eroded"
         layer_chan_eroded = make_channel_eroded_layer(
             **layer_params, parent=z_animator.object
         )
-        layer_params["name"] = name_save + "_edge"
-        layer_chan_edge = make_channel_edge_layer(
-            **layer_params, parent=z_animator.object
-        )
-        self.chan = AnimateLayer(layer_chan)
         self.chan_eroded = AnimateLayer(layer_chan_eroded)
         layer_params["name"] = name_save
-
-        # Set up LEDs
-
-        # Channel LED
-
         # Eroded channel LED
         name_LED = self.layer_params["name"] + "chan_LED"
         mat_LED = make_LED_material(name_LED + "mat")
@@ -404,10 +387,26 @@ class AnimateChannelWithSmallEdgesLayer:
             ),
             channel_width=self.layer_params["channel_width"],
             edge_width=self.layer_params["edge_width"],
-            z_position=self.z_layer_size / 2.0,
+            z_position=self.z_layer_size_small / 2.0,
             material=mat_LED,
         )
         self.eroded_LED_animator = AnimateAppearDisappear(illum_LED)
+        # Animate small edge layer and eroded layer
+        self.chan_eroded.set_color(self.colors[0])
+        self.timings.prep_grow_in_z()
+        self.edge_LED_animator_1.appear_at_frame(frame_num(self.timings.start_time))
+        self.chan_edge_3.grow_in_negative_z(
+            frame_num(self.timings.start_time), frame_num(self.timings.end_time)
+        )
+        self.edge_LED_animator_1.disappear_at_frame(frame_num(self.timings.end_time))
+
+        # Make eroded layer
+        # Make channel LED to do z growth
+        # Make eroded channel LED to do c0 -> c2 color transition for eroded layer region
+        # Do animation for 3rd layer
+
+        if True:
+            return
 
         # Create layer animations
         self.animate_layer()
