@@ -1436,22 +1436,19 @@ File: `211001_dev_animation_classes.py`
             - **No, need to set the bottom of the LED illumination at the z=0 plane. Re-do grow in z function and its initialization to place layers one half layer thickness below this plane.**
 - Find and fix bug in _initialize_grow_in_z where have to set position to ending position
 - Set top of each new layer to z=0.0
-    - `AnimateBulkLayer`
 - Consolidate LED objects with `create_LED_animators`, make them at start of code, use them in different layer types
     - `AnimateBulkLayer`
     - `AnimateChannelLayer`
     - `AnimateChannelWithEdgeLayer`
     - `AnimateRoofLayer`
+    - `AnimateChannelWithSmallEdgesLayer`
 
 ## Next:
 
-- Set top of each layer when it appears at z = 0.0.
-- Consolidate LED objects, make them at start of code, and re-use layer-to-layer?? Pass them as a dict into the animate layer classes where the proper one(s) will be used?
-- Make layer animators for other layer types using fundamental layer types
-    - Small edge layer case
+- Fix speed of growing in z for last layer in `AnimateChannelWithSmallEdgesLayer` so thin region and thick region grow at the same speed
 - Play with other colors for different exposure times
 - Fiddle with timings so animations look good
-- How specify and manage what is going to be in each layer? Dict: {0: 'Bulk', 1: 'Channel', ...}
+- Play with upper edges of layers so they scale a little bit in x-y to simulate scalloped sidewalls?
 
 
 # To-do's
