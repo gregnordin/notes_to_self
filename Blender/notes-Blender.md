@@ -1436,6 +1436,8 @@ File: `211001_dev_animation_classes.py`
             - **No, need to set the bottom of the LED illumination at the z=0 plane. Re-do grow in z function and its initialization to place layers one half layer thickness below this plane.**
 - Set top of each new layer to z=0.0
     - `AnimateBulkLayer`
+- Consolidate LED objects with `create_LED_animators`, make them at start of code, use them in different layer types
+    - `AnimateBulkLayer`
 
 ## Next:
 

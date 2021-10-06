@@ -722,7 +722,7 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
 
 
 class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
-    def __init__(self, layer_params, timings, colors, z_animator=None):
+    def __init__(self, layer_params, timings, colors, LED_animators, z_animator=None):
 
         self.layer_params = layer_params
         self.timings = timings
@@ -746,19 +746,7 @@ class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
         self._initialize_color_for_animation()
 
         # Set up LED
-        name_LED = self.layer_params["name"] + "_LED"
-        mat_LED = make_LED_material(name_LED + "_mat")
-        illum_LED = make_bulk_layer(
-            name=name_LED,
-            layer_size=(
-                self.layer_params["layer_size"][0],
-                self.layer_params["layer_size"][1],
-                self.layer_params["z_size_illum"],
-            ),
-            material=mat_LED,
-        )
-        self.LED_animator = AnimateAppearDisappear(illum_LED)
-        print("Bulk layer - LED location:", illum_LED.location)
+        self.LED_animator = LED_animators["Bulk"]
 
         self.animate_layer()
 
@@ -807,6 +795,38 @@ class AnimateZMotion:
         # Keyframe new location to end move
         self.object.location = new_location
         self.object.keyframe_insert(data_path="location", frame=frame_num(end_time))
+
+
+# ----------------------------------------------------------------------------------------
+# LED illumination
+# ----------------------------------------------------------------------------------------
+
+
+def create_LED_animators(layer_params, LED_material):
+    LED_animators = {}
+
+    layer_size = (
+        layer_params["layer_size"][0],
+        layer_params["layer_size"][1],
+        layer_params["z_size_illum"],
+    )
+
+    name = "Bulk"
+    LED_animators[name] = AnimateAppearDisappear(
+        make_bulk_layer(name=name, layer_size=layer_size, material=LED_material,)
+    )
+
+    name = "Channel"
+    LED_animators[name] = AnimateAppearDisappear(
+        make_bulk_layer(
+            name=name,
+            layer_size=layer_size,
+            channel_width=layer_params["channel_width"],
+            material=LED_material,
+        )
+    )
+
+    return LED_animators
 
 
 # ----------------------------------------------------------------------------------------
@@ -905,6 +925,8 @@ make_LED_material = partial(
     make_semitransparent_emission_shader, color=color_emission, strength=5, mix_fac=0.6
 )
 
+LED_animators = create_LED_animators(layer_params, make_LED_material("LED"))
+
 
 # Select which case to run by uncommenting one of the following 5 lines
 case = "bulk"
@@ -956,7 +978,9 @@ for i in range(num_layers):
     layer_params["name"] = f"Layer_{i:02d}"
     layer_params["color_RGB"] = color_RGB_small_edge
     if i == 0:
-        overall_parent_layer = AnimateBulkLayer(layer_params, timings, colors)
+        overall_parent_layer = AnimateBulkLayer(
+            layer_params, timings, colors, LED_animators
+        )
         z_animator = overall_parent_layer.z_animator
     elif i in channel_layers:
         channel = AnimateChannelLayer(layer_params, timings, colors, z_animator)
@@ -971,7 +995,9 @@ for i in range(num_layers):
     elif i in secondary_image_roof_layers:
         roof = AnimateRoofLayer(layer_params, timings, colors, z_animator)
     else:
-        bulk = AnimateBulkLayer(layer_params, timings, colors, z_animator)
+        bulk = AnimateBulkLayer(
+            layer_params, timings, colors, LED_animators, z_animator
+        )
 
 # Set last frame to be rendered for animation
 last_frame = frame_num(timings.end_time + 0.3)
