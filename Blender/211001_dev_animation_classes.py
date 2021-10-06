@@ -257,30 +257,125 @@ class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
 
 class AnimateChannelWithSmallEdgesLayer:
     def __init__(self, layer_params, timings, colors, z_animator=None):
-        if z_animator is None:
-            raise ValueError("Must provide a z_animator function argument")
-        self.z_animator = z_animator
 
-        # Collect various parameters
-        name_save = layer_params["name"]
         self.layer_params = layer_params
         self.timings = timings
         self.colors = colors
         self.z_layer_size = self.layer_params["layer_size"][2]
         self.z_layer_size_small = self.z_layer_size / 3.0
 
-        # Small layer 1
-        layer_params["name"] = name_save + "_smalledge1"
-        layer_edge1 = make_channel_edge_layer(**layer_params, parent=z_animator.object)
+        if z_animator:  # If parent object exists...
+            # Move parent object down in z, which moves all of its children too
+            self.z_animator = z_animator
+            self.timings.prep_animate_z_move()
+            self.z_animator.animate_z_move(
+                self.timings.start_time,
+                self.timings.end_time,
+                -(self.z_layer_size_small + self.z_layer_size) / 2.0,
+            )
+        else:
+            raise ValueError(
+                "AnimateChannelWithEdgeLayer: must provide a z_animator function argument"
+            )
 
-        #
-        #
-        #
-        #
+        # Do first small edge layer -------------------------------------------------------
+        # Small edge object
+        layer_edge = make_channel_edge_layer(
+            name=self.layer_params["name"] + "_edge_small_1",
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.z_layer_size_small,
+            ),
+            channel_width=self.layer_params["channel_width"],
+            edge_width=self.layer_params["edge_width"],
+            color_RGB=self.layer_params["color_RGB"],
+            parent=z_animator.object,
+        )
+        self.chan_edge_1 = AnimateLayer(layer_edge)
+        # Small edge LED
+        name_LED = self.layer_params["name"] + "_edge1_LED"
+        mat_LED = make_LED_material(name_LED + "_mat")
+        illum_LED = make_channel_edge_layer(
+            name=name_LED,
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.layer_params["z_size_illum"],
+            ),
+            channel_width=self.layer_params["channel_width"],
+            edge_width=self.layer_params["edge_width"],
+            z_position=self.z_layer_size_small / 2.0,
+            material=mat_LED,
+        )
+        self.edge_LED_animator_1 = AnimateAppearDisappear(illum_LED)
+        # Animate first small edge layer
+        self.chan_edge_1.set_color(self.colors[0])
+        self.timings.prep_grow_in_z_small_layer()
+        self.edge_LED_animator_1.appear_at_frame(frame_num(self.timings.start_time))
+        self.chan_edge_1.grow_in_negative_z(
+            frame_num(self.timings.start_time), frame_num(self.timings.end_time)
+        )
+        self.edge_LED_animator_1.disappear_at_frame(frame_num(self.timings.end_time))
 
-        # Make required animator objects
-        layer_params["name"] = name_save + "_chan"
-        layer_chan = make_channel_layer(**layer_params, parent=z_animator.object)
+        # Do second small edge layer -------------------------------------------------------
+        # First move parent object down in z
+        self.timings.prep_animate_z_move_small()
+        self.z_animator.animate_z_move(
+            self.timings.start_time, self.timings.end_time, -self.z_layer_size_small,
+        )
+        # Small edge object
+        layer_edge = make_channel_edge_layer(
+            name=self.layer_params["name"] + "_edge_small_1",
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.z_layer_size_small,
+            ),
+            channel_width=self.layer_params["channel_width"],
+            edge_width=self.layer_params["edge_width"],
+            color_RGB=self.layer_params["color_RGB"],
+            parent=z_animator.object,
+        )
+        self.chan_edge_2 = AnimateLayer(layer_edge)
+        # Animate second small edge layer
+        self.chan_edge_2.set_color(self.colors[0])
+        self.timings.prep_grow_in_z_small_layer()
+        self.edge_LED_animator_1.appear_at_frame(frame_num(self.timings.start_time))
+        self.chan_edge_2.grow_in_negative_z(
+            frame_num(self.timings.start_time), frame_num(self.timings.end_time)
+        )
+        self.edge_LED_animator_1.disappear_at_frame(frame_num(self.timings.end_time))
+
+        # Do third small edge layer -------------------------------------------------------
+        # First move parent object down in z
+        self.timings.prep_animate_z_move_small()
+        self.z_animator.animate_z_move(
+            self.timings.start_time, self.timings.end_time, -self.z_layer_size_small,
+        )
+        # Small edge object
+        layer_edge = make_channel_edge_layer(
+            name=self.layer_params["name"] + "_edge_small_1",
+            layer_size=(
+                self.layer_params["layer_size"][0],
+                self.layer_params["layer_size"][1],
+                self.z_layer_size_small,
+            ),
+            channel_width=self.layer_params["channel_width"],
+            edge_width=self.layer_params["edge_width"],
+            color_RGB=self.layer_params["color_RGB"],
+            parent=z_animator.object,
+        )
+        self.chan_edge_3 = AnimateLayer(layer_edge)
+
+        # Make eroded layer
+        # Make channel LED to do z growth
+        # Make eroded channel LED to do c0 -> c2 color transition for eroded layer region
+        # Do animation for 3rd layer
+
+        if True:
+            return
+
         layer_params["name"] = name_save + "_eroded"
         layer_chan_eroded = make_channel_eroded_layer(
             **layer_params, parent=z_animator.object
@@ -291,27 +386,11 @@ class AnimateChannelWithSmallEdgesLayer:
         )
         self.chan = AnimateLayer(layer_chan)
         self.chan_eroded = AnimateLayer(layer_chan_eroded)
-        self.chan_edge = AnimateLayer(layer_chan_edge)
-
         layer_params["name"] = name_save
 
         # Set up LEDs
 
         # Channel LED
-        name_LED = self.layer_params["name"] + "chan_LED"
-        mat_LED = make_LED_material(name_LED + "mat")
-        illum_LED = make_channel_layer(
-            name=name_LED,
-            layer_size=(
-                self.layer_params["layer_size"][0],
-                self.layer_params["layer_size"][1],
-                self.layer_params["z_size_illum"],
-            ),
-            channel_width=self.layer_params["channel_width"],
-            z_position=self.z_layer_size / 2.0,
-            material=mat_LED,
-        )
-        self.chan_LED_animator = AnimateAppearDisappear(illum_LED)
 
         # Eroded channel LED
         name_LED = self.layer_params["name"] + "chan_LED"
@@ -335,7 +414,6 @@ class AnimateChannelWithSmallEdgesLayer:
 
     def animate_layer(self):
         # Set initial colors for all layer objects
-        self.chan.set_color(self.colors[0])
         self.chan_eroded.set_color(self.colors[1])
         self.chan_edge.set_color(self.colors[1])
 
@@ -351,7 +429,6 @@ class AnimateChannelWithSmallEdgesLayer:
             frame_num(self.timings.start_time),
             frame_num(self.timings.end_time),
         )
-        self.chan_LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
 
         # Swap layer objects to set up for next animation series
         self.chan.disappear_at_frame(frame_num(self.timings.end_time))
@@ -371,12 +448,6 @@ class AnimateChannelWithSmallEdgesLayer:
         )
         self.eroded_LED_animator.disappear_at_frame(frame_num(self.timings.end_time))
 
-        # Move in z
-        self.timings.prep_animate_z_move()
-        self.z_animator.animate_z_move(
-            self.timings.start_time, self.timings.end_time, -self.z_layer_size
-        )
-
 
 class AnimateRoofLayer:
     def __init__(self, layer_params, timings, colors, z_animator=None):
@@ -393,7 +464,7 @@ class AnimateRoofLayer:
             self.z_animator.animate_z_move(
                 self.timings.start_time, self.timings.end_time, -self.z_layer_size
             )
-        else:  # If parent object does not exist, this object will be the parent object
+        else:
             raise ValueError(
                 "AnimateRoofLayer: must provide a z_animator function argument"
             )
@@ -503,7 +574,7 @@ class AnimateChannelWithEdgeLayer:
             self.z_animator.animate_z_move(
                 self.timings.start_time, self.timings.end_time, -self.z_layer_size
             )
-        else:  # If parent object does not exist, this object will be the parent object
+        else:
             raise ValueError(
                 "AnimateChannelWithEdgeLayer: must provide a z_animator function argument"
             )
@@ -862,8 +933,8 @@ make_LED_material = partial(
 # case = "bulk"
 # case = "channel"
 # case = "channel with edge dose"
-case = "channel with edge dose and roof dose"
-# case = "channel with small edge layers and roof dose"
+# case = "channel with edge dose and roof dose"
+case = "channel with small edge layers and roof dose"
 
 # Set up layer lists for specific case chosen
 channel_layers = []

@@ -1428,7 +1428,7 @@ File: `211001_dev_animation_classes.py`
 
 ## Next:
 
-- **NEED TO MOVE Z MOTION TO START OF EACH LAYER**
+- Consolidate LED objects, make them at start of code, and re-use layer-to-layer?? Pass them as a dict into the animate layer classes where the proper one(s) will be used?
 - Make layer animators for other layer types using fundamental layer types
     - Small edge layer case
 - Play with other colors for different exposure times
