@@ -241,7 +241,7 @@ class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
 
 
 class AnimateChannelWithSmallEdgesLayer:
-    def __init__(self, layer_params, timings, colors, z_animator=None):
+    def __init__(self, layer_params, timings, colors, LED_animators, z_animator=None):
 
         self.layer_params = layer_params
         self.timings = timings
@@ -434,7 +434,7 @@ class AnimateChannelWithSmallEdgesLayer:
 
 
 class AnimateRoofLayer:
-    def __init__(self, layer_params, timings, colors, z_animator=None):
+    def __init__(self, layer_params, timings, colors, LED_animators, z_animator=None):
 
         self.layer_params = layer_params
         self.timings = timings
@@ -469,37 +469,8 @@ class AnimateRoofLayer:
         layer_params["name"] = name_save
 
         # Set up LEDs
-
-        # Bulk LED
-        name_LED = self.layer_params["name"] + "_bulk_LED"
-        mat_LED = make_LED_material(name_LED + "_mat")
-        illum_LED = make_bulk_layer(
-            name=name_LED,
-            layer_size=(
-                self.layer_params["layer_size"][0],
-                self.layer_params["layer_size"][1],
-                self.layer_params["z_size_illum"],
-            ),
-            z_position=self.z_layer_size / 2.0,
-            material=mat_LED,
-        )
-        self.bulk_LED_animator = AnimateAppearDisappear(illum_LED)
-
-        # Channel LED
-        name_LED = self.layer_params["name"] + "_chan_LED"
-        mat_LED = make_LED_material(name_LED + "_mat")
-        illum_LED = make_channel_layer(
-            name=name_LED,
-            layer_size=(
-                self.layer_params["layer_size"][0],
-                self.layer_params["layer_size"][1],
-                self.layer_params["z_size_illum"],
-            ),
-            channel_width=self.layer_params["channel_width"],
-            z_position=self.z_layer_size / 2.0,
-            material=mat_LED,
-        )
-        self.chan_LED_animator = AnimateAppearDisappear(illum_LED)
+        self.bulk_LED_animator = LED_animators["Bulk"]
+        self.chan_LED_animator = LED_animators["Channel"]
 
         # Create layer animations
         self.animate_layer()
@@ -580,20 +551,8 @@ class AnimateChannelWithEdgeLayer:
         self.chan_edge = AnimateLayer(layer_chan_edge)
         layer_params["name"] = name_save
 
-        print(
-            f"{layer_params['i']} chan loc,scale: {self.chan.object.location}, {self.chan.object.scale}"
-        )
-        print(
-            f"{layer_params['i']} edge loc,scale: {self.chan_edge.object.location}, {self.chan_edge.object.scale}"
-        )
-        print(
-            f"{layer_params['i']} erod loc,scale: {self.chan_eroded.object.location}, {self.chan_eroded.object.scale}"
-        )
-
         # Set up LEDs
-        # Channel LED
         self.chan_LED_animator = LED_animators["Channel"]
-        # Eroded channel LED
         self.eroded_LED_animator = LED_animators["Eroded channel"]
 
         # Create layer animations
@@ -906,8 +865,8 @@ LED_animators = create_LED_animators(layer_params, make_LED_material("LED"))
 # Select which case to run by uncommenting one of the following 5 lines
 # case = "bulk"
 # case = "channel"
-case = "channel with edge dose"
-# case = "channel with edge dose and roof dose"
+# case = "channel with edge dose"
+case = "channel with edge dose and roof dose"
 # case = "channel with small edge layers and roof dose"
 
 # Set up layer lists for specific case chosen
@@ -968,10 +927,12 @@ for i in range(num_layers):
         )
     elif i in secondary_image_small_channel_layers:
         channel_with_edge = AnimateChannelWithSmallEdgesLayer(
-            layer_params, timings, colors, z_animator
+            layer_params, timings, colors, LED_animators, z_animator
         )
     elif i in secondary_image_roof_layers:
-        roof = AnimateRoofLayer(layer_params, timings, colors, z_animator)
+        roof = AnimateRoofLayer(
+            layer_params, timings, colors, LED_animators, z_animator
+        )
     else:
         bulk = AnimateBulkLayer(
             layer_params, timings, colors, LED_animators, z_animator

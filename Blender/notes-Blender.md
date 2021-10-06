@@ -1440,6 +1440,8 @@ File: `211001_dev_animation_classes.py`
 - Consolidate LED objects with `create_LED_animators`, make them at start of code, use them in different layer types
     - `AnimateBulkLayer`
     - `AnimateChannelLayer`
+    - `AnimateChannelWithEdgeLayer`
+    - `AnimateRoofLayer`
 
 ## Next:
 
