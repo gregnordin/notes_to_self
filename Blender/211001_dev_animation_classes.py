@@ -79,48 +79,35 @@ class MixinScale:
 
 class MixinGrowInZ:
     """Relies on MixinScale so new class must inherit from MixinScale and
-    MixinGrowInZ. Grows a layer in z direction starting from a 2D layer at
-    z = z_layer_size/2, ending up with a 3D layer with thickness z_layer_size
-    positioned at z = 0.0 such that the layer extends in z from -z_layer_size/2
-    to +z_layer_size/2.
+    MixinGrowInZ. Grows a layer in -z direction starting from a 2D layer at
+    z = 0.0, ending up with a 3D layer with thickness z_layer_size
+    positioned at z = z_layer_size/2 such that the layer extends in z from
+    0.0 to -z_layer_size
     """
 
-    def _initialize_location(self):
+    def _initialize_grow_in_z(self):
+        self._initialize_scale()
         self.original_location = self.object.location.copy()
-        # Reset layer z location to 0.0, meaning object is centered in z at 0.0.
-        self.object.location = (
+        self.z_layer_size = self.original_scale[2]
+        self.starting_location = (
             self.original_location[0],
             self.original_location[1],
             0.0,
         )
-        # print(
-        #     f"    _initialize_location {self.object.name}:",
-        #     self.object.location,
-        #     self.original_location,
-        # )
-
-    def grow_in_negative_z(self, start_frame, end_frame):
-        # Assumes self.object.scale is already (0, 0, 0). Double check to make sure it's true.
-        if not self.is_visible():
-            raise ValueError(
-                f"Before growing {self.object.name} in z, it must be invisible (scale={self._invisible_scale_value}), not {self.object.scale}"
-            )
-
-        # Set initial location to be at top of layer in z
-        # (layer z position spans -z_layer_size/2 to +z_layer_size/2)
-        z_layer_size = self.original_scale[2]
-        z_position = z_layer_size / 2.0
-        new_location = (
+        self.ending_location = (
             self.original_location[0],
             self.original_location[1],
-            z_position,
+            -self.z_layer_size / 2.0,
         )
-        self.object.location = new_location
+        self.starting_scale = (self.original_scale[0], self.original_scale[1], 0)
+        self.ending_scale = self.original_scale
+
+    def grow_in_negative_z(self, start_frame, end_frame):
 
         # Make layer appear at frame start_frame with zero thickness
+        self.object.location = self.starting_location
         self.object.keyframe_insert(data_path="scale", frame=start_frame - 1)
-        xy_scale = (self.original_scale[0], self.original_scale[1], 0)
-        self.set_scale(xy_scale)
+        self.set_scale(self.starting_scale)
         self.object.keyframe_insert(data_path="scale", frame=start_frame)
 
         # Set up keyframes to start growing in -z
@@ -128,13 +115,8 @@ class MixinGrowInZ:
         self.object.keyframe_insert(data_path="location", frame=start_frame)
 
         # Set up values and keyframes to define end of growth in -z
-        self.set_scale(self.original_scale)
-        new_location = (
-            self.original_location[0],
-            self.original_location[1],
-            0.0,
-        )
-        self.object.location = new_location
+        self.set_scale(self.ending_scale)
+        self.object.location = self.ending_location
         self.object.keyframe_insert(data_path="scale", frame=end_frame)
         self.object.keyframe_insert(data_path="location", frame=end_frame)
 
@@ -250,8 +232,7 @@ class AnimateAppearDisappear(MixinScale):
 class AnimateLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
     def __init__(self, obj):
         self.object = obj
-        self._initialize_scale()
-        self._initialize_location()
+        self._initialize_grow_in_z()
         self._initialize_color_for_animation()
 
 
@@ -693,8 +674,7 @@ class AnimateChannelLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
             self.object = make_channel_layer(**layer_params)
             self.z_animator = AnimateZMotion(self.object)
 
-        self._initialize_scale()
-        self._initialize_location()
+        self._initialize_grow_in_z()
         self._initialize_color_for_animation()
 
         # Set up LED
@@ -762,8 +742,7 @@ class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
             self.object = make_bulk_layer(**layer_params)
             self.z_animator = AnimateZMotion(self.object)
 
-        self._initialize_scale()
-        self._initialize_location()
+        self._initialize_grow_in_z()
         self._initialize_color_for_animation()
 
         # Set up LED
@@ -776,7 +755,6 @@ class AnimateBulkLayer(MixinScale, MixinGrowInZ, MixinColorAnimation):
                 self.layer_params["layer_size"][1],
                 self.layer_params["z_size_illum"],
             ),
-            z_position=self.z_layer_size / 2.0,
             material=mat_LED,
         )
         self.LED_animator = AnimateAppearDisappear(illum_LED)
@@ -929,11 +907,11 @@ make_LED_material = partial(
 
 
 # Select which case to run by uncommenting one of the following 5 lines
-# case = "bulk"
+case = "bulk"
 # case = "channel"
 # case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
-case = "channel with small edge layers and roof dose"
+# case = "channel with small edge layers and roof dose"
 
 # Set up layer lists for specific case chosen
 channel_layers = []

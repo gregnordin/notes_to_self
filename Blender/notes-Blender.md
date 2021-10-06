@@ -1434,9 +1434,12 @@ File: `211001_dev_animation_classes.py`
             - **Bottom of LED illumination should always be in the same place, but it's not for small edge layers!!**
             - Make my own animate in z function for small edge layers??
             - **No, need to set the bottom of the LED illumination at the z=0 plane. Re-do grow in z function and its initialization to place layers one half layer thickness below this plane.**
+- Set top of each new layer to z=0.0
+    - `AnimateBulkLayer`
 
 ## Next:
 
+- Set top of each layer when it appears at z = 0.0.
 - Consolidate LED objects, make them at start of code, and re-use layer-to-layer?? Pass them as a dict into the animate layer classes where the proper one(s) will be used?
 - Make layer animators for other layer types using fundamental layer types
     - Small edge layer case
