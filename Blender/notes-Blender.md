@@ -1449,13 +1449,35 @@ File: `211001_dev_animation_classes.py`
 File: `211001_dev_animation_classes.py`
 
 - Fix timing so that small edge layer and regular layer grow in z at same rate
+- Play with timings and find one that works well for the small edge case:
 
+        class Timings:
+            def __init__(self):
+                self.start_time = 0.3
+                self.end_time = self.start_time
+                self.duration_z_grow = 0.8
+                self.color_c0_to_c1 = 0.5
+                self.color_c1_to_c2 = 0.5
+                self.delay_move_down_after_LED = 0.2
+                self.duration_move_down = 0.6
+                self.delay_between_layers = 0.4
+                self.delay_between_switch_LED_patterns = 0.1
+                self.duration_small_z_grow = self.duration_z_grow / 3.0  # 0.4
+                self.delay_between_small_layers = 0.3
+                self.duration_move_down_small_z = 0.3
+
+- Create videos for all 4 cases: Bulk, Channel, Channel with edge dose, Channel with small thickness edges
 
 ## Next:
 
-- Fix speed of growing in z for last layer in `AnimateChannelWithSmallEdgesLayer` so thin region and thick region grow at the same speed
-- Play with other colors for different exposure times
 - Fiddle with timings so animations look good
+- Create videos
+- Process videos with ffmpeg to convert from avi to mpeg4
+- Add legend?
+    - In Blender?
+    - Afterward
+        - ffmpeg?
+- Play with other colors for different exposure times
 - Play with upper edges of layers so they scale a little bit in x-y to simulate scalloped sidewalls?
 
 

@@ -154,9 +154,9 @@ class Timings:
     def __init__(self):
         self.start_time = 0.3
         self.end_time = self.start_time
-        self.duration_z_grow = 0.75
-        self.color_c0_to_c1 = 0.4
-        self.color_c1_to_c2 = 0.4
+        self.duration_z_grow = 0.8
+        self.color_c0_to_c1 = 0.5
+        self.color_c1_to_c2 = 0.5
         self.delay_move_down_after_LED = 0.2
         self.duration_move_down = 0.6
         self.delay_between_layers = 0.4
@@ -762,14 +762,14 @@ layer_size = (xy_layer_size, xy_layer_size, z_layer_size)
 z_size_illum = 15
 channel_width = 3
 edge_width = 1
-num_layers = 4  # 9
+num_layers = 8  # 9
 num_small_layers_per_layer = 3
 z_small_layer_size = z_layer_size / num_small_layers_per_layer
 # Specify channel and roof layers
 # chan_layers = [2, 3, 4, 5]
 # roof_layers = [6, 7]
-chan_layers = [1, 2]
-roof_layers = [3]
+chan_layers = [1, 2, 3, 4]
+roof_layers = [5, 6]
 
 # Define colors
 # color_RGB_small_edge = (0.906, 0.96, 0.87)  # HEX #e7f5de
