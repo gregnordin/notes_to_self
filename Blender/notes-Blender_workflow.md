@@ -27,6 +27,10 @@ Set up VS Code to for Blender python autocomplete:
 
 ## Set up
 
+- Start Blender from the terminal command line so that print statements will put their output in this terminal window: 
+
+        /Applications/Blender.app/Contents/MacOS/Blender &
+
 - Start with a nearly blank Blender file that has no objects or materials but that has a short python script to read and execute an external python file.
     - To create blender file, create a new file and save it with some name, `my_file.blend`.
     - In Blender: 
