@@ -1468,17 +1468,64 @@ File: `211001_dev_animation_classes.py`
 
 - Create videos for all 4 cases: Bulk, Channel, Channel with edge dose, Channel with small thickness edges
 
+
+# Friday, 2021-10-08
+
+## Render animations
+
+### First process
+
+- Blender &rarr; 1920 x 1080 pixels, 60 fps, avi output, 90% quality
+- ffmpeg convert from avi to mp4 with best quality (`-crf 18`)
+
+Results
+
+- ~100 MB avi file
+- ~ 3 MB mp4 file
+- Side edges are crunchy, as are side walls during color transitions
+
+### Second process
+
+- Blender &rarr; 1920 x 1080 pixels, 60 fps, avi output, 100% quality
+- ffmpeg convert from avi to mp4 with best quality (`-crf 18`)
+
+Results
+
+- ~1 GB avi file
+- ~6 MB mp4 file
+- Side edges still are not great
+
+### 3rd process
+
+- Blender &rarr; 1920x1080 pixels, 60 fps, ffmpeg video output
+    - Encoding: 
+        - Container: MPEG-4
+    - Video: 
+        - Video Codec: H.264
+        - Output Quality: High Quality
+
+Results
+
+- ~4 MB mp4 file
+- Looks ok, somewhat better than first doing avi then using ffmpeg to convert to mp4
+
+
 ## Next:
 
-- Fiddle with timings so animations look good
 - Create videos
 - Process videos with ffmpeg to convert from avi to mpeg4
-- Add legend?
-    - In Blender?
+- &#9989; Add legend?
+    - &#10060; In Blender?
     - Afterward
-        - ffmpeg?
-- Play with other colors for different exposure times
+        - &#10060; ffmpeg?
+        - &#9989; Powerpoint
+- &#9989; Play with other colors for different exposure times &rarr; nothing better
 - Play with upper edges of layers so they scale a little bit in x-y to simulate scalloped sidewalls?
+- Simulate other microfluidic structures (with cross section)
+    - Membrane valve
+    - Squeeze valve
+    - Pump
+    - 1-way valve
 
 
 # To-do's

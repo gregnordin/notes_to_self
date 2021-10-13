@@ -747,10 +747,10 @@ bpy.context.scene.eevee.use_bloom = True
 bpy.data.scenes["Scene"].eevee.bloom_intensity = 0.1
 
 # Animation setup
-frames_per_second = bpy.data.scenes["Scene"].render.fps
-# # Change to 60 fps
-# bpy.data.scenes["Scene"].render.fps = 60
 # frames_per_second = bpy.data.scenes["Scene"].render.fps
+# # Change to 60 fps
+bpy.data.scenes["Scene"].render.fps = 60
+frames_per_second = bpy.data.scenes["Scene"].render.fps
 # Set up function to return frame number given time in seconds
 frame_num = partial(frame_number, frames_per_second=frames_per_second)
 
@@ -832,11 +832,11 @@ LED_animators = create_LED_animators(layer_params, make_LED_material("LED"))
 
 
 # Select which case to run by uncommenting one of the following 5 lines
-# case = "bulk"
+case = "bulk"
 # case = "channel"
 # case = "channel with edge dose"
 # case = "channel with edge dose and roof dose"
-case = "channel with small edge layers and roof dose"
+# case = "channel with small edge layers and roof dose"
 
 # Set up layer lists for specific case chosen
 channel_layers = []
