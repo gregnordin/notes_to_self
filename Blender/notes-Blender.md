@@ -4,6 +4,8 @@
 
 [What is a .blend1 file and why do you (not) need them?](https://cgcookie.com/articles/what-is-a-blend1-file-and-do-you-really-need-them)
 
+[Blender for Scientists - Complete Intro to 3D](https://www.youtube.com/watch?v=686nsgx8Yd4)
+
 # Basics
 
 [How to Use Blender without a Middle Mouse Button or a Scroll Wheel](https://www.blenderhut.com/use-blender-without-middle-mouse-button-or-scroll-wheel/)  
