@@ -1,0 +1,49 @@
+<!-- [Collapsible lists using HTML and CSS](https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css) -->
+<html>
+  <head> </head>
+  <body>
+    <h1>Basic <code>details</code> tag</h1>
+    <details>
+      <summary>See More</summary>
+      <p>This text will be hidden if your browser supports it.</p>
+      <p>And here is some more text.</p>
+    </details>
+
+    <h1>2-level embedded <code>details</code> tag</h1>
+    <details>
+      <summary>See More</summary>
+      This text will be hidden if your browser supports it.
+
+      <details>
+        <summary>See yet more</summary>
+        This text will be hidden if your browser supports it.
+      </details>
+    </details>
+
+    <h1><code>details</code> tag as part of a list</h1>
+    A list
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>
+        <details>
+          <summary>See More</summary>
+          <p>This text will be hidden if your browser supports it.</p>
+          <p>And here is some more text.</p>
+        </details>
+      </li>
+    </ul>
+
+    <h1><code>details</code> tag after a list</h1>
+    A list
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+    </ul>
+    <details>
+      <summary>Quotes</summary>
+      <p>This text will be hidden if your browser supports it.</p>
+      <p>And here is some more text.</p>
+    </details>
+  </body>
+</html>
