@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - No scrollbar on a &quot;fixed&quot; header</title>
+<style>
+    html,body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* remove default scrollbar,
+       browser support: IE8+, Firefox, Chrome, Opera, Safari 5.1.4 */
+    html {
+      overflow: hidden;
+    }
+
+    /* resize body element and set scrollbar there */
+    body {
+      position: absolute;
+      top: 80px;
+      bottom: 0;
+      width: 100%;
+      overflow: auto;
+    }
+
+    /* and finally the header element above it all */
+    body > h1:first-child {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 80px;
+      margin: 0;
+      padding: 0;
+      background: rgb(244,224,160);
+    }
+
+
+    /* big blue box */
+    p {
+      background: rgb(160,192,255);
+      height: 100em;
+      margin: 1em;
+      padding: .5em;
+      width: 20em;
+    }
+
+    /* pretty pretty */
+    h1, p {
+      box-shadow: inset 0 0 25px rgba(0, 0, 0, .5),0 0 5px rgba(0, 0, 0, .5);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, .4);
+    }
+</style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<h1>A header unaffected by scrollbar</h1>
+<p>Just a big blue box to generate a scrollbar.</p>
+<!-- partial -->
+  
+</body>
+</html>
