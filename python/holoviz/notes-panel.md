@@ -1,3 +1,16 @@
+# Key information
+
+## To set up a working `panel` installation with Jupyterlab
+
+- Install `panel` in both the jupyterlab environment and the python kernel environment!
+
+## To set up a working `panel` installation with python files
+
+- Just install `panel` in the virtual environment that you are going to use.
+
+---
+
+
 # Tuesday, 1/11/22
 
 ## Run a python file with `panel`
