@@ -12,3 +12,9 @@ To run a python file that uses `panel` (see [this link](https://panel.holoviz.or
     # Run python file with panel serve
     (panel) (base) 
     $ panel serve python/holoviz/200626_stand_alone_1.py --show
+
+Or, to make the panel app reload everytime the source file changes:
+
+    $ panel serve python/holoviz/200626_stand_alone_1.py --show --autoreload
+    
+    
