@@ -34,3 +34,24 @@ In terminal:
     hello_world.cpp temp
     $ ./temp
     Hello World!
+    
+Note: I have a problem in VS Code where it points to a different `g++` install from homebrew (in `.vscode/c_cpp_properties.json`) than the system `g++` that is used above by default. When I have more time I need to figure out how to fix this, possibly by changing my terminal PATH to point to the Homebrew version.
+
+    {
+        "configurations": [
+            {
+                "name": "Mac",
+                "includePath": [
+                    "${workspaceFolder}/**",
+                    "/opt/homebrew/Cellar/gcc/11.2.0_3/include/c++/11/tr1"
+                ],
+                "defines": [],
+                "macFrameworkPath": [],
+                "compilerPath": "/opt/homebrew/bin/gcc-11",
+                "cStandard": "gnu17",
+                "cppStandard": "gnu++17",
+                "intelliSenseMode": "macos-gcc-arm64"
+            }
+        ],
+        "version": 4
+    }
