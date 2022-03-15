@@ -37,14 +37,28 @@ int main()
     }
     
 //     Try a lamda
-    auto print_message[](std::string message)
+//     auto print_message[](std::string message)
+//     {
+//         cout << message << "\n";
+//     };
+//     print_message("Hello world");
+
+//  Try a local class
+//  See https://stackoverflow.com/questions/5356050/simulating-nested-functions-in-c
+    struct local 
     {
-        cout << message << "\n";
+        static int bar( int bar_var )  
+        {
+          /*code*/
+          return bar_var;
+        }
     };
-//     for (int i = 0; i < num_pump_cycles; i++ ){
-//         print_message("Hello world");
-//     }
-    print_message("Hello world");
+    cout << "\n";
+    int temp = local::bar(5);
+    cout << "local::bar(5) " << temp << "\n";
+    int temp2 = local::bar(115);
+    cout << "local::bar(115) " << temp2 << "\n\n";
+
     
     return 0;
 }

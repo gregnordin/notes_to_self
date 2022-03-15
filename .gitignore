@@ -19,3 +19,4 @@ media
 *.blend1
 Blender/.vscode
 untracked_with_git
+cpp/*/temp
