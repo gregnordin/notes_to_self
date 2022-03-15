@@ -36,7 +36,15 @@ int main()
         t0 = t0 + delta_t;
     }
     
-    
+//     Try a lamda
+    auto print_message[](std::string message)
+    {
+        cout << message << "\n";
+    };
+//     for (int i = 0; i < num_pump_cycles; i++ ){
+//         print_message("Hello world");
+//     }
+    print_message("Hello world");
     
     return 0;
 }
