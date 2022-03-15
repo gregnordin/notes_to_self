@@ -1,3 +1,13 @@
+# 3/14/22
+
+## Objective
+
+Try some C++ syntax things before implementing in OpenFoam `codeFixedValue` boundary conditions.
+
+    $ g++ try_arrays.cpp -o temp; ./temp
+
+
+
 # 2/17/22
 
 ## Objective
@@ -55,3 +65,4 @@ Note: I have a problem in VS Code where it points to a different `g++` install f
         ],
         "version": 4
     }
+    
