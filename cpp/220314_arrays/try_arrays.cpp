@@ -45,20 +45,43 @@ int main()
 
 //  Try a local class
 //  See https://stackoverflow.com/questions/5356050/simulating-nested-functions-in-c
-    struct local 
+//     struct local2 
+//     {
+//         static int bar( int bar_var )  
+//         {
+//           /*code*/
+//           return bar_var;
+//         }
+//     };
+//     cout << "\n";
+//     int temp = local2::bar(5);
+//     cout << "local2::bar(5) " << temp << "\n";
+//     int temp2 = local2::bar(115);
+//     cout << "local2::bar(115) " << temp2 << "\n\n";
+
+//  Now make this more like what I need for OpenFoam codeFixedValue
+    struct local
     {
-        static int bar( int bar_var )  
+        static float u_now(float t, float t0, float delta_t, float Umax)
         {
-          /*code*/
-          return bar_var;
+            const float t1 = t0 + delta_t;
+            float u;
+            if (t < t0)
+                u = 0;
+            else if (t < t1)
+                u = Umax;
+            else
+                u = 2 * Umax;
+            return u;
         }
     };
     cout << "\n";
-    int temp = local::bar(5);
-    cout << "local::bar(5) " << temp << "\n";
-    int temp2 = local::bar(115);
-    cout << "local::bar(115) " << temp2 << "\n\n";
-
+    float temp = local::u_now(0.1, 0.2, 0.05, 1.0);
+    cout << "local::u_now(0.1, 0.2, 0.05, 1.0) " << temp << "\n";
+    float temp2 = local::u_now(0.23, 0.2, 0.05, 1.0);
+    cout << "local::u_now(0.23, 0.2, 0.05, 1.0) " << temp2 << "\n";
+    float temp3 = local::u_now(0.27, 0.2, 0.05, 1.0);
+    cout << "local::u_now(0.27, 0.2, 0.05, 1.0) " << temp3 << "\n";
     
     return 0;
 }
