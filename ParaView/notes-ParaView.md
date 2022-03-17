@@ -13,3 +13,14 @@
 use Tools->Start Trace in the desktop application to record a python script.
 
 [ParaView/Python Scripting](https://www.paraview.org/Wiki/ParaView/Python_Scripting)
+
+## Filters
+
+How to use (for example, the `Transform` filter).
+
+- Find the filter in the `Filters` menu.
+    - Can use `Alphabetical` for access to all filters.
+    - If you know the name of the filter, can just `Search...` and start typing.
+- Click on whatever filter you've found, which adds it to the bottom left pane in the GUI window.
+- Type in whatever inputs you want the filter to have.
+- Click `Apply`. 
