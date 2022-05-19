@@ -49,7 +49,10 @@ __<span style="font-size:200%">Contents</span>__
     - `&Rightarrow;`
 - &rightarrow;
     - `&rightarrow;`
-
+- &plusmn;
+    - `&plusmn;`
+-  &approx;
+    -  ` &approx;`
 
 
 ## Other styling
