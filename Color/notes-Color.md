@@ -45,4 +45,7 @@ Use [Color Calculator - Sessions College](https://www.sessions.edu/color-calcula
     </g>
 </svg>
 
+## distinctipy
+
+[distinctipy](https://github.com/alan-turing-institute/distinctipy) - a lightweight python package providing functions to generate colours that are visually distinct from one another. Should be useful in matplotlib if need more than 20 colors.
  
