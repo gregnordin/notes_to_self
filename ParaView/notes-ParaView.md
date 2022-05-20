@@ -32,3 +32,10 @@ How to use (for example, the `Transform` filter).
 - Click on whatever filter you've found, which adds it to the bottom left pane in the GUI window.
 - Type in whatever inputs you want the filter to have.
 - Click `Apply`. 
+
+
+## Specific topics
+
+[Streamlines in ParaView & OpenFOAM](https://www.youtube.com/watch?v=pXWAs0hNFnw), foamGetDict and streamlines in ParaView - Great!  
+[How to plot Residuals in OpenFOAM by DD Fluids](https://www.youtube.com/watch?v=q0q_qwprEL4)  
+
