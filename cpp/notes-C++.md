@@ -1,3 +1,6 @@
+[C++ crash course for C programmers by Nicolas P. Rougier](https://github.com/rougier/CPP-Crash-Course)
+
+
 # 3/14/22
 
 ## Objective
