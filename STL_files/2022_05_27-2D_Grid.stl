@@ -1,0 +1,170 @@
+solid 2022_05_27-2D_Grid.stl
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.000000 0.000000 0.000000
+    vertex 0.100000 0.000000 0.000000
+    vertex 0.000000 0.100000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.100000 0.000000 0.000000
+    vertex 0.100000 0.100000 0.000000
+    vertex 0.000000 0.100000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.100000 0.000000 0.000000
+    vertex 0.200000 0.000000 0.000000
+    vertex 0.100000 0.100000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.200000 0.000000 0.000000
+    vertex 0.200000 0.100000 0.000000
+    vertex 0.100000 0.100000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.200000 0.000000 0.000000
+    vertex 0.300000 0.000000 0.000000
+    vertex 0.200000 0.100000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.300000 0.000000 0.000000
+    vertex 0.300000 0.100000 0.000000
+    vertex 0.200000 0.100000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.300000 0.000000 0.000000
+    vertex 0.400000 0.000000 0.000000
+    vertex 0.300000 0.100000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.400000 0.000000 0.000000
+    vertex 0.400000 0.100000 0.000000
+    vertex 0.300000 0.100000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.000000 0.100000 0.000000
+    vertex 0.100000 0.100000 0.000000
+    vertex 0.000000 0.200000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.100000 0.100000 0.000000
+    vertex 0.100000 0.200000 0.000000
+    vertex 0.000000 0.200000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.100000 0.100000 0.000000
+    vertex 0.200000 0.100000 0.000000
+    vertex 0.100000 0.200000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.200000 0.100000 0.000000
+    vertex 0.200000 0.200000 0.000000
+    vertex 0.100000 0.200000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.200000 0.100000 0.000000
+    vertex 0.300000 0.100000 0.000000
+    vertex 0.200000 0.200000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.300000 0.100000 0.000000
+    vertex 0.300000 0.200000 0.000000
+    vertex 0.200000 0.200000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.300000 0.100000 0.000000
+    vertex 0.400000 0.100000 0.000000
+    vertex 0.300000 0.200000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.400000 0.100000 0.000000
+    vertex 0.400000 0.200000 0.000000
+    vertex 0.300000 0.200000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.000000 0.200000 0.000000
+    vertex 0.100000 0.200000 0.000000
+    vertex 0.000000 0.300000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.100000 0.200000 0.000000
+    vertex 0.100000 0.300000 0.000000
+    vertex 0.000000 0.300000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.100000 0.200000 0.000000
+    vertex 0.200000 0.200000 0.000000
+    vertex 0.100000 0.300000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.200000 0.200000 0.000000
+    vertex 0.200000 0.300000 0.000000
+    vertex 0.100000 0.300000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.200000 0.200000 0.000000
+    vertex 0.300000 0.200000 0.000000
+    vertex 0.200000 0.300000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.300000 0.200000 0.000000
+    vertex 0.300000 0.300000 0.000000
+    vertex 0.200000 0.300000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 0.000000 0.010000
+  outer loop
+    vertex 0.300000 0.200000 0.000000
+    vertex 0.400000 0.200000 0.000000
+    vertex 0.300000 0.300000 0.000000
+  endloop
+endfacet
+facet normal 0.000000 -0.000000 0.010000
+  outer loop
+    vertex 0.400000 0.200000 0.000000
+    vertex 0.400000 0.300000 0.000000
+    vertex 0.300000 0.300000 0.000000
+  endloop
+endfacet
+endsolid 2022_05_27-2D_Grid.stl
