@@ -23,9 +23,14 @@ clean:
 
 ### Results
 
-Run 1st time: creates the directory `build`.  
-Run 2nd time: runs `mkdir -p $(BUILD)` again, but it doesn't do anything because the directory already exists.
+Run 1st time: runs `build` and creates the directory `build`.  
+Run 2nd time: runs `build` (`mkdir -p $(BUILD)`) again, but it doesn't do anything because the directory already exists.
 
 ### Conclusion
 
-When a target (`all`) has a dependency (`build`) that itself is a target but has no dependencies, it looks like everytime the initial target (`all`) gets run, that dependency  (`build`) will also be run.
+When a target (`all`) has a dependency (`build`) that itself is a target (but `.PHONY`, i.e., not a file) but has no dependencies, it looks like everytime the initial target (`all`) gets run, that dependency (`build`) will also be run.
+
+## `create_directory2`
+
+### Purpose
+
