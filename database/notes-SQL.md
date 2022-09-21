@@ -1,3 +1,9 @@
+
+# SQLite
+
+[Recipes from Python SQLite docs](https://rednafi.github.io/reflections/recipes-from-python-sqlite-docs.html)
+
+
 # Learn from SQLBolt
 
 Website: [SQLBolt](https://sqlbolt.com)
@@ -169,3 +175,4 @@ Get equivalent SQL command:
         LEFT OUTER JOIN exercise 
             ON main.id = exercise.date_id 
         GROUP BY main.date
+        
