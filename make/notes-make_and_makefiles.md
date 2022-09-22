@@ -38,6 +38,15 @@ Check that everything is in order (after running `$ source ~/bash_profile`):
 
 # Information
 
+Basics:
+
+```
+target1: dependency1 dependency2 ...
+	command1  # Each line is executed as a subshell, & therefore won't affect subsequent lines (so don't do cd and expect it to stick)
+	command2
+	...
+```
+
 [Makefile cheatsheet](https://bytes.usc.edu/cs104/wiki/makefile/).
 
 [How to make makefile find target in subdirectory makefile](https://stackoverflow.com/questions/17873044/how-to-make-makefile-find-target-in-subdirectory-makefile) - see 2nd answer about how to change directories for POSIX make (as opposed to GNU make).
@@ -58,11 +67,32 @@ Check that everything is in order (after running `$ source ~/bash_profile`):
     
 >       .ONESHELL: 
 
+Here is some additional info from [Chnossos answer](https://stackoverflow.com/questions/1789594/how-do-i-write-the-cd-command-in-a-makefile):
+
+>New special target: .ONESHELL instructs make to invoke a single instance of the shell and provide it with the entire recipe, regardless of how many lines it contains.
+
+
 [How do I write the 'cd' command in a makefile?](https://stackoverflow.com/questions/1789594/how-do-i-write-the-cd-command-in-a-makefile)
 
 >It is actually executing the command, changing the directory to some_directory, however, this is performed in a sub-process shell, and affects neither make nor the shell you're working from.
 
 >If you're looking to perform more tasks within some_directory, you need to add a && and append the other commands as well. Note that you cannot use new lines as they are interpreted by make as the end of the rule, so any new lines you use for clarity need to be escaped by a backslash.
+
+[Makefile for Projects with Subdirectories](https://yuukidach.github.io/2019/08/05/makefile-learning/) - See Practice 3 for interesting way of handling `.PHONY`:
+
+    PHONY := $(TARGET)
+    ...
+    PHONY += clean
+    clean:
+        ...
+    ...
+    PHONY += echoes
+    echoes:
+        ...
+    ...
+    .PHONY = $(PHONY)
+
+Or, one can just put `.PHONY: <something>` right before `<something>` definition.
 
 
 
@@ -93,7 +123,7 @@ Run 2nd time: runs `build` (`mkdir -p $(BUILD)`) again, but it doesn't do anythi
 
 ### Conclusion
 
-When a target (`all`) has a dependency (`build`) that itself is a target (but `.PHONY`, i.e., not a file) but has no dependencies, it looks like everytime the initial target (`all`) gets run, that dependency (`build`) will also be run.
+When a target (`all`) has a dependency (`build`) that itself is a target (but `.PHONY`, i.e., not a file) but has no dependencies, it looks like every time the initial target (`all`) gets run, that dependency (`build`) will also be run.
 
 ## `create_directory2`
 
