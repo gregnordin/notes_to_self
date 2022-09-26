@@ -8,6 +8,99 @@
 
 Jumping back and forth on the command line: [Moving efficiently in the CLI](https://clementc.github.io/blog/2018/01/25/moving_cli/)
 
+## Tutorial
+
+[Shell Scripting for Beginners – How to Write Bash Scripts in Linux](https://www.freecodecamp.org/news/shell-scripting-crash-course-how-to-write-bash-scripts-in-linux/)
+
+```
+
+# Variables:
+variable_name=value
+# To get the value of the variable, add $ before the variable:
+greeting=Hello
+name=Tux
+echo $greeting $name
+
+# Change file permission to be executable
+chmod u+x hello_world.sh
+
+# Run script. Either
+./hello_world.sh
+# or
+bash hello_world.sh
+
+# Numerical expressions can be calculated and stored in a variable using the syntax:
+var=$((expression))
+```
+
+Logical operators:
+
+OPERATION	|SYNTAX	EXPLANATION |
+:----| :---: |
+Equality |	num1 -eq num2  |
+Greater than equal to	|num1 -ge num2	 | 
+Greater than	|num1 -gt num2  |
+Less than equal to	|num1 -le num2	  |
+Less than	|num1 -lt num2  |
+Not Equal to	|num1 -ne num2	 |
+AND | -a |
+OR | -o |
+
+Example: if a is greater than 40 and b is less than 6:
+
+    if [ $a -gt 40 -a $b -lt 6 ]
+
+```
+# Looping with numbers:
+for i in {1..5}
+do
+    echo $i
+done
+
+# Looping with strings:
+for X in cyan magenta yellow  
+do
+	echo $X
+done
+
+# While loop
+i=1
+while [[ $i -le 10 ]] ; do
+   echo "$i"
+  (( i += 1 ))  # Expression that increments counter, i
+done
+
+# Reading file line-by-line
+LINE=1
+while read -r CURRENT_LINE
+	do
+		echo "$LINE: $CURRENT_LINE"
+    ((LINE++))
+done < "sample_file.txt"
+
+# How to execute commands with back ticks
+# If you need to include the output of a complex command in your script, 
+# you can write the statement inside back ticks.
+#
+# Syntax:
+# var= ` commands `
+#
+# Example: Suppose we want to get the output of a list of mountpoints with tmpfs 
+# in their name. We can craft a statement like this: df -h | grep tmpfs.
+# To include it in the bash script, we can enclose it in back ticks.
+#
+var=`df -h | grep tmpfs`
+echo $var
+
+# How to get arguments for scripts from the command line
+# $@ represents the position of the parameters, starting from one.
+for x in $@
+do
+    echo "Entered arg is $x"
+done
+
+```
+
 ## Expansions
 
 From [Learning the Shell](http://linuxcommand.org/lc3_lts0080.php), here are some key expansion things to know:
@@ -39,6 +132,9 @@ In double quotes, you can use \ to escape characters. For example `\$` means use
     # Case insensitive search for given string in file    
     grep -i "the" demo_file
 
+## find
+
+[How to Search for Files from the Linux Command Line](https://www.freecodecamp.org/news/how-to-search-for-files-from-the-linux-command-line/).
 
 ## crontab
 
