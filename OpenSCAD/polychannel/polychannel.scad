@@ -1,3 +1,13 @@
+/*--------------------------------------------------------------------------------------
+/ General purpose multi-segment channel module: polychannel.
+/
+/ Given a list of sizes and positions, a series of connected channels is constructed
+/ using the hull() operation to connect sequential pairs of cubes with specified
+/ size and position as given in the sizes and positions list.
+/
+/ Rev. 1, 9/28/22, by G. Nordin
+--------------------------------------------------------------------------------------*/
+
 module shape3D(size, position, center=true) {
     translate(position) cube(size, center=center);
 }
@@ -41,7 +51,8 @@ module polychannel_absolute_positions(sizes, positions, clr="lightblue", center=
     }
 }
 
-module polychannel(sizes, positions=[], relative_positions=false, clr="lightblue", center=true, show_only_shapes=false) {
+module polychannel(sizes, positions, relative_positions=false, clr="lightblue", center=true, show_only_shapes=false) {
+    assert(len(sizes) == len(positions), "polychannel: sizes and positions arrays must have the same length");
     if (relative_positions) {
         absolute_positions = [for(i = [0:len(sizes)-1]) partial_sum_vectors(positions, i)];
         polychannel_absolute_positions(sizes, absolute_positions, clr=clr, center=center, show_only_shapes=show_only_shapes);
@@ -50,6 +61,8 @@ module polychannel(sizes, positions=[], relative_positions=false, clr="lightblue
     }
 }
 
+
+// Example usage - see polychannel_result.png for output
 
 size1 = [1, 1, 1];
 
