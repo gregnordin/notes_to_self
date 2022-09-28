@@ -55,5 +55,5 @@ module serpentine_channel(
 
 // Example usage - see serpentinecircularends_result.png for output
 serpentine_channel();
-translate([0, -17, -5]) serpentine_channel(n=13, l=15, gap=1, clr="cornflowerblue");
-translate([0, -45, -10]) serpentine_channel(n=6, l=25, gap=4, clr="Salmon");
+translate([0, -17, -5]) serpentine_channel(n=13, l=15, gap=1, cross_section=[0.5, 1], clr="cornflowerblue");
+translate([0, -50, -10]) serpentine_channel(n=6, l=25, gap=4, cross_section=[0.5, 10], clr="Salmon");
