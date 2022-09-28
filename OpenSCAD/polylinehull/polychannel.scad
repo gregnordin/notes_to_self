@@ -91,5 +91,5 @@ polychannel(sizes, positions, clr="red", show_only_shapes=true);
 
 translate([0, -25, 0]) polychannel(sizes, positions, clr="Salmon");
 
-translate([0, 25, 0]) polychannel(sizes, relative_positions, relative_positions=true, clr="lightblue");
+translate([0, 25, 0]) polychannel(sizes, relative_positions, relative_positions=true);
 
