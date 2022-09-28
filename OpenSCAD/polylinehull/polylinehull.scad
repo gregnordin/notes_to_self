@@ -4,9 +4,16 @@ module shape3D(size, position, center=true) {
     translate(position) cube(size, center=center);
 }
 
+// See https://forum.openscad.org/Calculating-Summarize-Arrays-generate-Array-td29132.html
 function partial_sum(v, n, r = 0) = n <= 0 
         ? r + v[0] 
         : partial_sum(v, n - 1, r + v[n]); 
+
+function partial_sum_vectors(v, n, r = [0,0,0]) = partial_sum(v, n, r); 
+
+// function partial_sum_vectors(v, n, r = [0,0,0]) = n <= 0 
+//         ? r + v[0] 
+//         : partial_sum_vectors(v, n - 1, r + v[n]); 
 
 dim = [10, 8, 2, 25, 5]; 
 n = len(dim); 
@@ -15,8 +22,11 @@ echo(x_pos); // ECHO: [10, 18, 20, 45, 50]
 echo("");
 dim2 = [[10, 1], [8, 1], [2, 1], [25, 1], [5, 2]]; 
 n2 = len(dim2); 
-x_pos2 = [for(i = [0:n2-1]) partial_sum(dim2, i)]; 
-echo(x_pos2); // ECHO: [10, 18, 20, 45, 50] 
+x_pos2 = [for(i = [0:n2-1]) partial_sum_vectors(dim2, i)]; 
+echo(x_pos2); // ECHO: [[10, 1], [18, 2], [20, 3], [45, 4], [50, 6]]
+echo("");
+x_pos3 = [for(i = [0:n2-1]) partial_sum(dim2, i, [0,0,0])]; 
+echo(x_pos3); // ECHO: [[10, 1], [18, 2], [20, 3], [45, 4], [50, 6]]
 echo("");
 
 
