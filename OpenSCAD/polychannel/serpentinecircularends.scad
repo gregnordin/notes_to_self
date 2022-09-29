@@ -34,7 +34,7 @@ module serpentine_channel_circ(
     clr = "lightblue"         // Color
 ) {
     size = [cross_section[0], thin_size, cross_section[1]];
-    sizes = [size, size];
+    shapes = [["cube", size], ["cube", size]];
     positions = [
         [0, 0, 0],
         [0, l, 0]
@@ -46,7 +46,7 @@ module serpentine_channel_circ(
     for (i = [0: 1: n_serp_segments-1]) {
         x_pos = i * period;
         x_translation = [x_pos, 0, 0];
-        polychannel(sizes, positions + [x_translation, x_translation], relative_positions=false, clr=clr);
+        polychannel(shapes, positions + [x_translation, x_translation], relative_positions=false, clr=clr);
         if (i != n_serp_segments-1) {
             if (i%2 == 0)
                 translate([radius + i * period, positions[1][1], 0]) 
