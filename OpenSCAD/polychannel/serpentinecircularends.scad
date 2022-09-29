@@ -25,7 +25,7 @@ module channel_circular_arc(radius, chan_size, angle=180, center=true, clr="ligh
 }
 
 // Main serpentine channel module
-module serpentine_channel(
+module serpentine_channel_circ(
     n = 4,                    // Number of serpentine segments
     l = 10,                   // Length of serpentine segment
     cross_section = [1, 0.8], // Size of channel in x,y,z
@@ -61,6 +61,6 @@ module serpentine_channel(
 }
 
 // Example usage - see serpentinecircularends_result.png for output
-serpentine_channel();
-translate([0, -17, -5]) serpentine_channel(n=13, l=15, gap=1, cross_section=[0.5, 1], clr="cornflowerblue");
-translate([0, -50, -10]) serpentine_channel(n=6, l=25, gap=4, cross_section=[0.5, 10], clr="Salmon");
+serpentine_channel_circ();
+translate([0, -17, -5]) serpentine_channel_circ(n=13, l=15, gap=1, cross_section=[0.5, 1], clr="cornflowerblue");
+translate([0, -50, -10]) serpentine_channel_circ(n=6, l=25, gap=4, cross_section=[0.5, 10], clr="Salmon");

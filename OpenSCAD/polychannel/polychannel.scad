@@ -12,15 +12,15 @@ module shape3D(size, position, center=true) {
     translate(position) cube(size, center=center);
 }
 
-// These functions are helpers to create a vector of absolute positions from
+// These functions are helper functions to create a vector of absolute positions from
 // a vector of relative positions.
 // See https://forum.openscad.org/Calculating-Summarize-Arrays-generate-Array-td29132.html
+// for the original code, which cummulatively summed scalars.
 function partial_sum(v, n, r = 0) = n <= 0 
         ? r + v[0] 
         : partial_sum(v, n - 1, r + v[n]); 
 function partial_sum_vectors(v, n, r = [0,0,0]) = partial_sum(v, n, r); 
 
-/*
 // Tests for partial_sum and partial_sum_vectors
 dim = [10, 8, 2, 25, 5]; 
 n = len(dim); 
@@ -35,7 +35,6 @@ echo("");
 x_pos3 = [for(i = [0:n2-1]) partial_sum(dim2, i, [0,0,0])]; 
 echo(x_pos3); // ECHO: [[10, 1], [18, 2], [20, 3], [45, 4], [50, 6]]
 echo("");
-*/
 
 module polychannel_absolute_positions(sizes, positions, clr="lightblue", center=true, show_only_shapes=false) {
     if (show_only_shapes) {
