@@ -8,9 +8,15 @@
 --------------------------------------------------------------------------------------*/
 use <polychannel.scad>
 
-chan_size = [1, 0.8];
-thin = 0.01;
-
+// Create a channel that follows a circular arc. Note that this is based on the 
+// openscad function 'rotate_extrude', which is kind of weird so you have to 
+// carefully read its documentation to understand what it does. The main points
+// are that it takes a 2D x-y shape that is some distance from the x axis, flips
+// it into the x-z plane and then rotates it about the z axis with a radius
+// that is the 2D shape's distance from the x axis. Also, be sure to not have
+// any translation of the 2D shape's position in the y dimension because this
+// will bizarely be converted to an offset in the z direction for the extruded
+// shape.
 module channel_circular_arc(radius, chan_size, angle=180, center=true, clr="lightblue", convexity=10, fn=100) {
     assert(len(chan_size) == 2, "channel_circular_arc: chan_size must be have 2 dimensions")
     color(clr) 
@@ -18,6 +24,7 @@ module channel_circular_arc(radius, chan_size, angle=180, center=true, clr="ligh
             translate([radius, 0]) square(chan_size, center);
 }
 
+// Main serpentine channel module
 module serpentine_channel(
     n = 4,                    // Number of serpentine segments
     l = 10,                   // Length of serpentine segment

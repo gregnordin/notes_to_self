@@ -12,11 +12,12 @@ module shape3D(size, position, center=true) {
     translate(position) cube(size, center=center);
 }
 
+// These functions are helpers to create a vector of absolute positions from
+// a vector of relative positions.
 // See https://forum.openscad.org/Calculating-Summarize-Arrays-generate-Array-td29132.html
 function partial_sum(v, n, r = 0) = n <= 0 
         ? r + v[0] 
         : partial_sum(v, n - 1, r + v[n]); 
-
 function partial_sum_vectors(v, n, r = [0,0,0]) = partial_sum(v, n, r); 
 
 /*

@@ -2,12 +2,16 @@
 / Serpentine channel module based on the polychannel module.
 /
 / Serpentine long channel axis is y. As more long channel segments are added,
-/ the serpentine channel grows in x.
+/ the serpentine channel grows in x. 
+/
+/ See serpentine_algorithm.jpg to see the method used by this code.
 /
 / Rev. 1, 9/28/22, by G. Nordin
 --------------------------------------------------------------------------------------*/
 use <polychannel.scad>
 
+// Functions to help create the relative positions for the long
+// serpentine channel segments.
 function serp_rel_x_pos(n, lx) = n == 0
     ? 0
     : lx * ((n+1) % 2);
@@ -23,7 +27,7 @@ echo([for (i = [0:1:7]) sign(i)]);
 echo([for (i = [0:1:7]) serp_rel_y_pos(i, 3)]);
 echo([for (i = [0:1:7]) [serp_rel_x_pos(i, 2), serp_rel_y_pos(i, 3), 0]]);
 
-
+// Main serpentine channel module
 module serpentine_channel(
     n = 4,              // Number of serpentine segments
     l = 15,             // Length of serpentine segment
