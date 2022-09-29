@@ -41,8 +41,8 @@ module serpentine_channel(
     // echo("n_serp_segments:", n_serp_segments);
     // echo("n_gap_segments:", n_gap_segments);
     // echo("n_positions:", n_positions);
-    sizes = [for (i= [0: 1: n_positions-1]) size];
-    // echo(sizes);
+    shapes = [for (i= [0: 1: n_positions-1])["cube", size]];
+    // echo(shapes);
 
     lx = gap + size[0];
     ly = l - size[1];
@@ -50,7 +50,7 @@ module serpentine_channel(
     positions = [for (i= [0: 1: n_positions-1]) [serp_rel_x_pos(i, lx), serp_rel_y_pos(i, ly), 0]];
     // echo(positions);
 
-    polychannel(sizes, positions, relative_positions=true, clr=clr);
+    polychannel(shapes, positions, relative_positions=true, clr=clr);
 }
 
 // Example usage - see serpentine_result.png for output
