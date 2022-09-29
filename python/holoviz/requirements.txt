@@ -4,7 +4,7 @@ astroid==2.3.3
 attrs==19.3.0
 backcall==0.1.0
 black==19.10b0
-bleach==3.1.4
+bleach==3.3.0
 bokeh==2.1.0
 click==7.1.1
 colorcet==2.0.2
