@@ -73,3 +73,10 @@ polychannel_params = {
     {shape params-type and position}
 }
 ```
+
+Possibilities for circular arcs:
+
+- [sweep()](https://github.com/openscad/list-comprehension-demos/blob/master/sweep.scad).
+- [Snippet: Circular sector and arcs with OpenScad](https://www.xarg.org/snippet/circular-sector-and-arcs-with-openscad/) - looks simple, try it.
+- [Circular sector and arc](https://openhome.cc/eGossip/OpenSCAD/SectorArc.html) - more complicated.
+
