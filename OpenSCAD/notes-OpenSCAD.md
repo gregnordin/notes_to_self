@@ -85,4 +85,6 @@ Possibilities for circular arcs:
 
 Try creating an arc with intersection of cubes rotated and moved along an arc. Led to idea to do something like this with flat plate-like shapes and hull() between them, which is compatible with the polychannel approach and would just need the shapes and positions of the shapes.
 
+Try embedding the output of a function in a list&rarr; it works.
+
 
