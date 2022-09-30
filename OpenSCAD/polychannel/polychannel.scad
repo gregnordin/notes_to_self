@@ -13,11 +13,11 @@ function select(vector, indices) = [ for (index = indices) vector[index] ];
 module shape3D(shape_data, position, center=true) {
     shape = shape_data[0];
     size = shape_data[1];
-    fn = shape_data[2];
     if(shape=="cube"){
         translate(position) cube(size, center=center);
     }
     else if(shape=="sphr"){
+        fn = shape_data[2];
         translate(position) scale(size) sphere(d=1, $fn=fn);
     }
     else {
