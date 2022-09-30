@@ -85,6 +85,8 @@ Possibilities for circular arcs:
 
 Try creating an arc with intersection of cubes rotated and moved along an arc. Led to idea to do something like this with flat plate-like shapes and hull() between them, which is compatible with the polychannel approach and would just need the shapes and positions of the shapes.
 
-Try embedding the output of a function in a list&rarr; it works.
-
+- &#9989; Try embedding the output of a function in a list&rarr; it works.
+- &#9989; Create functions for absolute positions and relative positions along a 90&deg; arc.
+- Make arc go from angle a to angle b (CCW).
+- Make angle a and angle b handle CW as well as CCW directions.
 
