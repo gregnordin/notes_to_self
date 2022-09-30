@@ -21,14 +21,14 @@ Absolutely do not use `include <polychannel.scad>`, etc. The reason is that `use
 
 The `polychannel` module is a much easier to use replacement for Jose's `routing` library, and is based on Openscad's [hull() operation](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Transformations#hull). If you don't know what that is, please go through material at the link. Once you understand it, the module should be easy to use.
 
-![](polychannel_result.png)
+![](polychannel.png)
 
 Note that the red rectangular boxes are the shapes on which the `hull()` operation operates to get the pale red (absolute positioning) and light blue (relative positioning) polychannels.
 
 
 ## `serpentine_channel()`
 
-![](serpentine_result.png)
+![](serpentine.png)
 
 
 Schematic illustration of the geometry used for a serpentine channel and how the algorithm works by using relative positioning coordinates in conjunction with the `polychannel()` module. In the graph, the numbered green blocks (0-7) are the 3D shapes that are used in the sequential hull operation to generate the serpentine channel. The main point of the algorithm is simply calculating the relative positions of these blocks.
@@ -37,6 +37,6 @@ Schematic illustration of the geometry used for a serpentine channel and how the
 
 ## `serpentine_channel_circ()`
 
-![](serpentinecircularends_result.png)
+![](serpentinecircularends.png)
 
 
