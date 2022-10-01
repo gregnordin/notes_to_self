@@ -45,3 +45,5 @@ echo(big_list_abs);
 
 for (pos=big_list_abs)
     color("blue", alpha=0.35) translate(pos) sphere(0.9, $fn=50);
+
+// echo(big_list_abs[-1]);
