@@ -87,6 +87,11 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
 
 - &#9989; Try embedding the output of a function in a list&rarr; it works.
 - &#9989; Create functions for absolute positions and relative positions along a 90&deg; arc.
-- Make arc go from angle a to angle b (CCW).
-- Make angle a and angle b handle CW as well as CCW directions.
+- &#9989; Make arc go from angle a to angle b (CCW).
+- &#9989; Make angle a and angle b handle CW as well as CCW directions.
+- &#9989; Put into a list with other positions.
+- Add `rotate()` to shape3D?
+- Integrate with cross section shape and rotating that shape.
+- Use as input to polychannel and test.
+- Put into a list with other positions/shapes and input into polychannel.
 
