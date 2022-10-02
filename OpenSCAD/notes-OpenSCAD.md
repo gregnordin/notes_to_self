@@ -81,25 +81,28 @@ Possibilities for circular arcs:
 - [Circular sector and arc](https://openhome.cc/eGossip/OpenSCAD/SectorArc.html) - more complicated.
 
 
-# Friday, 9/30/22
+# 9/30/22 - 10/1/22
 
 Try creating an arc with intersection of cubes rotated and moved along an arc. Led to idea to do something like this with flat plate-like shapes and hull() between them, which is compatible with the polychannel approach and would just need the shapes and positions of the shapes.
 
 - &#9989; Try embedding the output of a function in a list&rarr; it works.
-- &#9989; Create functions for absolute positions and relative positions along a 90&deg; arc.
-- &#9989; Make arc go from angle a to angle b (CCW).
-- &#9989; Make angle a and angle b handle CW as well as CCW directions.
-- &#9989; Put into a list with other positions.
-- &#9989; Add `rotate()` to shape3D?
-    - &#9989; Shape data structure:
-        - [`<shape>, <size>, <relative position>, <rotation>`]
-            - `<shape>` = "cube" or "sphere/sphr"
-            - `<size>` = [3, 2, 1]
-            - `<position>` = [10, 12, 0] (absolute or relative, always specify as relative and then use function to turn it into absolute)
-            - `<rotation>` &rarr; angle (a=90), axis of rotation (v=[0, 0, 1]) = [90, [0, 0, 1]]
-        - Example
-            - `["sphr", [0.01, 4, 4], [0, 0, 0], [45, [0, 0, 1]]]`
-    - &#9989; Can `relative position` be easily turned into `absolute position` with this data structure? Write function to do it.
-- Use as input to polychannel and test.
+- `try_func_for_arc.scad`
+    - &#9989; Create functions for absolute positions and relative positions along a 90&deg; arc.
+    - &#9989; Make arc go from angle a to angle b (CCW).
+    - &#9989; Make angle a and angle b handle CW as well as CCW directions.
+    - &#9989; Put into a list with other positions.
+- `try_shape3D_with_rotation`
+    - &#9989; Add `rotate()` to shape3D.
+        - &#9989; Shape data structure:
+            - [`<shape>, <size>, <relative position>, <rotation>`]
+                - `<shape>` = "cube" or "sphere/sphr"
+                - `<size>` = [3, 2, 1]
+                - `<position>` = [10, 12, 0] (absolute or relative, always specify as relative and then use function to turn it into absolute)
+                - `<rotation>` &rarr; angle (a=90), axis of rotation (v=[0, 0, 1]) = [90, [0, 0, 1]]
+            - Example
+                - `["sphr", [0.01, 4, 4], [0, 0, 0], [45, [0, 0, 1]]]`
+        - &#9989; Can `relative position` be easily turned into `absolute position` with this data structure? Write function to do it.
+- Create new polychannel module to use the above shape3D and data structure.
+- Create function to make new data structure entries for an arc that include positions and shape angles.
 - Put into a list with other positions/shapes and input into polychannel.
 
