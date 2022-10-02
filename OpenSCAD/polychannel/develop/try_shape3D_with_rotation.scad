@@ -12,7 +12,61 @@ $fn=50;
 // Functions to convert from relative to absolute positions.
 function convert_params_rel_to_abs(p, n, r=[0, 0, 0]) = n <=0
     ? [p[n][0], p[n][1], p[n][2] + r, p[n][3]]
-    : convert_params_rel_to_abs(p, n-1, r + p[n][2]);
+    : convert_params_rel_to_abs(p, n-1, r + p[n][2])[n][2];
+
+// function add(v, n, i = 0, r = 0) = i <= n ? add(v, n, i + 1, r + v[i]) : r;
+// input = [2, 3, 5, 8, 10, 12];
+// for (i=[0:1:len(input)-1])
+//     echo(add(input, n=i));
+
+function add(v, i = 0, r = 0) = i < len(v) ? add(v, i + 1, r + v[i]) : r;
+input = [2, 3, 5, 8, 10, 12];
+output = add(input);
+echo(output);
+
+// Construct a sublist from given list
+input_sub = [
+    for (j=[0:1:2]) input[j]
+];
+echo(input_sub);
+echo(add(input_sub));
+for (i=[0:1:len(input)-1]) {
+    input_sub = [
+        for (j=[0:1:i]) input[j]
+    ];
+    echo(i, input_sub, add(input_sub));
+}
+
+// Construct a list of cummulative sums
+echo();
+echo("Cummulative sums");
+cumm_sum = [
+    for (i=[0:1:len(input)-1]) let (input_sub = [
+        for (j=[0:1:i]) input[j]
+    ]) add(input_sub)
+];
+echo(cumm_sum);
+echo();
+echo("cumm_sum_func");
+function cumm_sum_func(v) = [
+    for (i=[0:1:len(v)-1]) let (v_sub = [
+        for (j=[0:1:i]) v[j]
+    ]) add(v_sub)
+];
+echo(cumm_sum_func(input));
+
+// function convert_rel_to_abs() = 
+//     [
+
+//     ];
+
+function temp_rel_to_abs(p, n) = 
+    [
+        p[n][0],
+        p[n][1],
+        each convert_params_rel_to_abs(p, n)[2],
+        p[n][3]
+    ];
 
 // Funadamental shape creation module for polychannel module.
 module shape3D(shape, size, position, rotation, center=true) {
@@ -51,6 +105,19 @@ params_pos_relative = [
     ["sphr", [eps, 1*sqrt(2), 1], [0, 5, 0], [45, [0, 0, 1]]],
     ["sphr", [eps, 2, 2], [5, 0, 0], [0, [0, 0, 1]]]
 ];
+
+// function abs_pos(p, n, pos_index=2) = [
+//     for i=[n:1:n] let (positions=[for (j=[0:1:n]) [p[pos_index][j]]]) positions
+// ];
+
+// echo();
+// echo("Trying it out...");
+// temp_absolute = [
+//     for (p=params_pos_relative)  {};
+// ]
+// echo(temp_absolute);
+// echo();
+
 
 // Print test data relative and absolute positions
 for (i=[0:1:len(params_pos_relative)-1]) {
