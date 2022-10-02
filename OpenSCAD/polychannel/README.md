@@ -21,7 +21,7 @@ Absolutely do not use `include <polychannel.scad>`, etc. The reason is that `use
 
 The `polychannel` module is a much easier to use replacement for Jose's `routing` library, and is based on Openscad's [hull() operation](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Transformations#hull). If you don't know what that is, please go through material at the link. Once you understand it, the module should be easy to use.
 
-![](polychannel.png)
+![](polychannel_shapes.png)
 
 Note that the red rectangular boxes are the shapes on which the `hull()` operation operates to get the pale red (absolute positioning) and light blue (relative positioning) polychannels.
 
