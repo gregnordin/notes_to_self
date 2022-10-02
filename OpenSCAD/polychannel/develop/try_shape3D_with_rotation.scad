@@ -55,6 +55,36 @@ function cumm_sum_func(v) = [
 ];
 echo(cumm_sum_func(input));
 
+echo();
+echo("Cummulative sum 2nd elements");
+input2 = [[0, 2], [1, 3], [2, 5], [3, 8], [4, 10], [5, 12]];
+echo(0, input2[0], input2[0][1]);
+echo(1, input2[1], input2[1][1]);
+cumm_sum2 = [
+    for (i=[0:1:len(input2)-1]) let (input_sub = [
+        for (j=[0:1:i]) input2[j][1]
+    ]) add(input_sub)
+];
+echo(cumm_sum2);
+echo();
+echo("cumm_sum_func2");
+function cumm_sum_func2(v) = [
+    for (i=[0:1:len(v)-1]) let (v_sub = [
+        for (j=[0:1:i]) v[j][1]
+    ]) add(v_sub)
+];
+echo(cumm_sum_func2(input2));
+
+echo();
+echo("cumm_sum_func3");
+function cumm_sum_func3(v, sum_index, pos_index=1) = [
+    for (i=[sum_index:1:sum_index]) let (v_sub = [
+        for (j=[0:1:i]) v[j][pos_index]
+    ]) add(v_sub)
+];
+echo(2, cumm_sum_func3(input2, 2), cumm_sum_func3(input2, 2)[0]);
+
+
 // function convert_rel_to_abs() = 
 //     [
 
