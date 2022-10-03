@@ -1,5 +1,17 @@
 use <polychannel.scad>
 
+
+function abs_to_rel_positions(p) = [
+    for (i=[0:1:len(p)-1]) [
+        p[i][0], 
+        p[i][1],
+        i==0
+            ? p[i][2] - p[i][2]
+            : p[i][2] - p[i-1][2],
+        p[i][3]
+    ]
+];
+
 // Circular arc functions to calculate absolute and relative positions along an arc
 // n is the number of segments in arc, so number of points in arc is n+1
 function calc_arc_pos_i(radius, angle1, angle2, n, i) = [
@@ -46,5 +58,7 @@ test_params_pos_absolute = [
     ["cube", [0.01, 1, 2], [-2, temp_radius, 0], [0, [0, 0, 1]]]
 ];
 echo(test_params_pos_absolute);
+test_params_pos_relative = abs_to_rel_positions(test_params_pos_absolute);
 
 translate([-5, 0, 0]) polychannel(test_params_pos_absolute);
+translate([-5, 0, 3]) polychannel(test_params_pos_relative, relative_positions=true, clr="Salmon");
