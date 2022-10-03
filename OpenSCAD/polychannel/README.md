@@ -19,7 +19,7 @@ Absolutely do not use `include <polychannel.scad>`, etc. The reason is that `use
 
 ## `polychannel()`
 
-The `polychannel` module is a much easier to use replacement for Jose's `routing` library, and is based on Openscad's [hull() operation](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Transformations#hull). If you don't know what that is, please go through material at the link. Once you understand it, the module should be easy to use.
+The `polychannel` module is a much easier to use replacement for Jose's `routing` library, and is based on Openscad's [hull() operation](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Transformations#hull). If you don't know what that is, please go through material at the link. Once you understand it, the module should be easy to use. A good resource to understand convex hull for 2D is [Peter Norvig's note on 2D convex hull](https://github.com/norvig/pytudes/blob/main/ipynb/Convex%20Hull.ipynb).
 
 ![](polychannel_shapes.png)
 
