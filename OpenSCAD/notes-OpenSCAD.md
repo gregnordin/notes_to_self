@@ -85,7 +85,8 @@ Possibilities for circular arcs:
 
 Try creating an arc with intersection of cubes rotated and moved along an arc. Led to idea to do something like this with flat plate-like shapes and hull() between them, which is compatible with the polychannel approach and would just need the shapes and positions of the shapes.
 
-- &#9989; Try embedding the output of a function in a list&rarr; it works.
+- `try_embed_function_in_array.scad`
+    - &#9989; Try embedding the output of a function in a list&rarr; it works.
 - `try_func_for_arc.scad`
     - &#9989; Create functions for absolute positions and relative positions along a 90&deg; arc.
     - &#9989; Make arc go from angle a to angle b (CCW).
@@ -97,12 +98,26 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
             - [`<shape>, <size>, <relative position>, <rotation>`]
                 - `<shape>` = "cube" or "sphere/sphr"
                 - `<size>` = [3, 2, 1]
-                - `<position>` = [10, 12, 0] (absolute or relative, always specify as relative and then use function to turn it into absolute)
+                - `<position>` = [10, 12, 0] can be absolute or relative, always specify as relative and then use function to turn it into absolute?
                 - `<rotation>` &rarr; angle (a=90), axis of rotation (v=[0, 0, 1]) = [90, [0, 0, 1]]
             - Example
                 - `["sphr", [0.01, 4, 4], [0, 0, 0], [45, [0, 0, 1]]]`
-        - &#9989; Can `relative position` be easily turned into `absolute position` with this data structure? Write function to do it.
-- Create new polychannel module to use the above shape3D and data structure.
-- Create function to make new data structure entries for an arc that include positions and shape angles.
+        - &#9989; Can `relative position` be easily turned into `absolute position` with this data structure? Write functions to do it. **Use simple single purpose functions that work together.** Openscad functions are too limiting to do it all in one function.
+- &#9989; Create new polychannel module to use the above shape3D and data structure. **Do a lot of debugging.**
+- Expand example test data.
+- Create function to make new data structure entries for an xy arc that includes positions and shape rotation angles.
 - Put into a list with other positions/shapes and input into polychannel.
+- Add example to test data.
+- Create functions for xz and yz arcs.
+- Add examples to test data.
+
+
+Other possible modules for channel paths that use the new data format developed above and the hull-based polychannel approach:
+
+- [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) and linked Bezier curves.
+    - [Python Bezier package](https://bezier.readthedocs.io/en/stable/python/reference/bezier.curve.html).
+- Spirals.
+- 3D serpentine channels with 90&deg; corners and with 180&deg; circular arc bends.
+    - Stacked in z with channels in xy.
+    - Stacked in x or y with vertical channels.
 
