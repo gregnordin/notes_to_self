@@ -108,13 +108,19 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
 - `try_abs_to_rel_pos_conversion.scad`
     - &#9989; Create function to take an data structure with absolute positions and turn it into one with relative positions. I need this to make it simpler to create an arc data structure with relative positions.
 - `try_circular_arc_xy_for_polychannel.scad`
+    - **Positive angle rotation from x to y around +z axis.**
     - &#9989; Create function to make new data structure entries for an xy arc that includes positions and shape rotation angles. Use absolute positions to make it tractable given Openscad's limitations for functions.
     - &#9989; Put into a list with other positions/shapes and input into polychannel.
     - &#9989; Create relative position arc function.
     - &#9989; Use absolute to relative position converstion in list with other positions/shapes and input into polychannel.
     - &#9989; Try more extensive set of arc angles.
 - `try_circular_arc_xz_for_polychannel.scad`
+    - **Positive angle rotation from x to z around -y axis.**
     - &#9989; Create functions for xz arcs.
+- `try_circular_arc_yz_for_polychannel.scad`
+    - **Positive angle rotation from y to z around +x axis.**
+    - &#9989; Create functions for yz arcs.
+- Move xy, xz, yz arc functions to `polychannels.scad`
 - Add examples to test data.
 - Add a starting position to arc creation function so can use absolute positions?
 
