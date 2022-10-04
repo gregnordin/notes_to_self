@@ -113,8 +113,8 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
     - &#9989; Create relative position arc function.
     - &#9989; Use absolute to relative position converstion in list with other positions/shapes and input into polychannel.
     - &#9989; Try more extensive set of arc angles.
-- Add example to test data.
-- Create functions for xz and yz arcs.
+- `try_circular_arc_xz_for_polychannel.scad`
+    - &#9989; Create functions for xz arcs.
 - Add examples to test data.
 - Add a starting position to arc creation function so can use absolute positions?
 
