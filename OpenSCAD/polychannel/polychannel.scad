@@ -8,11 +8,13 @@
 / Rev. 1, 9/28/22, by G. Nordin - Initial version
 / Rev. 1.5, 9/29/22, by Dallin Miner - Modify to select sphere as well as cube shapes
 / Rev. 2, 10/1/22, by G. Nordin - Generalize to include rotation of shapes
+/ Rev. 3, 10/4/22, by G. Nordin - Generalize to include rotation of shapes
 --------------------------------------------------------------------------------------*/
 $fn=50;
 
 echo();
 echo();
+
 
 /*---------------------------------------------------------------------------------------
 // Functions to convert between relative and absolute positions and vice versa in
@@ -70,11 +72,86 @@ function rel_to_abs_positions(p) = [
 ];
 
 
+/*---------------------------------------------------------------------------------------
+// Circular arc functions to calculate absolute and relative positions along an arc in xy.
+// n is the number of segments in arc, so number of points in arc is n+1.
+//
+// Example
+// -------
+// test_arc = arc_xy_rel_position("cube", [1, 0.01, 2], 4, 0, 90, 12);
+// test_params_pos_relative = [
+//     ["cube", [1, 0.01, 2], [0, 0, 0], [0, [0, 0, 1]]],
+//     ["cube", [1, 0.01, 2], [0, 2, 0], [0, [0, 0, 1]]],
+//     each test_arc,
+//     ["cube", [0.01, 1, 2], [-2, 0, 0], [0, [0, 0, 1]]]
+// ];
+/--------------------------------------------------------------------------------------*/
+function _calc_arc_xy_pos_i(radius, angle1, angle2, n, i) = [
+    radius*cos(angle1 + i*(angle2-angle1)/n), 
+    radius*sin(angle1 + i*(angle2-angle1)/n),
+    0
+];
+function _calc_arc_xy_rot_i(angle1, angle2, n, i) = [
+    angle1 + i*(angle2-angle1)/n, 
+    [0, 0, 1]
+];
+function _arc_xy_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i) = [
+    shape, size, _calc_arc_xy_pos_i(radius, angle1, angle2, n, i), _calc_arc_xy_rot_i(angle1, angle2, n, i)
+];
+function _arc_xy_abs_position(shape, size, radius, angle1, angle2, n) = [
+    for (i=[0:1:n]) _arc_xy_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i)
+];
+function arc_xy_rel_position(shape, size, radius, angle1, angle2, n) = 
+    abs_to_rel_positions(_arc_xy_abs_position(shape, size, radius, angle1, angle2, n));
+
+/*---------------------------------------------------------------------------------------
+// Circular arc functions to calculate absolute and relative positions along an arc in xz.
+// n is the number of segments in arc, so number of points in arc is n+1.
+/--------------------------------------------------------------------------------------*/
+function _calc_arc_xz_pos_i(radius, angle1, angle2, n, i) = [
+    radius*cos(angle1 + i*(angle2-angle1)/n), 
+    0,
+    radius*sin(angle1 + i*(angle2-angle1)/n)
+];
+function _calc_arc_xz_rot_i(angle1, angle2, n, i) = [
+    angle1 + i*(angle2-angle1)/n, 
+    [0, -1, 0]
+];
+function _arc_xz_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i) = [
+    shape, size, _calc_arc_xz_pos_i(radius, angle1, angle2, n, i), _calc_arc_xz_rot_i(angle1, angle2, n, i)
+];
+function _arc_xz_abs_position(shape, size, radius, angle1, angle2, n) = [
+    for (i=[0:1:n]) _arc_xz_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i)
+];
+function arc_xz_rel_position(shape, size, radius, angle1, angle2, n) = 
+    abs_to_rel_positions(_arc_xz_abs_position(shape, size, radius, angle1, angle2, n));
+
+/*---------------------------------------------------------------------------------------
+// Circular arc functions to calculate absolute and relative positions along an arc in yz.
+// n is the number of segments in arc, so number of points in arc is n+1.
+/--------------------------------------------------------------------------------------*/
+function _calc_arc_yz_pos_i(radius, angle1, angle2, n, i) = [
+    0,
+    radius*cos(angle1 + i*(angle2-angle1)/n), 
+    radius*sin(angle1 + i*(angle2-angle1)/n)
+];
+function _calc_arc_yz_rot_i(angle1, angle2, n, i) = [
+    angle1 + i*(angle2-angle1)/n, 
+    [1, 0, 0]
+];
+function _arc_yz_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i) = [
+    shape, size, _calc_arc_yz_pos_i(radius, angle1, angle2, n, i), _calc_arc_yz_rot_i(angle1, angle2, n, i)
+];
+function _arc_yz_abs_position(shape, size, radius, angle1, angle2, n) = [
+    for (i=[0:1:n]) _arc_yz_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i)
+];
+function arc_yz_rel_position(shape, size, radius, angle1, angle2, n) = 
+    abs_to_rel_positions(_arc_yz_abs_position(shape, size, radius, angle1, angle2, n));
 
 
-
-
+/*---------------------------------------------------------------------------------------
 // Fundamental shape creation module for polychannel module.
+/--------------------------------------------------------------------------------------*/
 module shape3D(shape, size, position, rotation, center=true) {
     a = rotation[0];
     v = rotation[1];
@@ -108,7 +185,7 @@ module polychannel_absolute_positions(params, clr="lightblue", center=true, show
     }
 }
 
-module polychannel(params, relative_positions=false, clr="lightblue", center=true, show_only_shapes=false) {
+module polychannel(params, relative_positions=true, clr="lightblue", center=true, show_only_shapes=false) {
     if (relative_positions) {
         params_abs = rel_to_abs_positions(params);
         polychannel_absolute_positions(params_abs, clr=clr, center=center, show_only_shapes=show_only_shapes);
@@ -117,29 +194,17 @@ module polychannel(params, relative_positions=false, clr="lightblue", center=tru
     }
 }
 
-// Test data
+// Example
 eps = 0.01;
-params_pos_absolute = [
-    ["sphr", [eps, 4, 4], [0, 0, 0], [0, [0, 0, 1]]],
-    ["sphr", [eps, 4, 4], [7, 0, 0], [0, [0, 0, 1]]],
-    ["cube", [eps, 1, 1], [7, 0, 0], [0, [0, 0, 1]]],
-    ["cube", [eps, 1*sqrt(2), 1], [10, 0, 0], [45, [0, 0, 1]]],
-    ["cube", [eps, 1, 1], [10, 2, 0], [90, [0, 0, 1]]],
-    ["cube", [3, 2, 3], [10, 5, 0], [0, [0, 0, 1]]],
-    ["cube", [1, eps, 1], [10, 7, 0], [0, [0, 0, 1]]],
-    ["sphr", [eps, 1*sqrt(2), 1], [10, 8, 0], [45, [0, 0, 1]]],
-    ["sphr", [eps, 2, 2], [15, 8, 0], [0, [0, 0, 1]]],
-    ["sphr", [2, 2, 2], [17, 8, 0], [0, [0, 0, 1]]],
-    ["sphr", [2, 2, 2], [17, 4, 4], [0, [0, 0, 1]]],
-    ["cube", [1, 1, 2], [17, 2, 4], [0, [0, 0, 1]]]
-];
+
 params_pos_relative = [
     ["sphr", [eps, 4, 4], [0, 0, 0], [0, [0, 0, 1]]],
     ["sphr", [eps, 4, 4], [7, 0, 0], [0, [0, 0, 1]]],
-    ["cube", [eps, 1, 1], [0, 0, 0], [0, [0, 0, 1]]],
+    ["sphr", [eps, 3, 3], [0, 0, 0], [0, [0, 0, 1]]],
+    ["cube", [eps, 1, 1], [3, 0, 0], [0, [0, 0, 1]]],
     ["cube", [eps, 1*sqrt(2), 1], [3, 0, 0], [45, [0, 0, 1]]],
     ["cube", [eps, 1, 1], [0, 2, 0], [90, [0, 0, 1]]],
-    ["cube", [3, 2, 3], [0, 3, 0], [0, [0, 0, 1]]],
+    ["cube", [3, 1, 3], [0, 3, 0], [0, [0, 0, 1]]],
     ["cube", [1, eps, 1], [0, 2, 0], [0, [0, 0, 1]]],
     ["sphr", [eps, 1*sqrt(2), 1], [0, 2, 0], [45, [0, 0, 1]]],
     ["sphr", [eps, 2, 2], [5, 0, 0], [0, [0, 0, 1]]],
@@ -147,11 +212,9 @@ params_pos_relative = [
     ["sphr", [2, 2, 2], [0, -4, 4], [0, [0, 0, 1]]],
     ["cube", [1, 1, 2], [0, -2, 0], [0, [0, 0, 1]]]
 ];
+params_pos_absolute = rel_to_abs_positions(params_pos_relative);
 
-
-polychannel(params_pos_relative, relative_positions=true, clr="red", show_only_shapes=true);
-
-translate([0, -25, 0]) polychannel(params_pos_absolute, clr="Salmon");
-
-translate([0, 25, 0]) polychannel(params_pos_relative, relative_positions=true);
+polychannel(params_pos_relative, clr="red", show_only_shapes=true);
+translate([0, 25, 0]) polychannel(params_pos_absolute, relative_positions=false);
+translate([0, -25, 0]) polychannel(params_pos_relative, clr="Salmon");
 
