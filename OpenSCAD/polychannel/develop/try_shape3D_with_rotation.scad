@@ -37,15 +37,15 @@ function add_list_of_vecs(v) = [for(i=v) 1]*v;
 function extract_rel_pos_vectors(p, n, pos_index=2) = [
     for (i=[0:1:n]) p[i][pos_index]
 ];
-function pos_rel_to_abs_oneline(p, line_index) = [
+function rel_to_abs_position_oneline(p, line_index) = [
     p[line_index][0],
     p[line_index][1],
     add_list_of_vecs(extract_rel_pos_vectors(p, line_index)),
     p[line_index][3]
 ];
 
-function convert_params_rel_to_abs(p) = [
-    for (i=[0:1:len(p)-1]) pos_rel_to_abs_oneline(p, i)
+function rel_to_abs_positions(p) = [
+    for (i=[0:1:len(p)-1]) rel_to_abs_position_oneline(p, i)
 ];
 
 // Test data
@@ -72,7 +72,7 @@ params_pos_relative = [
 ];
 
 // Calculate absolute positions from relative positions
-test_params_pos_absolute = convert_params_rel_to_abs(params_pos_relative);
+test_params_pos_absolute = rel_to_abs_positions(params_pos_relative);
 echo();
 
 // Display relative, absolute, and calculated absolute positions
