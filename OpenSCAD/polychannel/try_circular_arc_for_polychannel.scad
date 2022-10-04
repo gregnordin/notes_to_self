@@ -41,14 +41,14 @@ function abs_to_rel_positions(p) = [
 ];
 // Function to add list of vectors. See add2() at 
 // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Add_all_values_in_a_list
-function add_list_of_vecs(v) = [for(i=v) 1]*v;
-function extract_rel_pos_vectors(p, n, pos_index=2) = [
+function _add_list_of_vecs(v) = [for(i=v) 1]*v;
+function _extract_rel_pos_vectors(p, n, pos_index=2) = [
     for (i=[0:1:n]) p[i][pos_index]
 ];
 function rel_to_abs_position_oneline(p, line_index) = [
     p[line_index][0],
     p[line_index][1],
-    add_list_of_vecs(extract_rel_pos_vectors(p, line_index)),
+    _add_list_of_vecs(_extract_rel_pos_vectors(p, line_index)),
     p[line_index][3]
 ];
 function rel_to_abs_positions(p) = [
@@ -69,23 +69,23 @@ function rel_to_abs_positions(p) = [
 //     ["cube", [0.01, 1, 2], [-2, 0, 0], [0, [0, 0, 1]]]
 // ];
 /--------------------------------------------------------------------------------------*/
-function calc_arc_pos_i(radius, angle1, angle2, n, i) = [
+function _calc_arc_pos_i(radius, angle1, angle2, n, i) = [
     radius*cos(angle1 + i*(angle2-angle1)/n), 
     radius*sin(angle1 + i*(angle2-angle1)/n),
     0
 ];
-function calc_arc_rot_i(angle1, angle2, n, i) = [
+function _calc_arc_rot_i(angle1, angle2, n, i) = [
     angle1 + i*(angle2-angle1)/n, 
     [0, 0, 1]
 ];
-function arc_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i) = [
-    shape, size, calc_arc_pos_i(radius, angle1, angle2, n, i), calc_arc_rot_i(angle1, angle2, n, i)
+function _arc_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i) = [
+    shape, size, _calc_arc_pos_i(radius, angle1, angle2, n, i), _calc_arc_rot_i(angle1, angle2, n, i)
 ];
-function arc_abs_position(shape, size, radius, angle1, angle2, n) = [
-    for (i=[0:1:n]) arc_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i)
+function _arc_abs_position(shape, size, radius, angle1, angle2, n) = [
+    for (i=[0:1:n]) _arc_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i)
 ];
 function arc_rel_position(shape, size, radius, angle1, angle2, n) = 
-    abs_to_rel_positions(arc_abs_position(shape, size, radius, angle1, angle2, n));
+    abs_to_rel_positions(_arc_abs_position(shape, size, radius, angle1, angle2, n));
 
 /*---------------------------------------------------------------------------------------
 // Examples
@@ -136,10 +136,10 @@ translate([6.5*spacing, 0, 0])
 translate([7*spacing, 0, 0]) 
     polychannel(rel_to_abs_positions(arc_rel_position("cube", [1, 0.01, 2], radius, 180, 0, n_segs)));
 // 180deg arc starting at -90deg
-translate([8.5*spacing, 0, 0]) 
+translate([4.5*spacing, -1.5*spacing, 0]) 
     polychannel(rel_to_abs_positions(arc_rel_position("cube", [1, 0.01, 2], radius, -90, 90, n_segs)));
 // 180deg arc starting at -90deg
-translate([9.5*spacing, 0, 0]) 
+translate([5.5*spacing, -1.5*spacing, 0]) 
     polychannel(rel_to_abs_positions(arc_rel_position("cube", [1, 0.01, 2], radius, 90, -90, n_segs)));
 
 /*---------------------------------------------------------------------------------------
