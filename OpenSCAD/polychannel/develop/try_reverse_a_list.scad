@@ -1,19 +1,5 @@
 use <../polychannel.scad>
 
-function reverse_order(p) = [
-    for (i=[len(p)-1:-1:0]) [
-        p[i][0], 
-        p[i][1],
-        i==len(p)-1
-            ? p[0][2]
-            : p[i+1][2],
-        p[i][3]
-    ]
-];
-function extract_all_rel_position_vectors(p) =
-    _extract_rel_pos_vectors(params_pos_relative, len(params_pos_relative)-1);
-
-
 
 eps = 0.01;
 params_pos_relative = [
@@ -37,6 +23,7 @@ echo();
 echo(rel_positions);
 echo(final_position);
 echo(-final_position);
+echo(get_final_position(params_pos_relative));
 echo();
 
 color("Salmon") translate([0, 0, 5]) 

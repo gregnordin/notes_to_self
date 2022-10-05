@@ -17,6 +17,31 @@ echo();
 
 
 /*---------------------------------------------------------------------------------------
+// Utility functions.
+--------------------------------------------------------------------------------------*/
+
+// Reverse the order of a list of parameters with relative positions.
+function reverse_order(p) = [
+    for (i=[len(p)-1:-1:0]) [
+        p[i][0], 
+        p[i][1],
+        i==len(p)-1
+            ? p[0][2]
+            : p[i+1][2],
+        p[i][3]
+    ]
+];
+
+// Get all of the relative position vectors from list of parameters.
+function extract_all_rel_position_vectors(p) =
+    _extract_rel_pos_vectors(params_pos_relative, len(params_pos_relative)-1);
+
+// Return the final position of the center of the last element for a 
+// list of parameters that uses relative position vectors.
+function get_final_position(p) = 
+    _add_list_of_vecs(extract_all_rel_position_vectors(p));
+
+/*---------------------------------------------------------------------------------------
 // Functions to convert between relative and absolute positions and vice versa in
 // a list of shape/size/position/rotation parameters.
 //
