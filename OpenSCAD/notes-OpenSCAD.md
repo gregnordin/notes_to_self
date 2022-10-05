@@ -122,17 +122,25 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
     - &#9989; Create functions for yz arcs.
 - &#9989; Move xy, xz, yz arc functions to `polychannels.scad`
 - &#9989; Change polychannel default to `relative_positions=true`
-- Add examples to test data.
-    - 90&deg; bends - `polychannel_examples_90deg_bends.scad`.
-    - Shape changing.
-    - Round channels and turns.
+- &#9989; Add examples that illustrate use of polychannel and arc features.
+    - &#9989; Multiple sequential 90&deg; bends - `polychannel_examples_90deg_bends.scad`.
+    - &#9989; Individual arcs that show starting position and sense of angular rotation.
+    - &#9989; Shape changing.
+    - &#9989; Round channels and turns.
 - &#10060; Add a starting position to arc creation function so can use absolute positions?
 - Update `serpentine.scad` and `serpentine_circularends.scad`.
+- Re-do Dallin's interleaved 1D mixer to use circular arcs for the narrow interleaved channels and the narrow channels feeding into and out of the high aspect ratio mixer channel.
 
 
 Other possible modules for channel paths that use the new data format developed above and the hull-based polychannel approach:
 
 - S-curve.
+    - Inputs:
+        - radius1
+        - radius2
+        - Separation between input and output channels (= radius1 + radius2 + diff)
+            - Separation direction (positive or negative)
+        - Plane of S: xy, xz, yz
 - 90&deg; xy bend with z change.
 - [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) and linked Bezier curves.
     - [Python Bezier package](https://bezier.readthedocs.io/en/stable/python/reference/bezier.curve.html).
