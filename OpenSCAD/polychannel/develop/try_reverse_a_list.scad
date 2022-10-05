@@ -1,6 +1,5 @@
 use <../polychannel.scad>
 
-
 eps = 0.01;
 params_pos_relative = [
     ["sphr", [eps, 4, 4], [0, 0, 0], [0, [0, 0, 1]]],
@@ -13,6 +12,7 @@ params_pos_relative = [
 polychannel(params_pos_relative);
 
 final_position = get_final_position(params_pos_relative);
+params_pos_absolute = rel_to_abs_positions(params_pos_relative);
 
 echo();
 echo(params_pos_relative);
@@ -22,6 +22,8 @@ echo();
 echo(final_position);
 echo(-final_position);
 echo(get_final_position(params_pos_relative));
+echo(params_pos_absolute);
+echo(params_pos_absolute[5][2]);
 echo();
 
 color("Salmon") translate([0, 0, 5]) 

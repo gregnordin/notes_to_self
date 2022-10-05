@@ -92,8 +92,7 @@ function extract_all_rel_position_vectors(p) =
 
 // Return the final position of the center of the last element for a 
 // list of parameters that uses relative position vectors.
-function get_final_position(p) = 
-    _add_list_of_vecs(extract_all_rel_position_vectors(p));
+function get_final_position(p) = rel_to_abs_positions(p)[len(p)-1][2];
 
 
 /*---------------------------------------------------------------------------------------
