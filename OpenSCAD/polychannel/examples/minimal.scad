@@ -10,3 +10,9 @@ params_pos_relative = [
     ["cube", [0.5, 0.5, 0.5], [0, 4, 0], [0, [0, 0, 1]]],
 ];
 polychannel(params_pos_relative);
+color("red") translate([0, 0, 5]) polychannel(params_pos_relative, show_only_shapes=true);
+
+//Annotations
+color("blue") translate([8,-4,0]) rotate([90,0,0]) scale(0.1) text("polychannel() output",halign="center",valign="center");
+color("blue") translate([8,-4,5]) rotate([90,0,0]) scale(0.1) text("Shapes-only",halign="center",valign="center");
+
