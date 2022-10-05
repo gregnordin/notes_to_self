@@ -24,7 +24,7 @@ translate([0, 3, 0]) polychannel(params_arc);
 
 0&deg; is in the xz plane, and positive rotation is CCW from the +x axis rotating around the +z axis (follows right-hand rule with thumb in the +z direction).
 
-![](polychannel_examples_arc_xy_definitions.png)
+![](examples/arc_xy_definitions.png)
 
 
 ## x-z arc
@@ -39,7 +39,7 @@ translate([0, 3, 0]) polychannel(params_arc);
 
 0&deg; is in the xy plane, and positive rotation is CCW from the +x axis rotating around the -y axis (to maintain right-hand rule, thumb in the -y direction).
 
-![](polychannel_examples_arc_xz_definitions.png)
+![](examples/arc_xz_definitions.png)
 
 ## y-z arc
 
@@ -53,4 +53,4 @@ translate([0, 3, 0]) polychannel(params_arc);
 
 0&deg; is in the xy plane, and positive rotation is CCW from the +y axis rotating around the +x axis (follows right-hand rule with thumb in the +x direction).
 
-![](polychannel_examples_arc_yz_definitions.png)
+![](examples/arc_yz_definitions.png)
