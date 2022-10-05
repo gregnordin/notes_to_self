@@ -17,6 +17,60 @@ echo();
 
 
 /*---------------------------------------------------------------------------------------
+// polychannel module.
+/--------------------------------------------------------------------------------------*/
+// This is the module that should always be used. It is set by default to operate on
+// shape-position lists that use relative positions for the elements.
+module polychannel(params, relative_positions=true, clr="lightblue", center=true, show_only_shapes=false) {
+    if (relative_positions) {
+        params_abs = rel_to_abs_positions(params);
+        polychannel_absolute_positions(params_abs, clr=clr, center=center, show_only_shapes=show_only_shapes);
+    } else {
+        polychannel_absolute_positions(params, clr=clr, center=center, show_only_shapes=show_only_shapes);
+    }
+}
+
+// Module that does the heavy lifting of creating a polychannel. Should be used by calling
+// the polychannel() module.
+module polychannel_absolute_positions(params, clr="lightblue", center=true, show_only_shapes=false) {
+    // echo("len(params)", len(params));
+    // echo("params", params);
+    if (show_only_shapes) {
+        for (i = [0:1:len(params)-1]) {
+            // echo("shapes only", i, params[i]);
+            color(clr) shape3D(params[i][0], params[i][1], params[i][2], params[i][3], center=center);
+        }
+    } else {
+        for (i = [1:1:len(params)-1]) {
+            // echo("with hull", i, params[i-1], params[i]);
+            color(clr) hull() {
+                shape3D(params[i-1][0], params[i-1][1], params[i-1][2], params[i-1][3], center=center);
+                shape3D(params[i][0], params[i][1], params[i][2], params[i][3], center=center);
+            };
+        };
+    }
+}
+
+
+/*---------------------------------------------------------------------------------------
+// Fundamental shape creation module for polychannel module.
+/--------------------------------------------------------------------------------------*/
+module shape3D(shape, size, position, rotation, center=true) {
+    a = rotation[0];
+    v = rotation[1];
+    if(shape=="cube"){
+        translate(position) rotate(a=a, v=v) cube(size, center=center);
+    }
+    else if(shape=="sphr" || shape=="sphere"){
+        translate(position) rotate(a=a, v=v)  scale(size) sphere(d=1);
+    }
+    else {
+        assert(false, "invalid shape");
+    }
+}
+
+
+/*---------------------------------------------------------------------------------------
 // Utility functions.
 --------------------------------------------------------------------------------------*/
 
@@ -34,12 +88,13 @@ function reverse_order(p) = [
 
 // Get all of the relative position vectors from list of parameters.
 function extract_all_rel_position_vectors(p) =
-    _extract_rel_pos_vectors(params_pos_relative, len(params_pos_relative)-1);
+    _extract_rel_pos_vectors_up_to_n(params_pos_relative, len(params_pos_relative)-1);
 
 // Return the final position of the center of the last element for a 
 // list of parameters that uses relative position vectors.
 function get_final_position(p) = 
     _add_list_of_vecs(extract_all_rel_position_vectors(p));
+
 
 /*---------------------------------------------------------------------------------------
 // Functions to convert between relative and absolute positions and vice versa in
@@ -83,13 +138,13 @@ function abs_to_rel_positions(p) = [
 // Function to add list of vectors. See add2() at 
 // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Add_all_values_in_a_list
 function _add_list_of_vecs(v) = [for(i=v) 1]*v;
-function _extract_rel_pos_vectors(p, n, pos_index=2) = [
+function _extract_rel_pos_vectors_up_to_n(p, n, pos_index=2) = [
     for (i=[0:1:n]) p[i][pos_index]
 ];
 function rel_to_abs_position_oneline(p, line_index) = [
     p[line_index][0],
     p[line_index][1],
-    _add_list_of_vecs(_extract_rel_pos_vectors(p, line_index)),
+    _add_list_of_vecs(_extract_rel_pos_vectors_up_to_n(p, line_index)),
     p[line_index][3]
 ];
 function rel_to_abs_positions(p) = [
@@ -173,51 +228,6 @@ function _arc_yz_abs_position(shape, size, radius, angle1, angle2, n) = [
 function arc_yz_rel_position(shape, size, radius, angle1, angle2, n) = 
     abs_to_rel_positions(_arc_yz_abs_position(shape, size, radius, angle1, angle2, n));
 
-
-/*---------------------------------------------------------------------------------------
-// Fundamental shape creation module for polychannel module.
-/--------------------------------------------------------------------------------------*/
-module shape3D(shape, size, position, rotation, center=true) {
-    a = rotation[0];
-    v = rotation[1];
-    if(shape=="cube"){
-        translate(position) rotate(a=a, v=v) cube(size, center=center);
-    }
-    else if(shape=="sphr" || shape=="sphere"){
-        translate(position) rotate(a=a, v=v)  scale(size) sphere(d=1);
-    }
-    else {
-        assert(false, "invalid shape");
-    }
-}
-
-module polychannel_absolute_positions(params, clr="lightblue", center=true, show_only_shapes=false) {
-    // echo("len(params)", len(params));
-    // echo("params", params);
-    if (show_only_shapes) {
-        for (i = [0:1:len(params)-1]) {
-            // echo("shapes only", i, params[i]);
-            color(clr) shape3D(params[i][0], params[i][1], params[i][2], params[i][3], center=center);
-        }
-    } else {
-        for (i = [1:1:len(params)-1]) {
-            // echo("with hull", i, params[i-1], params[i]);
-            color(clr) hull() {
-                shape3D(params[i-1][0], params[i-1][1], params[i-1][2], params[i-1][3], center=center);
-                shape3D(params[i][0], params[i][1], params[i][2], params[i][3], center=center);
-            };
-        };
-    }
-}
-
-module polychannel(params, relative_positions=true, clr="lightblue", center=true, show_only_shapes=false) {
-    if (relative_positions) {
-        params_abs = rel_to_abs_positions(params);
-        polychannel_absolute_positions(params_abs, clr=clr, center=center, show_only_shapes=show_only_shapes);
-    } else {
-        polychannel_absolute_positions(params, clr=clr, center=center, show_only_shapes=show_only_shapes);
-    }
-}
 
 // Example
 eps = 0.01;

@@ -12,15 +12,13 @@ params_pos_relative = [
 ];
 polychannel(params_pos_relative);
 
-rel_positions = extract_all_rel_position_vectors(params_pos_relative);
-final_position = _add_list_of_vecs(rel_positions);
+final_position = get_final_position(params_pos_relative);
 
 echo();
 echo(params_pos_relative);
 echo();
 echo(reverse_order(params_pos_relative));
 echo();
-echo(rel_positions);
 echo(final_position);
 echo(-final_position);
 echo(get_final_position(params_pos_relative));
