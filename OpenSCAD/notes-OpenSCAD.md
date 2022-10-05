@@ -123,12 +123,17 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
 - &#9989; Move xy, xz, yz arc functions to `polychannels.scad`
 - &#9989; Change polychannel default to `relative_positions=true`
 - Add examples to test data.
+    - 90&deg; bends - `polychannel_examples_90deg_bends.scad`.
+    - Shape changing.
+    - Round channels and turns.
 - &#10060; Add a starting position to arc creation function so can use absolute positions?
 - Update `serpentine.scad` and `serpentine_circularends.scad`.
 
 
 Other possible modules for channel paths that use the new data format developed above and the hull-based polychannel approach:
 
+- S-curve.
+- 90&deg; xy bend with z change.
 - [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) and linked Bezier curves.
     - [Python Bezier package](https://bezier.readthedocs.io/en/stable/python/reference/bezier.curve.html).
 - [B-splines](https://en.wikipedia.org/wiki/B-spline)?
