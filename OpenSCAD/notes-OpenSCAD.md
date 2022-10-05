@@ -128,7 +128,7 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
     - &#9989; Shape changing.
     - &#9989; Round channels and turns.
 - &#10060; Add a starting position to arc creation function so can use absolute positions?
-- Move examples into an examples directory.
+- &#9989; Move examples into an examples directory.
 - Update `serpentine.scad` and `serpentine_circularends.scad`.
 - Re-do Dallin's interleaved 1D mixer to use circular arcs for the narrow interleaved channels and the narrow channels feeding into and out of the high aspect ratio mixer channel.
 - Utility functions

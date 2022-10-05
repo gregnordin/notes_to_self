@@ -1,4 +1,4 @@
-use <polychannel.scad>
+use <../polychannel.scad>
 
 eps = 0.01;
 params_pos_relative = [

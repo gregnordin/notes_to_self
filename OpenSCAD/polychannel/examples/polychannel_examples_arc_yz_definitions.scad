@@ -1,4 +1,4 @@
-use <polychannel.scad>
+use <../polychannel.scad>
 
 // Note: all examples use relative coordinates to specify shape positions.
 

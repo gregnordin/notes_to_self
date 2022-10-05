@@ -1,4 +1,4 @@
-use <polychannel.scad>
+use <../polychannel.scad>
 
 // Note: all examples use relative coordinates to specify shape positions.
 
@@ -7,7 +7,7 @@ width = 2;
 height = 1;
 
 params_arc = [
-    each arc_xz_rel_position("cube", [width, height, eps], radius=2, angle1=0, angle2=45, n=4),
+    each arc_xy_rel_position("cube", [width, eps, height], radius=2, angle1=0, angle2=45, n=4),
 ];
 translate([0, 0, 0]) {
     polychannel(params_arc, clr="Salmon", show_only_shapes=true);
