@@ -131,12 +131,13 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
 - &#9989; Move examples into an examples directory.
 - &#9989; Improve examples and text in project wiki.
 - &#9989; Fix README.md and notes-polychannel.md.
-- Update `serpentine.scad` and `serpentine_circularends.scad`.
-- Re-do Dallin's interleaved 1D mixer to use circular arcs for the narrow interleaved channels and the narrow channels feeding into and out of the high aspect ratio mixer channel.
-- Utility functions
+- &#9989; Utility functions
     - &#9989; Function to reverse the order of a list of shape/positions.
     - &#9989; Function to sum up all of the relative positions in a params list to give the final position.
     - &#9989; Function to get the final position from a list of shape/positions.
+    - &#9989; Function to modify arc to be an ascending arc. Works for any arbitrary list of shape/positions.
+- Update `serpentine.scad` and `serpentine_circularends.scad`.
+- Re-do Dallin's interleaved 1D mixer to use circular arcs for the narrow interleaved channels and the narrow channels feeding into and out of the high aspect ratio mixer channel.
 
 
 Other possible modules for channel paths that use the new data format developed above and the hull-based polychannel approach:
@@ -153,7 +154,7 @@ Other possible modules for channel paths that use the new data format developed 
     - [Python Bezier package](https://bezier.readthedocs.io/en/stable/python/reference/bezier.curve.html).
 - [B-splines](https://en.wikipedia.org/wiki/B-spline)?
 - Spirals.
-- 3D serpentine channels with 90&deg; corners and with 180&deg; circular arc bends.
+- 3D serpentine channels with 90&deg; corners and with 180&deg; circular arc bends. Use `uniformly_increase_rel_pos_in_z()`.
     - Stacked in z with channels in xy.
     - Stacked in x or y with vertical channels.
 

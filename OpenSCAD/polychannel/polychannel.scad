@@ -228,6 +228,27 @@ function arc_yz_rel_position(shape, size, radius, angle1, angle2, n) =
     abs_to_rel_positions(_arc_yz_abs_position(shape, size, radius, angle1, angle2, n));
 
 
+/*---------------------------------------------------------------------------------------
+// Functions to uniformly increment relative positions. See
+/--------------------------------------------------------------------------------------*/
+function uniformly_increase_rel_pos(p, change_vec) = [
+    for (i=[0:1:len(p)-1]) let (delta = change_vec/(len(p)-1))[
+        p[i][0], 
+        p[i][1],
+        i==0
+            ? p[i][2]
+            : p[i][2] + delta,
+        p[i][3]
+    ]
+];
+function uniformly_increase_rel_pos_in_z(p, total_pos_change) = 
+    uniformly_increase_rel_pos(p, [0, 0, total_pos_change]);
+function uniformly_increase_rel_pos_in_y(p, total_pos_change) = 
+    uniformly_increase_rel_pos(p, [0, total_pos_change, 0]);
+function uniformly_increase_rel_pos_in_x(p, total_pos_change) = 
+    uniformly_increase_rel_pos(p, [total_pos_change, 0, 0]);
+
+
 // Example
 eps = 0.01;
 
