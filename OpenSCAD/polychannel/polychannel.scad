@@ -8,7 +8,9 @@
 / Rev. 1, 9/28/22, by G. Nordin - Initial version
 / Rev. 1.5, 9/29/22, by Dallin Miner - Modify to select sphere as well as cube shapes
 / Rev. 2, 10/1/22, by G. Nordin - Generalize to include rotation of shapes
-/ Rev. 3, 10/4/22, by G. Nordin - Generalize to include rotation of shapes
+/ Rev. 3, 10/4/22, by G. Nordin
+/ Rev. 4, 10/5/22, by G. Nordin - Add uniformly_increase functions
+/ Rev. 4.1, 10/7/22, by G. Nordin - Add rot_* functions
 --------------------------------------------------------------------------------------*/
 $fn=50;
 
@@ -93,6 +95,11 @@ function extract_all_rel_position_vectors(p) =
 // Return the final position of the center of the last element for a 
 // list of parameters that uses relative position vectors.
 function get_final_position(p) = rel_to_abs_positions(p)[len(p)-1][2];
+
+function rot_x(angle) = [angle, [1, 0, 0]];
+function rot_y(angle) = [angle, [0, 1, 0]];
+function rot_z(angle) = [angle, [0, 0, 1]];
+function no_rot() = rot_z(0);
 
 
 /*---------------------------------------------------------------------------------------
@@ -229,7 +236,7 @@ function arc_yz_rel_position(shape, size, radius, angle1, angle2, n) =
 
 
 /*---------------------------------------------------------------------------------------
-// Functions to uniformly increment relative positions. See
+// Functions to uniformly increment relative positions. See examples/ascending_arcs.scad.
 /--------------------------------------------------------------------------------------*/
 function uniformly_increase_rel_pos(p, change_vec) = [
     for (i=[0:1:len(p)-1]) let (delta = change_vec/(len(p)-1))[
@@ -249,7 +256,9 @@ function uniformly_increase_rel_pos_in_x(p, total_pos_change) =
     uniformly_increase_rel_pos(p, [total_pos_change, 0, 0]);
 
 
+/*---------------------------------------------------------------------------------------
 // Example
+/--------------------------------------------------------------------------------------*/
 eps = 0.01;
 
 params_pos_relative = [
