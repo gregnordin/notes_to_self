@@ -261,27 +261,28 @@ function uniformly_increase_rel_pos_in_x(p, total_pos_change) =
 /--------------------------------------------------------------------------------------*/
 eps = 0.01;
 
+no_rotation = no_rot();
 params_pos_relative = [
-    ["sphr", [eps, 4, 4], [0, 0, 0], [0, [0, 0, 1]]],
-    ["sphr", [eps, 4, 4], [7, 0, 0], [0, [0, 0, 1]]],
-    ["sphr", [eps, 3, 3], [0, 0, 0], [0, [0, 0, 1]]],
-    ["cube", [eps, 1, 1], [3, 0, 0], [0, [0, 0, 1]]],
-    ["cube", [eps, 1*sqrt(2), 1], [3, 0, 0], [45, [0, 0, 1]]],
-    ["cube", [eps, 1, 1], [0, 2, 0], [90, [0, 0, 1]]],
-    ["cube", [3, 1, 3], [0, 3, 0], [0, [0, 0, 1]]],
-    ["cube", [1, eps, 1], [0, 2, 0], [0, [0, 0, 1]]],
-    ["sphr", [eps, 1*sqrt(2), 1], [0, 2, 0], [45, [0, 0, 1]]],
-    ["sphr", [eps, 2, 2], [5, 0, 0], [0, [0, 0, 1]]],
-    ["sphr", [2, 2, 2], [2, 0, 0], [0, [0, 0, 1]]],
-    ["sphr", [2, 2, 2], [0, -4, 4], [0, [0, 0, 1]]],
-    ["cube", [1, eps, 2], [0, -3, 0], [0, [0, 0, 1]]],
+    ["sphr", [eps, 4, 4], [0, 0, 0], no_rotation],
+    ["sphr", [eps, 4, 4], [7, 0, 0], no_rotation],
+    ["sphr", [eps, 3, 3], [0, 0, 0], no_rotation],
+    ["cube", [eps, 1, 1], [3, 0, 0], no_rotation],
+    ["cube", [eps, 1*sqrt(2), 1], [3, 0, 0], rot_z(45)],
+    ["cube", [eps, 1, 1], [0, 2, 0], rot_z(90)],
+    ["cube", [3, 1, 3], [0, 3, 0], no_rotation],
+    ["cube", [1, eps, 1], [0, 2, 0], no_rotation],
+    ["sphr", [eps, 1*sqrt(2), 1], [0, 2, 0], rot_z(45)],
+    ["sphr", [eps, 2, 2], [5, 0, 0], no_rotation],
+    ["sphr", [2, 2, 2], [2, 0, 0], no_rotation],
+    ["sphr", [2, 2, 2], [0, -4, 4], no_rotation],
+    ["cube", [1, eps, 2], [0, -3, 0], no_rotation],
     each arc_xy_rel_position("cube", [1, eps, 2], radius=3, angle1=0, angle2=-90, n=10),
-    ["cube", [1, 1, 2], [-2, 0, 0], [0, [0, 0, 1]]],
+    ["cube", [1, 1, 2], [-2, 0, 0], no_rotation],
     each arc_xz_rel_position("cube", [2, 1, eps], radius=3, angle1=-90, angle2=-270, n=20),
     each arc_xy_rel_position("cube", [1, eps, 2], radius=1, angle1=-90, angle2=0, n=10),
-    ["cube", [1, eps, 1], [0, 5, 0], [0, [0, 0, 1]]],
+    ["cube", [1, eps, 1], [0, 5, 0], no_rotation],
     each arc_xy_rel_position("cube", [1, eps, 1], radius=1, angle1=0, angle2=90, n=10),
-    ["cube", [eps, 1, 1], [-15, 0, 0], [0, [0, 0, 1]]],
+    ["cube", [eps, 1, 1], [-15, 0, 0], no_rotation],
 ];
 params_pos_absolute = rel_to_abs_positions(params_pos_relative);
 
