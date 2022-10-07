@@ -139,8 +139,9 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
     - Dallin's function to convert from shorter to longer shape/position format.
     - &#9989; Introduce `rot_x (ang)`, `rot_y(ang)`, `rot_z(ang)` `no_rot()` functions.
         - &#9989; Introduce a `no_rot()` function to use with the longer shape/position format to indicate the shape has no rotation.
+- &#10060; Try to add an initial position to `arc_xz_rel_position` but failed--would have to completely re-do approach to how the function works.
+- &#10060; Re-do Dallin's interleaved 1D mixer to use circular arcs for the narrow interleaved channels and the narrow channels feeding into and out of the high aspect ratio mixer channel.
 - Update `serpentine.scad` and `serpentine_circularends.scad`.
-- Re-do Dallin's interleaved 1D mixer to use circular arcs for the narrow interleaved channels and the narrow channels feeding into and out of the high aspect ratio mixer channel.
 
 
 Other possible modules for channel paths that use the new data format developed above and the hull-based polychannel approach:
