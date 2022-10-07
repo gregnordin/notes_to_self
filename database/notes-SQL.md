@@ -135,6 +135,8 @@ This would then create as many results as there are unique groups defined as by 
 
 # SQLAlchemy
 
+[SQLAlchemy Tutorial With Examples](https://www.datacamp.com/tutorial/sqlalchemy-tutorial-examples).
+
 ## Left outer join
 
 - [How to execute “left outer join” in SqlAlchemy](https://stackoverflow.com/questions/26142304/how-to-execute-left-outer-join-in-sqlalchemy)
