@@ -131,16 +131,30 @@ function no_rot() = rot_z(0);
 // echo(p_absolute_test);
 // echo(params_absolute);
 /--------------------------------------------------------------------------------------*/
-function abs_to_rel_positions(p) = [
+// function abs_to_rel_positions(p) = [
+//     for (i=[0:1:len(p)-1]) [
+//         p[i][0], 
+//         p[i][1],
+//         i==0
+//             ? p[i][2] - p[i][2]
+//             : p[i][2] - p[i-1][2],
+//         p[i][3]
+//     ]
+// ];
+function abs_to_rel_positions(p, keep_first_position=false) = [
     for (i=[0:1:len(p)-1]) [
         p[i][0], 
         p[i][1],
         i==0
-            ? p[i][2] - p[i][2]
+            ? keep_first_position==true
+                ? p[i][2]
+                : p[i][2] - p[i][2]
             : p[i][2] - p[i-1][2],
         p[i][3]
     ]
 ];
+function abs_to_rel_positions_keep_first_position(p) = 
+    abs_to_rel_positions(p, keep_first_position=true);
 // Function to add list of vectors. See add2() at 
 // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Add_all_values_in_a_list
 function _add_list_of_vecs(v) = [for(i=v) 1]*v;
