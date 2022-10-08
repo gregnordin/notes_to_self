@@ -96,6 +96,15 @@ function extract_all_rel_position_vectors(p) =
 // list of parameters that uses relative position vectors.
 function get_final_position(p) = rel_to_abs_positions(p)[len(p)-1][2];
 
+// Exactly what the name says for the first element in a shape/position list data structure.
+function set_first_position(p, pos=[0, 0, 0]) = [
+    for (i=[0:1:len(p)-1]) 
+        i==0
+            ? [p[i][0], p[i][1], pos, p[i][3]]
+            : p[i]
+];
+
+// Helper functions for rotations in the shape/position data structure list.
 function rot_x(angle) = [angle, [1, 0, 0]];
 function rot_y(angle) = [angle, [0, 1, 0]];
 function rot_z(angle) = [angle, [0, 0, 1]];
