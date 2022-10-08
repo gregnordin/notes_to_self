@@ -104,7 +104,10 @@ function no_rot() = rot_z(0);
 
 /*---------------------------------------------------------------------------------------
 // Functions to convert between relative and absolute positions and vice versa in
-// a list of shape/size/position/rotation parameters.
+// a list of shape/size/position/rotation parameters. Note that 
+// 'abs_to_rel_positions_keep_first_position()' will keep the first position and
+// make all of the other positions relative to it while 'abs_to_rel_positions()'
+// will create a relative positions result with the first position at [0,0,0].
 //
 // Examples
 // --------
