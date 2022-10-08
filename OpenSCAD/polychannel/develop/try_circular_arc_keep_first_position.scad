@@ -46,23 +46,29 @@ abs_to_rel2 = abs_to_rel_positions_keep_first_position(params_pos_absolute);
 // color("red") translate([0, 0, 5]) polychannel(abs_to_rel2, show_only_shapes=true);
 
 
-function _calc_arc_xy_pos_i(radius, angle1, angle2, n, i, r0) = [
-    r0[0] + radius*cos(angle1 + i*(angle2-angle1)/n), 
-    r0[1] + radius*sin(angle1 + i*(angle2-angle1)/n),
-    r0[2]
+function _calc_arc_xy_pos_i(radius, angle1, angle2, n, i) = [
+    radius*cos(angle1 + i*(angle2-angle1)/n), 
+    radius*sin(angle1 + i*(angle2-angle1)/n),
+    0
 ];
 function _calc_arc_xy_rot_i(angle1, angle2, n, i) = [
     angle1 + i*(angle2-angle1)/n, 
     [0, 0, 1]
 ];
-function _arc_xy_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i, r0) = [
-    shape, size, _calc_arc_xy_pos_i(radius, angle1, angle2, n, i, r0), _calc_arc_xy_rot_i(angle1, angle2, n, i)
+function _arc_xy_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i) = [
+    shape, size, _calc_arc_xy_pos_i(radius, angle1, angle2, n, i), _calc_arc_xy_rot_i(angle1, angle2, n, i)
 ];
-function _arc_xy_abs_position(shape, size, radius, angle1, angle2, n, r0) = [
-    for (i=[0:1:n]) _arc_xy_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i, r0)
+function _arc_xy_abs_position(shape, size, radius, angle1, angle2, n) = [
+    for (i=[0:1:n]) _arc_xy_pos_rot_oneline(shape, size, radius, angle1, angle2, n, i)
 ];
-function arc_xy_rel_position(shape, size, radius, angle1, angle2, n, r0=[0,0,0]) = 
-    abs_to_rel_positions_keep_first_x(_arc_xy_abs_position(shape, size, radius, angle1, angle2, n, r0));
+function arc_xy_rel_position(shape, size, radius, angle1, angle2, n) = 
+    abs_to_rel_positions(_arc_xy_abs_position(shape, size, radius, angle1, angle2, n));
+function set_first_position(p, pos=[0, 0, 0]) = [
+    for (i=[0:1:len(p)-1]) 
+        i==0
+            ? [p[i][0], p[i][1], pos, p[i][3]]
+            : p[i]
+];
 function abs_to_rel_positions_keep_first_x(p) = [
     for (i=[0:1:len(p)-1]) [
         p[i][0], 
@@ -82,8 +88,8 @@ height_90bends = 1;
 size_90bends = [width_90bends, width_90bends, height_90bends];
 params_90bends_arcs = [
     ["cube", [eps, width_90bends, height_90bends], [0, 0, 0], [0, z_vec]],
-    ["cube", [eps, width_90bends, height_90bends], [6.5, 0, 0], [0, z_vec]],
-    each arc_xy_rel_position("cube", [width_90bends, eps, height_90bends], radius90, -90, 0, n_segs90, r0=[0, 0, 0]),
+    // ["cube", [eps, width_90bends, height_90bends], [6.5, 0, 0], [0, z_vec]],
+    each set_first_position(arc_xy_rel_position("cube", [width_90bends, eps, height_90bends], radius90, -90, 0, n_segs90), r0=[10, 0, 0]),
     ["cube", [width_90bends, eps, height_90bends], [0, 4, 0], [0, z_vec]],
     each arc_yz_rel_position("cube", [width_90bends, height_90bends, eps], radius90, -90, 90, 2*n_segs90),
     ["cube", [width_90bends, eps, height_90bends], [0, -1.5, 0], [0, z_vec]],
@@ -96,3 +102,9 @@ params_90bends_arcs = [
 polychannel(params_90bends_arcs, clr="Salmon", show_only_shapes=true);
 translate([0, 10, 0]) 
     polychannel(params_90bends_arcs);
+
+echo();
+echo();
+echo(arc_xy_rel_position("cube", [width_90bends, eps, height_90bends], radius90, -90, 0, n_segs90));
+echo(set_first_position(arc_xy_rel_position("cube", [width_90bends, eps, height_90bends], radius90, -90, 0, n_segs90), r0=[10, 0, 0]));
+echo();

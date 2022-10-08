@@ -140,8 +140,9 @@ Try creating an arc with intersection of cubes rotated and moved along an arc. L
     - &#9989; Introduce `rot_x (ang)`, `rot_y(ang)`, `rot_z(ang)` `no_rot()` functions.
         - &#9989; Introduce a `no_rot()` function to use with the longer shape/position format to indicate the shape has no rotation.
 - &#10060; Try to add an initial position to `arc_xz_rel_position` but failed--would have to completely re-do approach to how the function works.
-- &#9989; Modify `abs_to_rel_positions2()` to keep the first position and make all of the others relative.
-- &#10060; Re-do Dallin's interleaved 1D mixer to use circular arcs for the narrow interleaved channels and the narrow channels feeding into and out of the high aspect ratio mixer channel.
+- &#9989; ~~Modify `abs_to_rel_positions2()` to keep the first position and make all of the others relative.~~
+- &#9989; Oops, I need to add r0 after doing a completely relative set of positions. **New function that in essence does a translate on a set of shape/pos from an arc function.** `set_first_position()` - success!
+- &#10060; Re-do Dallin's interleaved 1D mixer to use circular arcs for the narrow interleaved channels and the narrow channels feeding into and out of the high aspect ratio mixer channel. &rarr; **ask Dallin to do it.**
 - Update `serpentine.scad` and `serpentine_circularends.scad`.
 
 
