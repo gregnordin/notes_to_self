@@ -1,4 +1,8 @@
 
+Nice preprint format: [LaPreprint](https://github.com/roaldarbol/LaPreprint). I had to comment out a lot of stuff to get it to work.
+
+---
+
 **Problem**: When try to use `\ul` to underline text, if there is a `\ref{}` in the text then LaTex will throw an error.  
 **Solution**: Enclose `ref{}` in `{}` like this: `{\ref{}}`.  
 **See**: [Problems with \ref when using soul for highlighting](https://tex.stackexchange.com/questions/23307/problems-with-ref-when-using-soul-for-highlighting).
