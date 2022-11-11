@@ -48,4 +48,8 @@ Use [Color Calculator - Sessions College](https://www.sessions.edu/color-calcula
 ## distinctipy
 
 [distinctipy](https://github.com/alan-turing-institute/distinctipy) - a lightweight python package providing functions to generate colours that are visually distinct from one another. Should be useful in matplotlib if need more than 20 colors.
- 
+
+## Matplotlib 10 default colors
+
+`['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2',
+ '#7f7f7f', '#bcbd22', '#17becf']`
