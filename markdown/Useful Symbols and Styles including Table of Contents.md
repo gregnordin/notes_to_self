@@ -89,6 +89,9 @@ __<span style="font-size:200%">Contents</span>__
 - &gsim; greater than or similar, `&gsim;`
 - &times; `&times;`
 - &#177; `&#177;`
+- &ne; `&ne;`
+- &ge; `&ge;`
+- &le; `&le;`
 
 ## Center stuff
 
