@@ -1,6 +1,8 @@
 Use [Color Calculator - Sessions College](https://www.sessions.edu/color-calculator/) to get complementary, triadic, tretradic, split complementary, and analogous colors for a given primary color.  
 
-Also use [RGB to HEX Color Converter](https://www.rgbtohex.net) and [Hex to RGB Color Converter](https://www.rapidtables.com/convert/color/hex-to-rgb.html)  
+Also use [RGB to HEX Color Converter](https://www.rgbtohex.net) and [Hex to RGB Color Converter](https://www.rapidtables.com/convert/color/hex-to-rgb.html).  
+
+[OK, OKLCH: a color picker made to help think perceptively](https://evilmartians.com/chronicles/oklch-a-color-picker-made-to-help-think-perceptively) - a different color picker.  
 
 ## 5 nice colors
 
@@ -53,3 +55,5 @@ Use [Color Calculator - Sessions College](https://www.sessions.edu/color-calcula
 
 `['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2',
  '#7f7f7f', '#bcbd22', '#17becf']`
+ 
+ 
