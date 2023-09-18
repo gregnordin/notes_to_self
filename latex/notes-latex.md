@@ -1,4 +1,7 @@
 
+[LaTeX cheat sheet](https://wch.github.io/latexsheet/)  
+[LaTeX for tabletop](https://vladar.bearblog.dev/latex-for-tabletop/) - quick summary of LaTeX  
+
 Nice preprint format: [LaPreprint](https://github.com/roaldarbol/LaPreprint). I had to comment out a lot of stuff to get it to work.
 
 ---
