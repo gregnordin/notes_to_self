@@ -7,7 +7,7 @@ Install and learn to use [The FEniCSx computing platform](https://fenicsproject.
 
 ## Docker
 
-### Initial 
+### Current version 
 
 Follow `Binary -> Docker images` at [DOLFINx](https://github.com/FEniCS/dolfinx)
 
@@ -59,6 +59,8 @@ root@53f74472d761:~# exit
 ```
 #### Startup with JupyterLab
 
+**Note that this uses a different Docker image.**
+
 ```
 docker run --init -ti -p 8888:8888 dolfinx/lab:stable  # Access at http://localhost:8888
 # Options
@@ -91,8 +93,6 @@ DOLFINx version: 0.6.0 based on GIT commit: 24f86a9ce57df6978070dbee22b3eae8bb77
 So, it looks like it's working. Here is the file system info from within the notebook, `Untitled.ipynb`:
 
 ```
-!ls
-    Untitled.ipynb
 !pwd
     /root
 !ls -al
@@ -110,9 +110,21 @@ So, it looks like it's working. Here is the file system info from within the not
     -rw-r--r-- 1 root root  161 Jul  9  2019 .profile
     -rw-r--r-- 1 root root  367 Jan 24  2023 .wget-hsts
     -rw-r--r-- 1 root root 1187 Oct  5 19:35 Untitled.ipynb
+!ls /
+    bin   dev  home  media	opt   root  sbin  sys  usr
+    boot  etc  lib	 mnt	proc  run   srv   tmp  var
 ```
 
-### Alternative
+#### Startup with Jupyterlab and shared local directory &larr; USE THIS!
+
+```
+docker run --init -ti -p 8888:8888 -v $(pwd):/root/shared dolfinx/lab:stable  # Access at http://localhost:8888
+```
+
+This works great! Note that the container directory is `/root/shared`. The `shared` is automatically created inside `root` when the container is started.
+
+
+### 2016 Version
 
 [FEniCS in Docker](https://fenics.readthedocs.io/projects/containers/en/latest/#)
 
