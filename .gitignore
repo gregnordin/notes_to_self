@@ -21,3 +21,7 @@ Blender/.vscode
 untracked_with_git
 cpp/*/temp
 notes-FEniCSx_files/libs/
+.ipython/
+.jupyter/
+.local/
+Untitled.ipynb

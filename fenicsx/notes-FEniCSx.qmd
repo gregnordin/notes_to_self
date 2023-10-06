@@ -1,11 +1,17 @@
 
 # Purpose
 
-Install and learn to use [The FEniCSx computing platform](https://fenicsproject.org/) for doing finite element analysis of coupled partial differential equations.
+Install and learn to use [The FEniCSx computing platform](https://fenicsproject.org/) for doing finite element analysis of coupled partial differential equations. 
+
+[2023 DOLFINx Documentation](https://docs.fenicsproject.org/dolfinx/main/python/index.html) - DOLFINx is the next generation problem solving interface of the FEniCS Project.
 
 # Installation
 
 ## Docker
+
+Official Docker images are at [DockerHub dolfinx](https://hub.docker.com/u/dolfinx). The Dockerfile used to build the stable and lab images are in [docker/Dockerfile.end-user](https://github.com/FEniCS/dolfinx/blob/main/docker/Dockerfile.end-user).
+
+The [FEniCS Tutorial](https://jsdokken.com/dolfinx-tutorial/fem.html)has further useful information about [Obtaining the software](https://jsdokken.com/dolfinx-tutorial/fem.html#obtaining-the-software) using Docker.
 
 ### Current version 
 
@@ -117,11 +123,36 @@ So, it looks like it's working. Here is the file system info from within the not
 
 #### Startup with Jupyterlab and shared local directory &larr; USE THIS!
 
+Follow [Tutorial compatible docker images](https://jsdokken.com/dolfinx-tutorial/fem.html#tutorial-compatible-docker-images).
+
 ```
 docker run --init -ti -p 8888:8888 -v $(pwd):/root/shared dolfinx/lab:stable  # Access at http://localhost:8888
 ```
 
 This works great! Note that the container directory is `/root/shared`. The `shared` is automatically created inside `root` when the container is started.
+
+
+### Tutorial Docker version
+
+```
+# This version makes the base directory /lib, which is not helpful.
+# docker run --init -p 8888:8888 -v "$(pwd)":/root/shared ghcr.io/jorgensd/dolfinx-tutorial:v0.6.0
+
+# This version makes the base directory /root/shared, which is the local host directory and is the desired behavior.
+docker run --init -p 8888:8888 -v "$(pwd)":/root/shared -w /root/shared ghcr.io/jorgensd/dolfinx-tutorial:v0.6.0
+```
+
+Tried running code at [Tutorial - Implementation](https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals_code.html#implementation) in a new notebook I created. Everything ran (that is, after I selected the the `Python 3 (ipykernel)` kernel) until got to `import pyvista`, which was not installed. Could not pip install it because vtk lacking.
+
+### Try to get `pyvista` installed and working
+
+- lab version &rarr; pyvista missing and get errors when pip install it or vtk.
+- Try tutorial version again and see if pyvista is installed.
+  - `import pyvista` shows it is not installed.
+  - Try pip install pyvista and vtk separately and get the same errors.
+  - ~~Make notebook in /root/shared/ to try stuff.~~
+- Try non-lab version and see if pyvista is installed.
+  - **Result:** Not installed, try pip install pyvista and vtk separately and get the same errors.
 
 
 ### 2016 Version
