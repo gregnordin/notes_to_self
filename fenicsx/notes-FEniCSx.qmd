@@ -131,6 +131,18 @@ docker run --init -ti -p 8888:8888 -v $(pwd):/root/shared dolfinx/lab:stable  # 
 
 This works great! Note that the container directory is `/root/shared`. The `shared` is automatically created inside `root` when the container is started.
 
+Now `vtk` and `pyvista` need to be installed. On an M1 mac, `pip install pyvista` on its own fails because the official VTK channel does not supply an M1 mac version for pip installation. Instead, do the following:
+
+```
+# Install special M1 mac VTK version from github:
+python3 -m pip install "https://github.com/finsberg/vtk-aarch64/releases/download/vtk-9.2.6-cp310/vtk-9.2.6.dev0-cp310-cp310-linux_aarch64.whl"
+
+# Now install pyvista:
+pip install pyvista
+```
+
+In a jupyter notebook, remember to precede each of the above commands with `!` to execute them.
+
 
 ### Tutorial Docker version
 
@@ -150,6 +162,11 @@ Opened Github issue [pip install pyvista fail #144](https://github.com/jorgensd/
 >@finsberg has made a mac-binary of VTK, which can be installed as described in: KitwareMedical/VTKPythonPackage#42 (comment)
 
 **Installing @finsberg's instruction, I can install pyvista and the first tutorial now fully runs. The same process should fix the lab and non-lab versions.**
+
+Here is the command that successfully installs vtk, after which pyvista can be installed:
+
+    python3 -m pip install "https://github.com/finsberg/vtk-aarch64/releases/download/vtk-9.2.6-cp310/vtk-9.2.6.dev0-cp310-cp310-linux_aarch64.whl"
+
 
 ### Try to get `pyvista` installed and working
 
