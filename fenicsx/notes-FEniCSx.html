@@ -48,11 +48,14 @@ ul.task-list li input[type="checkbox"] {
 <section id="purpose" class="level1">
 <h1>Purpose</h1>
 <p>Install and learn to use <a href="https://fenicsproject.org/">The FEniCSx computing platform</a> for doing finite element analysis of coupled partial differential equations.</p>
+<p><a href="https://docs.fenicsproject.org/dolfinx/main/python/index.html">2023 DOLFINx Documentation</a> - DOLFINx is the next generation problem solving interface of the FEniCS Project.</p>
 </section>
 <section id="installation" class="level1">
 <h1>Installation</h1>
 <section id="docker" class="level2">
 <h2 class="anchored" data-anchor-id="docker">Docker</h2>
+<p>Official Docker images are at <a href="https://hub.docker.com/u/dolfinx">DockerHub dolfinx</a>. The Dockerfile used to build the stable and lab images are in <a href="https://github.com/FEniCS/dolfinx/blob/main/docker/Dockerfile.end-user">docker/Dockerfile.end-user</a>.</p>
+<p>The <a href="https://jsdokken.com/dolfinx-tutorial/fem.html">FEniCS Tutorial</a>has further useful information about <a href="https://jsdokken.com/dolfinx-tutorial/fem.html#obtaining-the-software">Obtaining the software</a> using Docker.</p>
 <section id="current-version" class="level3">
 <h3 class="anchored" data-anchor-id="current-version">Current version</h3>
 <p>Follow <code>Binary -&gt; Docker images</code> at <a href="https://github.com/FEniCS/dolfinx">DOLFINx</a></p>
@@ -146,9 +149,39 @@ print(f"DOLFINx version: {dolfinx.__version__} based on GIT commit: {dolfinx.git
 </section>
 <section id="startup-with-jupyterlab-and-shared-local-directory-use-this" class="level4">
 <h4 class="anchored" data-anchor-id="startup-with-jupyterlab-and-shared-local-directory-use-this">Startup with Jupyterlab and shared local directory ← USE THIS!</h4>
+<p>Follow <a href="https://jsdokken.com/dolfinx-tutorial/fem.html#tutorial-compatible-docker-images">Tutorial compatible docker images</a>.</p>
 <pre><code>docker run --init -ti -p 8888:8888 -v $(pwd):/root/shared dolfinx/lab:stable  # Access at http://localhost:8888</code></pre>
 <p>This works great! Note that the container directory is <code>/root/shared</code>. The <code>shared</code> is automatically created inside <code>root</code> when the container is started.</p>
 </section>
+</section>
+<section id="tutorial-docker-version" class="level3">
+<h3 class="anchored" data-anchor-id="tutorial-docker-version">Tutorial Docker version</h3>
+<pre><code># This version makes the base directory /lib, which is not helpful.
+# docker run --init -p 8888:8888 -v "$(pwd)":/root/shared ghcr.io/jorgensd/dolfinx-tutorial:v0.6.0
+
+# This version makes the base directory /root/shared, which is the local host directory and is the desired behavior.
+docker run --init -p 8888:8888 -v "$(pwd)":/root/shared -w /root/shared ghcr.io/jorgensd/dolfinx-tutorial:v0.6.0</code></pre>
+<p>Tried running code at <a href="https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals_code.html#implementation">Tutorial - Implementation</a> in a new notebook I created. Everything ran (that is, after I selected the the <code>Python 3 (ipykernel)</code> kernel) until got to <code>import pyvista</code>, which was not installed. Could not pip install it because vtk lacking.</p>
+<p>Opened Github issue <a href="https://github.com/jorgensd/dolfinx-tutorial/issues/144">pip install pyvista fail #144</a> and jorgensd responded:</p>
+<blockquote class="blockquote">
+<p>As you can see by the output, the issue is that VTK does not supply binaries on modern macs (ref: KitwareMedical/VTKPythonPackage#42). <span class="citation" data-cites="finsberg">@finsberg</span> has made a mac-binary of VTK, which can be installed as described in: KitwareMedical/VTKPythonPackage#42 (comment)</p>
+</blockquote>
+</section>
+<section id="try-to-get-pyvista-installed-and-working" class="level3">
+<h3 class="anchored" data-anchor-id="try-to-get-pyvista-installed-and-working">Try to get <code>pyvista</code> installed and working</h3>
+<ul>
+<li>lab version → pyvista missing and get errors when pip install it or vtk.</li>
+<li>Try tutorial version again and see if pyvista is installed.
+<ul>
+<li><code>import pyvista</code> shows it is not installed.</li>
+<li>Try pip install pyvista and vtk separately and get the same errors.</li>
+<li><del>Make notebook in /root/shared/ to try stuff.</del></li>
+</ul></li>
+<li>Try non-lab version and see if pyvista is installed.
+<ul>
+<li><strong>Result:</strong> Not installed, try pip install pyvista and vtk separately and get the same errors.</li>
+</ul></li>
+</ul>
 </section>
 <section id="version" class="level3">
 <h3 class="anchored" data-anchor-id="version">2016 Version</h3>

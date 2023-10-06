@@ -144,6 +144,13 @@ docker run --init -p 8888:8888 -v "$(pwd)":/root/shared -w /root/shared ghcr.io/
 
 Tried running code at [Tutorial - Implementation](https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals_code.html#implementation) in a new notebook I created. Everything ran (that is, after I selected the the `Python 3 (ipykernel)` kernel) until got to `import pyvista`, which was not installed. Could not pip install it because vtk lacking.
 
+Opened Github issue [pip install pyvista fail #144](https://github.com/jorgensd/dolfinx-tutorial/issues/144) and jorgensd responded:
+
+>As you can see by the output, the issue is that VTK does not supply binaries on modern macs (ref: KitwareMedical/VTKPythonPackage#42).
+>@finsberg has made a mac-binary of VTK, which can be installed as described in: KitwareMedical/VTKPythonPackage#42 (comment)
+
+**Installing @finsberg's instruction, I can install pyvista and the first tutorial now fully runs. The same process should fix the lab and non-lab versions.**
+
 ### Try to get `pyvista` installed and working
 
 - lab version &rarr; pyvista missing and get errors when pip install it or vtk.
