@@ -152,6 +152,13 @@ print(f"DOLFINx version: {dolfinx.__version__} based on GIT commit: {dolfinx.git
 <p>Follow <a href="https://jsdokken.com/dolfinx-tutorial/fem.html#tutorial-compatible-docker-images">Tutorial compatible docker images</a>.</p>
 <pre><code>docker run --init -ti -p 8888:8888 -v $(pwd):/root/shared dolfinx/lab:stable  # Access at http://localhost:8888</code></pre>
 <p>This works great! Note that the container directory is <code>/root/shared</code>. The <code>shared</code> is automatically created inside <code>root</code> when the container is started.</p>
+<p>Now <code>vtk</code> and <code>pyvista</code> need to be installed. On an M1 mac, <code>pip install pyvista</code> on its own fails because the official VTK channel does not supply an M1 mac version for pip installation. Instead, do the following:</p>
+<pre><code># Install special M1 mac VTK version from github:
+python3 -m pip install "https://github.com/finsberg/vtk-aarch64/releases/download/vtk-9.2.6-cp310/vtk-9.2.6.dev0-cp310-cp310-linux_aarch64.whl"
+
+# Now install pyvista:
+pip install pyvista</code></pre>
+<p>In a jupyter notebook, remember to precede each of the above commands with <code>!</code> to execute them.</p>
 </section>
 </section>
 <section id="tutorial-docker-version" class="level3">
@@ -166,6 +173,9 @@ docker run --init -p 8888:8888 -v "$(pwd)":/root/shared -w /root/shared ghcr.io/
 <blockquote class="blockquote">
 <p>As you can see by the output, the issue is that VTK does not supply binaries on modern macs (ref: KitwareMedical/VTKPythonPackage#42). <span class="citation" data-cites="finsberg">@finsberg</span> has made a mac-binary of VTK, which can be installed as described in: KitwareMedical/VTKPythonPackage#42 (comment)</p>
 </blockquote>
+<p><strong>Installing <span class="citation" data-cites="finsberg">@finsberg</span>’s instruction, I can install pyvista and the first tutorial now fully runs. The same process should fix the lab and non-lab versions.</strong></p>
+<p>Here is the command that successfully installs vtk, after which pyvista can be installed:</p>
+<pre><code>python3 -m pip install "https://github.com/finsberg/vtk-aarch64/releases/download/vtk-9.2.6-cp310/vtk-9.2.6.dev0-cp310-cp310-linux_aarch64.whl"</code></pre>
 </section>
 <section id="try-to-get-pyvista-installed-and-working" class="level3">
 <h3 class="anchored" data-anchor-id="try-to-get-pyvista-installed-and-working">Try to get <code>pyvista</code> installed and working</h3>
@@ -219,6 +229,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 Illegal instruction: 4
 (fenicsx-env)
 $</code></pre>
+<p>See discussion in FEniCSx Slack channel on and around 10/6/23. I put a comment there too.</p>
 </section>
 </section>
 

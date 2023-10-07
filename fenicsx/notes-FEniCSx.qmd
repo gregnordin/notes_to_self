@@ -218,3 +218,5 @@ Illegal instruction: 4
 (fenicsx-env)
 $
 ```
+
+See discussion in [FEniCSx Slack channel](https://app.slack.com/client/T1AFBGYP2/C1AFSEWKU) on and around 10/6/23. I put a comment there too.
