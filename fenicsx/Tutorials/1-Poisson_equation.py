@@ -1,5 +1,3 @@
-import pyvista
-
 from mpi4py import MPI
 from dolfinx import mesh
 domain = mesh.create_unit_square(MPI.COMM_WORLD, 8, 8, mesh.CellType.quadrilateral)
@@ -48,4 +46,40 @@ if domain.comm.rank == 0:
     print(f"Error_L2 : {error_L2:.2e}")
     print(f"Error_max : {error_max:.2e}")
     
+import pyvista
+from dolfinx import plot
+pyvista.start_xvfb()
+topology, cell_types, geometry = plot.create_vtk_mesh(domain, tdim)
+grid = pyvista.UnstructuredGrid(topology, cell_types, geometry)
+
+plotter = pyvista.Plotter()
+plotter.add_mesh(grid, show_edges=True)
+plotter.view_xy()
+if not pyvista.OFF_SCREEN:
+    plotter.show()
+else:
+    figure = plotter.screenshot("fundamentals_mesh.png")
     
+u_topology, u_cell_types, u_geometry = plot.create_vtk_mesh(V)
+
+u_grid = pyvista.UnstructuredGrid(u_topology, u_cell_types, u_geometry)
+u_grid.point_data["u"] = uh.x.array.real
+u_grid.set_active_scalars("u")
+u_plotter = pyvista.Plotter()
+u_plotter.add_mesh(u_grid, show_edges=True)
+u_plotter.view_xy()
+if not pyvista.OFF_SCREEN:
+    u_plotter.show()
+    
+warped = u_grid.warp_by_scalar()
+plotter2 = pyvista.Plotter()
+plotter2.add_mesh(warped, show_edges=True, show_scalar_bar=True)
+if not pyvista.OFF_SCREEN:
+    plotter2.show()
+    
+from dolfinx import io
+with io.VTXWriter(domain.comm, "output.bp", [uh]) as vtx:
+    vtx.write(0.0)
+with io.XDMFFile(domain.comm, "output.xdmf", "w") as xdmf:
+    xdmf.write_mesh(domain)
+    xdmf.write_function(uh)
