@@ -184,6 +184,77 @@ Here is the command that successfully installs vtk, after which pyvista can be i
 [FEniCS in Docker](https://fenics.readthedocs.io/projects/containers/en/latest/#)
 
 
+## New conda approach
+
+The reason why the approach below failed is that I am running a mac-Intel version of conda so when fenicsx tries to run arm64 commands, it came across one that Rosetta cannot emulate.
+
+**Possible solutions:**
+
+- Get rid of `conda` and install the arm version. But if I'm going to do this, I might as well go with `mamba`. However, I will likely have to re-do all of my virtual environments.
+- Create an arm-specific virtual environment.
+
+**Actual solution:**
+
+Go with the 2nd option.
+
+```
+conda create --override-channels -c conda-forge/osx-arm64 -c conda-forge/noarch -n fenics_v06 fenics-dolfinx=0.6
+conda activate fenics_v06
+
+# At this point I started a python REPL and successfull imported dolfinx
+$ python
+Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:41:52) [Clang 15.0.7 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import dolfinx
+>>> dolfinx.__version__
+'0.6.0'
+>>> exit()
+
+# Install pyvista and check that it successfully imports
+conda install -c conda-forge/osx-arm64 pyvista
+$ python
+Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:41:52) [Clang 15.0.7 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import pyvista
+>>> import dolfinx
+>>> pyvista.__version__
+'0.42.3'
+>>> dolfinx.__version__
+'0.6.0'
+>>> exit()
+
+# Likewise mpich
+conda install -c conda-forge/osx-arm64 mpich
+  Collecting package metadata (current_repodata.json): done
+  Solving environment: done
+  # All requested packages already installed.
+```
+
+Now run `1-Poisson_equation.py` and see what happens.
+
+```
+(fenics_v06)
+nordin@ECEns-MBP-4 ~/Documents/Projects/notes_to_self/fenicsx/Tutorials (master)*
+$ python 1-Poisson_equation.py
+# Whole bunch of INFO:root:clang messages
+# ...
+Error_L2 : 8.24e-03
+Error_max : 2.22e-15
+```
+
+Run it again.
+
+```
+(fenics_v06)
+nordin@ECEns-MBP-4 ~/Documents/Projects/notes_to_self/fenicsx/Tutorials (master)*
+$ python 1-Poisson_equation.py
+Error_L2 : 8.24e-03
+Error_max : 2.22e-15
+```
+
+Now everything runs just fine.
+
+
 ## ~~conda~~ &rarr; Failed
 
 Follow `Binary -> conda` at [DOLFINx](https://github.com/FEniCS/dolfinx)
