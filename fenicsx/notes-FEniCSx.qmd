@@ -303,6 +303,6 @@ env | grep CONDA
 
 ## Wed, 10/11/23
 
-Get free online book [ Introduction to Numerical Methods for Variational Problems by Hans Petter Langtangen and Kent-Andre Mardal](https://github.com/hplgit/fem-book). Read first chapter, "Quick overview of the finite element method", which is extremely helpful to start understanding the finite element method as implemented in FEniCSx.
+Get free online book [Introduction to Numerical Methods for Variational Problems by Hans Petter Langtangen and Kent-Andre Mardal](https://github.com/hplgit/fem-book). Read first chapter, "Quick overview of the finite element method", which is extremely helpful to start understanding the finite element method as implemented in FEniCSx.
 
-
+Go through [Solving the Poisson equation](https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals.html#solving-the-poisson-equation) and [Implementation](https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals_code.html#) to understand how the quick overview FEM material relates to the Tutorial 1 code.
