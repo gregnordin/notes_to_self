@@ -291,3 +291,18 @@ $
 ```
 
 See discussion in [FEniCSx Slack channel](https://app.slack.com/client/T1AFBGYP2/C1AFSEWKU) on and around 10/6/23. I put a comment there too.
+
+## Remember these
+
+```
+echo $SHELL
+env | grep CONDA
+```
+
+# Log
+
+## Wed, 10/11/23
+
+Get free online book [ Introduction to Numerical Methods for Variational Problems by Hans Petter Langtangen and Kent-Andre Mardal](https://github.com/hplgit/fem-book). Read first chapter, "Quick overview of the finite element method", which is extremely helpful to start understanding the finite element method as implemented in FEniCSx.
+
+

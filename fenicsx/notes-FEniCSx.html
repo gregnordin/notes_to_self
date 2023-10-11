@@ -198,6 +198,62 @@ docker run --init -p 8888:8888 -v "$(pwd)":/root/shared -w /root/shared ghcr.io/
 <p><a href="https://fenics.readthedocs.io/projects/containers/en/latest/#">FEniCS in Docker</a></p>
 </section>
 </section>
+<section id="new-conda-approach" class="level2">
+<h2 class="anchored" data-anchor-id="new-conda-approach">New conda approach</h2>
+<p>The reason why the approach below failed is that I am running a mac-Intel version of conda so when fenicsx tries to run arm64 commands, it came across one that Rosetta cannot emulate.</p>
+<p><strong>Possible solutions:</strong></p>
+<ul>
+<li>Get rid of <code>conda</code> and install the arm version. But if I’m going to do this, I might as well go with <code>mamba</code>. However, I will likely have to re-do all of my virtual environments.</li>
+<li>Create an arm-specific virtual environment.</li>
+</ul>
+<p><strong>Actual solution:</strong></p>
+<p>Go with the 2nd option.</p>
+<pre><code>conda create --override-channels -c conda-forge/osx-arm64 -c conda-forge/noarch -n fenics_v06 fenics-dolfinx=0.6
+conda activate fenics_v06
+
+# At this point I started a python REPL and successfull imported dolfinx
+$ python
+Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:41:52) [Clang 15.0.7 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import dolfinx
+&gt;&gt;&gt; dolfinx.__version__
+'0.6.0'
+&gt;&gt;&gt; exit()
+
+# Install pyvista and check that it successfully imports
+conda install -c conda-forge/osx-arm64 pyvista
+$ python
+Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:41:52) [Clang 15.0.7 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import pyvista
+&gt;&gt;&gt; import dolfinx
+&gt;&gt;&gt; pyvista.__version__
+'0.42.3'
+&gt;&gt;&gt; dolfinx.__version__
+'0.6.0'
+&gt;&gt;&gt; exit()
+
+# Likewise mpich
+conda install -c conda-forge/osx-arm64 mpich
+  Collecting package metadata (current_repodata.json): done
+  Solving environment: done
+  # All requested packages already installed.</code></pre>
+<p>Now run <code>1-Poisson_equation.py</code> and see what happens.</p>
+<pre><code>(fenics_v06)
+nordin@ECEns-MBP-4 ~/Documents/Projects/notes_to_self/fenicsx/Tutorials (master)*
+$ python 1-Poisson_equation.py
+# Whole bunch of INFO:root:clang messages
+# ...
+Error_L2 : 8.24e-03
+Error_max : 2.22e-15</code></pre>
+<p>Run it again.</p>
+<pre><code>(fenics_v06)
+nordin@ECEns-MBP-4 ~/Documents/Projects/notes_to_self/fenicsx/Tutorials (master)*
+$ python 1-Poisson_equation.py
+Error_L2 : 8.24e-03
+Error_max : 2.22e-15</code></pre>
+<p>Now everything runs just fine.</p>
+</section>
 <section id="conda-failed" class="level2">
 <h2 class="anchored" data-anchor-id="conda-failed"><del>conda</del> → Failed</h2>
 <p>Follow <code>Binary -&gt; conda</code> at <a href="https://github.com/FEniCS/dolfinx">DOLFINx</a></p>
@@ -229,7 +285,12 @@ Type "help", "copyright", "credits" or "license" for more information.
 Illegal instruction: 4
 (fenicsx-env)
 $</code></pre>
-<p>See discussion in FEniCSx Slack channel on and around 10/6/23. I put a comment there too.</p>
+<p>See discussion in <a href="https://app.slack.com/client/T1AFBGYP2/C1AFSEWKU">FEniCSx Slack channel</a> on and around 10/6/23. I put a comment there too.</p>
+</section>
+<section id="remember-these" class="level2">
+<h2 class="anchored" data-anchor-id="remember-these">Remember these</h2>
+<pre><code>echo $SHELL
+env | grep CONDA</code></pre>
 </section>
 </section>
 
