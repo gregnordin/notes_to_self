@@ -254,43 +254,15 @@ Error_max : 2.22e-15
 
 Now everything runs just fine.
 
-
-## ~~conda~~ &rarr; Failed
-
-Follow `Binary -> conda` at [DOLFINx](https://github.com/FEniCS/dolfinx)
+Install further packages needed for some of the tutorials.
+```
+conda install -c conda-forge/osx-arm64 imageio
 
 ```
-(base)
-$ python --version
-Python 3.10.11
 
-conda create -n fenicsx-env
-conda activate fenicsx-env
-conda install -c conda-forge fenics-dolfinx mpich pyvista
-    Collecting package metadata (current_repodata.json): done
-    Solving environment: unsuccessful initial attempt using frozen solve. Retrying with flexible solve.
-    Solving environment: unsuccessful attempt using repodata from current_repodata.json, retrying with next repodata source.
-    Collecting package metadata (repodata.json): done
-    Solving environment: done
+### Notes
 
-(fenicsx-env)
-$ which python
-/Users/nordin/opt/miniconda3/envs/fenicsx-env/bin/python
-(fenicsx-env)
-$ python --version
-Python 3.10.12
-
-(fenicsx-env)
-$ python
-Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:39:40) [Clang 15.0.7 ] on darwin
-Type "help", "copyright", "credits" or "license" for more information.
->>> import dolfinx
-Illegal instruction: 4
-(fenicsx-env)
-$
-```
-
-See discussion in [FEniCSx Slack channel](https://app.slack.com/client/T1AFBGYP2/C1AFSEWKU) on and around 10/6/23. I put a comment there too.
+See discussion in [FEniCSx Slack channel](https://app.slack.com/client/T1AFBGYP2/C1AFSEWKU) on and around 10/6/23. I put a comment there about my problems with successfully installing on my M1 mac with an Intel mac conda version.
 
 ## Remember these
 
@@ -311,4 +283,10 @@ Start going through [Deflection of a membrane](https://jsdokken.com/dolfinx-tuto
 
 ## Thu, 10/12/23
 
-Go through more of [The FEniCSx tutorial](https://jsdokken.com/dolfinx-tutorial/index.html).
+Go most of the rest of [The FEniCSx tutorial](https://jsdokken.com/dolfinx-tutorial/index.html) to have an idea of what is there.
+
+Successfully run code in [Diffusion of a Gaussian function](https://jsdokken.com/dolfinx-tutorial/chapter2/diffusion_code.html). 
+
+- Had to install `imageio` into virtual environment.
+- Can import and animate in ParaView, and export `.avi` file.
+
