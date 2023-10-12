@@ -308,3 +308,7 @@ Get free online book [Introduction to Numerical Methods for Variational Problems
 Go through [Solving the Poisson equation](https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals.html#solving-the-poisson-equation) and [Implementation](https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals_code.html#) to understand how the quick overview FEM material relates to the Tutorial 1 code.
 
 Start going through [Deflection of a membrane](https://jsdokken.com/dolfinx-tutorial/chapter1/membrane.html) and [Implementation](https://jsdokken.com/dolfinx-tutorial/chapter1/membrane_code.html), which is Tutorial 2.
+
+## Thu, 10/12/23
+
+Go through more of [The FEniCSx tutorial](https://jsdokken.com/dolfinx-tutorial/index.html).
