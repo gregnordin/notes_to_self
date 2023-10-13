@@ -184,7 +184,7 @@ Here is the command that successfully installs vtk, after which pyvista can be i
 [FEniCS in Docker](https://fenics.readthedocs.io/projects/containers/en/latest/#)
 
 
-## New conda approach
+## New conda approach &rarr This is the one I am using.
 
 The reason why the approach below failed is that I am running a mac-Intel version of conda so when fenicsx tries to run arm64 commands, it came across one that Rosetta cannot emulate.
 
@@ -254,10 +254,13 @@ Error_max : 2.22e-15
 
 Now everything runs just fine.
 
-Install further packages needed for some of the tutorials.
+Install jupyter and further packages needed for some of the tutorials.
 ```
 conda install -c conda-forge/osx-arm64 imageio
 
+# Jupyter and make kernel available
+conda install -c conda-forge/osx-arm64 jupyter
+python -m ipykernel install --user --name=fenics_v06
 ```
 
 ### Notes
@@ -290,3 +293,16 @@ Successfully run code in [Diffusion of a Gaussian function](https://jsdokken.com
 - Had to install `imageio` into virtual environment.
 - Can import and animate in ParaView, and export `.avi` file.
 
+Download [The FEniCSx tutorial](https://jsdokken.com/dolfinx-tutorial/index.html) as a static site on my laptop at `Projects/2023_projects/FEniCSx_tutorial_website_2023_10_12`.
+
+```
+wget \
+     --recursive \
+     --no-clobber \
+     --page-requisites \
+     --html-extension \
+     --convert-links \
+     --domains jsdokken.com \
+     --no-parent \
+     jsdokken.com/dolfinx-tutorial/index.html
+```

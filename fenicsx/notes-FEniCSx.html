@@ -253,44 +253,46 @@ $ python 1-Poisson_equation.py
 Error_L2 : 8.24e-03
 Error_max : 2.22e-15</code></pre>
 <p>Now everything runs just fine.</p>
+<p>Install further packages needed for some of the tutorials.</p>
+<pre><code>conda install -c conda-forge/osx-arm64 imageio
+</code></pre>
+<section id="notes" class="level3">
+<h3 class="anchored" data-anchor-id="notes">Notes</h3>
+<p>See discussion in <a href="https://app.slack.com/client/T1AFBGYP2/C1AFSEWKU">FEniCSx Slack channel</a> on and around 10/6/23. I put a comment there about my problems with successfully installing on my M1 mac with an Intel mac conda version.</p>
 </section>
-<section id="conda-failed" class="level2">
-<h2 class="anchored" data-anchor-id="conda-failed"><del>conda</del> → Failed</h2>
-<p>Follow <code>Binary -&gt; conda</code> at <a href="https://github.com/FEniCS/dolfinx">DOLFINx</a></p>
-<pre><code>(base)
-$ python --version
-Python 3.10.11
-
-conda create -n fenicsx-env
-conda activate fenicsx-env
-conda install -c conda-forge fenics-dolfinx mpich pyvista
-    Collecting package metadata (current_repodata.json): done
-    Solving environment: unsuccessful initial attempt using frozen solve. Retrying with flexible solve.
-    Solving environment: unsuccessful attempt using repodata from current_repodata.json, retrying with next repodata source.
-    Collecting package metadata (repodata.json): done
-    Solving environment: done
-
-(fenicsx-env)
-$ which python
-/Users/nordin/opt/miniconda3/envs/fenicsx-env/bin/python
-(fenicsx-env)
-$ python --version
-Python 3.10.12
-
-(fenicsx-env)
-$ python
-Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:39:40) [Clang 15.0.7 ] on darwin
-Type "help", "copyright", "credits" or "license" for more information.
-&gt;&gt;&gt; import dolfinx
-Illegal instruction: 4
-(fenicsx-env)
-$</code></pre>
-<p>See discussion in <a href="https://app.slack.com/client/T1AFBGYP2/C1AFSEWKU">FEniCSx Slack channel</a> on and around 10/6/23. I put a comment there too.</p>
 </section>
 <section id="remember-these" class="level2">
 <h2 class="anchored" data-anchor-id="remember-these">Remember these</h2>
 <pre><code>echo $SHELL
 env | grep CONDA</code></pre>
+</section>
+</section>
+<section id="log" class="level1">
+<h1>Log</h1>
+<section id="wed-101123" class="level2">
+<h2 class="anchored" data-anchor-id="wed-101123">Wed, 10/11/23</h2>
+<p>Get free online book <a href="https://github.com/hplgit/fem-book">Introduction to Numerical Methods for Variational Problems by Hans Petter Langtangen and Kent-Andre Mardal</a>. Read first chapter, “Quick overview of the finite element method”, which is extremely helpful to start understanding the finite element method as implemented in FEniCSx.</p>
+<p>Go through <a href="https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals.html#solving-the-poisson-equation">Solving the Poisson equation</a> and <a href="https://jsdokken.com/dolfinx-tutorial/chapter1/fundamentals_code.html#">Implementation</a> to understand how the quick overview FEM material relates to the Tutorial 1 code.</p>
+<p>Start going through <a href="https://jsdokken.com/dolfinx-tutorial/chapter1/membrane.html">Deflection of a membrane</a> and <a href="https://jsdokken.com/dolfinx-tutorial/chapter1/membrane_code.html">Implementation</a>, which is Tutorial 2.</p>
+</section>
+<section id="thu-101223" class="level2">
+<h2 class="anchored" data-anchor-id="thu-101223">Thu, 10/12/23</h2>
+<p>Go most of the rest of <a href="https://jsdokken.com/dolfinx-tutorial/index.html">The FEniCSx tutorial</a> to have an idea of what is there.</p>
+<p>Successfully run code in <a href="https://jsdokken.com/dolfinx-tutorial/chapter2/diffusion_code.html">Diffusion of a Gaussian function</a>.</p>
+<ul>
+<li>Had to install <code>imageio</code> into virtual environment.</li>
+<li>Can import and animate in ParaView, and export <code>.avi</code> file.</li>
+</ul>
+<p>Download <a href="https://jsdokken.com/dolfinx-tutorial/index.html">The FEniCSx tutorial</a> as a static site on my laptop at <code>Projects/2023_projects/FEniCSx_tutorial_website_2023_10_12</code>.</p>
+<pre><code>wget \
+     --recursive \
+     --no-clobber \
+     --page-requisites \
+     --html-extension \
+     --convert-links \
+     --domains jsdokken.com \
+     --no-parent \
+     jsdokken.com/dolfinx-tutorial/index.html</code></pre>
 </section>
 </section>
 
