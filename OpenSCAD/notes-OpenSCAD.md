@@ -9,21 +9,22 @@ Includes:
 - Great math library with 2D & 3D transforms
 - Threading library
 
+# Notes for developing polychannel and related modules
 
-# Tuesday, 9/27/22
+## Tuesday, 9/27/22
 
 - Try out `rotate_extrude()`.
 - Start creating `polylinehull` module.
 
 
-# Wednesday, 9/28/22
+## Wednesday, 9/28/22
 
 - Create `polychannel` module.
 - Create `serpentine` module.
 - Create `serpentinecircularends` module.
 
 
-# Thursday, 9/29/22
+## Thursday, 9/29/22
 
 How create a polychannel that has one or more channel sections with a circular arc? Information needed for each arc (limit to only 90&deg; and 180&deg; arcs? Maybe also 45&deg; arcs, possibly 30/60&deg; arcs?):
 
@@ -81,7 +82,7 @@ Possibilities for circular arcs:
 - [Circular sector and arc](https://openhome.cc/eGossip/OpenSCAD/SectorArc.html) - more complicated.
 
 
-# 9/30/22 - 10/7/22
+## 9/30/22 - 10/7/22
 
 Try creating an arc with intersection of cubes rotated and moved along an arc. Led to idea to do something like this with flat plate-like shapes and hull() between them, which is compatible with the polychannel approach and would just need the shapes and positions of the shapes.
 
