@@ -39,12 +39,14 @@ module echo_params(p=default_params) {
     echo("param_f:", param_f(p));
 }
 
+function size(p) = [param_a(p), param_b(p), param_c(p)];
+
 module module_with_params(p=default_params) {
     echo();
     echo("In module_with_params");
     echo(p);
     echo(param_a(p));
-    color(param_f(p)) translate(param_d(p)) cube([param_a(p), param_b(p),param_c(p)], center=true);
+    color(param_f(p)) translate(param_d(p)) cube(size(p), center=true);
     color(param_f(p)) translate(param_d(p) + [0,0,param_c(p)]) scale(0.1) text(param_e(p));
     
 }
