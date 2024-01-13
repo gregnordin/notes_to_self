@@ -1,3 +1,26 @@
+# Tutorial/example resources
+
+[DOLFINx documentation](https://docs.fenicsproject.org/dolfinx/main/python/)
+
+[The FEniCSx tutorial](https://jsdokken.com/dolfinx-tutorial/) by jsdokken.
+
+[FEniCS23-tutorial](https://jsdokken.com/FEniCS23-tutorial/README.html) by jsdokken.  
+
+[DOLFINx: The next generation FEniCS problem solving environment](https://zenodo.org/records/10447666) - 12/31/23, extensive journal paper.
+
+[Nguyen Lab Wiki - fenicsx how-to](https://me.jhu.edu/nguyenlab/doku.php?id=fenicsx) - lots of good info.
+
+## Discourse threads
+
+[Can I run FEniCSx in Apple silicon M3 max?](https://fenicsproject.discourse.group/t/can-i-run-fenicsx-in-apple-silicon-m3-max/13211) - similar problem as mine where he migrated from 2015 Intel macbook pro to M3 Max Apple Silicon macbook pro. Solution: *erase everything in the new MacBook and set it up by hand, not use migration*.
+
+> dokken writes: *Several core developers use Mac in their development.*
+
+[The usage of the functions of dolfinx](https://fenicsproject.discourse.group/t/the-usage-of-the-functions-of-dolfinx/13214).
+
+>The API of DOLFINx has been quite stable since v0.5.x/v0.6.x.
+>There will always be some API changes, as we keep on improving the software.
+
 # Install latest version of `fenicsx`
 
 Problem: my conda installation on my Apple Silicon macbook pro is for Intel x86 architecture and I need `fenicsx` to run natively on Apple Silicon. 
