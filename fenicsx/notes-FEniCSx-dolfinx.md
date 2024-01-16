@@ -23,6 +23,32 @@
 
 # Install latest version of `fenicsx`
 
+
+
+```
+micromamba create -n fenicsx-env fenics-dolfinx mpich pyvista imageio
+micromamba activate fenicsx-env
+
+which python
+	/Users/nordin/micromamba/envs/fenicsx-env/bin/python
+python --version
+	Python 3.12.1
+python -c "import platform; print(platform.processor())"
+	arm
+
+python -c 'import dolfinx; print(f"DOLFINx version: {dolfinx.__version__} based on GIT commit: {dolfinx.git_commit_hash} of https://github.com/FEniCS/dolfinx/")'
+	DOLFINx version: 0.7.2 based on GIT commit:  of https://github.com/FEniCS/dolfinx/
+	
+cd <correct directory>
+python diffusion_2D.py
+```
+
+**The above works great--should have re-done my python installation and management long ago.**
+
+
+
+# OLD - Install latest version of `fenicsx`
+
 Problem: my conda installation on my Apple Silicon macbook pro is for Intel x86 architecture and I need `fenicsx` to run natively on Apple Silicon. 
 
 ## What architecture python is running?
@@ -62,7 +88,7 @@ Running `python diffusion_2D.py` in the conda environment `fenicsx-env` works pe
 
 #### Conclusion
 
-Blow away my Intel conda installation and start fresh with a new minconda set up, or do mamba.
+**Delete my Intel conda installation and start fresh with a new minconda set up, or do mamba.**
 
 #### Terminal session
 
