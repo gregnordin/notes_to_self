@@ -45,6 +45,13 @@ python diffusion_2D.py
 
 **The above works great--should have re-done my python installation and management long ago.**
 
+## Make available as Jupyter kernel
+
+```
+micromamba install ipykernel
+python -m ipykernel install --user --name fenicsx-env --display-name="fenicsx-env"
+```
+
 
 
 # OLD - Install latest version of `fenicsx`
