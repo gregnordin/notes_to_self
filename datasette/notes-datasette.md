@@ -11,6 +11,14 @@
 - [Datasette - an ecosystem of tools for working with small data](https://www.youtube.com/watch?v=Lig2gxPEZPo) by Simon Willison.
 - [Datasette is my data hammer](https://www.jeremiak.com/blog/datasette-the-data-hammer/).
 
+# How-to
+
+## Create database from CSV file
+
+- Open Datasette app
+- Menu: File &rarr; New Empty Database...
+- At top left of new window, click on button `Import CSV`
+
 # Log
 
 ## Tue, 3/5/24
@@ -30,6 +38,9 @@ datasette --version
 datasette install datasette-vega
 datasette install datasette-cluster-map
 datasette install csvs-to-sqlite
+datasette install datasette-upload-csvs
+datasette install datasette-search-all
+datasette install datasette-bplist
 ```
 
 ### Install `sqlite-utils`
