@@ -24,7 +24,9 @@ pip install scikit-fem[all]
 python -m ipykernel install --user --name scikit-fem --display-name="scikit-fem"
 ```
 
+### Try Example 1
 
+`ex01.py`
 
 
 
