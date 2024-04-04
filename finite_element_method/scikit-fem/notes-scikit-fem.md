@@ -24,9 +24,16 @@ pip install scikit-fem[all]
 python -m ipykernel install --user --name scikit-fem --display-name="scikit-fem"
 ```
 
-### Try Example 1
+### Try Examples 1, 7, 13
 
-`ex01.py`
+Files: `ex01.py`, `ex07.py`, `ex13.py`
+
+- Each file runs and produces output.
+- I can look at the vtk output file from the first example, but was unable to produce output files for the other two examples &rarr; I need to understand the classes and their content and structure.
+
+### Look at mesh and basis
+
+- Create `meshes.ipynb` and look at `MeshTriP1` and `MeshQuad1` with first order elements.
 
 
 
