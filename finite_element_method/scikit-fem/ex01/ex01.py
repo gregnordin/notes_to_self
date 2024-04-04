@@ -1,4 +1,5 @@
-from skfem import *
+# from skfem import *
+from skfem import MeshTri, Basis, ElementTriP1, BilinearForm, LinearForm, enforce, solve
 from skfem.helpers import dot, grad
 
 # create the mesh
