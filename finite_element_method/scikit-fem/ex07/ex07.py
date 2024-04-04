@@ -47,4 +47,4 @@ def visualize():
 
 if __name__ == "__main__":
     visualize().show()
-    # m.save("output.vtk", point_data={"solution": x})
+    # m.save("output.vtk", point_data={"solution": X})
