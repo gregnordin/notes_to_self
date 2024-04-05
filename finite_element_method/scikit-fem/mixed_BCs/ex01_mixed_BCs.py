@@ -23,8 +23,11 @@ def rhs(v, _):
 A = laplace.assemble(basis)
 b = rhs.assemble(basis)
 
-# Dirichlet boundary conditions
-A, b = enforce(A, b, D=mesh.boundary_nodes())
+# Boundary conditions
+u = basis.zeros()
+u[basis.get_dofs("left")] = 1.0
+u[basis.get_dofs("right")] = 1.0
+A, b = enforce(A, b, x=u, D=mesh.boundary_nodes())
 
 # solve the linear system
 x = solve(A, b)
@@ -32,4 +35,4 @@ x = solve(A, b)
 # plot using matplotlib
 mesh.plot(x, shading="gouraud", colorbar=True).show()
 # or, save to external file:
-mesh.save("output.vtk", point_data={"solution": x})
+mesh.save("output_leftrighteq1.vtk", point_data={"solution": x})
