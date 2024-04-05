@@ -11,6 +11,13 @@ Try latest `panel` version with jupyterlab.
   - Text of [paper](https://github.com/kinnala/scikit-fem/blob/master/paper/paper.md)
   - [List of examples](https://github.com/kinnala/scikit-fem/blob/master/docs/listofexamples.rst)
 
+# Next
+
+- Poisson equation with mixed boundary conditions.
+- Rectangular shape computation region.
+- Add spatially-dependent source function.
+- Solve time-dependent diffusion case.
+
 # Log
 
 ## Thu, 4/4/24
