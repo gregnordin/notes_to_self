@@ -14,11 +14,17 @@ Try latest `panel` version with jupyterlab.
 # Next
 
 - Poisson equation with mixed boundary conditions.
-- Rectangular shape computation region.
+- &#9989; Rectangular shape computation region.
 - Add spatially-dependent source function.
 - Solve time-dependent diffusion case.
 
 # Log
+
+## Fri, 4/5/24
+
+### Rectangular mesh regions
+
+See `meshes-rectangular.ipynb`, which uses the mesh `.init_tensor` method documented at [Class: MeshTri](https://scikit-fem.readthedocs.io/en/latest/api.html#class-meshtri).
 
 ## Thu, 4/4/24
 
