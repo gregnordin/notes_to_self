@@ -24,7 +24,14 @@ Try latest `panel` version with jupyterlab.
 
 ### Rectangular mesh regions
 
-See `meshes-rectangular.ipynb`, which uses the mesh `.init_tensor` method documented at [Class: MeshTri](https://scikit-fem.readthedocs.io/en/latest/api.html#class-meshtri).
+See `meshes/meshes-rectangular.ipynb`, which uses the mesh `.init_tensor` method documented at [Class: MeshTri](https://scikit-fem.readthedocs.io/en/latest/api.html#class-meshtri).
+
+### Mixed boundary conditions
+
+Start with `ex01.py` as `mixed_BCs/ex01_mixed_BCs.py` and modify to have mixed BCs:
+
+- top & bottom: Neumann, 0
+- left & right: Dirichlet, 0
 
 ## Thu, 4/4/24
 
