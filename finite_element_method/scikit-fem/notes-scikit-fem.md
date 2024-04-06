@@ -13,7 +13,7 @@ Try latest `panel` version with jupyterlab.
 
 # Next
 
-- Poisson equation with mixed boundary conditions.
+- &#9989; Poisson equation with mixed boundary conditions.
 - &#9989; Rectangular shape computation region.
 - Add spatially-dependent source function.
 - Solve time-dependent diffusion case.
@@ -28,16 +28,52 @@ See `meshes/meshes-rectangular.ipynb`, which uses the mesh `.init_tensor` method
 
 ### Mixed boundary conditions
 
-Start with `ex01.py` as `mixed_BCs/ex01_mixed_BCs.py` and modify to have mixed BCs:
+Start with `ex01.py` as `mixed_BCs/ex01_mixed_BCs.py` and modify so fixed field is 0.0 and to have mixed BCs:
 
 - top & bottom: Neumann, 0
-- left & right: Dirichlet, 0
+- left & right: Dirichlet, 1 & 0
+
+#### Solution - code snippets
+
+```python
+# create 2D mesh and associated basis, both have default boundaries defined as "left", "right", "top", "bottom"
+mesh = MeshTri().refined(4)
+basis = Basis(mesh, ElementTriP1())
+
+# Create left and right hand sides of weak formulation
+@BilinearForm
+def laplace(u, v, _):
+    return dot(grad(u), grad(v))
+@LinearForm
+def rhs(v, _):
+    return 0.0 * v
+A = laplace.assemble(basis)
+b = rhs.assemble(basis)
+
+# Boundary conditions
+
+# Create temporary array of nodes "u" and set boundary node values for desired Dirichlet BCs.
+# In this case we want "left" to be 1.0 and "right" to be 0.0 (which it already is because of how we created "u")
+u = basis.zeros()
+u[basis.get_dofs("left")] = 1.0
+
+# Add BCs to A and b. 
+# "x=u" sets the boundary values for the boundaries specified with "D=...".
+# All boundaries not specified with "D=..." have Neumann BC equal to 0.
+# If a desired flux is needed at a boundary, check out Example 24 that has a parabolic velocity flow at an inlet.
+A, b = enforce(A, b, x=u, D=basis.get_dofs(["left", "right"]))
+
+```
+
+#### Result
+
+![](mixed_BCs/output_initial0_lefteq1.png)
 
 ## Thu, 4/4/24
 
 ### Create environment
 
-```
+```bash
 micromamba create -n scikit-fem python ipykernel
 micromamba activate scikit-fem
 pip install scikit-fem[all]
@@ -179,7 +215,7 @@ condense(A: scipy.sparse._matrix.spmatrix, b: Union[numpy.ndarray, scipy.sparse.
 
 These lines implement setting Dirichlet BC u(y=0) = 0 ("ground" side of mesh) and u(y=...) = 1.0 ("positive" side of mesh):
 
-```
+```python
 # Create an array of the right shape that is filled with zeros
 u = basis.zeros()
 
