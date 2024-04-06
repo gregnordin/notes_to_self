@@ -20,6 +20,14 @@ Try latest `panel` version with jupyterlab.
 
 # Log
 
+## Sat, 4/6/24
+
+Finish mixed boundary conditions and document.
+
+Examine mesh properites in `meshes/meshes-properties.ipynb`.
+
+Start to look at Example 19 for how to solve time-dependent diffusion case.
+
 ## Fri, 4/5/24
 
 ### Rectangular mesh regions
