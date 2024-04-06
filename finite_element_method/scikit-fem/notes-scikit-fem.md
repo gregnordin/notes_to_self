@@ -33,7 +33,9 @@ Start with `ex01.py` as `mixed_BCs/ex01_mixed_BCs.py` and modify so fixed field 
 - top & bottom: Neumann, 0
 - left & right: Dirichlet, 1 & 0
 
-#### Solution - code snippets
+#### Solution - code snippet
+
+These are the critical parts of the code:
 
 ```python
 # create 2D mesh and associated basis, both have default boundaries defined as "left", "right", "top", "bottom"
@@ -63,6 +65,8 @@ u[basis.get_dofs("left")] = 1.0
 # If a desired flux is needed at a boundary, check out Example 24 that has a parabolic velocity flow at an inlet.
 A, b = enforce(A, b, x=u, D=basis.get_dofs(["left", "right"]))
 
+# solve the linear system
+x = solve(A, b)
 ```
 
 #### Result
