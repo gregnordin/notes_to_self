@@ -28,6 +28,16 @@ Examine mesh properites in `meshes/meshes-properties.ipynb`.
 
 Start to look at Example 19 for how to solve time-dependent diffusion case.
 
+### Example 19 - time-dependent diffusion
+
+#### Crank-Nicolson method
+
+[Crank–Nicolson method - Wikipedia](https://en.wikipedia.org/wiki/Crank–Nicolson_method)
+
+
+
+[Crank-Nicolson Method for the Diffusion Equation | Lecture 72 | Numerical Methods for Engineers](https://www.youtube.com/watch?v=f_JZRjt8AZ4)
+
 ## Fri, 4/5/24
 
 ### Rectangular mesh regions
