@@ -28,15 +28,19 @@ Examine mesh properites in `meshes/meshes-properties.ipynb`.
 
 Start to look at Example 19 for how to solve time-dependent diffusion case.
 
+[meshio - time series data in an XDMF file](https://github.com/kinnala/scikit-fem?tab=readme-ov-file) &rarr; need to try this and post to scikit-fem discussion [Save time series simulation results? #1113](https://github.com/kinnala/scikit-fem/discussions/1113).
+
 ### Example 19 - time-dependent diffusion
 
 #### Crank-Nicolson method
 
 [Crank–Nicolson method - Wikipedia](https://en.wikipedia.org/wiki/Crank–Nicolson_method)
 
-
-
 [Crank-Nicolson Method for the Diffusion Equation | Lecture 72 | Numerical Methods for Engineers](https://www.youtube.com/watch?v=f_JZRjt8AZ4)
+
+#### Writing data for each time step so can view with ParaView
+
+See the jupyter notebook. I was able to get a lot of things worked out and understood. The immediate problem right now is how to save a time series of data captured during evolution of the field. &rArr; **I solved this by writing a vtk file for each time step with the time embedded in the file name.**
 
 ## Fri, 4/5/24
 
@@ -99,6 +103,7 @@ x = solve(A, b)
 micromamba create -n scikit-fem python ipykernel
 micromamba activate scikit-fem
 pip install scikit-fem[all]
+pip install h5py
 python -m ipykernel install --user --name scikit-fem --display-name="scikit-fem"
 ```
 
