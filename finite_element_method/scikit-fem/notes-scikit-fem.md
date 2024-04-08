@@ -20,6 +20,20 @@ Try latest `panel` version with jupyterlab.
 
 # Log
 
+## Mon, 4/8/24
+
+### mesh & basis
+
+Coordinates of mesh vertices are in:
+
+- `mesh.p`
+
+- `basis.doflocs`
+
+
+
+
+
 ## Sat, 4/6/24
 
 Finish mixed boundary conditions and document.
