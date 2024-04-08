@@ -11,12 +11,17 @@ Try latest `panel` version with jupyterlab.
   - Text of [paper](https://github.com/kinnala/scikit-fem/blob/master/paper/paper.md)
   - [List of examples](https://github.com/kinnala/scikit-fem/blob/master/docs/listofexamples.rst)
 
+- [Extended documentation for skfem (draft) #817](https://github.com/kinnala/scikit-fem/discussions/817) - **Excellent!**
+
 # Next
 
 - &#9989; Poisson equation with mixed boundary conditions.
 - &#9989; Rectangular shape computation region.
-- Add spatially-dependent source function.
+- &#9989; Write VTK files
+- &#9989; Write XDMF files with time series data
 - Solve time-dependent diffusion case.
+
+- Add spatially-dependent source function.
 
 # Log
 
@@ -30,9 +35,13 @@ Coordinates of mesh vertices are in:
 
 - `basis.doflocs`
 
+### Write data to file - VTK and XDMF
 
+See `write_to_file` notebook and results. Everything works now. I had to sort out how to get the right information to `meshio.write_points_cells` and wrote some helper functions.
 
+### Found really good documentation
 
+[Extended documentation for skfem (draft) #817](https://github.com/kinnala/scikit-fem/discussions/817) - this is a great read and very illuminating.
 
 ## Sat, 4/6/24
 
