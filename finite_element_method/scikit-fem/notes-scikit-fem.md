@@ -19,6 +19,7 @@ Try latest `panel` version with jupyterlab.
 - &#9989; Rectangular shape computation region.
 - &#9989; Write VTK files
 - &#9989; Write XDMF files with time series data
+- &#10060; Add documentation to my github discussion question about writing time-series data, [Save time series simulation results? #1113](https://github.com/kinnala/scikit-fem/discussions/1113).
 - Solve time-dependent diffusion case.
 
 - Add spatially-dependent source function.
