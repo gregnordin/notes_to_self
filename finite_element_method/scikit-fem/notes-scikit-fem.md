@@ -26,6 +26,12 @@ Try latest `panel` version with jupyterlab.
 
 # Log
 
+## Tue, 4/9/24
+
+### Example 19a - write XDMF file
+
+Create `ex19a.py` as a complete example of writing time series data to an XDMF file and share it at [Save time series simulation results? #1113](https://github.com/kinnala/scikit-fem/discussions/1113).
+
 ## Mon, 4/8/24
 
 ### mesh & basis
