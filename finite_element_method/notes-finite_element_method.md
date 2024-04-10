@@ -25,4 +25,39 @@ Some possible FEM codes to look into
 
   - [Notes on solving PDEs by the Finite Element Method](https://sfepy.org/doc-devel/solving_pdes_by_fem.html#sec-solving-pdes-fem)
 
-  - 
+- [deal.ii](https://www.dealii.org/)
+
+  - > **What it is:** A C++ software library supporting the creation of finite element codes and an open community of users and developers.
+    >
+    > **Mission:** To provide well-documented tools to build finite element codes for a broad variety of PDEs, from laptops to supercomputers.
+
+- [pyamg](https://github.com/pyamg/pyamg)
+
+  - a library of **Algebraic Multigrid (AMG)** solvers with a convenient Python interface
+
+  - > AMG is a multilevel technique for solving large-scale linear systems with optimal or near-optimal efficiency. Unlike geometric multigrid, AMG requires little or no geometric information about the underlying problem and develops a sequence of coarser grids directly from the input matrix. This feature is especially important for problems discretized on unstructured meshes and irregular grids.
+
+  - [Tutorial](https://github.com/pyamg/pyamg/wiki/Tutorial)
+
+
+
+
+
+# Learning Resources
+
+- [In-depth tutorial on FEM in a deal.ii code example](https://www.dealii.org/current/doxygen/deal.II/step_3.html) - **very good**.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
