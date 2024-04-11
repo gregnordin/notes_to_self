@@ -49,6 +49,24 @@ Some possible FEM codes to look into
 
 
 
+# Other - finite volume method
+
+[Clawpack](http://www.clawpack.org)
+
+> a collection of finite volume methods for linear and nonlinear hyperbolic systems of conservation laws. Clawpack employs high-resolution Godunov-type methods with limiters in a general framework applicable to many kinds of waves. Clawpack is written in Fortran and Python.
+
+[FiPy: A Finite Volume PDE Solver Using Python](https://www.ctcms.nist.gov/fipy/index.html)
+
+> [*FiPy*](https://www.ctcms.nist.gov/fipy/documentation/glossary.html#term-fipy) is an object oriented, partial differential equation (PDE) solver, written in [Python](https://www.ctcms.nist.gov/cgi-bin/redirect.py?url=http://www.python.org/), based on a standard finite volume (FV) approach.
+
+
+
+
+
+
+
+
+
 
 
 
