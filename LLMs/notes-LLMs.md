@@ -1,5 +1,21 @@
 # Log
 
+## Sunday, 4/21/24
+
+### Get Ollama working with Enchanted as front end
+
+**Objective**: Locally run large language models.
+
+[Ollama](https://github.com/ollama/ollama?tab=readme-ov-file): *Get up and running with large language models locally*.
+
+- Download and install [Ollama](https://github.com/ollama/ollama?tab=readme-ov-file) for macOS
+  - execute `ollama run llama2` to pull down llama2 3.8GB.
+  - execute `ollama run codellama` to pull down [Code Llama 7B](https://github.com/meta-llama/codellama) based on llama2.
+  - execute `ollama run llama3` to pull down Llama3 8B.
+  - execute `ollama run llama3:70b` to pull down Llama3 70B.
+
+Download and install [Enchanted](https://apps.apple.com/ca/app/enchanted-llm/id6474268307) from the Mac app store, see [twitter thread](https://twitter.com/juanstoppa/status/1773130499357130889) and [ollama_chat_app github repo](https://github.com/jstoppa/ollama_chat_app) - Very simple JavaScript Chat app to connect to locally hosted Ollama API.
+
 ## Friday, 8/11/23
 
 ### Jeremy Howard custom ChatGPT instructions
