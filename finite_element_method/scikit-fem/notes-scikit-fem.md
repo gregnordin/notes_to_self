@@ -26,6 +26,10 @@ Try latest `panel` version with jupyterlab.
 
 # Log
 
+## Mon, 4/22/24
+
+Use ChatGPT to write code to solve Poisson equation with mixed BCs in `scikit-fem/mixed_BCs/2024-04-23_code_from_llm/from_chatgpt_mixedBCs2.py`.
+
 ## Tue, 4/9/24
 
 ### Example 19a - write XDMF file
