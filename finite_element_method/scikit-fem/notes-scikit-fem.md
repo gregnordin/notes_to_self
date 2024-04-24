@@ -42,13 +42,32 @@ The 2nd term on the LHS can be moved to the RHS resulting in
 
 ​            $\int_\Omega \nabla v \cdot \nabla u \, d\Omega = \int_\Omega v f \, d\Omega + \int_{\Gamma} v \frac{\partial u}{\partial n} \, d\Gamma$ 
 
-where the RHS does not depend on u so the equation can be cast in the form $\textbf{A} \vec{u} = \vec{b}$. Note that $\vec{b}$ is the sum of what we usually refer to as $L$ and an integral over the portion of the boundary with Neumann BC. **Hence, implementing Neumann BCs involves adding this term to $\vec{b}$.**
+where the RHS does not depend on u so the equation can be cast in the form $\textbf{A} \vec{u} = \vec{b}$. Note that $\vec{b}$ is the sum of what we usually refer to as the linear form $L$ and an integral over the portion of the boundary with Neumann BC. **Hence, implementing Neumann BCs involves adding this term to $\vec{b}$.**
 
 For mixed BCs, the 2nd integral on the RHS is over the portions of the boundary that have a Neumann BC, i.e., $\Gamma_N$, where $\frac{\partial u}{\partial n} = g$. Note that if $g = 0$, this integral goes to zero and the problem is formulated as 
 
 ​            $\int_\Omega \nabla v \cdot \nabla u \, d\Omega = \int_\Omega v f \, d\Omega$
 
-with Dirichlet BCs on the remaining portion of the boundary, $\Gamma_D$, that has Dirichlet BCs ($\Gamma = \Gamma_N + \Gamma_D$).
+with Dirichlet BCs on the remaining portion of the boundary, $\Gamma_D$, that has Dirichlet BCs ($\Gamma = \Gamma_N + \Gamma_D$​).
+
+### Logical program flow for mixed BCs
+
+See Example 13 jupyter notebook.
+
+- Create mesh
+- Create basis (mesh with specified FEM element)
+- Create $A$ &rarr; `A = asm(laplace, basis)`
+- Create Dirichlet BCs
+  - `u = basis.zeros()   # Create array of 0.0 values for all dofs
+    u[basis.get_dofs("left")] = <value>  # Set one of the boundaries to desired value. Repeat for additional boundaries.`
+- If the Neumann BCs are 0.0, then we're ready to solve:
+  - `u = solve(*condense(A, x=u, D=basis.get_dofs({"left", <etc.>})))`
+
+### Next
+
+Now that we have a solution, `u`, what do we do with it?
+
+- Looking at Example 1, it is solved with `ElementTriP1` so the `dofs` are just at the mesh vertices. What if we solve with `ElementTriP2`? Then there are more `dofs` and the simple `mesh.plot` at the end does not work? Do we have to do `basis.plot`?
 
 ## Mon, 4/22/24
 

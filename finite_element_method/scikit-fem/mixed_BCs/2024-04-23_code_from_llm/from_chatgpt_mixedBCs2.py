@@ -6,9 +6,9 @@ from skfem.helpers import dot, grad
 
 # Step 1: Create a mesh
 mesh = MeshTri().refined(1)
-print("__file__:    ", __file__)
-
+# print("__file__:    ", __file__)
 mesh.save(Path(__file__).parent / "from_chatgpt_mixedBCs2.vtk")
+print(f"{mesh=}")
 # exit()
 
 # Step 2: Define the element and basis
@@ -18,6 +18,8 @@ basis = InteriorBasis(mesh, element)
 # Step 3: Formulate the problem (LHS: Laplacian, RHS: source term)
 A = asm(laplace, basis)
 b = asm(unit_load, basis)
+print(f"{A=}")
+print(f"{b=}")
 
 
 # Step 4: Identify boundary facets using mesh.facets_satisfying
