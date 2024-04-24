@@ -30,9 +30,25 @@ Try latest `panel` version with jupyterlab.
 
 Work on ChatGPT-generated code. Try to understand how Neumann BCs are being created and the errors being thrown.
 
-Next:
+### Neumann BCs
 
-- Understand how Neumann BCs are involved in assembling the RHS, `b`, of the linear system.
+**Objective**: Understand how Neumann BCs are involved in assembling the RHS, `b`, of the linear system.
+
+**Formulation of Weak Form**: Starting with the strong form of the PDE, one integrates over the domain and applies integration by parts. This process brings in the boundary integral involving the Neumann condition. For the Poisson equation $-\nabla^2u = f$ in a domain $\Omega$ with boundary $\Gamma$, integrating by parts yields:
+
+​            $\int_\Omega \nabla v \cdot \nabla u \, d\Omega - \int_{\Gamma} v \frac{\partial u}{\partial n} \, d\Gamma = \int_\Omega v f \, d\Omega$
+
+The 2nd term on the LHS can be moved to the RHS resulting in
+
+​            $\int_\Omega \nabla v \cdot \nabla u \, d\Omega = \int_\Omega v f \, d\Omega + \int_{\Gamma} v \frac{\partial u}{\partial n} \, d\Gamma$ 
+
+where the RHS does not depend on u so the equation can be cast in the form $\textbf{A} \vec{u} = \vec{b}$. Note that $\vec{b}$ is the sum of what we usually refer to as $L$ and an integral over the portion of the boundary with Neumann BC. **Hence, implementing Neumann BCs involves adding this term to $\vec{b}$.**
+
+For mixed BCs, the 2nd integral on the RHS is over the portions of the boundary that have a Neumann BC, i.e., $\Gamma_N$, where $\frac{\partial u}{\partial n} = g$. Note that if $g = 0$, this integral goes to zero and the problem is formulated as 
+
+​            $\int_\Omega \nabla v \cdot \nabla u \, d\Omega = \int_\Omega v f \, d\Omega$
+
+with Dirichlet BCs on the remaining portion of the boundary, $\Gamma_D$, that has Dirichlet BCs ($\Gamma = \Gamma_N + \Gamma_D$).
 
 ## Mon, 4/22/24
 
