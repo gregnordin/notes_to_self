@@ -1,10 +1,12 @@
+from pathlib import Path
+
 import numpy as np
 from skfem import *
 from skfem.models.poisson import laplace, unit_load
 
 # Step 1: Create a mesh
-mesh = MeshTri.init_symmetric()
-mesh.refined(3)
+mesh = MeshTri.init_symmetric().refined(2)
+mesh.save(Path(__file__).parent / "from_chatgpt_mixedBCs.vtk")
 
 # Step 2: Define the element and basis
 element = ElementTriP1()
@@ -13,6 +15,9 @@ basis = InteriorBasis(mesh, element)
 # Step 3: Formulate the problem (LHS: Laplacian, RHS: source term)
 A = asm(laplace, basis)
 b = asm(unit_load, basis)
+print(f"{dir(unit_load)}")
+print(f"{b=}")
+print(f"{A=}")
 
 # Step 4: Identify boundary facets for Neumann conditions
 top_facets = np.nonzero(mesh.facets_satisfying(lambda x: x[1] == 1.0))[0]
@@ -26,6 +31,8 @@ print(f"{bottom_facets=}")
 g = lambda x: np.zeros(x.shape[1])  # Modify this as per actual conditions
 
 # Assemble Neumann contributions
+print(f"{basis.get_dofs(top_facets).all()=}")
+print(f"{basis.get_dofs(bottom_facets).all()=}")
 neumann_dofs = basis.get_dofs(top_facets).all() | basis.get_dofs(bottom_facets).all()
 b += asm(neumann, basis, facets=np.hstack([top_facets, bottom_facets]), fn=g)
 
