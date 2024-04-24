@@ -67,7 +67,10 @@ See Example 13 jupyter notebook.
 
 Now that we have a solution, `u`, what do we do with it?
 
-- Looking at Example 1, it is solved with `ElementTriP1` so the `dofs` are just at the mesh vertices. What if we solve with `ElementTriP2`? Then there are more `dofs` and the simple `mesh.plot` at the end does not work? Do we have to do `basis.plot`?
+- Looking at Example 1, it is solved with `ElementTriP1` so the `dofs` are just at the mesh vertices. 
+  - What if we solve with `ElementTriP2`? Then there are more `dofs` and the simple `mesh.plot` at the end does not work? Do we have to do `basis.plot`?
+  - And what do we save to a vtk file?
+  - **&rArr; Oh, I'm remembering now. the first `N_vertices` points in `u` are the values at the mesh vertices.** How do we save all of the `dofs` in `u` so they can be used in ParaView?
 
 ## Mon, 4/22/24
 
