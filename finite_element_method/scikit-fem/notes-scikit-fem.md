@@ -42,13 +42,13 @@ The 2nd term on the LHS can be moved to the RHS resulting in
 
 ​            $\int_\Omega \nabla v \cdot \nabla u \, d\Omega = \int_\Omega v f \, d\Omega + \int_{\Gamma} v \frac{\partial u}{\partial n} \, d\Gamma$ 
 
-where the RHS does not depend on u so the equation can be cast in the form $\textbf{A} \vec{u} = \vec{b}$. Note that $\vec{b}$ is the sum of what we usually refer to as the linear form $L$ and an integral over the portion of the boundary with Neumann BC. **Hence, implementing Neumann BCs involves adding this term to $\vec{b}$.**
+where the RHS does not depend on u so the equation can be cast in the linear algebra form $\textbf{A} \vec{u} = \vec{b}$ through the usual introduction of the intermediate abstract notation for the problem, $a(u,v) = L(v)$ (see 5.2.3 of *Introduction to Numerical Methods for Variational Problems* by Langtangen & Mardal). Note that $\vec{b}$ is the sum of what we usually refer to as the linear form $L$ and an integral over the portion of the boundary with Neumann BC. **Hence, implementing Neumann BCs involves adding this term to $\vec{b}$.**
 
 For mixed BCs, the 2nd integral on the RHS is over the portions of the boundary that have a Neumann BC, i.e., $\Gamma_N$, where $\frac{\partial u}{\partial n} = g$. Note that if $g = 0$, this integral goes to zero and the problem is formulated as 
 
 ​            $\int_\Omega \nabla v \cdot \nabla u \, d\Omega = \int_\Omega v f \, d\Omega$
 
-with Dirichlet BCs on the remaining portion of the boundary, $\Gamma_D$, that has Dirichlet BCs ($\Gamma = \Gamma_N + \Gamma_D$​).
+with Dirichlet BCs on the remaining portion of the boundary, $\Gamma_D$, with $\Gamma = \Gamma_N + \Gamma_D$​.
 
 ### Logical program flow for mixed BCs
 
