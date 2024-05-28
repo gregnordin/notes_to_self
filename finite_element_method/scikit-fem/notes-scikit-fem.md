@@ -1,6 +1,6 @@
 # Purpose
 
-Try latest `panel` version with jupyterlab.
+Try `scikit-fem` as a way of doing finite element simulations.
 
 # Info
 
