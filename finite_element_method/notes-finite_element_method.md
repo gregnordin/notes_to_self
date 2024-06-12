@@ -46,6 +46,7 @@ Some possible FEM codes to look into
 # Learning Resources
 
 - [In-depth tutorial on FEM in a deal.ii code example](https://www.dealii.org/current/doxygen/deal.II/step_3.html) - **very good**.
+- [Finite Element Method, youtube channel: Numerical Analysis by Julian Roth](https://www.youtube.com/watch?v=P4lBRuY7pC4) - good overview, 32 min but play at 2x.
 
 
 
