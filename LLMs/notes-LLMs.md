@@ -20,7 +20,7 @@ Download and install [Enchanted](https://apps.apple.com/ca/app/enchanted-llm/id6
 
 ### Jeremy Howard custom ChatGPT instructions
 
-[Jeremy Howard - ChatGPT custom instructions](https://twitter.com/FitFounder/status/1689652124781842432)
+[Jeremy Howard - ChatGPT custom instructions](https://twitter.com/jeremyphoward/status/1689464587077509120)
 
 >Now that ChatGPT has rolled out custom instructions to most users, try out this instruction -- it makes GPT 4 far more accurate for me: (Concat the rest of this 🧵 together and put in your custom instruction section)
 >
