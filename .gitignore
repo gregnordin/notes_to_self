@@ -10,6 +10,7 @@ __pycache__
 *.blg
 .venv
 .bash_history
+firedrake/
 python/manim_animations/.bash_history
 python/manim_animations/.ipython/
 python/manim_animations/.jupyter/

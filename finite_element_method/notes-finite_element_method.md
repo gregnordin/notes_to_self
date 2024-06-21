@@ -4,6 +4,8 @@ Collect information about the finite element method and software implementation.
 
 # FEM software
 
+[Firedrake](https://www.firedrakeproject.org/index.html) - 2013 branched off of Fenics and is designed for user ease-of-use rather than ultimate flexibility.
+
 [Nico Schloemer - Awesome Scientific Computing - Finite Elements section](https://github.com/nschloe/awesome-scientific-computing?tab=readme-ov-file#finite-elements) - good overview of free FEM software.
 
 Some possible FEM codes to look into
