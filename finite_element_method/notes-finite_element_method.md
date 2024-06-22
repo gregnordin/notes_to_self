@@ -4,18 +4,21 @@ Collect information about the finite element method and software implementation.
 
 # FEM software
 
-[Firedrake](https://www.firedrakeproject.org/index.html) - 2013 branched off of Fenics and is designed for user ease-of-use rather than ultimate flexibility.
+<span style="color:red; font-size:150%">&#x2605;</span> [Firedrake](https://www.firedrakeproject.org/index.html) - 2013 branched off of Fenics and is designed for user ease-of-use rather than ultimate flexibility. Recommended 4/21/24 by Patrick Ferrell from U. of Oxford.
+
+[scikit-fem](https://github.com/kinnala/scikit-fem?tab=readme-ov-file) -  I tried this May-June 2024 and liked it.
+
+- > `scikit-fem` is a pure Python 3.8+ library for performing [finite element assembly](https://en.wikipedia.org/wiki/Finite_element_method). Its main purpose is the transformation of bilinear forms into sparse matrices and linear forms into vectors.
+
+- Text of [paper](https://github.com/kinnala/scikit-fem/blob/master/paper/paper.md)
+
+- [List of examples](https://github.com/kinnala/scikit-fem/blob/master/docs/listofexamples.rst)
+
+[FEniCSx/dolfinx](https://github.com/FEniCS/dolfinx) - I tried this Fall 2023 through April 2024 and found it difficult to learn due to jumble of old FEniCS material online and newer but very incomplete FEniCSx documentation.
 
 [Nico Schloemer - Awesome Scientific Computing - Finite Elements section](https://github.com/nschloe/awesome-scientific-computing?tab=readme-ov-file#finite-elements) - good overview of free FEM software.
 
 Some possible FEM codes to look into
-
-- [scikit-fem](https://github.com/kinnala/scikit-fem?tab=readme-ov-file)
-
-  - > `scikit-fem` is a pure Python 3.8+ library for performing [finite element assembly](https://en.wikipedia.org/wiki/Finite_element_method). Its main purpose is the transformation of bilinear forms into sparse matrices and linear forms into vectors.
-
-  - Text of [paper](https://github.com/kinnala/scikit-fem/blob/master/paper/paper.md)
-  - [List of examples](https://github.com/kinnala/scikit-fem/blob/master/docs/listofexamples.rst)
 
 - [SfePy: Simple Finite Elements in Python](https://sfepy.org/doc-devel/index.html)
 
