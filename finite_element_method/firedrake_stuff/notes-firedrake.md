@@ -634,7 +634,7 @@ Try examples from [Patrick Ferrel's icerm2024 lectures](https://github.com/pefar
 
 [Mixed formulation for the Poisson equation](https://www.firedrakeproject.org/demos/poisson_mixed.py.html): `poisson_mixed.py`. **Success.**
 
-[Simple Helmholtz equation](https://www.firedrakeproject.org/demos/helmholtz.py.html). **Success.**
+[Simple Helmholtz equation](https://www.firedrakeproject.org/demos/helmholtz.py.html). `helmholtz.py`. **Success.**
 
-
+[Burgers equation](https://www.firedrakeproject.org/demos/burgers.py.html). `burgers.py`. **Success.**
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">
+<Collection>
+<DataSet timestep="0" file="burgers/burgers_0.vtu" />
+<DataSet timestep="1" file="burgers/burgers_1.vtu" />
+<DataSet timestep="2" file="burgers/burgers_2.vtu" />
+<DataSet timestep="3" file="burgers/burgers_3.vtu" />
+<DataSet timestep="4" file="burgers/burgers_4.vtu" />
+<DataSet timestep="5" file="burgers/burgers_5.vtu" />
+<DataSet timestep="6" file="burgers/burgers_6.vtu" />
+<DataSet timestep="7" file="burgers/burgers_7.vtu" />
+<DataSet timestep="8" file="burgers/burgers_8.vtu" />
+<DataSet timestep="9" file="burgers/burgers_9.vtu" />
+<DataSet timestep="10" file="burgers/burgers_10.vtu" />
+<DataSet timestep="11" file="burgers/burgers_11.vtu" />
+<DataSet timestep="12" file="burgers/burgers_12.vtu" />
+<DataSet timestep="13" file="burgers/burgers_13.vtu" />
+<DataSet timestep="14" file="burgers/burgers_14.vtu" />
+<DataSet timestep="15" file="burgers/burgers_15.vtu" />
+<DataSet timestep="16" file="burgers/burgers_16.vtu" />
+</Collection>
+</VTKFile>
