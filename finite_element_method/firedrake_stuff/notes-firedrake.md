@@ -630,7 +630,11 @@ export OMP_NUM_THREADS=1
 
 Try examples from [Patrick Ferrel's icerm2024 lectures](https://github.com/pefarrell/icerm2024/tree/main) in a jupyter notebook. They work for the most part. The main exception is whenever `NetgenHierarchy()` is used. Example code includes an argument, `order=XX`, but the function signature requires `flag=YY`. I have not gotten the latter to work.
 
-### Try documentation example, `poisson_mixed.py`
+### Try introductor documentation examples
 
 [Mixed formulation for the Poisson equation](https://www.firedrakeproject.org/demos/poisson_mixed.py.html): `poisson_mixed.py`. **Success.**
+
+[Simple Helmholtz equation](https://www.firedrakeproject.org/demos/helmholtz.py.html). **Success.**
+
+
 
