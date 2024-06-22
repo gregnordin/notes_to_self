@@ -1000,3 +1000,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
 ```
 
+### Try Patrick Ferrell Examples
+
+Try examples from [Patrick Ferrel's icerm2024 lectures](https://github.com/pefarrell/icerm2024/tree/main) in a jupyter notebook. They work for the most part. The main exception is whenever `NetgenHierarchy()` is used. Example code includes an argument, `order=XX`, but the function signature requires `flag=YY`. I have not gotten the latter to work.
+
