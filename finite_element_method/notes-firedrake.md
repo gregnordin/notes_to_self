@@ -1,6 +1,10 @@
 # Purpose
 
-Document installation and use of Firedrake FEM software.
+Document installation and use of [Firedrake FEM software](https://www.firedrakeproject.org/index.html).
+
+# Information
+
+[Patrick Ferrell lecture slides on solving PDEs with Firedrake he gave at ICERM in 2024](https://pefarrell.org/files/icerm2024.pdf) and associated [github repo](https://github.com/pefarrell/icerm2024)
 
 # Installation
 
