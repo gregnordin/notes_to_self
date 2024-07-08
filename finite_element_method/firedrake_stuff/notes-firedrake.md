@@ -601,6 +601,14 @@ python -m ipykernel install --user --name firedrake --display-name "firedrake"
 	Installed kernelspec firedrake in /Users/nordin/Library/Jupyter/kernels/firedrake
 ```
 
+### Install `ipympl` for interactive matplotlib
+
+```
+pip install ipympl
+```
+
+
+
 ### Quick import test &rarr; Success
 
 ```bash
@@ -638,3 +646,4 @@ Try examples from [Patrick Ferrel's icerm2024 lectures](https://github.com/pefar
 
 [Burgers equation](https://www.firedrakeproject.org/demos/burgers.py.html). `burgers.py`. **Success.**
 
+ 
