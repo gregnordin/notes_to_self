@@ -607,6 +607,13 @@ python -m ipykernel install --user --name firedrake --display-name "firedrake"
 pip install ipympl
 ```
 
+### Other package installations
+
+```
+pip install scikit-image
+pip install tqdm
+```
+
 
 
 ### Quick import test &rarr; Success
