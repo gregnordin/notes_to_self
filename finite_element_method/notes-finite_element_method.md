@@ -4,7 +4,7 @@ Collect information about the finite element method and software implementation.
 
 # FEM software
 
-<span style="color:red; font-size:150%">&#x2605;</span> [Firedrake](https://www.firedrakeproject.org/index.html) - 2013 branched off of Fenics and is designed for user ease-of-use rather than ultimate flexibility. Recommended 4/21/24 by Patrick Ferrell from U. of Oxford.
+<span style="color:red; font-size:150%">&#x2605;</span> [Firedrake](https://www.firedrakeproject.org/index.html) - 2013 branched off of Fenics and is designed for user ease-of-use rather than ultimate flexibility. Recommended 6/21/24 by Patrick Ferrell from U. of Oxford.
 
 [scikit-fem](https://github.com/kinnala/scikit-fem?tab=readme-ov-file) -  I tried this May-June 2024 and liked it.
 
