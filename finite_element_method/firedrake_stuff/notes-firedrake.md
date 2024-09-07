@@ -615,6 +615,7 @@ pip install tqdm
 pip install --upgrade gmsh
 pip install meshio
 pip install opencv-python
+pip install pydantic
 ```
 
 
