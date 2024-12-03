@@ -1,5 +1,68 @@
 # Log
 
+## Sunday, 12/1/24
+
+### Simon Willison's `llm` and `qwen2.5-coder:32b`
+
+Go through [Qwen2.5-Coder-32B is an LLM that can code well that runs on my Mac by Simon Willison](https://simonwillison.net/2024/Nov/12/qwen25-coder/).
+
+```bash
+# Get qwen2.5-coder:32b
+$ ollama pull qwen2.5-coder:32b
+
+# Install Simon Willison's llm
+$ pipx install llm
+  installed package llm 0.18, installed using Python 3.13.0
+  These apps are now globally available
+    - llm
+done! ✨ 🌟 ✨
+$ which llm
+/Users/nordin/.local/bin/llm
+
+# Install extension so that llm can use ollama
+$llm install llm-ollama
+
+# Test llm
+$ llm -m llama2:latest 'How much is 2+2?'
+The answer to 2+2 is 4.
+
+# See which models are already available on my laptop
+$ llm models
+OpenAI Chat: gpt-4o (aliases: 4o)
+OpenAI Chat: gpt-4o-mini (aliases: 4o-mini)
+OpenAI Chat: gpt-4o-audio-preview
+OpenAI Chat: gpt-3.5-turbo (aliases: 3.5, chatgpt)
+OpenAI Chat: gpt-3.5-turbo-16k (aliases: chatgpt-16k, 3.5-16k)
+OpenAI Chat: gpt-4 (aliases: 4, gpt4)
+OpenAI Chat: gpt-4-32k (aliases: 4-32k)
+OpenAI Chat: gpt-4-1106-preview
+OpenAI Chat: gpt-4-0125-preview
+OpenAI Chat: gpt-4-turbo-2024-04-09
+OpenAI Chat: gpt-4-turbo (aliases: gpt-4-turbo-preview, 4-turbo, 4t)
+OpenAI Chat: o1-preview
+OpenAI Chat: o1-mini
+OpenAI Completion: gpt-3.5-turbo-instruct (aliases: 3.5-instruct, chatgpt-instruct)
+Ollama: qwen2.5-coder:32b
+Ollama: llama3-gradient:latest (aliases: llama3-gradient)
+Ollama: deepseek-coder:33b
+Ollama: deepseek-coder:6.7b
+Ollama: codellama:7b-python
+Ollama: starcoder2:3b
+Ollama: my-python-assistant:latest (aliases: my-python-assistant)
+Ollama: codellama:latest (aliases: codellama)
+Ollama: llama3:70b
+Ollama: llama3:latest (aliases: llama3)
+Ollama: llama2:latest (aliases: llama2)
+
+# Try it out
+$ llm -m qwen2.5-coder:32b 'python function that takes URL to a CSV file and path to a SQLite database, fetches the CSV with the standard library, creates a table with the right columns and inserts the data'
+
+# Set the default model to qwen2.5-coder:32b
+$ llm models default qwen2.5-coder:32b
+```
+
+
+
 ## Sunday, 4/21/24
 
 ### Get Ollama working with Enchanted as front end
