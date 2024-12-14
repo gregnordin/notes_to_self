@@ -618,6 +618,7 @@ pip install opencv-python
 pip install pydantic
 pip install panel watchfiles
 pip install nicegui
+pip install streamlit
 ```
 
 
