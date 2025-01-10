@@ -10,7 +10,7 @@ Document installation and use of [Firedrake FEM software](https://www.firedrakep
 
 ## 1/10/25
 
-### firedrake-install script -> SUCCESS
+### firedrake-install script with python 3.11 -> SUCCESS
 
 Submit question about installation error to firedrake slack channel and get responses. They updated `firedrake-install` to overcome a PETSc/MPI error. Then do:
 
@@ -81,6 +81,181 @@ pip show firedrake
   Summary: An automated system for the portable solution of partial differential equations using the finite element method
 
 ```
+
+#### Fix `OMP_NUM_THREADS` warning
+
+```
+export OMP_NUM_THREADS=1
+```
+
+#### Further package installs
+
+```
+# To fix a warning where firedrake wants to use this package but falls back to 'hashlib.sha256'
+pip install siphash24
+```
+
+### firedrake-install script with python 3.13 -> FAIL-siphash24
+
+```
+cd /Users/nordin/Documents/python_environments
+conda activate py313
+which python
+  /Users/nordin/micromamba/envs/py313/bin/python
+python --version
+  Python 3.13.1
+curl -O https://raw.githubusercontent.com/firedrakeproject/firedrake/master/scripts/firedrake-install
+```
+
+Insert the following at line 744 in `firedrake-install` to overcome an error where the install script could not find the Homebrew-installed zlib:
+
+```
+        # zlib
+        petsc_options.add("--download-zlib")
+```
+
+Continuing:
+
+```
+# this is necessary for the script to run
+pip install packaging
+	Successfully installed packaging-24.2
+python firedrake-install
+  Installing h5py/
+  Installing loopy/
+  Installing petsc4py/
+  Installing ufl/
+  Installing fiat/
+  Installing pyadjoint/
+  Installing pytest-mpi/
+  Installing libsupermesh/
+  Installing firedrake/
+
+  Successfully installed Firedrake.
+
+  Firedrake has been installed in a python venv. You activate it with:
+    . /Users/nordin/Documents/python_environments/firedrake_py313/firedrake/bin/activate
+  The venv can be deactivated by running:
+    deactivate
+  To upgrade Firedrake activate the venv and run firedrake-update
+
+# Activate virtual environment
+conda deactivate
+source /Users/nordin/Documents/python_environments/firedrake_py313/firedrake/bin/activate
+
+# Double check python version
+which python
+ /Users/nordin/Documents/python_environments/firedrake_py313/firedrake/bin/python
+python --version
+ Python 3.13.1
+
+# Check installed PETSc version
+python -c "from petsc4py import PETSc; print(PETSc.Sys.getVersion())"
+(3, 22, 2)
+
+# Check firedrake version
+pip show firedrake
+Name: firedrake
+Version: 0.14.dev0
+...
+
+```
+
+#### Fix `OMP_NUM_THREADS` warning
+
+```
+export OMP_NUM_THREADS=1
+```
+
+#### Further package installs
+
+```
+# To fix a warning where firedrake wants to use this package but falls back to 'hashlib.sha256'
+pip install siphash24
+  Collecting siphash24
+    Using cached siphash24-1.7.tar.gz (19 kB)
+    Installing build dependencies ... done
+    Getting requirements to build wheel ... done
+    Preparing metadata (pyproject.toml) ... error
+    error: subprocess-exited-with-error
+
+    × Preparing metadata (pyproject.toml) did not run successfully.
+    │ exit code: 1
+    ╰─> [12 lines of output]
+        + meson setup /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870 /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870/.mesonpy-0vic0mbg -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --native-file=/private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870/.mesonpy-0vic0mbg/meson-python-native-file.ini
+        The Meson build system
+        Version: 1.6.1
+        Source dir: /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870
+        Build dir: /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870/.mesonpy-0vic0mbg
+        Build type: native build
+        Project name: python-siphash24
+        Project version: undefined
+
+        ../meson.build:4:0: ERROR: Compiler cc cannot compile programs.
+
+        A full log can be found at /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870/.mesonpy-0vic0mbg/meson-logs/meson-log.txt
+        [end of output]
+
+    note: This error originates from a subprocess, and is likely not a problem with pip.
+  error: metadata-generation-failed
+
+  × Encountered error while generating package metadata.
+  ╰─> See above for output.
+
+  note: This is an issue with the package mentioned above, not pip.
+  hint: See above for details.
+  
+# Try to fix by installing meson and ninja
+pip install meson ninja
+  Requirement already satisfied: meson in /Users/nordin/Documents/python_environments/firedrake_py313/firedrake/lib/python3.13/site-packages (1.6.1)
+  Collecting ninja
+    Downloading ninja-1.11.1.3-py3-none-macosx_10_9_universal2.whl.metadata (5.3 kB)
+  Downloading ninja-1.11.1.3-py3-none-macosx_10_9_universal2.whl (279 kB)
+  Installing collected packages: ninja
+  Successfully installed ninja-1.11.1.3
+
+# Try again -> FAIL
+pip install siphash24
+  Collecting siphash24
+    Using cached siphash24-1.7.tar.gz (19 kB)
+    Installing build dependencies ... done
+    Getting requirements to build wheel ... done
+    Preparing metadata (pyproject.toml) ... error
+    error: subprocess-exited-with-error
+
+    × Preparing metadata (pyproject.toml) did not run successfully.
+    │ exit code: 1
+    ╰─> [12 lines of output]
+        + meson setup /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870 /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870/.mesonpy-0vic0mbg -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --native-file=/private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870/.mesonpy-0vic0mbg/meson-python-native-file.ini
+        The Meson build system
+        Version: 1.6.1
+        Source dir: /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870
+        Build dir: /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870/.mesonpy-0vic0mbg
+        Build type: native build
+        Project name: python-siphash24
+        Project version: undefined
+
+        ../meson.build:4:0: ERROR: Compiler cc cannot compile programs.
+
+        A full log can be found at /private/tmp/pip-install-ivhi53xs/siphash24_b565b9cc44ca46a789cdce47560e8870/.mesonpy-0vic0mbg/meson-logs/meson-log.txt
+        [end of output]
+
+    note: This error originates from a subprocess, and is likely not a problem with pip.
+  error: metadata-generation-failed
+
+  × Encountered error while generating package metadata.
+  ╰─> See above for output.
+
+  note: This is an issue with the package mentioned above, not pip.
+  hint: See above for details.
+  
+```
+
+### 
+
+
+
+
 
 ### &#10060; Docker -> only available for amd64, not arm
 
