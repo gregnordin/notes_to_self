@@ -95,6 +95,15 @@ export OMP_NUM_THREADS=1
 pip install siphash24
 ```
 
+#### Jupyter kernel
+
+```
+python -m ipykernel install --user --name=firedrake2 --display-name "firedrake2-py311"
+  Installed kernelspec firedrake2 in /Users/nordin/Library/Jupyter/kernels/firedrake2
+```
+
+
+
 ### firedrake-install script with python 3.13 -> FAIL-siphash24
 
 ```
