@@ -8,9 +8,11 @@ Document installation and use of [Firedrake FEM software](https://www.firedrakep
 
 # Installation
 
-## 1/9/25
+## 1/10/25
 
-### firedrake-install script -> FAIL
+### firedrake-install script -> SUCCESS
+
+Submit question about installation error to firedrake slack channel and get responses. They updated `firedrake-install` to overcome a PETSc/MPI error. Then do:
 
 ```
 cd /Users/nordin/Documents/python_environments
@@ -20,41 +22,64 @@ which python
 python --version
   Python 3.11.9
 curl -O https://raw.githubusercontent.com/firedrakeproject/firedrake/master/scripts/firedrake-install
+```
+
+Insert the following at line 744 in `firedrake-install` to overcome an error where the install script could not find the Homebrew-installed zlib:
+
+```
+        # zlib
+        petsc_options.add("--download-zlib")
+```
+
+Continuing:
+
+```
 python firedrake-install
-```
+  Installing h5py/
+  Installing loopy/
+  Installing petsc4py/
+  Installing ufl/
+  Installing fiat/
+  Installing pyadjoint/
+  Installing pytest-mpi/
+  Installing libsupermesh/
+  Installing firedrake/
 
-I get a cryptic error. After lots of investigation and trying things, it looks like this goes back to a problem with finding zlib, which is already installed at `/opt/hombrew/opt/zlib`. Force zlib to be found in all of the normal places:
 
-```
-brew link --force zlib
-  Linking /opt/homebrew/Cellar/zlib/1.3.1... 8 symlinks created.
-pkg-config --cflags zlib
-  -I/opt/homebrew/opt/zlib/include
-pkg-config --libs zlib
-  -L/opt/homebrew/opt/zlib/lib -lz
-```
+  Successfully installed Firedrake.
 
-Try to run install again and get same error so it doesn't look like the `zlib` fix above did anything:
 
-```
-Installing petsc/
-Depending on your platform, PETSc may take an hour or more to build!
-Traceback (most recent call last):
-  File "/Users/nordin/Documents/python_environments/firedrake-install", line 1816, in <module>
-    install("petsc/")
-  File "/Users/nordin/Documents/python_environments/firedrake-install", line 1060, in install
-    build_and_install_petsc()
-  File "/Users/nordin/Documents/python_environments/firedrake-install", line 1172, in build_and_install_petsc
-    check_call([python, "./configure", "PETSC_DIR={}".format(petsc_dir), "PETSC_ARCH={}".format(petsc_arch)] + petsc_options)
-  File "/Users/nordin/Documents/python_environments/firedrake-install", line 680, in check_call
-    log.debug(subprocess.check_output(arguments, stderr=subprocess.STDOUT, env=os.environ).decode())
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/nordin/micromamba/envs/py311/lib/python3.11/subprocess.py", line 466, in check_output
-    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/nordin/micromamba/envs/py311/lib/python3.11/subprocess.py", line 571, in run
-    raise CalledProcessError(retcode, process.args,
-subprocess.CalledProcessError: Command '['/Users/nordin/Documents/python_environments/firedrake/bin/python', './configure', 'PETSC_DIR=/Users/nordin/Documents/python_environments/firedrake/src/petsc', 'PETSC_ARCH=default', '--download-mpich-configure-arguments=--disable-opencl', '--download-hwloc-configure-arguments=--disable-opencl', '--download-metis', '--with-zlib', '--with-x=0', '--with-netlib-lapack-c-bindings', '--download-scalapack', '--download-mumps', '--download-hwloc', '--download-netlib-lapack', '--download-hypre', '--download-hdf5', '--download-pastix', '--download-superlu_dist', '--download-suitesparse', '--CFLAGS=-Wno-implicit-function-declaration', '--download-pnetcdf', '--download-ptscotch', '--download-netcdf', '--download-openblas', '--LDFLAGS=-Wl,-ld_classic,-dead_strip_dylibs', "--download-openblas-make-options='USE_THREAD=0 USE_LOCKING=1 USE_OPENMP=0'", '--download-mpich', '--with-fortran-bindings=0', '--with-shared-libraries=1', '--with-debugging=0', '--with-c2html=0', '--download-bison']' returned non-zero exit status 1.
+  Firedrake has been installed in a python venv. You activate it with:
+
+    . /Users/nordin/Documents/python_environments/firedrake/bin/activate
+
+  The venv can be deactivated by running:
+
+    deactivate
+
+	To upgrade Firedrake activate the venv and run firedrake-update
+
+# Deactivate conda environment and activate firedrake virtual environment
+conda deactivate
+. /Users/nordin/Documents/python_environments/firedrake/bin/activate
+# Double check python version
+which python
+	/Users/nordin/Documents/python_environments/firedrake/bin/python
+python --version
+	Python 3.11.9
+
+# Check installed PETSc version
+python -c "from petsc4py import PETSc; print(PETSc.Sys.getVersion())"
+  /Users/nordin/Documents/python_environments/firedrake/lib/python3.11/site-packages/petsc4py/lib/__init__.py:41: UserWarning: ignored arch: 'arch-darwin-opt', using: 'default'
+    path, arch = getPathArch(path, arch, rcvar, rcfile)
+  (3, 22, 2)
+
+# Check firedrake version
+pip show firedrake
+  Name: firedrake
+  Version: 0.14.dev0
+  Summary: An automated system for the portable solution of partial differential equations using the finite element method
+
 ```
 
 ### &#10060; Docker -> only available for amd64, not arm
@@ -78,25 +103,16 @@ pip install mpi4py petsc petsc4py
 # Set environment variables
 export PETSC_DIR=/Users/nordin/Documents/python_environments/firedrake2/lib/python3.11/site-packages/petsc
 export PETSC_ARCH=arch-darwin-opt
-
-
 ```
 
-### firedrake-install script again
+Message from Connor Ward at 6:13 am 1/10/24 in firedrake slack channel: 
 
-
-
-```
-conda activate py311
-which python
-  /Users/nordin/micromamba/envs/py311/bin/python
-python --version
-  Python 3.11.9
-
+*For the pip install route the only tricky ones are CC and CXX. If you built PETSc using the default options then you only need to set them to*
 
 ```
-
-
+CC=$PETSC_DIR/$PETSC_ARCH/bin/mpicc
+CXX=$PETSC_DIR/$PETSC_ARCH/bin/mpicxx
+```
 
 
 
