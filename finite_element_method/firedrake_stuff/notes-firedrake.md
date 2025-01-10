@@ -10,7 +10,7 @@ Document installation and use of [Firedrake FEM software](https://www.firedrakep
 
 ## 1/9/25
 
-
+### firedrake-install script -> FAIL
 
 ```
 cd /Users/nordin/Documents/python_environments
@@ -34,9 +34,69 @@ pkg-config --libs zlib
   -L/opt/homebrew/opt/zlib/lib -lz
 ```
 
-Next:
+Try to run install again and get same error so it doesn't look like the `zlib` fix above did anything:
 
-- Try running install script again.
+```
+Installing petsc/
+Depending on your platform, PETSc may take an hour or more to build!
+Traceback (most recent call last):
+  File "/Users/nordin/Documents/python_environments/firedrake-install", line 1816, in <module>
+    install("petsc/")
+  File "/Users/nordin/Documents/python_environments/firedrake-install", line 1060, in install
+    build_and_install_petsc()
+  File "/Users/nordin/Documents/python_environments/firedrake-install", line 1172, in build_and_install_petsc
+    check_call([python, "./configure", "PETSC_DIR={}".format(petsc_dir), "PETSC_ARCH={}".format(petsc_arch)] + petsc_options)
+  File "/Users/nordin/Documents/python_environments/firedrake-install", line 680, in check_call
+    log.debug(subprocess.check_output(arguments, stderr=subprocess.STDOUT, env=os.environ).decode())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nordin/micromamba/envs/py311/lib/python3.11/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nordin/micromamba/envs/py311/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/Users/nordin/Documents/python_environments/firedrake/bin/python', './configure', 'PETSC_DIR=/Users/nordin/Documents/python_environments/firedrake/src/petsc', 'PETSC_ARCH=default', '--download-mpich-configure-arguments=--disable-opencl', '--download-hwloc-configure-arguments=--disable-opencl', '--download-metis', '--with-zlib', '--with-x=0', '--with-netlib-lapack-c-bindings', '--download-scalapack', '--download-mumps', '--download-hwloc', '--download-netlib-lapack', '--download-hypre', '--download-hdf5', '--download-pastix', '--download-superlu_dist', '--download-suitesparse', '--CFLAGS=-Wno-implicit-function-declaration', '--download-pnetcdf', '--download-ptscotch', '--download-netcdf', '--download-openblas', '--LDFLAGS=-Wl,-ld_classic,-dead_strip_dylibs', "--download-openblas-make-options='USE_THREAD=0 USE_LOCKING=1 USE_OPENMP=0'", '--download-mpich', '--with-fortran-bindings=0', '--with-shared-libraries=1', '--with-debugging=0', '--with-c2html=0', '--download-bison']' returned non-zero exit status 1.
+```
+
+### &#10060; Docker -> only available for amd64, not arm
+
+### pip install -> give up, what should env variables be set to?
+
+```
+conda activate py311
+python -m venv firedrake2 --prompt firedrake2
+conda deactivate
+source firedrake2/bin/activate
+which python
+  /Users/nordin/Documents/python_environments/firedrake2/bin/python
+python --version
+  Python 3.11.9
+# Install petsc
+pip install mpi4py petsc petsc4py
+  Successfully built mpi4py petsc petsc4py
+  Installing collected packages: numpy, mpi4py, petsc, petsc4py
+  Successfully installed mpi4py-4.0.1 numpy-2.2.1 petsc-3.22.2 petsc4py-3.22.2
+# Set environment variables
+export PETSC_DIR=/Users/nordin/Documents/python_environments/firedrake2/lib/python3.11/site-packages/petsc
+export PETSC_ARCH=arch-darwin-opt
+
+
+```
+
+### firedrake-install script again
+
+
+
+```
+conda activate py311
+which python
+  /Users/nordin/micromamba/envs/py311/bin/python
+python --version
+  Python 3.11.9
+
+
+```
+
+
 
 
 
