@@ -8,6 +8,38 @@ Document installation and use of [Firedrake FEM software](https://www.firedrakep
 
 # Installation
 
+## 1/9/25
+
+
+
+```
+cd /Users/nordin/Documents/python_environments
+conda activate py311
+which python
+  /Users/nordin/micromamba/envs/py311/bin/python
+python --version
+  Python 3.11.9
+curl -O https://raw.githubusercontent.com/firedrakeproject/firedrake/master/scripts/firedrake-install
+python firedrake-install
+```
+
+I get a cryptic error. After lots of investigation and trying things, it looks like this goes back to a problem with finding zlib, which is already installed at `/opt/hombrew/opt/zlib`. Force zlib to be found in all of the normal places:
+
+```
+brew link --force zlib
+  Linking /opt/homebrew/Cellar/zlib/1.3.1... 8 symlinks created.
+pkg-config --cflags zlib
+  -I/opt/homebrew/opt/zlib/include
+pkg-config --libs zlib
+  -L/opt/homebrew/opt/zlib/lib -lz
+```
+
+Next:
+
+- Try running install script again.
+
+
+
 ##  6/21/24
 
 ### Initial install-fix problem
@@ -619,6 +651,14 @@ pip install pydantic
 pip install panel watchfiles
 pip install nicegui
 pip install streamlit
+```
+
+### Firedrake version
+
+```
+python -c "import firedrake; print(firedrake.__version__)"
+  firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
+  0.13.0+6141.g14c688547
 ```
 
 
