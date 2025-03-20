@@ -1,8 +1,20 @@
-## Use uv and juv to create Jupyter notebook
+## Use ~~uv~~ uvx and juv to create/run Jupyter notebooks
 
 Discover and install [juv](https://github.com/manzt/juv) - reproducible Jupyter notebooks, powered by uv.
 
 `uv tool install juv`
+
+### Updated use: `uvx`
+
+Wed, 3/19/25:
+
+```
+uvx juv lab 2025-03-19_analyze_data.ipynb
+```
+
+
+
+### OLD
 
 ### Create notebook
 
