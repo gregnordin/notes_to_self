@@ -1,5 +1,7 @@
 ## Use ~~uv~~ uvx and juv to create/run Jupyter notebooks
 
+
+
 Discover and install [juv](https://github.com/manzt/juv) - reproducible Jupyter notebooks, powered by uv.
 
 `uv tool install juv`
