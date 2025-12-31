@@ -1,8 +1,16 @@
+# Purpose
 
+Find a good home 3D printer to do projects with the grandkids. Ease of use and no need for fussing are key criteria.
 
+# Information
 
+[I Wish I Knew THIS About 3D Printing 3 Years Ago by wittworks](https://www.youtube.com/watch?v=GVDhAKxNcJA), lots of great information, highly recommends Bambu Lab P1S printer (note this video was made a year ago) and Bambu filaments. &rArr; convinced me to go with the Bambu P2S.
 
-[Bambu Lab P2S, \$549 or \$799](https://us.store.bambulab.com/products/p2s?from=home_web_p2s_detail&id=664977091405410311)
+[9 Tips for a Killer 3D Printing Setup by Print Farm Academy](https://www.youtube.com/watch?v=yqm4YfjJzO0), great recommendations and list of parts and tools.
+
+# 3D printers
+
+<span style="color:red; font-size:150%">&#x2605;</span> [Bambu Lab P2S, \$549 or \$799](https://us.store.bambulab.com/products/p2s?from=home_web_p2s_detail&id=664977091405410311)
 
 [Prusa Core One+ with INDX \$1299, kit \$999](https://www.prusa3d.com/)
 
