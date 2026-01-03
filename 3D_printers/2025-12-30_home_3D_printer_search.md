@@ -8,6 +8,21 @@ Find a good home 3D printer to do projects with the grandkids. Ease of use and n
 
 [9 Tips for a Killer 3D Printing Setup by Print Farm Academy](https://www.youtube.com/watch?v=yqm4YfjJzO0), great recommendations and list of parts and tools.
 
+- CyberPower 1500 VA UPS - https://amzn.to/45AUQTf
+- Hoto Rechargeable electric screwdriver - https://amzn.to/45SPPUO
+- Hoto Mini electric screwdriver - https://amzn.to/3UQljGa
+- Flush Trim Cutter - https://amzn.to/4fV0CCL
+- BIQU Aluminum Scraper - https://amzn.to/47OjTnc
+- Heavy Duty Full Extension Drawer Slides - https://amzn.to/4mXSDqD
+- Air Gradient Monitor - https://www.airgradient.com/indoor/
+- Air Knight Monitor (another option) - https://amzn.to/46b2mUU
+- Stat Pro Filament Dryer - https://bit.ly/467Cw49
+- Sunlu S4 Filament Dryer - https://amzn.to/4p1yzWr
+- Filament Dryer Stand Option - https://amzn.to/3HhSTBQ
+- IKEA Pegboard - https://bit.ly/45NWI9V
+- IKEA Sektion Base Cabinets - https://www.ikea.com/us/en/cat/base-c...
+- IKEA Drawer fronts are "Voxtorp Dark Grey"
+
 # 3D printers
 
 <span style="color:red; font-size:150%">&#x2605;</span> [Bambu Lab P2S, \$549 or \$799](https://us.store.bambulab.com/products/p2s?from=home_web_p2s_detail&id=664977091405410311)
@@ -25,6 +40,8 @@ Find a good home 3D printer to do projects with the grandkids. Ease of use and n
 
 - 4 print heads
 - Not available until late March
+
+[Elegoo Centauri Carbon, $413](https://us.elegoo.com/pages/elegoo-centauri-carbon) 
 
 Voron open-source self-built
 
